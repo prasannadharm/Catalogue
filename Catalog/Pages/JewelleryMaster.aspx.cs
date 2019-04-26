@@ -46,5 +46,17 @@ namespace Catalog.Pages
         {
             new JewelleryDAO().UpdateJewelley(obj, id);
         }
+
+        [WebMethod]
+        public static void InsertData(JewelleryEntity obj)
+        {
+            new JewelleryDAO().InsertJewelley(obj);
+        }
+
+        [WebMethod]
+        public static void DeleteData(int id)
+        {
+            new JewelleryDAO().DeleteJewelley(id);
+        }
     }
 }

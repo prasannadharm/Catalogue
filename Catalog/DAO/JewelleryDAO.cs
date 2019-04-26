@@ -70,7 +70,6 @@ namespace Catalog.DAO
         public void UpdateJewelley(JewelleryEntity obj, int id)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            SqlDataAdapter adapter;
             DataSet ds = new DataSet();
             List<JewelleryEntity> retlst = new List<JewelleryEntity>();
             using (SqlConnection con = new SqlConnection(CS))
@@ -84,6 +83,39 @@ namespace Catalog.DAO
                 cmd.ExecuteNonQuery();
                 con.Close();
             }            
+        }
+
+        public void InsertJewelley(JewelleryEntity obj)
+        {
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            DataSet ds = new DataSet();
+            List<JewelleryEntity> retlst = new List<JewelleryEntity>();
+            using (SqlConnection con = new SqlConnection(CS))
+            {
+                SqlCommand cmd = new SqlCommand("USP_InsertJewelleryMaster", con);
+                cmd.CommandType = CommandType.StoredProcedure;                
+                cmd.Parameters.AddWithValue("@NAME", obj.NAME);
+                cmd.Parameters.AddWithValue("@ACTIVE_STATUS", obj.ACTIVE_STATUS);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+
+        public void DeleteJewelley(int id)
+        {
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            DataSet ds = new DataSet();
+            List<JewelleryEntity> retlst = new List<JewelleryEntity>();
+            using (SqlConnection con = new SqlConnection(CS))
+            {
+                SqlCommand cmd = new SqlCommand("USP_DeleteJewelleryMaster", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", id);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
         }
     }
 }

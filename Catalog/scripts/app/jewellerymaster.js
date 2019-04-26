@@ -30,56 +30,74 @@ function getDetails() {
 
 
 $(function () {
-    //$("#btnSave").click(function () {
-    //    var user = {};
-    //    user.Name = $("#FirstName").val();
-    //    user.Id = $("#Surname").val();
-    //    user.Nationality = $("#Nationality").val();
-    //    user.Doj = $("#Doj").val();
-    //    $.ajax({
-    //        type: "POST",
-    //        url: "Default.aspx/SaveUser",
-    //        data: '{objEmployee: ' + JSON.stringify(user) + '}',
-    //        dataType: "json",
-    //        contentType: "application/json; charset=utf-8",
-    //        success: function () {
-    //            alert("User has been added successfully.");
-    //            getDetails();
-    //        },
-    //        error: function () {
-    //            alert("Error while inserting data");
-    //        }
-    //    });
-    //    return false;
-    //});     
+    $("#btnSave").click(function () {
+        var obj = {};
+        obj.NAME = $("#NAME1").val();
+        if ($('#ACTIVE_STATUS1').is(":checked")) {
+            obj.ACTIVE_STATUS = true;
+        }
+        else {
+            obj.ACTIVE_STATUS = false;
+        }
 
-    //$(document).on("click", ".deleteButton", function () {
-    //    var id = $(this).attr("data-id");
-    //    $.ajax({
-    //        type: "Post",
-    //        contentType: "application/json; charset=utf-8",
-    //        url: "Default.aspx/Remove",
-    //        data: '{eid: ' + id + '}',
-    //        dataType: "json",
-    //        success: function () {
-    //            if (confirm("Are you sure you want to delete !") == true) {
-    //                alert("Data Deleted successfully");
-    //            } else {
-    //                alert("You have canceled the changes");
-    //            }
-    //            //alert("Data Updated successfully");
-    //            getDetails();
-    //        },
-    //        error: function (data) {
-    //            alert("Error while Updating data of :" + id);
-    //        }
-    //    });
+        if (confirm("Are you sure you Add the details!") == true) {
+            $.ajax({
+                type: "Post",
+                contentType: "application/json; charset=utf-8",
+                url: "JewelleryMaster.aspx/InsertData",
+                data: '{obj: ' + JSON.stringify(obj) + '}',
+                dataType: "json",
+                success: function (data) {
+                    alert("Data added successfully");
+                    getDetails();
+                },
+                error: function (data) {
+                    alert("Error while Adding data of :" + obj.NAME);
+                }
+            });
+        }
+        else {
+            alert("You have canceled the changes");
+        }
+    });     
 
+    $(document).on("click", ".deleteButton", function () {
+        if (confirm("Are you sure you want to delete !") == true) {
 
-    //});
+            var id = $(this).attr("data-id");
+            $.ajax({
+                type: "Post",
+                contentType: "application/json; charset=utf-8",
+                url: "JewelleryMaster.aspx/DeleteData",
+                data: '{id: ' + id + '}',
+                dataType: "json",
+                success: function () {
+                    alert("Data Deleted successfully");
+                    getDetails();
+                },
+                error: function (data) {
+                    alert("Error while Deleting data of :" + id);
+                }
+            });
+        }        
 
-    $(document).on("click", ".editButton", function () {
+    });
+
+    $(document).on("click", ".addNewButton", function () {
+        $('#btnSave').show();
+        $('#btnUpdate').hide();
         $('#myModal').focus();
+        $("#NAME1").val('');
+        $("#ACTIVE_STATUS1").prop('checked', true);
+        $('#NAME1').focus();
+        $('myModalLabel').val('Add Jewellery Details');
+    });
+    
+    $(document).on("click", ".editButton", function () {
+        $('#btnSave').hide();
+        $('#btnUpdate').show();
+        $('#myModal').focus();
+        $('myModalLabel').val('Edit Jewellery Details');
         var id = $(this).attr("data-id");
         console.log(id);
         $("#btnUpdate").attr("edit-id", id);
@@ -139,6 +157,5 @@ $(function () {
             alert("You have canceled the changes");
         }
     });
-
-
+    
 });

@@ -94,6 +94,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\CatalogAdminMasterPage.css" />
     <Content Include="css\dataTables.bootstrap4.min.css" />
     <Content Include="images\static\sort_asc.png" />
     <Content Include="images\static\sort_both.png" />
