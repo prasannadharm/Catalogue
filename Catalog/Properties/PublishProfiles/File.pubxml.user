@@ -16,13 +16,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/16/2019 20:23:16</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>04/21/2019 18:36:45</publishTime>
+      <publishTime>04/26/2019 21:26:44</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>04/21/2019 18:36:45</publishTime>
+      <publishTime>04/26/2019 21:26:44</publishTime>
     </File>
     <File Include="bin/Catalog.dll">
-      <publishTime>04/21/2019 18:36:34</publishTime>
+      <publishTime>04/26/2019 21:26:30</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>12/07/2015 19:04:38</publishTime>
@@ -96,6 +96,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="css/cards-gallery.css">
       <publishTime>03/27/2018 15:27:14</publishTime>
     </File>
+    <File Include="css/CatalogAdminMasterPage.css">
+      <publishTime>04/26/2019 19:53:27</publishTime>
+    </File>
+    <File Include="css/dataTables.bootstrap4.min.css">
+      <publishTime>04/21/2019 21:33:46</publishTime>
+    </File>
     <File Include="images/static/dashboard.png">
       <publishTime>04/09/2019 21:07:00</publishTime>
     </File>
@@ -129,29 +135,41 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="images/static/logo.png">
       <publishTime>04/16/2019 20:58:50</publishTime>
     </File>
+    <File Include="images/static/sort_asc.png">
+      <publishTime>04/21/2019 19:53:14</publishTime>
+    </File>
+    <File Include="images/static/sort_both.png">
+      <publishTime>10/16/2015 11:56:06</publishTime>
+    </File>
+    <File Include="images/static/sort_desc.png">
+      <publishTime>04/21/2019 19:54:36</publishTime>
+    </File>
     <File Include="packages.config">
       <publishTime>04/16/2019 20:23:16</publishTime>
     </File>
     <File Include="Pages/CatalogAdmin.Master">
-      <publishTime>04/18/2019 18:02:52</publishTime>
+      <publishTime>04/26/2019 20:19:37</publishTime>
     </File>
     <File Include="Pages/Company.aspx">
       <publishTime>04/21/2019 18:35:09</publishTime>
     </File>
     <File Include="Pages/home.aspx">
-      <publishTime>04/18/2019 06:04:24</publishTime>
+      <publishTime>04/26/2019 16:07:14</publishTime>
     </File>
     <File Include="Pages/home.html">
       <publishTime>04/16/2019 20:42:54</publishTime>
     </File>
+    <File Include="Pages/JewelleryMaster.aspx">
+      <publishTime>04/26/2019 21:01:12</publishTime>
+    </File>
     <File Include="Pages/UserDashboard.aspx">
-      <publishTime>04/16/2019 21:19:33</publishTime>
+      <publishTime>04/26/2019 13:00:36</publishTime>
     </File>
     <File Include="Pages/UserLogin.aspx">
-      <publishTime>04/16/2019 21:51:18</publishTime>
+      <publishTime>04/26/2019 20:01:24</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>04/21/2019 18:36:36</publishTime>
+      <publishTime>04/26/2019 21:26:40</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>04/16/2019 20:23:16</publishTime>
@@ -162,17 +180,26 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="scripts/app/company.js">
       <publishTime>04/21/2019 18:32:25</publishTime>
     </File>
+    <File Include="scripts/app/jewellerymaster.js">
+      <publishTime>04/26/2019 21:20:24</publishTime>
+    </File>
     <File Include="scripts/baguetteBox.min.js">
       <publishTime>04/16/2019 06:03:29</publishTime>
     </File>
     <File Include="scripts/bootstrap.4.3.1.min.js">
       <publishTime>03/16/2019 17:45:44</publishTime>
     </File>
+    <File Include="scripts/dataTables.bootstrap4.min.js">
+      <publishTime>04/21/2019 21:35:53</publishTime>
+    </File>
     <File Include="scripts/jquery-3.0.0.min.js">
       <publishTime>03/16/2019 17:45:44</publishTime>
     </File>
+    <File Include="scripts/jquery.dataTables.min.js">
+      <publishTime>04/21/2019 21:35:20</publishTime>
+    </File>
     <File Include="Web.config">
-      <publishTime>04/21/2019 18:36:35</publishTime>
+      <publishTime>04/26/2019 21:26:40</publishTime>
     </File>
   </ItemGroup>
 </Project>

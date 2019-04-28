@@ -2,5 +2,5 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-   <img src="../images/static/dashboard.png" style="align-content:center"/>
+   <img style="align-content:center;height:400px" />
 </asp:Content>

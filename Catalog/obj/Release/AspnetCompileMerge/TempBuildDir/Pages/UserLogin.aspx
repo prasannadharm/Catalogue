@@ -88,8 +88,8 @@
                     <asp:Button ID="btnLogin" CssClass="btn btn-success rounded-0 btn-block" runat="server" Text="Login" OnClick="btnLogin_Click" />
                 </div>
                 <div class="form-group text-center">
-                    <asp:HyperLink ID="linkRegistration" NavigateUrl="~/RegisterForm.aspx" CssClass="text-primary btn-link" runat="server">New User</asp:HyperLink>
-                    <asp:HyperLink ID="linkForgotPassword" NavigateUrl="~/ForgotPassword.aspx" CssClass="text-primary btn-link" runat="server">Forgot Password</asp:HyperLink>
+                    <asp:HyperLink ID="linkRegistration" NavigateUrl="Home.aspx" CssClass="text-primary btn-link" runat="server">Catalogue</asp:HyperLink>&nbsp
+                    <asp:HyperLink ID="linkForgotPassword" NavigateUrl="ForgotPassword.aspx" CssClass="text-primary btn-link" runat="server" style="border-left: 2px solid blue;padding-left:10px">Forgot Password</asp:HyperLink>
                 </div>
                 <div class="text-center">
                     <asp:Label ID="lblMessage" CssClass="text-danger" runat="server"></asp:Label>

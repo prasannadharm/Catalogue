@@ -96,6 +96,8 @@
   <ItemGroup>
     <Content Include="css\CatalogAdminMasterPage.css" />
     <Content Include="css\dataTables.bootstrap4.min.css" />
+    <Content Include="images\static\loader.gif" />
+    <Content Include="images\static\loader1.gif" />
     <Content Include="images\static\sort_asc.png" />
     <Content Include="images\static\sort_both.png" />
     <Content Include="images\static\sort_desc.png" />
@@ -153,6 +155,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DbStatusEntity.cs" />
     <Compile Include="Models\JewelleryEntity.cs" />
     <Compile Include="Models\LoginEntity.cs" />
     <Compile Include="Models\UserMenuEntity.cs" />

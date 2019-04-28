@@ -28,7 +28,14 @@ namespace Catalog.Pages
         public static JewelleryEntity[] GetData() //Show the details of the data after insert in HTML Table
         {
             var details = new List<JewelleryEntity>();
-            details = new JewelleryDAO().GetJewelleyList();
+            try
+            {
+                details = new JewelleryDAO().GetJewelleyList();
+            }
+            catch (Exception ex)
+            {
+                // details.Add(new DbStatusEntity(ex.Message));
+            }
             return details.ToArray();
         }
 
@@ -37,26 +44,64 @@ namespace Catalog.Pages
         public static JewelleryEntity[] EditData(int id)
         {
             var details = new List<JewelleryEntity>();
-            details = new JewelleryDAO().EditJewelley(id);
+            try
+            {
+                details = new JewelleryDAO().EditJewelley(id);
+            }
+            catch (Exception ex)
+            {
+                //details.Add(new DbStatusEntity(ex.Message));
+            }
             return details.ToArray();
         }
 
         [WebMethod]
-        public static void UpdateData(JewelleryEntity obj, int id) //Update data in database  
+        public static DbStatusEntity[] UpdateData(JewelleryEntity obj, int id) //Update data in database  
         {
-            new JewelleryDAO().UpdateJewelley(obj, id);
+            var details = new List<DbStatusEntity>();
+            try
+            {
+                details.Add(new JewelleryDAO().UpdateJewelley(obj, id));
+            }
+            catch (Exception ex)
+            {
+                details.Clear();
+                details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+
         }
 
         [WebMethod]
-        public static void InsertData(JewelleryEntity obj)
+        public static DbStatusEntity[] InsertData(JewelleryEntity obj)
         {
-            new JewelleryDAO().InsertJewelley(obj);
+            var details = new List<DbStatusEntity>();
+            try
+            {
+                details.Add(new JewelleryDAO().InsertJewelley(obj));
+            }
+            catch (Exception ex)
+            {
+                details.Clear();
+                details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
         }
 
         [WebMethod]
-        public static void DeleteData(int id)
+        public static DbStatusEntity[] DeleteData(int id)
         {
-            new JewelleryDAO().DeleteJewelley(id);
+            var details = new List<DbStatusEntity>();
+            try
+            {
+                details.Add(new JewelleryDAO().DeleteJewelley(id));
+            }
+            catch (Exception ex)
+            {
+                details.Clear();
+                details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
         }
     }
 }

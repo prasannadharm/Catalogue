@@ -14,13 +14,13 @@
                     <h2>Jewellery Master</h2>
                 </div>
                 <div class="col-6">
-                    <button type="button" id="btnAddNew" class="btn btn-success addNewButton" data-toggle="modal" data-target="#myModal" style="position: relative; float: right;">Add New</button>
+                    <button type="button" id="btnAddNew" class="btn btn-success addNewButton" style="position: relative; float: right;">Add New</button>
                 </div>
             </div>
 
             <!-- /.panel-heading -->
-            <div class="panel-body">
-                <div class="table-responsive">
+            <div class="panel-body" id="maindiv">
+                <div class="table-responsive" id="griddiv">
                     <table id="tablemain" class="table table-striped table-bordered" style="width: 100%">
                         <thead>
                             <tr>
@@ -38,30 +38,30 @@
         </div>
     </div>
     <!-- For Modal Popup  -->
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="PopupModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="myModalLabel">Edit Jewellery Details</h2>
+                    <h2>Edit Jewellery Details</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <div class="panel-body">
                         <div class="form-group col-lg-12">
                             <label>Jewellery Name</label>
-                            <input type="text" name="NAME" id="NAME1" class="form-control" placeholder="Jewellery Name" required="" />
+                            <input type="text" name="NAME" id="NAME1" class="form-control" placeholder="Please enter Name"/>                            
                         </div>
                         <div class="form-group col-lg-12">
                             <label>Active Status</label>
-                            <input type="checkbox" name="ACTIVE_STATUS" id="ACTIVE_STATUS1" />
+                            <input type="checkbox" name="ACTIVE_STATUS" id="ACTIVE_STATUS1" style="margin-left: 10px; vertical-align: middle;" />
                         </div>
 
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" id="btnSave" class="btn btn-primary">Save Data</button>
+                    <button type="button" id="btnUpdate" class="btn btn-primary" edit-id="" >Update Data</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <button type="button" id="btnSave" class="btn btn-primary" data-dismiss="modal"/>
-                    <button type="button" id="btnUpdate" class="btn btn-primary" edit-id="" data-dismiss="modal">Save changes</button>
                 </div>
             </div>
         </div>

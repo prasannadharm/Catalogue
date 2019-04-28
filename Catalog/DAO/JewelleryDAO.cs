@@ -18,22 +18,29 @@ namespace Catalog.DAO
             SqlDataAdapter adapter;
             DataSet ds = new DataSet();
             List<JewelleryEntity> retlst = new List<JewelleryEntity>();
-            using (SqlConnection con = new SqlConnection(CS))
-            {              
-                SqlCommand cmd = new SqlCommand("USP_GetJewelleryMasterList", con);
-                cmd.CommandType = CommandType.StoredProcedure;               
-                con.Open();
-                adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(ds);
-
-                for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+            try
+            {
+                using (SqlConnection con = new SqlConnection(CS))
                 {
-                    JewelleryEntity obj = new JewelleryEntity();
-                    obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
-                    obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
-                    obj.ACTIVE_STATUS = Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
-                    retlst.Add(obj);
+                    SqlCommand cmd = new SqlCommand("USP_GetJewelleryMasterList", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        JewelleryEntity obj = new JewelleryEntity();
+                        obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
+                        obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
+                        obj.ACTIVE_STATUS = Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
+                        retlst.Add(obj);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
             return retlst;
         }
@@ -45,77 +52,141 @@ namespace Catalog.DAO
             SqlDataAdapter adapter;
             DataSet ds = new DataSet();
             List<JewelleryEntity> retlst = new List<JewelleryEntity>();
-            using (SqlConnection con = new SqlConnection(CS))
+            try
             {
-                SqlCommand cmd = new SqlCommand("USP_GetJewelleryMasterDetailsbyID", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ID", id);
-                con.Open();
-                adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(ds);
-
-                for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                using (SqlConnection con = new SqlConnection(CS))
                 {
-                    JewelleryEntity obj = new JewelleryEntity();
-                    obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
-                    obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
-                    obj.ACTIVE_STATUS = Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
-                    retlst.Add(obj);
+                    SqlCommand cmd = new SqlCommand("USP_GetJewelleryMasterDetailsbyID", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", id);
+                    con.Open();
+                    adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        JewelleryEntity obj = new JewelleryEntity();
+                        obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
+                        obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
+                        obj.ACTIVE_STATUS = Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
+                        retlst.Add(obj);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
             return retlst;
         }
 
 
-        public void UpdateJewelley(JewelleryEntity obj, int id)
+        public DbStatusEntity UpdateJewelley(JewelleryEntity obj, int id)
         {
+            DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             DataSet ds = new DataSet();
             List<JewelleryEntity> retlst = new List<JewelleryEntity>();
-            using (SqlConnection con = new SqlConnection(CS))
+            try
             {
-                SqlCommand cmd = new SqlCommand("USP_UpdateJewelleryMaster", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ID", id);
-                cmd.Parameters.AddWithValue("@NAME", obj.NAME);
-                cmd.Parameters.AddWithValue("@ACTIVE_STATUS", obj.ACTIVE_STATUS);
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }            
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("USP_UpdateJewelleryMaster", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", id);
+                    cmd.Parameters.AddWithValue("@NAME", obj.NAME);
+                    cmd.Parameters.AddWithValue("@ACTIVE_STATUS", obj.ACTIVE_STATUS);
+
+                    cmd.Parameters.Add("@RESULT", SqlDbType.Int);
+                    cmd.Parameters["@RESULT"].Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@CNT", SqlDbType.Int);
+                    cmd.Parameters["@CNT"].Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@MSG", SqlDbType.NVarChar, 500);
+                    cmd.Parameters["@MSG"].Direction = ParameterDirection.Output;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    objreturn.RESULT = Convert.ToInt32(cmd.Parameters["@RESULT"].Value);
+                    objreturn.CNT = Convert.ToInt32(cmd.Parameters["@CNT"].Value);
+                    objreturn.MSG = Convert.ToString(cmd.Parameters["@MSG"].Value);
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return objreturn;
         }
 
-        public void InsertJewelley(JewelleryEntity obj)
+        public DbStatusEntity InsertJewelley(JewelleryEntity obj)
         {
+            DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             DataSet ds = new DataSet();
             List<JewelleryEntity> retlst = new List<JewelleryEntity>();
-            using (SqlConnection con = new SqlConnection(CS))
+            try
             {
-                SqlCommand cmd = new SqlCommand("USP_InsertJewelleryMaster", con);
-                cmd.CommandType = CommandType.StoredProcedure;                
-                cmd.Parameters.AddWithValue("@NAME", obj.NAME);
-                cmd.Parameters.AddWithValue("@ACTIVE_STATUS", obj.ACTIVE_STATUS);
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("USP_InsertJewelleryMaster", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@NAME", obj.NAME);
+                    cmd.Parameters.AddWithValue("@ACTIVE_STATUS", obj.ACTIVE_STATUS);
+
+                    cmd.Parameters.Add("@RESULT", SqlDbType.Int);
+                    cmd.Parameters["@RESULT"].Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@CNT", SqlDbType.Int);
+                    cmd.Parameters["@CNT"].Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@MSG", SqlDbType.NVarChar, 500);
+                    cmd.Parameters["@MSG"].Direction = ParameterDirection.Output;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    objreturn.RESULT = Convert.ToInt32(cmd.Parameters["@RESULT"].Value);
+                    objreturn.CNT = Convert.ToInt32(cmd.Parameters["@CNT"].Value);
+                    objreturn.MSG = Convert.ToString(cmd.Parameters["@MSG"].Value);
+                    con.Close();
+                }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return objreturn;
         }
 
-        public void DeleteJewelley(int id)
+        public DbStatusEntity DeleteJewelley(int id)
         {
+            DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             DataSet ds = new DataSet();
             List<JewelleryEntity> retlst = new List<JewelleryEntity>();
-            using (SqlConnection con = new SqlConnection(CS))
+            try
             {
-                SqlCommand cmd = new SqlCommand("USP_DeleteJewelleryMaster", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ID", id);
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("USP_DeleteJewelleryMaster", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    cmd.Parameters.Add("@RESULT", SqlDbType.Int);
+                    cmd.Parameters["@RESULT"].Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@CNT", SqlDbType.Int);
+                    cmd.Parameters["@CNT"].Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@MSG", SqlDbType.NVarChar, 500);
+                    cmd.Parameters["@MSG"].Direction = ParameterDirection.Output;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    objreturn.RESULT = Convert.ToInt32(cmd.Parameters["@RESULT"].Value);
+                    objreturn.CNT = Convert.ToInt32(cmd.Parameters["@CNT"].Value);
+                    objreturn.MSG = Convert.ToString(cmd.Parameters["@MSG"].Value);
+                    con.Close();
+                }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return objreturn;
         }
     }
 }

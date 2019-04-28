@@ -14,12 +14,23 @@
 </head>
 <body>
     <form id="form1" runat="server">
+	<div class="container">
+	<nav class="navbar navbar-inverse my-3 rounded shadow-sm" style="background-color: #692b2b;">
+		<a class="navbar-brand mb-0 h1" href="#" style="color: #ffd500;">Jewellery Catalogue</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<ul class="nav navbar-nav navbar-right">
+			<li style="align-content: center">
+				<a href="../Pages/UserLogin.aspx" style="color: #fdf8bc;font-style:italic;">Login to Admin Module</a>                      
+			</li>
+		</ul>
+
+     </nav>
+			
     <section class="gallery-block cards-gallery">
-	    <div class="container">
-	        <div class="heading">
-	          <h2>Jewellery Catalogue</h2>
-                <a href="../Pages/UserLogin.aspx">Login to Admin Module</a>
-	        </div>
+	           
 	        <div class="row">
 	            <div class="col-6 col-md-4 col-lg-3">
 	                <div class="card border-0 transform-on-hover">
@@ -122,8 +133,13 @@
 	                </div>
 	            </div>
 	        </div>
-	    </div>
+	    
     </section>
+	
+	<div class="d-flex align-items-center p-3 my-3 rounded shadow-sm" style="background-color: #692b2b;color: #ffd500;">
+                © Copyright 2019 Jewellery Catalogue. All Rights Reserved.             
+	</div>
+	</div>
     </form>
     <script src="../scripts/baguetteBox.min.js"></script>    
     <script>
