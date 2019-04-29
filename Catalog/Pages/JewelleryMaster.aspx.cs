@@ -25,12 +25,12 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static JewelleryEntity[] GetData() //Show the details of the data after insert in HTML Table
+        public static JewelleryMasterEntity[] GetData() //Show the details of the data after insert in HTML Table
         {
-            var details = new List<JewelleryEntity>();
+            var details = new List<JewelleryMasterEntity>();
             try
             {
-                details = new JewelleryDAO().GetJewelleyList();
+                details = new JewelleryMasterDAO().GetJewelleyList();
             }
             catch (Exception ex)
             {
@@ -41,12 +41,12 @@ namespace Catalog.Pages
 
 
         [WebMethod]
-        public static JewelleryEntity[] EditData(int id)
+        public static JewelleryMasterEntity[] EditData(int id)
         {
-            var details = new List<JewelleryEntity>();
+            var details = new List<JewelleryMasterEntity>();
             try
             {
-                details = new JewelleryDAO().EditJewelley(id);
+                details = new JewelleryMasterDAO().EditJewelley(id);
             }
             catch (Exception ex)
             {
@@ -56,12 +56,12 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static DbStatusEntity[] UpdateData(JewelleryEntity obj, int id) //Update data in database  
+        public static DbStatusEntity[] UpdateData(JewelleryMasterEntity obj, int id) //Update data in database  
         {
             var details = new List<DbStatusEntity>();
             try
             {
-                details.Add(new JewelleryDAO().UpdateJewelley(obj, id));
+                details.Add(new JewelleryMasterDAO().UpdateJewelley(obj, id));
             }
             catch (Exception ex)
             {
@@ -73,12 +73,12 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static DbStatusEntity[] InsertData(JewelleryEntity obj)
+        public static DbStatusEntity[] InsertData(JewelleryMasterEntity obj)
         {
             var details = new List<DbStatusEntity>();
             try
             {
-                details.Add(new JewelleryDAO().InsertJewelley(obj));
+                details.Add(new JewelleryMasterDAO().InsertJewelley(obj));
             }
             catch (Exception ex)
             {
@@ -94,7 +94,7 @@ namespace Catalog.Pages
             var details = new List<DbStatusEntity>();
             try
             {
-                details.Add(new JewelleryDAO().DeleteJewelley(id));
+                details.Add(new JewelleryMasterDAO().DeleteJewelley(id));
             }
             catch (Exception ex)
             {

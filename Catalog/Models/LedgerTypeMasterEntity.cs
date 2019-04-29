@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Catalog.Models
 {
-    public class JewelleryEntity
+    public class LedgerTypeMasterEntity
     {
         public int ID { get; set; }
         public string NAME { get; set; }

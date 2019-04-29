@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -24,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -131,14 +133,35 @@
     <Content Include="images\static\image8.jpg" />
     <Content Include="images\static\image9.jpg" />
     <Content Include="images\static\logo.png" />
+    <Content Include="Pages\CatalogueMaster.aspx" />
+    <Content Include="Pages\CityStateMaster.aspx" />
+    <Content Include="Pages\CollectionsMaster.aspx" />
+    <Content Include="Pages\CompanyMaster.aspx" />
+    <Content Include="Pages\DesignMaster.aspx" />
+    <Content Include="Pages\GeneralSettings.aspx" />
+    <Content Include="Pages\GramSlabMaster.aspx" />
     <Content Include="Pages\home.aspx" />
     <Content Include="Pages\home.html" />
     <Content Include="Pages\JewelleryMaster.aspx" />
+    <Content Include="Pages\KaratMaster.aspx" />
+    <Content Include="Pages\LedgerMaster.aspx" />
+    <Content Include="Pages\LedgerTypeMaster.aspx" />
+    <Content Include="Pages\MaterialMaster.aspx" />
+    <Content Include="Pages\OccasionMaster.aspx" />
     <Content Include="Pages\UserDashboard.aspx" />
     <Content Include="Pages\UserLogin.aspx" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="scripts\app\cataloguemaster.js" />
+    <Content Include="scripts\app\citystatemaster.js" />
+    <Content Include="scripts\app\companymaster.js" />
+    <Content Include="scripts\app\designmaster.js" />
+    <Content Include="scripts\app\gramslabmaster.js" />
     <Content Include="scripts\app\jewellerymaster.js" />
+    <Content Include="scripts\app\karatmaster.js" />
+    <Content Include="scripts\app\ledgermaster.js" />
+    <Content Include="scripts\app\materialmaster.js" />
+    <Content Include="scripts\app\occasionmaster.js" />
     <Content Include="scripts\baguetteBox.min.js" />
     <Content Include="scripts\bootstrap.4.3.1.min.js" />
     <Content Include="scripts\dataTables.bootstrap4.min.js" />
@@ -147,17 +170,39 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAO\JewelleryDAO.cs" />
+    <Compile Include="DAO\CatalogueMasterDAO.cs" />
+    <Compile Include="DAO\CityStateMasterDAO.cs" />
+    <Compile Include="DAO\CollectionsMasterDAO.cs" />
+    <Compile Include="DAO\CompanyMasterDAO.cs" />
+    <Compile Include="DAO\DesignMasterDAO.cs" />
+    <Compile Include="DAO\GramSlabMasterDAO.cs" />
+    <Compile Include="DAO\JewelleryMasterDAO.cs" />
+    <Compile Include="DAO\KaratMasterDAO.cs" />
+    <Compile Include="DAO\LedgerMasterDAO.cs" />
+    <Compile Include="DAO\LedgerTypeMasterDAO.cs" />
     <Compile Include="DAO\LoginDAO.cs" />
+    <Compile Include="DAO\MaterialMasterDAO.cs" />
+    <Compile Include="DAO\OccasionMasterDAO.cs" />
     <Compile Include="Generic\CryptographyHelper.cs" />
     <Compile Include="Generic\ICryptographyHelper.cs" />
     <Compile Include="Generic\PasswordHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CatalogueMasterEntity.cs" />
+    <Compile Include="Models\CityStateMasterEntity.cs" />
+    <Compile Include="Models\CollectionsMasterEntity.cs" />
+    <Compile Include="Models\CompanyMasterEntity.cs" />
     <Compile Include="Models\DbStatusEntity.cs" />
-    <Compile Include="Models\JewelleryEntity.cs" />
+    <Compile Include="Models\DesignMasterEntity.cs" />
+    <Compile Include="Models\GramSlabMasterEntity.cs" />
+    <Compile Include="Models\JewelleryMasterEntity.cs" />
+    <Compile Include="Models\KaratMasterEntity.cs" />
+    <Compile Include="Models\LedgerMasterEntity.cs" />
+    <Compile Include="Models\LedgerTypeMasterEntity.cs" />
     <Compile Include="Models\LoginEntity.cs" />
+    <Compile Include="Models\MaterialMasterEntity.cs" />
+    <Compile Include="Models\OccasionMasterEntity.cs" />
     <Compile Include="Models\UserMenuEntity.cs" />
     <Compile Include="Pages\CatalogAdmin.Master.cs">
       <DependentUpon>CatalogAdmin.Master</DependentUpon>
@@ -165,6 +210,55 @@
     </Compile>
     <Compile Include="Pages\CatalogAdmin.Master.designer.cs">
       <DependentUpon>CatalogAdmin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CatalogueMaster.aspx.cs">
+      <DependentUpon>CatalogueMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\CatalogueMaster.aspx.designer.cs">
+      <DependentUpon>CatalogueMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CityStateMaster.aspx.cs">
+      <DependentUpon>CityStateMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\CityStateMaster.aspx.designer.cs">
+      <DependentUpon>CityStateMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CollectionsMaster.aspx.cs">
+      <DependentUpon>CollectionsMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\CollectionsMaster.aspx.designer.cs">
+      <DependentUpon>CollectionsMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CompanyMaster.aspx.cs">
+      <DependentUpon>CompanyMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\CompanyMaster.aspx.designer.cs">
+      <DependentUpon>CompanyMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DesignMaster.aspx.cs">
+      <DependentUpon>DesignMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\DesignMaster.aspx.designer.cs">
+      <DependentUpon>DesignMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\GeneralSettings.aspx.cs">
+      <DependentUpon>GeneralSettings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\GeneralSettings.aspx.designer.cs">
+      <DependentUpon>GeneralSettings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\GramSlabMaster.aspx.cs">
+      <DependentUpon>GramSlabMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\GramSlabMaster.aspx.designer.cs">
+      <DependentUpon>GramSlabMaster.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>
@@ -179,6 +273,41 @@
     </Compile>
     <Compile Include="Pages\JewelleryMaster.aspx.designer.cs">
       <DependentUpon>JewelleryMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\KaratMaster.aspx.cs">
+      <DependentUpon>KaratMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\KaratMaster.aspx.designer.cs">
+      <DependentUpon>KaratMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LedgerMaster.aspx.cs">
+      <DependentUpon>LedgerMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\LedgerMaster.aspx.designer.cs">
+      <DependentUpon>LedgerMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LedgerTypeMaster.aspx.cs">
+      <DependentUpon>LedgerTypeMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\LedgerTypeMaster.aspx.designer.cs">
+      <DependentUpon>LedgerTypeMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MaterialMaster.aspx.cs">
+      <DependentUpon>MaterialMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\MaterialMaster.aspx.designer.cs">
+      <DependentUpon>MaterialMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OccasionMaster.aspx.cs">
+      <DependentUpon>OccasionMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\OccasionMaster.aspx.designer.cs">
+      <DependentUpon>OccasionMaster.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\UserDashboard.aspx.cs">
       <DependentUpon>UserDashboard.aspx</DependentUpon>
@@ -199,11 +328,21 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="scripts\app\ledgertypemaster.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="scripts\app\collectionsmaster.js" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>

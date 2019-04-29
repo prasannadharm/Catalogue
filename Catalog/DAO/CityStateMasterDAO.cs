@@ -1,23 +1,20 @@
-﻿using System;
+﻿using Catalog.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Catalog.Models;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace Catalog.DAO
 {
-    public class JewelleryDAO
+    public class CityStateMasterDAO
     {
-
-        public List<JewelleryEntity> GetJewelleyList()
+        public List<JewelleryMasterEntity> GetCityStateList()
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
             DataSet ds = new DataSet();
-            List<JewelleryEntity> retlst = new List<JewelleryEntity>();
+            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
@@ -30,7 +27,7 @@ namespace Catalog.DAO
 
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
-                        JewelleryEntity obj = new JewelleryEntity();
+                        JewelleryMasterEntity obj = new JewelleryMasterEntity();
                         obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
                         obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
                         obj.ACTIVE_STATUS = Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
@@ -46,12 +43,12 @@ namespace Catalog.DAO
         }
 
 
-        public List<JewelleryEntity> EditJewelley(int id)
+        public List<JewelleryMasterEntity> EditCityState(int id)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
             DataSet ds = new DataSet();
-            List<JewelleryEntity> retlst = new List<JewelleryEntity>();
+            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
@@ -65,7 +62,7 @@ namespace Catalog.DAO
 
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
-                        JewelleryEntity obj = new JewelleryEntity();
+                        JewelleryMasterEntity obj = new JewelleryMasterEntity();
                         obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
                         obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
                         obj.ACTIVE_STATUS = Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
@@ -81,12 +78,12 @@ namespace Catalog.DAO
         }
 
 
-        public DbStatusEntity UpdateJewelley(JewelleryEntity obj, int id)
+        public DbStatusEntity UpdateCityState(JewelleryMasterEntity obj, int id)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             DataSet ds = new DataSet();
-            List<JewelleryEntity> retlst = new List<JewelleryEntity>();
+            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
@@ -118,12 +115,12 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public DbStatusEntity InsertJewelley(JewelleryEntity obj)
+        public DbStatusEntity InsertCityState(JewelleryMasterEntity obj)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             DataSet ds = new DataSet();
-            List<JewelleryEntity> retlst = new List<JewelleryEntity>();
+            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
@@ -154,12 +151,12 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public DbStatusEntity DeleteJewelley(int id)
+        public DbStatusEntity DeleteCityState(int id)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             DataSet ds = new DataSet();
-            List<JewelleryEntity> retlst = new List<JewelleryEntity>();
+            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
