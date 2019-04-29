@@ -9,17 +9,17 @@ namespace Catalog.DAO
 {
     public class CityStateMasterDAO
     {
-        public List<JewelleryMasterEntity> GetCityStateList()
+        public List<CityStateMasterEntity> GetCityStateList()
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
             DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
+            List<CityStateMasterEntity> retlst = new List<CityStateMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_GetJewelleryMasterList", con);
+                    SqlCommand cmd = new SqlCommand("USP_GetCityStateMasterList", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     adapter = new SqlDataAdapter(cmd);
@@ -27,9 +27,10 @@ namespace Catalog.DAO
 
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
-                        JewelleryMasterEntity obj = new JewelleryMasterEntity();
+                        CityStateMasterEntity obj = new CityStateMasterEntity();
                         obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
-                        obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
+                        obj.CITY = ds.Tables[0].Rows[i]["CITY"].ToString();
+                        obj.STATE = ds.Tables[0].Rows[i]["STATE"].ToString();
                         obj.ACTIVE_STATUS = Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
                         retlst.Add(obj);
                     }
@@ -43,17 +44,17 @@ namespace Catalog.DAO
         }
 
 
-        public List<JewelleryMasterEntity> EditCityState(int id)
+        public List<CityStateMasterEntity> EditCityState(int id)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
             DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
+            List<CityStateMasterEntity> retlst = new List<CityStateMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_GetJewelleryMasterDetailsbyID", con);
+                    SqlCommand cmd = new SqlCommand("USP_GetCityStateDetailsbyID", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", id);
                     con.Open();
@@ -62,9 +63,10 @@ namespace Catalog.DAO
 
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
-                        JewelleryMasterEntity obj = new JewelleryMasterEntity();
+                        CityStateMasterEntity obj = new CityStateMasterEntity();
                         obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
-                        obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
+                        obj.CITY = ds.Tables[0].Rows[i]["CITY"].ToString();
+                        obj.STATE = ds.Tables[0].Rows[i]["STATE"].ToString();
                         obj.ACTIVE_STATUS = Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
                         retlst.Add(obj);
                     }
@@ -78,20 +80,19 @@ namespace Catalog.DAO
         }
 
 
-        public DbStatusEntity UpdateCityState(JewelleryMasterEntity obj, int id)
+        public DbStatusEntity UpdateCityState(CityStateMasterEntity obj, int id)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_UpdateJewelleryMaster", con);
+                    SqlCommand cmd = new SqlCommand("USP_UpdateCityStateMaster", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", id);
-                    cmd.Parameters.AddWithValue("@NAME", obj.NAME);
+                    cmd.Parameters.AddWithValue("@CITY", obj.CITY);
+                    cmd.Parameters.AddWithValue("@STATE", obj.STATE);
                     cmd.Parameters.AddWithValue("@ACTIVE_STATUS", obj.ACTIVE_STATUS);
 
                     cmd.Parameters.Add("@RESULT", SqlDbType.Int);
@@ -115,19 +116,19 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public DbStatusEntity InsertCityState(JewelleryMasterEntity obj)
+        public DbStatusEntity InsertCityState(CityStateMasterEntity obj)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
+            
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_InsertJewelleryMaster", con);
+                    SqlCommand cmd = new SqlCommand("USP_InsertCityStateMaster", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@NAME", obj.NAME);
+                    cmd.Parameters.AddWithValue("@CITY", obj.CITY);
+                    cmd.Parameters.AddWithValue("@STATE", obj.STATE);
                     cmd.Parameters.AddWithValue("@ACTIVE_STATUS", obj.ACTIVE_STATUS);
 
                     cmd.Parameters.Add("@RESULT", SqlDbType.Int);
@@ -155,13 +156,12 @@ namespace Catalog.DAO
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
+           
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_DeleteJewelleryMaster", con);
+                    SqlCommand cmd = new SqlCommand("USP_DeleteCityStateMaster", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", id);
 

@@ -16,13 +16,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/16/2019 20:23:16</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>04/28/2019 22:39:34</publishTime>
+      <publishTime>04/29/2019 21:12:27</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>04/28/2019 22:39:34</publishTime>
+      <publishTime>04/29/2019 21:12:26</publishTime>
     </File>
     <File Include="bin/Catalog.dll">
-      <publishTime>04/28/2019 22:39:19</publishTime>
+      <publishTime>04/29/2019 21:08:28</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>12/07/2015 19:04:38</publishTime>
@@ -156,8 +156,29 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Pages/CatalogAdmin.Master">
       <publishTime>04/26/2019 20:19:37</publishTime>
     </File>
+    <File Include="Pages/CatalogueMaster.aspx">
+      <publishTime>04/29/2019 06:12:03</publishTime>
+    </File>
+    <File Include="Pages/CityStateMaster.aspx">
+      <publishTime>04/29/2019 06:48:11</publishTime>
+    </File>
+    <File Include="Pages/CollectionsMaster.aspx">
+      <publishTime>04/29/2019 20:07:33</publishTime>
+    </File>
     <File Include="Pages/Company.aspx">
       <publishTime>04/21/2019 18:35:09</publishTime>
+    </File>
+    <File Include="Pages/CompanyMaster.aspx">
+      <publishTime>04/29/2019 06:30:56</publishTime>
+    </File>
+    <File Include="Pages/DesignMaster.aspx">
+      <publishTime>04/29/2019 20:30:01</publishTime>
+    </File>
+    <File Include="Pages/GeneralSettings.aspx">
+      <publishTime>04/29/2019 06:32:23</publishTime>
+    </File>
+    <File Include="Pages/GramSlabMaster.aspx">
+      <publishTime>04/29/2019 20:56:43</publishTime>
     </File>
     <File Include="Pages/home.aspx">
       <publishTime>04/26/2019 16:07:14</publishTime>
@@ -168,6 +189,21 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Pages/JewelleryMaster.aspx">
       <publishTime>04/28/2019 22:37:51</publishTime>
     </File>
+    <File Include="Pages/KaratMaster.aspx">
+      <publishTime>04/29/2019 21:05:48</publishTime>
+    </File>
+    <File Include="Pages/LedgerMaster.aspx">
+      <publishTime>04/29/2019 06:15:18</publishTime>
+    </File>
+    <File Include="Pages/LedgerTypeMaster.aspx">
+      <publishTime>04/29/2019 19:51:57</publishTime>
+    </File>
+    <File Include="Pages/MaterialMaster.aspx">
+      <publishTime>04/29/2019 20:17:06</publishTime>
+    </File>
+    <File Include="Pages/OccasionMaster.aspx">
+      <publishTime>04/29/2019 20:49:41</publishTime>
+    </File>
     <File Include="Pages/UserDashboard.aspx">
       <publishTime>04/26/2019 13:00:36</publishTime>
     </File>
@@ -175,7 +211,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/26/2019 20:01:24</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>04/28/2019 22:39:30</publishTime>
+      <publishTime>04/29/2019 21:12:21</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>04/16/2019 20:23:16</publishTime>
@@ -183,11 +219,44 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="scripts/ai.0.22.9-build00167.min.js">
       <publishTime>04/16/2019 20:23:16</publishTime>
     </File>
+    <File Include="scripts/app/cataloguemaster.js">
+      <publishTime>04/29/2019 06:13:12</publishTime>
+    </File>
+    <File Include="scripts/app/citystatemaster.js">
+      <publishTime>04/29/2019 06:48:46</publishTime>
+    </File>
+    <File Include="scripts/app/collectionsmaster.js">
+      <publishTime>04/29/2019 20:06:52</publishTime>
+    </File>
     <File Include="scripts/app/company.js">
       <publishTime>04/21/2019 18:32:25</publishTime>
     </File>
+    <File Include="scripts/app/companymaster.js">
+      <publishTime>04/29/2019 06:31:47</publishTime>
+    </File>
+    <File Include="scripts/app/designmaster.js">
+      <publishTime>04/29/2019 20:29:30</publishTime>
+    </File>
+    <File Include="scripts/app/gramslabmaster.js">
+      <publishTime>04/29/2019 20:55:41</publishTime>
+    </File>
     <File Include="scripts/app/jewellerymaster.js">
       <publishTime>04/28/2019 22:34:44</publishTime>
+    </File>
+    <File Include="scripts/app/karatmaster.js">
+      <publishTime>04/29/2019 21:04:52</publishTime>
+    </File>
+    <File Include="scripts/app/ledgermaster.js">
+      <publishTime>04/29/2019 06:15:04</publishTime>
+    </File>
+    <File Include="scripts/app/ledgertypemaster.js">
+      <publishTime>04/29/2019 19:56:12</publishTime>
+    </File>
+    <File Include="scripts/app/materialmaster.js">
+      <publishTime>04/29/2019 20:23:40</publishTime>
+    </File>
+    <File Include="scripts/app/occasionmaster.js">
+      <publishTime>04/29/2019 20:49:40</publishTime>
     </File>
     <File Include="scripts/baguetteBox.min.js">
       <publishTime>04/16/2019 06:03:29</publishTime>

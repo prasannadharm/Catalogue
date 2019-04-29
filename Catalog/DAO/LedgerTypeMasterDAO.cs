@@ -9,17 +9,17 @@ namespace Catalog.DAO
 {
     public class LedgerTypeMasterDAO
     {
-        public List<JewelleryMasterEntity> GetJewelleyList()
+        public List<LedgerTypeMasterEntity> GetLedgerTypeMasterList()
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
             DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
+            List<LedgerTypeMasterEntity> retlst = new List<LedgerTypeMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_GetJewelleryMasterList", con);
+                    SqlCommand cmd = new SqlCommand("USP_GetLedgerTypeMasterList", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     adapter = new SqlDataAdapter(cmd);
@@ -27,7 +27,7 @@ namespace Catalog.DAO
 
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
-                        JewelleryMasterEntity obj = new JewelleryMasterEntity();
+                        LedgerTypeMasterEntity obj = new LedgerTypeMasterEntity();
                         obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
                         obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
                         obj.ACTIVE_STATUS = Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
@@ -41,19 +41,18 @@ namespace Catalog.DAO
             }
             return retlst;
         }
-
-
-        public List<JewelleryMasterEntity> EditJewelley(int id)
+        
+        public List<LedgerTypeMasterEntity> EditLedgerType(int id)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
             DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
+            List<LedgerTypeMasterEntity> retlst = new List<LedgerTypeMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_GetJewelleryMasterDetailsbyID", con);
+                    SqlCommand cmd = new SqlCommand("USP_GetLedgerTypeDetailsbyID", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", id);
                     con.Open();
@@ -62,7 +61,7 @@ namespace Catalog.DAO
 
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
-                        JewelleryMasterEntity obj = new JewelleryMasterEntity();
+                        LedgerTypeMasterEntity obj = new LedgerTypeMasterEntity();
                         obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
                         obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
                         obj.ACTIVE_STATUS = Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
@@ -76,19 +75,16 @@ namespace Catalog.DAO
             }
             return retlst;
         }
-
-
-        public DbStatusEntity UpdateJewelley(JewelleryMasterEntity obj, int id)
+        
+        public DbStatusEntity UpdateLedgerType(LedgerTypeMasterEntity obj, int id)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_UpdateJewelleryMaster", con);
+                    SqlCommand cmd = new SqlCommand("USP_UpdateLedgerTypeMaster", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", id);
                     cmd.Parameters.AddWithValue("@NAME", obj.NAME);
@@ -115,17 +111,15 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public DbStatusEntity InsertJewelley(JewelleryMasterEntity obj)
+        public DbStatusEntity InsertLedgerTypeMaster(LedgerTypeMasterEntity obj)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_InsertJewelleryMaster", con);
+                    SqlCommand cmd = new SqlCommand("USP_InsertLedgerTypeMaster", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@NAME", obj.NAME);
                     cmd.Parameters.AddWithValue("@ACTIVE_STATUS", obj.ACTIVE_STATUS);
@@ -151,17 +145,15 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public DbStatusEntity DeleteJewelley(int id)
+        public DbStatusEntity DeleteLedgerType(int id)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_DeleteJewelleryMaster", con);
+                    SqlCommand cmd = new SqlCommand("USP_DeleteLedgerTypeMaster", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", id);
 

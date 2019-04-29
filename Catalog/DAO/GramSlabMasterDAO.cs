@@ -9,17 +9,17 @@ namespace Catalog.DAO
 {
     public class GramSlabMasterDAO
     {
-        public List<JewelleryMasterEntity> GetJewelleyList()
+        public List<GramSlabMasterEntity> GetGramSlabList()
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
             DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
+            List<GramSlabMasterEntity> retlst = new List<GramSlabMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_GetJewelleryMasterList", con);
+                    SqlCommand cmd = new SqlCommand("USP_GetGramSlabMasterList", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     adapter = new SqlDataAdapter(cmd);
@@ -27,7 +27,7 @@ namespace Catalog.DAO
 
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
-                        JewelleryMasterEntity obj = new JewelleryMasterEntity();
+                        GramSlabMasterEntity obj = new GramSlabMasterEntity();
                         obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
                         obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
                         obj.ACTIVE_STATUS = Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
@@ -43,17 +43,17 @@ namespace Catalog.DAO
         }
 
 
-        public List<JewelleryMasterEntity> EditJewelley(int id)
+        public List<GramSlabMasterEntity> EditGramSlab(int id)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
             DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
+            List<GramSlabMasterEntity> retlst = new List<GramSlabMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_GetJewelleryMasterDetailsbyID", con);
+                    SqlCommand cmd = new SqlCommand("USP_GetGramSlabDetailsbyID", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", id);
                     con.Open();
@@ -62,7 +62,7 @@ namespace Catalog.DAO
 
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
-                        JewelleryMasterEntity obj = new JewelleryMasterEntity();
+                        GramSlabMasterEntity obj = new GramSlabMasterEntity();
                         obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
                         obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
                         obj.ACTIVE_STATUS = Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
@@ -78,17 +78,16 @@ namespace Catalog.DAO
         }
 
 
-        public DbStatusEntity UpdateJewelley(JewelleryMasterEntity obj, int id)
+        public DbStatusEntity UpdateGramSlab(GramSlabMasterEntity obj, int id)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
+         
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_UpdateJewelleryMaster", con);
+                    SqlCommand cmd = new SqlCommand("USP_UpdateGramSlabMaster", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", id);
                     cmd.Parameters.AddWithValue("@NAME", obj.NAME);
@@ -115,17 +114,16 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public DbStatusEntity InsertJewelley(JewelleryMasterEntity obj)
+        public DbStatusEntity InsertGramSlab(GramSlabMasterEntity obj)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
+            
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_InsertJewelleryMaster", con);
+                    SqlCommand cmd = new SqlCommand("USP_InsertGramSlabMaster", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@NAME", obj.NAME);
                     cmd.Parameters.AddWithValue("@ACTIVE_STATUS", obj.ACTIVE_STATUS);
@@ -151,17 +149,16 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public DbStatusEntity DeleteJewelley(int id)
+        public DbStatusEntity DeleteGramSlab(int id)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
+            
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_DeleteJewelleryMaster", con);
+                    SqlCommand cmd = new SqlCommand("USP_DeleteGramSlabMaster", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", id);
 

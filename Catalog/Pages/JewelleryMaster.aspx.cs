@@ -30,7 +30,7 @@ namespace Catalog.Pages
             var details = new List<JewelleryMasterEntity>();
             try
             {
-                details = new JewelleryMasterDAO().GetJewelleyList();
+                details = new JewelleryMasterDAO().GetJewelleryList();
             }
             catch (Exception ex)
             {
@@ -46,7 +46,7 @@ namespace Catalog.Pages
             var details = new List<JewelleryMasterEntity>();
             try
             {
-                details = new JewelleryMasterDAO().EditJewelley(id);
+                details = new JewelleryMasterDAO().EditJewellery(id);
             }
             catch (Exception ex)
             {
@@ -61,7 +61,7 @@ namespace Catalog.Pages
             var details = new List<DbStatusEntity>();
             try
             {
-                details.Add(new JewelleryMasterDAO().UpdateJewelley(obj, id));
+                details.Add(new JewelleryMasterDAO().UpdateJewellery(obj, id));
             }
             catch (Exception ex)
             {
@@ -78,7 +78,7 @@ namespace Catalog.Pages
             var details = new List<DbStatusEntity>();
             try
             {
-                details.Add(new JewelleryMasterDAO().InsertJewelley(obj));
+                details.Add(new JewelleryMasterDAO().InsertJewellery(obj));
             }
             catch (Exception ex)
             {
@@ -94,7 +94,7 @@ namespace Catalog.Pages
             var details = new List<DbStatusEntity>();
             try
             {
-                details.Add(new JewelleryMasterDAO().DeleteJewelley(id));
+                details.Add(new JewelleryMasterDAO().DeleteJewellery(id));
             }
             catch (Exception ex)
             {

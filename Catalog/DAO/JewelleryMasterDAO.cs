@@ -10,7 +10,7 @@ namespace Catalog.DAO
     public class JewelleryMasterDAO
     {
 
-        public List<JewelleryMasterEntity> GetJewelleyList()
+        public List<JewelleryMasterEntity> GetJewelleryList()
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
@@ -44,7 +44,7 @@ namespace Catalog.DAO
         }
 
 
-        public List<JewelleryMasterEntity> EditJewelley(int id)
+        public List<JewelleryMasterEntity> EditJewellery(int id)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
@@ -79,12 +79,10 @@ namespace Catalog.DAO
         }
 
 
-        public DbStatusEntity UpdateJewelley(JewelleryMasterEntity obj, int id)
+        public DbStatusEntity UpdateJewellery(JewelleryMasterEntity obj, int id)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
@@ -116,12 +114,10 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public DbStatusEntity InsertJewelley(JewelleryMasterEntity obj)
+        public DbStatusEntity InsertJewellery(JewelleryMasterEntity obj)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
@@ -152,12 +148,10 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public DbStatusEntity DeleteJewelley(int id)
+        public DbStatusEntity DeleteJewellery(int id)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            DataSet ds = new DataSet();
-            List<JewelleryMasterEntity> retlst = new List<JewelleryMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
