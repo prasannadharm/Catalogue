@@ -203,6 +203,7 @@
     <Compile Include="Models\LoginEntity.cs" />
     <Compile Include="Models\MaterialMasterEntity.cs" />
     <Compile Include="Models\OccasionMasterEntity.cs" />
+    <Compile Include="Models\StateMasterEntity.cs" />
     <Compile Include="Models\UserMenuEntity.cs" />
     <Compile Include="Pages\CatalogAdmin.Master.cs">
       <DependentUpon>CatalogAdmin.Master</DependentUpon>
