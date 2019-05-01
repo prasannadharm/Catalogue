@@ -16,13 +16,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/16/2019 20:23:16</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>04/30/2019 06:41:03</publishTime>
+      <publishTime>05/01/2019 13:05:29</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>04/30/2019 06:41:03</publishTime>
+      <publishTime>05/01/2019 13:05:28</publishTime>
     </File>
     <File Include="bin/Catalog.dll">
-      <publishTime>04/30/2019 06:36:53</publishTime>
+      <publishTime>05/01/2019 13:05:13</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>12/07/2015 19:04:38</publishTime>
@@ -102,6 +102,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="css/dataTables.bootstrap4.min.css">
       <publishTime>04/21/2019 21:33:46</publishTime>
     </File>
+    <File Include="css/forgotpassword.css">
+      <publishTime>05/01/2019 08:44:10</publishTime>
+    </File>
     <File Include="images/static/dashboard.png">
       <publishTime>04/09/2019 21:07:00</publishTime>
     </File>
@@ -154,10 +157,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/16/2019 20:23:16</publishTime>
     </File>
     <File Include="Pages/CatalogAdmin.Master">
-      <publishTime>04/26/2019 20:19:37</publishTime>
+      <publishTime>05/01/2019 08:11:06</publishTime>
+    </File>
+    <File Include="Pages/CatalogMaster.aspx">
+      <publishTime>05/01/2019 07:55:04</publishTime>
     </File>
     <File Include="Pages/CatalogueMaster.aspx">
       <publishTime>04/29/2019 06:12:03</publishTime>
+    </File>
+    <File Include="Pages/ChangePassword.aspx">
+      <publishTime>05/01/2019 12:59:33</publishTime>
     </File>
     <File Include="Pages/CityStateMaster.aspx">
       <publishTime>04/30/2019 06:39:24</publishTime>
@@ -169,10 +178,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/21/2019 18:35:09</publishTime>
     </File>
     <File Include="Pages/CompanyMaster.aspx">
-      <publishTime>04/29/2019 06:30:56</publishTime>
+      <publishTime>04/30/2019 21:46:52</publishTime>
     </File>
     <File Include="Pages/DesignMaster.aspx">
       <publishTime>04/29/2019 20:30:01</publishTime>
+    </File>
+    <File Include="Pages/ForgotPassword.aspx">
+      <publishTime>05/01/2019 12:48:37</publishTime>
     </File>
     <File Include="Pages/GeneralSettings.aspx">
       <publishTime>04/29/2019 06:32:23</publishTime>
@@ -181,7 +193,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/29/2019 20:56:43</publishTime>
     </File>
     <File Include="Pages/home.aspx">
-      <publishTime>04/26/2019 16:07:14</publishTime>
+      <publishTime>05/01/2019 08:10:47</publishTime>
     </File>
     <File Include="Pages/home.html">
       <publishTime>04/16/2019 20:42:54</publishTime>
@@ -204,14 +216,20 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Pages/OccasionMaster.aspx">
       <publishTime>04/29/2019 20:49:41</publishTime>
     </File>
+    <File Include="Pages/RolesMaster.aspx">
+      <publishTime>05/01/2019 12:07:18</publishTime>
+    </File>
     <File Include="Pages/UserDashboard.aspx">
       <publishTime>04/26/2019 13:00:36</publishTime>
     </File>
     <File Include="Pages/UserLogin.aspx">
-      <publishTime>04/26/2019 20:01:24</publishTime>
+      <publishTime>05/01/2019 09:10:49</publishTime>
+    </File>
+    <File Include="Pages/UserMaster.aspx">
+      <publishTime>05/01/2019 10:40:40</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>04/30/2019 06:41:00</publishTime>
+      <publishTime>05/01/2019 13:05:25</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>04/16/2019 20:23:16</publishTime>
@@ -221,6 +239,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="scripts/app/cataloguemaster.js">
       <publishTime>04/29/2019 06:13:12</publishTime>
+    </File>
+    <File Include="scripts/app/changepassword.js">
+      <publishTime>05/01/2019 12:58:08</publishTime>
     </File>
     <File Include="scripts/app/citystatemaster.js">
       <publishTime>04/30/2019 06:36:49</publishTime>
@@ -232,7 +253,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/21/2019 18:32:25</publishTime>
     </File>
     <File Include="scripts/app/companymaster.js">
-      <publishTime>04/29/2019 06:31:47</publishTime>
+      <publishTime>04/30/2019 22:21:20</publishTime>
     </File>
     <File Include="scripts/app/designmaster.js">
       <publishTime>04/29/2019 20:29:30</publishTime>
@@ -258,6 +279,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="scripts/app/occasionmaster.js">
       <publishTime>04/29/2019 20:49:40</publishTime>
     </File>
+    <File Include="scripts/app/rolesmaster.js">
+      <publishTime>05/01/2019 12:15:58</publishTime>
+    </File>
+    <File Include="scripts/app/usermaster.js">
+      <publishTime>05/01/2019 11:45:37</publishTime>
+    </File>
     <File Include="scripts/baguetteBox.min.js">
       <publishTime>04/16/2019 06:03:29</publishTime>
     </File>
@@ -274,7 +301,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/21/2019 21:35:20</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/28/2019 22:39:29</publishTime>
+      <publishTime>05/01/2019 13:05:24</publishTime>
     </File>
   </ItemGroup>
 </Project>

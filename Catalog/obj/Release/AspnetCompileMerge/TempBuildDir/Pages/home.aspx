@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Jewellery Catalogue</title>	
+    <title>Jewellery Catalog</title>	
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/baguetteBox.min.css" rel="stylesheet" />
     <link href="../css/cards-gallery.css" rel="stylesheet" />
@@ -16,7 +16,7 @@
     <form id="form1" runat="server">
 	<div class="container">
 	<nav class="navbar navbar-inverse my-3 rounded shadow-sm" style="background-color: #692b2b;">
-		<a class="navbar-brand mb-0 h1" href="#" style="color: #ffd500;">Jewellery Catalogue</a>
+		<a class="navbar-brand mb-0 h1" href="#" style="color: #ffd500;">Jewellery Catalog</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>

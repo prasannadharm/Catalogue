@@ -184,6 +184,7 @@
     <Compile Include="DAO\CollectionsMasterDAO.cs" />
     <Compile Include="DAO\CompanyMasterDAO.cs" />
     <Compile Include="DAO\DesignMasterDAO.cs" />
+    <Compile Include="DAO\EmailServerDAO.cs" />
     <Compile Include="DAO\GramSlabMasterDAO.cs" />
     <Compile Include="DAO\JewelleryMasterDAO.cs" />
     <Compile Include="DAO\KaratMasterDAO.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Generic\CryptographyHelper.cs" />
     <Compile Include="Generic\ICryptographyHelper.cs" />
     <Compile Include="Generic\PasswordHelper.cs" />
+    <Compile Include="Generic\SendEmail.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -207,6 +209,7 @@
     <Compile Include="Models\CompanyMasterEntity.cs" />
     <Compile Include="Models\DbStatusEntity.cs" />
     <Compile Include="Models\DesignMasterEntity.cs" />
+    <Compile Include="Models\EmailEntity.cs" />
     <Compile Include="Models\GramSlabMasterEntity.cs" />
     <Compile Include="Models\JewelleryMasterEntity.cs" />
     <Compile Include="Models\KaratMasterEntity.cs" />
