@@ -162,6 +162,7 @@
     <Content Include="scripts\app\citystatemaster.js" />
     <Content Include="scripts\app\companymaster.js" />
     <Content Include="scripts\app\designmaster.js" />
+    <Content Include="scripts\app\forgotpassword.js" />
     <Content Include="scripts\app\gramslabmaster.js" />
     <Content Include="scripts\app\jewellerymaster.js" />
     <Content Include="scripts\app\karatmaster.js" />
@@ -185,6 +186,7 @@
     <Compile Include="DAO\CompanyMasterDAO.cs" />
     <Compile Include="DAO\DesignMasterDAO.cs" />
     <Compile Include="DAO\EmailServerDAO.cs" />
+    <Compile Include="DAO\ForgotPasswordDAO.cs" />
     <Compile Include="DAO\GramSlabMasterDAO.cs" />
     <Compile Include="DAO\JewelleryMasterDAO.cs" />
     <Compile Include="DAO\KaratMasterDAO.cs" />

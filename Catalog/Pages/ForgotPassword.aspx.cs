@@ -22,14 +22,29 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static DbStatusEntity[] EditData(ChangePasswordEntity obj)
+        public static DbStatusEntity[] ForgotPasword(string email)
         {
             var details = new List<DbStatusEntity>();
             SendEmail objsendemail = new SendEmail();
             try
             {
-                //obj.USER_ID = userid;
-                details.Add(new ChangePasswordDAO().ChangePassword(obj));
+                DbStatusEntity objret = new ForgotPasswordDAO().GetFogotPassword(email);
+                if (objret.RESULT == 1)
+                {
+                    string password = CryptographyHelper.Instance.Decrypt(objret.MSG);
+                    string strsubject = "Password retrival from Jewellery Catalog website.";
+                    string strbody = "Hi,<br><br>Your Email : <b>" + email + "</b><br>Your passowrd : <b>" + password + "</b><br><br>Team Jewellery Catalog";
+                    if (objsendemail.SendMail(email, strsubject, strbody) == false)
+                    {
+                        objret.RESULT = 0;
+                        objret.MSG = "Mail sending failue";
+                    }
+                    else
+                    {
+                        objret.MSG = "Login details email sent to " + email;
+                    }
+                }
+                details.Add(objret);
             }
             catch (Exception ex)
             {
