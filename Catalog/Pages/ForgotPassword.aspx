@@ -31,6 +31,7 @@
     <link href="../css/forgotpassword.css" rel="stylesheet" />
     <script src="../scripts/jquery-3.0.0.min.js"></script>
     <script src="../scripts/bootstrap.4.3.1.min.js"></script>
+   
 </head>
 <body>
     <div class="container">
@@ -54,13 +55,13 @@
             
             <div class="row" style="margin-bottom: 10px">
                 <div class="col-12">                    
-                    <button class="btn btn-primary" id="password_modal_save" style="width:100%">Retrive Password</button>                  
+                    <button class="btn btn-primary" id="btnsave" style="width:100%">Retrive Password</button>                  
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">                                        
                     <asp:HyperLink ID="linkCatalog" NavigateUrl="Home.aspx" CssClass="text-primary btn-link" runat="server">Return to Catalogue</asp:HyperLink>&nbsp&nbsp
-                    <asp:HyperLink ID="linkLogin" NavigateUrl="ForgotPassword.aspx" CssClass="text-primary btn-link" runat="server" style="border-left: 2px solid blue;padding-left:10px">Return to Login Page</asp:HyperLink>                
+                    <asp:HyperLink ID="linkLogin" NavigateUrl="UserLogin.aspx" CssClass="text-primary btn-link" runat="server" style="border-left: 2px solid blue;padding-left:10px">Return to Login Page</asp:HyperLink>                
                 </div>
             </div>
         

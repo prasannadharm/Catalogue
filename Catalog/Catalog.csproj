@@ -151,11 +151,14 @@
     <Content Include="Pages\LedgerTypeMaster.aspx" />
     <Content Include="Pages\MaterialMaster.aspx" />
     <Content Include="Pages\OccasionMaster.aspx" />
+    <Content Include="Pages\RolesMaster.aspx" />
     <Content Include="Pages\UserDashboard.aspx" />
     <Content Include="Pages\UserLogin.aspx" />
+    <Content Include="Pages\UserMaster.aspx" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\app\cataloguemaster.js" />
+    <Content Include="scripts\app\changepassword.js" />
     <Content Include="scripts\app\citystatemaster.js" />
     <Content Include="scripts\app\companymaster.js" />
     <Content Include="scripts\app\designmaster.js" />
@@ -165,6 +168,8 @@
     <Content Include="scripts\app\ledgermaster.js" />
     <Content Include="scripts\app\materialmaster.js" />
     <Content Include="scripts\app\occasionmaster.js" />
+    <Content Include="scripts\app\rolesmaster.js" />
+    <Content Include="scripts\app\usermaster.js" />
     <Content Include="scripts\baguetteBox.min.js" />
     <Content Include="scripts\bootstrap.4.3.1.min.js" />
     <Content Include="scripts\dataTables.bootstrap4.min.js" />
@@ -174,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAO\CatalogMasterDAO.cs" />
+    <Compile Include="DAO\ChangePasswordDAO.cs" />
     <Compile Include="DAO\CityStateMasterDAO.cs" />
     <Compile Include="DAO\CollectionsMasterDAO.cs" />
     <Compile Include="DAO\CompanyMasterDAO.cs" />
@@ -186,6 +192,8 @@
     <Compile Include="DAO\LoginDAO.cs" />
     <Compile Include="DAO\MaterialMasterDAO.cs" />
     <Compile Include="DAO\OccasionMasterDAO.cs" />
+    <Compile Include="DAO\RolesMasterDAO.cs" />
+    <Compile Include="DAO\UserMasterDAO.cs" />
     <Compile Include="Generic\CryptographyHelper.cs" />
     <Compile Include="Generic\ICryptographyHelper.cs" />
     <Compile Include="Generic\PasswordHelper.cs" />
@@ -193,6 +201,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CatalogMasterEntity.cs" />
+    <Compile Include="Models\ChangePasswordEntity.cs" />
     <Compile Include="Models\CityStateMasterEntity.cs" />
     <Compile Include="Models\CollectionsMasterEntity.cs" />
     <Compile Include="Models\CompanyMasterEntity.cs" />
@@ -206,7 +215,9 @@
     <Compile Include="Models\LoginEntity.cs" />
     <Compile Include="Models\MaterialMasterEntity.cs" />
     <Compile Include="Models\OccasionMasterEntity.cs" />
+    <Compile Include="Models\RoleMasterEntitycs.cs" />
     <Compile Include="Models\StateMasterEntity.cs" />
+    <Compile Include="Models\UserMasterEntity.cs" />
     <Compile Include="Models\UserMenuEntity.cs" />
     <Compile Include="Pages\CatalogAdmin.Master.cs">
       <DependentUpon>CatalogAdmin.Master</DependentUpon>
@@ -327,6 +338,13 @@
     <Compile Include="Pages\OccasionMaster.aspx.designer.cs">
       <DependentUpon>OccasionMaster.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\RolesMaster.aspx.cs">
+      <DependentUpon>RolesMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\RolesMaster.aspx.designer.cs">
+      <DependentUpon>RolesMaster.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\UserDashboard.aspx.cs">
       <DependentUpon>UserDashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -340,6 +358,13 @@
     </Compile>
     <Compile Include="Pages\UserLogin.aspx.designer.cs">
       <DependentUpon>UserLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\UserMaster.aspx.cs">
+      <DependentUpon>UserMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\UserMaster.aspx.designer.cs">
+      <DependentUpon>UserMaster.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
