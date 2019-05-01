@@ -98,6 +98,7 @@
   <ItemGroup>
     <Content Include="css\CatalogAdminMasterPage.css" />
     <Content Include="css\dataTables.bootstrap4.min.css" />
+    <Content Include="css\forgotpassword.css" />
     <Content Include="images\static\loader.gif" />
     <Content Include="images\static\loader1.gif" />
     <Content Include="images\static\sort_asc.png" />
@@ -133,11 +134,13 @@
     <Content Include="images\static\image8.jpg" />
     <Content Include="images\static\image9.jpg" />
     <Content Include="images\static\logo.png" />
-    <Content Include="Pages\CatalogueMaster.aspx" />
+    <Content Include="Pages\CatalogMaster.aspx" />
+    <Content Include="Pages\ChangePassword.aspx" />
     <Content Include="Pages\CityStateMaster.aspx" />
     <Content Include="Pages\CollectionsMaster.aspx" />
     <Content Include="Pages\CompanyMaster.aspx" />
     <Content Include="Pages\DesignMaster.aspx" />
+    <Content Include="Pages\ForgotPassword.aspx" />
     <Content Include="Pages\GeneralSettings.aspx" />
     <Content Include="Pages\GramSlabMaster.aspx" />
     <Content Include="Pages\home.aspx" />
@@ -170,7 +173,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAO\CatalogueMasterDAO.cs" />
+    <Compile Include="DAO\CatalogMasterDAO.cs" />
     <Compile Include="DAO\CityStateMasterDAO.cs" />
     <Compile Include="DAO\CollectionsMasterDAO.cs" />
     <Compile Include="DAO\CompanyMasterDAO.cs" />
@@ -189,7 +192,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CatalogueMasterEntity.cs" />
+    <Compile Include="Models\CatalogMasterEntity.cs" />
     <Compile Include="Models\CityStateMasterEntity.cs" />
     <Compile Include="Models\CollectionsMasterEntity.cs" />
     <Compile Include="Models\CompanyMasterEntity.cs" />
@@ -212,12 +215,19 @@
     <Compile Include="Pages\CatalogAdmin.Master.designer.cs">
       <DependentUpon>CatalogAdmin.Master</DependentUpon>
     </Compile>
-    <Compile Include="Pages\CatalogueMaster.aspx.cs">
-      <DependentUpon>CatalogueMaster.aspx</DependentUpon>
+    <Compile Include="Pages\CatalogMaster.aspx.cs">
+      <DependentUpon>CatalogMaster.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\CatalogueMaster.aspx.designer.cs">
-      <DependentUpon>CatalogueMaster.aspx</DependentUpon>
+    <Compile Include="Pages\CatalogMaster.aspx.designer.cs">
+      <DependentUpon>CatalogMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ChangePassword.aspx.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ChangePassword.aspx.designer.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\CityStateMaster.aspx.cs">
       <DependentUpon>CityStateMaster.aspx</DependentUpon>
@@ -246,6 +256,13 @@
     </Compile>
     <Compile Include="Pages\DesignMaster.aspx.designer.cs">
       <DependentUpon>DesignMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ForgotPassword.aspx.cs">
+      <DependentUpon>ForgotPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ForgotPassword.aspx.designer.cs">
+      <DependentUpon>ForgotPassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\GeneralSettings.aspx.cs">
       <DependentUpon>GeneralSettings.aspx</DependentUpon>

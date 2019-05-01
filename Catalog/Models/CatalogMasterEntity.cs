@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Catalog.Models
 {
-    public class CatalogueMasterEntity
+    public class CatalogMasterEntity
     {
     }
 }

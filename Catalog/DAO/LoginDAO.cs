@@ -35,7 +35,6 @@ namespace Catalog.DAO
                         objLogin.RESULT = 1;
                         objLogin.MESSAGE = ds.Tables[0].Rows[i]["MESSAGE"].ToString();
                         objLogin.USER_ID = Convert.ToInt32(ds.Tables[0].Rows[i]["USER_ID"].ToString());
-                        objLogin.USER_NAME = ds.Tables[0].Rows[i]["USER_NAME"].ToString();
                         objLogin.USER_PASSWORD = ds.Tables[0].Rows[i]["USER_PASSWORD"].ToString();
                         objLogin.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
                         objLogin.EMAIL = ds.Tables[0].Rows[i]["EMAIL"].ToString();
