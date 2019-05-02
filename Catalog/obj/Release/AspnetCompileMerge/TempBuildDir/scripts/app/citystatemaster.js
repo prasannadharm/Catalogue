@@ -64,7 +64,7 @@ $(function () {
             return false;
         }
 
-        if ($("#STATE1").val().trim() == "") {
+        if ($("#STATE1").val() == null) {
             alert("Please enter State Name.");
             $("#STATE1").focus();
             return false;
@@ -190,7 +190,7 @@ $(function () {
             return false;
         }
 
-        if ($("#STATE1").val().trim() == "") {
+        if ($("#STATE1").val() == null) {
             alert("Please enter State Name.");
             $("#STATE1").focus();
             return false;

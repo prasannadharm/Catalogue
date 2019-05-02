@@ -76,7 +76,7 @@ $(function () {
             return false;
         }
 
-        if ($("#ROLE_NAME1").val().trim() == "") {
+        if ($("#ROLE_NAME1").val() == null) {
             alert("Please select Role.");
             $("#ROLE_NAME1").focus();
             return false;
@@ -232,7 +232,7 @@ $(function () {
             return false;
         }
 
-        if ($("#ROLE_NAME1").val().trim() == "") {
+        if ($("#ROLE_NAME1").val() == null) {
             alert("Please select Role.");
             $("#ROLE_NAME1").focus();
             return false;

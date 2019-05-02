@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Login to Jewellery Catalogue Configuration</title>
+    <title>Login to Jewellery Catalog Configuration</title>
     <%--<link href="../../Content/font-awesome.min.css" rel="stylesheet" />--%>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
     <link href="../css/bootstrap4.3.min.css" rel="stylesheet" />
@@ -88,7 +88,7 @@
                     <asp:Button ID="btnLogin" CssClass="btn btn-success rounded-0 btn-block" runat="server" Text="Login" OnClick="btnLogin_Click" />
                 </div>
                 <div class="form-group text-center">
-                    <asp:HyperLink ID="linkCatalog" NavigateUrl="Home.aspx" CssClass="text-primary btn-link" runat="server">Catalogue</asp:HyperLink>&nbsp
+                    <asp:HyperLink ID="linkCatalog" NavigateUrl="Home.aspx" CssClass="text-primary btn-link" runat="server">Catalog</asp:HyperLink>&nbsp
                     <asp:HyperLink ID="linkForgotPassword" NavigateUrl="ForgotPassword.aspx" CssClass="text-primary btn-link" runat="server" style="border-left: 2px solid blue;padding-left:10px">Forgot Password</asp:HyperLink>
                 </div>
                 <div class="text-center">

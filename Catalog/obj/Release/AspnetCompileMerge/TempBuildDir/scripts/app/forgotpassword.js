@@ -5,7 +5,7 @@
             $("#email1").focus();
             return false;
         }      
-
+        $("body").css("cursor", "progress");
         var obj = {};
         obj.EMAIL = $("#email1").val().trim();
         
@@ -16,6 +16,7 @@
             data: '{email: ' + JSON.stringify(obj) + '}',
             dataType: "json",
             success: function (data) {
+                $("body").css("cursor", "default");
                 for (var i = 0; i < data.d.length; i++) {
                     if (data.d[i].RESULT === 1) {
                         alert(data.d[i].MSG);                        
@@ -28,6 +29,7 @@
                 }
             },
             error: function (data) {
+                $("body").css("cursor", "default");
                 alert("Error while Adding data of :" + obj.NAME);
                 $("#email1").focus();
                 return false;

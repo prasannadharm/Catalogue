@@ -60,7 +60,7 @@
             </div>
             <div class="row">
                 <div class="col-12">                                        
-                    <asp:HyperLink ID="linkCatalog" NavigateUrl="Home.aspx" CssClass="text-primary btn-link" runat="server">Return to Catalogue</asp:HyperLink>&nbsp&nbsp
+                    <asp:HyperLink ID="linkCatalog" NavigateUrl="Home.aspx" CssClass="text-primary btn-link" runat="server">Return to Catalog</asp:HyperLink>&nbsp&nbsp
                     <asp:HyperLink ID="linkLogin" NavigateUrl="UserLogin.aspx" CssClass="text-primary btn-link" runat="server" style="border-left: 2px solid blue;padding-left:10px">Return to Login Page</asp:HyperLink>                
                 </div>
             </div>
