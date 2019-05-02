@@ -137,7 +137,7 @@
     </section>
 	
 	<div class="d-flex align-items-center p-3 my-3 rounded shadow-sm" style="background-color: #692b2b;color: #ffd500;">
-                © Copyright 2019 Jewellery Catalogue. All Rights Reserved.             
+                © Copyright 2019 Jewellery Catalog. All Rights Reserved.             
 	</div>
 	</div>
     </form>

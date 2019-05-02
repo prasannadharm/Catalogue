@@ -31,7 +31,7 @@
     <link href="../css/forgotpassword.css" rel="stylesheet" />
     <script src="../scripts/jquery-3.0.0.min.js"></script>
     <script src="../scripts/bootstrap.4.3.1.min.js"></script>
-   
+    <script src="../scripts/app/forgotpassword.js"></script>
 </head>
 <body>
     <div class="container">
@@ -49,13 +49,13 @@
             <div class="row" style="margin-bottom: 10px">
                 <div class="col-12">
                     <label>Please enter Email address</label>
-                    <input type="email" name="email" class="form-control"/>
+                    <input type="email" name="email" id="email1" class="form-control"/>
                 </div>
             </div>
             
             <div class="row" style="margin-bottom: 10px">
                 <div class="col-12">                    
-                    <button class="btn btn-primary" id="btnsave" style="width:100%">Retrive Password</button>                  
+                    <button type="button" class="btn btn-primary" id="btngetdetails" style="width:100%">Retrive Password</button>                  
                 </div>
             </div>
             <div class="row">

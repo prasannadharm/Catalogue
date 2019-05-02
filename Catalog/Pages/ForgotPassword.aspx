@@ -55,7 +55,7 @@
             
             <div class="row" style="margin-bottom: 10px">
                 <div class="col-12">                    
-                    <button class="btn btn-primary" id="btngetdetails" style="width:100%">Retrive Password</button>                  
+                    <button type="button" class="btn btn-primary" id="btngetdetails" style="width:100%">Retrive Password</button>                  
                 </div>
             </div>
             <div class="row">

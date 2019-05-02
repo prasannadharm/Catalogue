@@ -22,33 +22,33 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static DbStatusEntity[] ForgotPasword(string email)
+        public static DbStatusEntity[] ForgotPasword(ForgotPasswordEntity email)
         {
             var details = new List<DbStatusEntity>();
             SendEmail objsendemail = new SendEmail();
             try
             {
-                DbStatusEntity objret = new ForgotPasswordDAO().GetFogotPassword(email);
+                DbStatusEntity objret = new ForgotPasswordDAO().GetFogotPassword(email.EMAIL);
                 if (objret.RESULT == 1)
                 {
                     string password = CryptographyHelper.Instance.Decrypt(objret.MSG);
                     string strsubject = "Password retrival from Jewellery Catalog website.";
-                    string strbody = "Hi,<br><br>Your Email : <b>" + email + "</b><br>Your passowrd : <b>" + password + "</b><br><br>Team Jewellery Catalog";
-                    if (objsendemail.SendMail(email, strsubject, strbody) == false)
+                    string strbody = "Hi,<br><br>Your Email : <b>" + email.EMAIL + "</b><br>Your passowrd : <b>" + password + "</b><br><br>Team Jewellery Catalog";
+                    if (objsendemail.SendMail(email.EMAIL, strsubject, strbody) == false)
                     {
                         objret.RESULT = 0;
                         objret.MSG = "Mail sending failue";
                     }
                     else
                     {
-                        objret.MSG = "Login details email sent to " + email;
+                        objret.MSG = "Login details email sent to " + email.EMAIL;
                     }
                 }
                 details.Add(objret);
             }
             catch (Exception ex)
             {
-                //details.Add(new DbStatusEntity(ex.Message));
+                details.Add(new DbStatusEntity(ex.Message));
             }
             return details.ToArray();
         }

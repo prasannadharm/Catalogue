@@ -5,8 +5,8 @@ using System.Web;
 
 namespace Catalog.Models
 {
-    public class CatalogMasterEntity
+    public class ForgotPasswordEntity
     {
-       
+        public string EMAIL { get; set; }
     }
 }

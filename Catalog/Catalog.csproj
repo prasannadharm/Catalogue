@@ -212,6 +212,7 @@
     <Compile Include="Models\DbStatusEntity.cs" />
     <Compile Include="Models\DesignMasterEntity.cs" />
     <Compile Include="Models\EmailEntity.cs" />
+    <Compile Include="Models\ForgotPasswordEntity.cs" />
     <Compile Include="Models\GramSlabMasterEntity.cs" />
     <Compile Include="Models\JewelleryMasterEntity.cs" />
     <Compile Include="Models\KaratMasterEntity.cs" />
