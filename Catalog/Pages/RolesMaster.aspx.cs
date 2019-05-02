@@ -18,9 +18,9 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static RoleMasterEntitycs[] GetData() //Show the details of the data after insert in HTML Table
+        public static RoleMasterEntity[] GetData() //Show the details of the data after insert in HTML Table
         {
-            var details = new List<RoleMasterEntitycs>();
+            var details = new List<RoleMasterEntity>();
             try
             {
                 details = new RolesMasterDAO().GetRolesList();
@@ -34,9 +34,9 @@ namespace Catalog.Pages
 
 
         [WebMethod]
-        public static RoleMasterEntitycs[] EditData(int id)
+        public static RoleMasterEntity[] EditData(int id)
         {
-            var details = new List<RoleMasterEntitycs>();
+            var details = new List<RoleMasterEntity>();
             try
             {
                 details = new RolesMasterDAO().EditRoles(id);
@@ -49,7 +49,7 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static DbStatusEntity[] UpdateData(RoleMasterEntitycs obj, int id) //Update data in database  
+        public static DbStatusEntity[] UpdateData(RoleMasterEntity obj, int id) //Update data in database  
         {
             var details = new List<DbStatusEntity>();
             try
@@ -66,7 +66,7 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static DbStatusEntity[] InsertData(RoleMasterEntitycs obj)
+        public static DbStatusEntity[] InsertData(RoleMasterEntity obj)
         {
             var details = new List<DbStatusEntity>();
             try
@@ -95,6 +95,54 @@ namespace Catalog.Pages
                 details.Add(new DbStatusEntity(ex.Message));
             }
             return details.ToArray();
+        }
+
+
+        [WebMethod]
+        public static RoleBaseMenuEntity[] GetBaseMenuList() //Show the details of the data after insert in HTML Table
+        {
+            var details = new List<RoleBaseMenuEntity>();
+            try
+            {
+                details = new RolesMasterDAO().GetBaseMenuList();
+            }
+            catch (Exception ex)
+            {
+                // details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
+
+        [WebMethod]
+        public static RoleSelectedMenuEntity[] EditAuthData(int id)
+        {
+            var details = new List<RoleSelectedMenuEntity>();
+            try
+            {
+                details = new RolesMasterDAO().EditRolesAuthority(id);
+            }
+            catch (Exception ex)
+            {
+                //details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
+
+        [WebMethod]
+        public static DbStatusEntity[] UpdateAuthData(RoleSelectedMenuEntity[] obj, int id) //Update data in database  
+        {
+            var details = new List<DbStatusEntity>();
+            try
+            {
+                details.Add(new RolesMasterDAO().UpdateRolesMenu(obj.ToList(), id));
+            }
+            catch (Exception ex)
+            {
+                details.Clear();
+                details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+
         }
     }
 }

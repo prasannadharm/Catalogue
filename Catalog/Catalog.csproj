@@ -101,6 +101,7 @@
     <Content Include="css\forgotpassword.css" />
     <Content Include="images\static\loader.gif" />
     <Content Include="images\static\loader1.gif" />
+    <Content Include="images\static\logout.png" />
     <Content Include="images\static\sort_asc.png" />
     <Content Include="images\static\sort_both.png" />
     <Content Include="images\static\sort_desc.png" />
@@ -222,7 +223,9 @@
     <Compile Include="Models\LoginEntity.cs" />
     <Compile Include="Models\MaterialMasterEntity.cs" />
     <Compile Include="Models\OccasionMasterEntity.cs" />
-    <Compile Include="Models\RoleMasterEntitycs.cs" />
+    <Compile Include="Models\RoleBaseMenuEntity.cs" />
+    <Compile Include="Models\RoleMasterEntity.cs" />
+    <Compile Include="Models\RoleSelectedMenuEntity.cs" />
     <Compile Include="Models\StateMasterEntity.cs" />
     <Compile Include="Models\UserMasterEntity.cs" />
     <Compile Include="Models\UserMenuEntity.cs" />

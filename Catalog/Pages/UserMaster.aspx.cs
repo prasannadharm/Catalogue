@@ -34,9 +34,9 @@ namespace Catalog.Pages
 
 
         [WebMethod]
-        public static RoleMasterEntitycs[] GetRoles() //Show the details of the data after insert in HTML Table
+        public static RoleMasterEntity[] GetRoles() //Show the details of the data after insert in HTML Table
         {
-            var details = new List<RoleMasterEntitycs>();
+            var details = new List<RoleMasterEntity>();
             try
             {
                 details = new GenericDAO().GetActiveRoleList();

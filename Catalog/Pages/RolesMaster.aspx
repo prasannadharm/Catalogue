@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/CatalogAdmin.Master" AutoEventWireup="true" CodeBehind="RolesMaster.aspx.cs" Inherits="Catalog.Pages.RolesMaster" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -37,7 +38,7 @@
             </div>
         </div>
     </div>
-    <!-- For Modal Popup  -->
+    <!-- For Modal Popup Edit Details -->
     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="PopupModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -49,7 +50,7 @@
                     <div class="panel-body">
                         <div class="form-group col-lg-12">
                             <label>Role Name</label>
-                            <input type="text" name="NAME" id="NAME1" class="form-control" placeholder="Please enter Name"/>                            
+                            <input type="text" name="NAME" id="NAME1" class="form-control" placeholder="Please enter Name" />
                         </div>
                         <div class="form-group col-lg-12">
                             <label>Active Status</label>
@@ -60,7 +61,56 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btnSave" class="btn btn-primary">Save Data</button>
-                    <button type="button" id="btnUpdate" class="btn btn-primary" edit-id="" >Update Data</button>
+                    <button type="button" id="btnUpdate" class="btn btn-primary" edit-id="">Update Data</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- For Modal Popup  -->
+
+
+    <!-- For Modal Popup Screen Authorizations Details -->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="PopupModalAuth">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Screen Authorization for Roles</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="form-group col-3">
+                                <label for="selTransaction">Transaction</label>
+                                <select multiple="multiple" class="form-control" id="selTransaction">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="form-group col-3">
+                                <label for="selReports">Reports</label>
+                                <select multiple="multiple" class="form-control" id="selReports">
+                                    <option></option>                                    
+                                </select>
+                            </div>
+                            <div class="form-group col-3">
+                                <label for="selMaster">Master</label>
+                                <select multiple="multiple" class="form-control" id="selMaster">
+                                    <option></option>                                  
+                                </select>
+                            </div>
+                            <div class="form-group col-3">
+                                <label for="selTools">Tools</label>
+                                <select multiple="multiple" class="form-control" id="selTools">
+                                    <option></option>                                    
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <label style="margin-right:30px">Please multi select the Screens by using Ctrl/Shift + Click.</label>
+                    <button type="button" id="btnSaveAuth" class="btn btn-primary" edit-id="">Save Data</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </div>

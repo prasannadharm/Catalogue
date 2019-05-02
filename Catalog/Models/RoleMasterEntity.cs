@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Catalog.Models
 {
-    public class RoleMasterEntitycs
+    public class RoleMasterEntity
     {
         public int ROLE_ID { get; set; }
         public string ROLE_NAME { get; set; }

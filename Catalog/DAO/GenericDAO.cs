@@ -78,12 +78,12 @@ namespace Catalog.DAO
             return retlst;
         }
 
-        public List<RoleMasterEntitycs> GetActiveRoleList()
+        public List<RoleMasterEntity> GetActiveRoleList()
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
             DataSet ds = new DataSet();
-            List<RoleMasterEntitycs> retlst = new List<RoleMasterEntitycs>();
+            List<RoleMasterEntity> retlst = new List<RoleMasterEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
@@ -98,7 +98,7 @@ namespace Catalog.DAO
                     {
                         if (ds.Tables[0].Rows[i]["ROLE_NAME"] != DBNull.Value)
                         {
-                            RoleMasterEntitycs obj = new RoleMasterEntitycs();
+                            RoleMasterEntity obj = new RoleMasterEntity();
                             obj.ROLE_ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ROLE_ID"].ToString());
                             obj.ROLE_NAME = ds.Tables[0].Rows[i]["ROLE_NAME"].ToString();
                             retlst.Add(obj);
