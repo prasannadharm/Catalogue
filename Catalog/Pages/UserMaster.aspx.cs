@@ -39,7 +39,7 @@ namespace Catalog.Pages
             var details = new List<RoleMasterEntitycs>();
             try
             {
-                details = new UserMasterDAO().GetRoleList();
+                details = new GenericDAO().GetActiveRoleList();
             }
             catch (Exception ex)
             {

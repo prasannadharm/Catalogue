@@ -46,42 +46,7 @@ namespace Catalog.DAO
             }
             return retlst;
         }
-
-        public List<RoleMasterEntitycs> GetRoleList()
-        {
-            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            SqlDataAdapter adapter;
-            DataSet ds = new DataSet();
-            List<RoleMasterEntitycs> retlst = new List<RoleMasterEntitycs>();
-            try
-            {
-                using (SqlConnection con = new SqlConnection(CS))
-                {
-                    SqlCommand cmd = new SqlCommand("USP_GetActiveRoleList", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    con.Open();
-                    adapter = new SqlDataAdapter(cmd);
-                    adapter.Fill(ds);
-
-                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
-                    {
-                        if (ds.Tables[0].Rows[i]["ROLE_NAME"] != DBNull.Value)
-                        {
-                            RoleMasterEntitycs obj = new RoleMasterEntitycs();
-                            obj.ROLE_ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ROLE_ID"].ToString());
-                            obj.ROLE_NAME = ds.Tables[0].Rows[i]["ROLE_NAME"].ToString();
-                            retlst.Add(obj);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return retlst;
-        }
-
+              
 
         public List<UserMasterEntity> EditUserMaster(int id)
         {

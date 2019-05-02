@@ -41,40 +41,7 @@ namespace Catalog.DAO
                 throw ex;
             }
             return retlst;
-        }
-
-        public List<StateMasterEntity> GetStateList()
-        {
-            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            SqlDataAdapter adapter;
-            DataSet ds = new DataSet();
-            List<StateMasterEntity> retlst = new List<StateMasterEntity>();
-            try
-            {
-                using (SqlConnection con = new SqlConnection(CS))
-                {
-                    SqlCommand cmd = new SqlCommand("USP_GetActiveStateList", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    con.Open();
-                    adapter = new SqlDataAdapter(cmd);
-                    adapter.Fill(ds);
-
-                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
-                    {
-                        StateMasterEntity obj = new StateMasterEntity();
-                        obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
-                        obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();                       
-                        retlst.Add(obj);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return retlst;
-        }
-
+        }       
 
         public List<CityStateMasterEntity> EditCityState(int id)
         {

@@ -187,6 +187,7 @@
     <Compile Include="DAO\DesignMasterDAO.cs" />
     <Compile Include="DAO\EmailServerDAO.cs" />
     <Compile Include="DAO\ForgotPasswordDAO.cs" />
+    <Compile Include="DAO\GenericDAO.cs" />
     <Compile Include="DAO\GramSlabMasterDAO.cs" />
     <Compile Include="DAO\JewelleryMasterDAO.cs" />
     <Compile Include="DAO\KaratMasterDAO.cs" />

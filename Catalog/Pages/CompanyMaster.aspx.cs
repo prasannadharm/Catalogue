@@ -38,7 +38,7 @@ namespace Catalog.Pages
             var details = new List<StateMasterEntity>();
             try
             {
-                details = new CityStateMasterDAO().GetStateList();
+                details = new GenericDAO().GetStateList();
             }
             catch (Exception ex)
             {
@@ -53,7 +53,7 @@ namespace Catalog.Pages
             var details = new List<CityStateMasterEntity>();
             try
             {
-                details = new CompanyMasterDAO().GetCityByState(str);
+                details = new GenericDAO().GetCityByState(str);
             }
             catch (Exception ex)
             {

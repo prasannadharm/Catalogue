@@ -39,7 +39,7 @@ namespace Catalog.Pages
             var details = new List<StateMasterEntity>();
             try
             {
-                details = new CityStateMasterDAO().GetStateList();
+                details = new GenericDAO().GetStateList();
             }
             catch (Exception ex)
             {
