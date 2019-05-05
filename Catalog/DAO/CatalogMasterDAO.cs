@@ -35,9 +35,7 @@ namespace Catalog.DAO
                         obj.STK_QTY = ds.Tables[0].Rows[i]["STK_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["STK_QTY"]);
                         obj.JEWELLERY_NAME = ds.Tables[0].Rows[i]["JEWELLERY_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["JEWELLERY_NAME"].ToString();
                         obj.DESIGN_NAME = ds.Tables[0].Rows[i]["DESIGN_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["DESIGN_NAME"].ToString();
-                        obj.COLLECTIONS_NAME = ds.Tables[0].Rows[i]["COLLECTIONS_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["COLLECTIONS_NAME"].ToString();
-                        obj.MATERIAL_NAME = ds.Tables[0].Rows[i]["MATERIAL_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["MATERIAL_NAME"].ToString();
-                        obj.ACTIVE_STATUS = ds.Tables[0].Rows[i]["ACTIVE_STATUS"] == DBNull.Value ? true : Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
+                        obj.COLLECTIONS_NAME = ds.Tables[0].Rows[i]["COLLECTIONS_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["COLLECTIONS_NAME"].ToString();                        
                         retlst.Add(obj);
                     }
                 }
@@ -104,7 +102,7 @@ namespace Catalog.DAO
                         obj.TAXABLE_AMT = ds.Tables[0].Rows[i]["TAXABLE_AMT"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["TAXABLE_AMT"]);
                         obj.TAX_PER = ds.Tables[0].Rows[i]["TAX_PER"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["TAX_PER"]);
                         obj.TAX_AMT = ds.Tables[0].Rows[i]["TAX_AMT"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["TAX_AMT"]);
-                        obj.NET_WT = ds.Tables[0].Rows[i]["NET_WT"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["NET_WT"]);
+                        obj.NET_AMT = ds.Tables[0].Rows[i]["NET_AMT"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["NET_AMT"]);
                         retlst.Add(obj);
                     }
                 }
@@ -138,7 +136,7 @@ namespace Catalog.DAO
                     cmd.Parameters.AddWithValue("@DESIGN_ID", obj.DESIGN_ID);
                     cmd.Parameters.AddWithValue("@COLLECTIONS_ID", obj.COLLECTIONS_ID);
                     cmd.Parameters.AddWithValue("@MATERIAL_ID", obj.MATERIAL_ID);
-                    cmd.Parameters.AddWithValue("@COLLECTIONS_ID", obj.COLLECTIONS_ID);
+                    cmd.Parameters.AddWithValue("@OCCASION_ID", obj.OCCASION_ID);
                     cmd.Parameters.AddWithValue("@GRAMSLAB_ID", obj.GRAMSLAB_ID);
                     cmd.Parameters.AddWithValue("@KARAT_ID", obj.KARAT_ID);
                     cmd.Parameters.AddWithValue("@PURITY", obj.PURITY);
@@ -152,8 +150,7 @@ namespace Catalog.DAO
                     cmd.Parameters.AddWithValue("@TAXABLE_AMT", obj.TAXABLE_AMT);
                     cmd.Parameters.AddWithValue("@TAX_PER", obj.TAX_PER);
                     cmd.Parameters.AddWithValue("@TAX_AMT", obj.TAX_AMT);
-                    cmd.Parameters.AddWithValue("@NET_AMT", obj.NET_AMT);
-                    cmd.Parameters.AddWithValue("@STK_QTY", obj.STK_QTY);
+                    cmd.Parameters.AddWithValue("@NET_AMT", obj.NET_AMT);                    
                     cmd.Parameters.Add("@RESULT", SqlDbType.Int);
                     cmd.Parameters["@RESULT"].Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("@CNT", SqlDbType.Int);
@@ -175,7 +172,7 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public DbStatusEntity InsertJewellery(CatalogMasterEntity obj)
+        public DbStatusEntity InsertCatalog(CatalogMasterEntity obj)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
@@ -195,7 +192,7 @@ namespace Catalog.DAO
                     cmd.Parameters.AddWithValue("@DESIGN_ID", obj.DESIGN_ID);
                     cmd.Parameters.AddWithValue("@COLLECTIONS_ID", obj.COLLECTIONS_ID);
                     cmd.Parameters.AddWithValue("@MATERIAL_ID", obj.MATERIAL_ID);
-                    cmd.Parameters.AddWithValue("@COLLECTIONS_ID", obj.COLLECTIONS_ID);
+                    cmd.Parameters.AddWithValue("@OCCASION_ID", obj.OCCASION_ID);
                     cmd.Parameters.AddWithValue("@GRAMSLAB_ID", obj.GRAMSLAB_ID);
                     cmd.Parameters.AddWithValue("@KARAT_ID", obj.KARAT_ID);
                     cmd.Parameters.AddWithValue("@PURITY", obj.PURITY);
@@ -209,8 +206,7 @@ namespace Catalog.DAO
                     cmd.Parameters.AddWithValue("@TAXABLE_AMT", obj.TAXABLE_AMT);
                     cmd.Parameters.AddWithValue("@TAX_PER", obj.TAX_PER);
                     cmd.Parameters.AddWithValue("@TAX_AMT", obj.TAX_AMT);
-                    cmd.Parameters.AddWithValue("@NET_AMT", obj.NET_AMT);
-                    cmd.Parameters.AddWithValue("@STK_QTY", obj.STK_QTY);
+                    cmd.Parameters.AddWithValue("@NET_AMT", obj.NET_AMT);                    
 
                     cmd.Parameters.Add("@RESULT", SqlDbType.Int);
                     cmd.Parameters["@RESULT"].Direction = ParameterDirection.Output;

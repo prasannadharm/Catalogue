@@ -158,7 +158,7 @@
     <Content Include="Pages\UserMaster.aspx" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
-    <Content Include="scripts\app\cataloguemaster.js" />
+    <Content Include="scripts\app\catalogmaster.js" />
     <Content Include="scripts\app\changepassword.js" />
     <Content Include="scripts\app\citystatemaster.js" />
     <Content Include="scripts\app\companymaster.js" />
