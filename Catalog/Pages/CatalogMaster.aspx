@@ -126,15 +126,15 @@
                                 <input type="text" name="PURITY" id="PURITY1" class="form-control" placeholder="Purity %" style="text-align:right" />
                             </div>
                             <div class="form-group col-3">
-                                <label>Rate</label>
+                                <label>Rate (Rs)</label>
                                 <input type="number" name="RATE" id="RATE1" class="form-control" onchange="CalcAmt()" style="text-align:right"/>
                             </div>
                             <div class="form-group col-3">
-                                <label>Gross WT</label>
+                                <label>Gross WT (Gm)</label>
                                 <input type="number" name="GR_WT" id="GR_WT1" class="form-control" onchange="CalcAmt()" style="text-align:right"/>
                             </div>
                             <div class="form-group col-3">
-                                <label>Stone WT</label>
+                                <label>Stone WT (Gm)</label>
                                 <input type="number" name="ST_WT" id="ST_WT1" class="form-control" onchange="CalcAmt()" style="text-align:right"/>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
 
                         <div class="row">
                             <div class="form-group col-3">
-                                <label>Net WT</label>
+                                <label>Net WT (Gm)</label>
                                 <input type="number" name="NET_WT" id="NET_WT1" class="form-control" readonly="true" style="text-align:right"/>
                             </div>
                             <div class="form-group col-3">
@@ -150,18 +150,18 @@
                                 <input type="number" name="VA_PER" id="VA_PER1" class="form-control" onchange="CalcAmt()" style="text-align:right"/>
                             </div>
                             <div class="form-group col-3">
-                                <label>VA Amt</label>
+                                <label>VA Amt (Rs)</label>
                                 <input type="number" name="VA_AMT" id="VA_AMT1" readonly="true" class="form-control" style="text-align:right"/>
                             </div>
                             <div class="form-group col-3">
-                                <label>Stone Amt</label>
+                                <label>Stone Amt (Rs)</label>
                                 <input type="number" name="ST_AMT" id="ST_AMT1" class="form-control" onchange="CalcAmt()" style="text-align:right"/>
                             </div>                            
                         </div>
 
                         <div class="row">
                             <div class="form-group col-3">
-                                <label>Taxable Amt</label>
+                                <label>Taxable Amt (Rs)</label>
                                 <input type="number" name="TAXABLE_AMT" id="TAXABLE_AMT1" readonly="true" class="form-control" style="text-align:right"/>
                             </div>
                             <div class="form-group col-3">
@@ -169,11 +169,11 @@
                                 <input type="number" name="TAX_PER" id="TAX_PER1" class="form-control" onchange="CalcAmt()" style="text-align:right"/>
                             </div>
                             <div class="form-group col-3">
-                                <label>Tax Amt</label>
+                                <label>Tax Amt (Rs)</label>
                                 <input type="number" name="TAX_AMT" id="TAX_AMT1" readonly="true" class="form-control" style="text-align:right"/>
                             </div>
                             <div class="form-group col-3">
-                                <label>Net Amt</label>
+                                <label>Net Amt (Rs)</label>
                                 <input type="number" name="NET_AMT" id="NET_AMT1" readonly="true" class="form-control" style="text-align:right"/>
                             </div>
                         </div>

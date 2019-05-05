@@ -31,7 +31,7 @@
     <link href="../css/forgotpassword.css" rel="stylesheet" />
     <script src="../scripts/jquery-3.0.0.min.js"></script>
     <script src="../scripts/bootstrap.4.3.1.min.js"></script>
-    <script src="../scripts/app/forgotpassword.js"></script>
+    <script src="../scripts/app/forgotpassword.js?v=1"></script>
 </head>
 <body>
     <div class="container">

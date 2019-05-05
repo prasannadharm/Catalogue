@@ -19,7 +19,8 @@
                 $("body").css("cursor", "default");
                 for (var i = 0; i < data.d.length; i++) {
                     if (data.d[i].RESULT === 1) {
-                        alert(data.d[i].MSG);                        
+                        alert(data.d[i].MSG);
+                        window.location = 'UserLogin.aspx';
                     }
                     else {
                         alert(data.d[i].MSG);

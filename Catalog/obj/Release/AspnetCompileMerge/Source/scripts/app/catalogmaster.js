@@ -312,8 +312,6 @@ $(function () {
             return false;
         }
 
-        CalcAmt();
-
         var obj = {};
         obj.CODE = $("#CODE1").val().trim();
         obj.TITLE = $("#TITLE1").val().trim();
@@ -544,10 +542,9 @@ $(function () {
                         $("#SHOW_TRENDING1").prop('checked', true);
                     else
                         $("#SHOW_TRENDING1").prop('checked', false);
-                }               
-                Datalodaing = 0;
-                CalcAmt();
+                }
                 $('#TITLE1').focus();
+                Datalodaing = 0;
             },
             error: function () {
                 alert("Error while retrieving data of :" + id);
@@ -658,8 +655,6 @@ $(function () {
             $("#NET_AMT").focus();
             return false;
         }
-
-        CalcAmt();
 
         var id = $(this).attr("edit-id");
         var obj = {};

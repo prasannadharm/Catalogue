@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <script src="../scripts/app/changepassword.js"></script>
+     <script src="../scripts/app/changepassword.js?v=1"></script>
     <div class="col-12">
         <div class="panel panel-default">
             <div class="row" style="margin-bottom: 20px">
