@@ -6,6 +6,8 @@
     <link href="../css/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <script src="../scripts/jquery.dataTables.min.js"></script>
     <script src="../scripts/dataTables.bootstrap4.min.js"></script>
+    <%--<script src="../scripts/jquery-1.7.1.min.js"></script>--%>
+    <script src="../scripts/AjaxFileupload.js"></script>
     <script src="../scripts/app/catalogmaster.js"></script>
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -123,19 +125,19 @@
                         <div class="row">
                             <div class="form-group col-3">
                                 <label>Purity</label>
-                                <input type="text" name="PURITY" id="PURITY1" class="form-control" placeholder="Purity %" style="text-align:right" />
+                                <input type="text" name="PURITY" id="PURITY1" class="form-control" placeholder="Purity %" style="text-align: right" />
                             </div>
                             <div class="form-group col-3">
                                 <label>Rate (Rs)</label>
-                                <input type="number" name="RATE" id="RATE1" class="form-control" onchange="CalcAmt()" style="text-align:right"/>
+                                <input type="number" name="RATE" id="RATE1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
                             </div>
                             <div class="form-group col-3">
                                 <label>Gross WT (Gm)</label>
-                                <input type="number" name="GR_WT" id="GR_WT1" class="form-control" onchange="CalcAmt()" style="text-align:right"/>
+                                <input type="number" name="GR_WT" id="GR_WT1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
                             </div>
                             <div class="form-group col-3">
                                 <label>Stone WT (Gm)</label>
-                                <input type="number" name="ST_WT" id="ST_WT1" class="form-control" onchange="CalcAmt()" style="text-align:right"/>
+                                <input type="number" name="ST_WT" id="ST_WT1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
                             </div>
                         </div>
 
@@ -143,38 +145,38 @@
                         <div class="row">
                             <div class="form-group col-3">
                                 <label>Net WT (Gm)</label>
-                                <input type="number" name="NET_WT" id="NET_WT1" class="form-control" readonly="true" style="text-align:right"/>
+                                <input type="number" name="NET_WT" id="NET_WT1" class="form-control" readonly="true" style="text-align: right" />
                             </div>
                             <div class="form-group col-3">
                                 <label>VA (%)</label>
-                                <input type="number" name="VA_PER" id="VA_PER1" class="form-control" onchange="CalcAmt()" style="text-align:right"/>
+                                <input type="number" name="VA_PER" id="VA_PER1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
                             </div>
                             <div class="form-group col-3">
                                 <label>VA Amt (Rs)</label>
-                                <input type="number" name="VA_AMT" id="VA_AMT1" readonly="true" class="form-control" style="text-align:right"/>
+                                <input type="number" name="VA_AMT" id="VA_AMT1" readonly="true" class="form-control" style="text-align: right" />
                             </div>
                             <div class="form-group col-3">
                                 <label>Stone Amt (Rs)</label>
-                                <input type="number" name="ST_AMT" id="ST_AMT1" class="form-control" onchange="CalcAmt()" style="text-align:right"/>
-                            </div>                            
+                                <input type="number" name="ST_AMT" id="ST_AMT1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
+                            </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-3">
                                 <label>Taxable Amt (Rs)</label>
-                                <input type="number" name="TAXABLE_AMT" id="TAXABLE_AMT1" readonly="true" class="form-control" style="text-align:right"/>
+                                <input type="number" name="TAXABLE_AMT" id="TAXABLE_AMT1" readonly="true" class="form-control" style="text-align: right" />
                             </div>
                             <div class="form-group col-3">
                                 <label>Tax (%)</label>
-                                <input type="number" name="TAX_PER" id="TAX_PER1" class="form-control" onchange="CalcAmt()" style="text-align:right"/>
+                                <input type="number" name="TAX_PER" id="TAX_PER1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
                             </div>
                             <div class="form-group col-3">
                                 <label>Tax Amt (Rs)</label>
-                                <input type="number" name="TAX_AMT" id="TAX_AMT1" readonly="true" class="form-control" style="text-align:right"/>
+                                <input type="number" name="TAX_AMT" id="TAX_AMT1" readonly="true" class="form-control" style="text-align: right" />
                             </div>
                             <div class="form-group col-3">
                                 <label>Net Amt (Rs)</label>
-                                <input type="number" name="NET_AMT" id="NET_AMT1" readonly="true" class="form-control" style="text-align:right"/>
+                                <input type="number" name="NET_AMT" id="NET_AMT1" readonly="true" class="form-control" style="text-align: right" />
                             </div>
                         </div>
 
@@ -193,4 +195,48 @@
         </div>
     </div>
     <!-- For Modal Popup  -->
+
+
+    <!-- For Modal Popup Screen Authorizations Details -->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="PopupModalUpload">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Catalog Images Upload Area</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="panel-body">
+                        <div class="table-responsive" id="griddivupload">
+                            <table id="tableupload" class="table table-striped table-bordered" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>Image File</th>
+                                        <th>Thumbnail</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div style="float: left; padding-left: 10px">
+                <span style="padding-left: 10px">
+                     <%--Progress bar--%> 
+                    <img id="loading" src="../images/static/loading.gif" style="display: none;"></span>
+                </div>
+                <div class="modal-footer">
+                    <asp:FileUpload ID="fileToUpload" runat="server" ClientIDMode="Static" />
+                    <button type="button" id="btnUploadImage" class="btn btn-primary" edit-id="">Upload Image</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- For Modal Popup  -->
+
+
 </asp:Content>

@@ -61,6 +61,6 @@ F:\GIT-TFS\Source\Repos\Catalogue\Catalog\bin\Microsoft.AI.Web.xml
 F:\GIT-TFS\Source\Repos\Catalogue\Catalog\bin\Microsoft.AI.WindowsServer.xml
 F:\GIT-TFS\Source\Repos\Catalogue\Catalog\bin\Microsoft.ApplicationInsights.xml
 F:\GIT-TFS\Source\Repos\Catalogue\Catalog\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-F:\GIT-TFS\Source\Repos\Catalogue\Catalog\obj\Debug\Catalog.csprojResolveAssemblyReference.cache
 F:\GIT-TFS\Source\Repos\Catalogue\Catalog\obj\Debug\Catalog.dll
 F:\GIT-TFS\Source\Repos\Catalogue\Catalog\obj\Debug\Catalog.pdb
+F:\GIT-TFS\Source\Repos\Catalogue\Catalog\obj\Debug\Catalog.csprojResolveAssemblyReference.cache

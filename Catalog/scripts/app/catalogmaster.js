@@ -209,6 +209,56 @@ function LoadKaratCombo(data) {
 //Combos Loading Code - End
 
 $(function () {
+    $("#btnUploadImage").click(function () {
+
+        if ($('#fileToUpload').val() == null || $('#fileToUpload').val() == "") {
+            alert('Please Select an Image file upload');
+            $('#fileToUpload').focus();
+            return;
+        }
+
+        var id = $(this).attr("edit-id");
+
+        var fileToUpload = getNameFromPath($('#fileToUpload').val());
+        var orgfilename = fileToUpload;
+        var phyfilename = String(id) + '_' + String(getFormattedTimeStamp()) + '.' + orgfilename.substr((orgfilename.lastIndexOf('.') + 1));
+
+        if (checkFileExtension(fileToUpload)) {
+            if (orgfilename != "" && orgfilename != null) {
+                $("#loading").ajaxStart(function () {
+                    $(this).show();
+                }).ajaxComplete(function () {
+                    $(this).hide();
+                    return false;
+                });
+
+                $.ajaxFileUpload({
+                    url: 'CatalogImageUpload.ashx?action=UPLOAD&catalogid=' + id + '&phy_file_name=' + phyfilename + '&org_file_name=' + orgfilename,
+                    secureuri: false,
+                    fileElementId: 'fileToUpload',
+                    dataType: 'json',
+                    success: function (data, status) {
+                        if (typeof (data.error) != 'undefined') {
+                            if (data.error != '') {
+                                alert(data.error);
+                            } else {
+                                ShowUploadedFiles();
+                                $('#fileToUpload').val("");
+                            }
+                        }
+                    },
+                    error: function (data, status, e) {
+                        alert(e);
+                    }
+                });
+
+            }
+        }
+        else {
+            alert('You can upload only jpg,jpeg,png extension Image files.');
+        }
+    });
+
     $("#btnSave").click(function () {
         if ($("#TITLE1").val().trim() == "") {
             alert("Please enter Description.");
@@ -325,7 +375,7 @@ $(function () {
         obj.GRAMSLAB_ID = $("#GRAMSLAB_NAME1").val();
         obj.KARAT_ID = $("#KARAT_NAME1").val();
         obj.REMARKS = $("#REMARKS1").val().trim();
-        
+
         obj.PURITY = $("#PURITY1").val();
         obj.RATE = $("#RATE1").val();
         obj.GR_WT = $("#GR_WT1").val();
@@ -455,6 +505,17 @@ $(function () {
         $('#TITLE1').focus();
     });
 
+    $(document).on("click", ".uploadButton", function () {
+        $('#PopupModalUpload').modal('show');
+        $('#PopupModalUpload').focus();
+        var id = $(this).attr("data-id");
+        console.log(id);
+        $('#fileToUpload').val("");
+        $("#btnUploadImage").attr("edit-id", id);
+        ShowUploadedFiles();
+        $('#fileToUpload').focus();
+    });
+
     $(document).on("click", ".editButton", function () {
         $('#btnSave').hide();
         $('#btnUpdate').show();
@@ -517,7 +578,7 @@ $(function () {
                     $("#GRAMSLAB_NAME1").val(data.d[i].GRAMSLAB_ID);
                     $("#KARAT_NAME1").val(data.d[i].KARAT_ID);
                     $("#REMARKS1").val(data.d[i].REMARKS);
-                    $("#PURITY1").val(data.d[i].PURITY);                    
+                    $("#PURITY1").val(data.d[i].PURITY);
                     $("#RATE1").val(data.d[i].RATE);
                     $("#GR_WT1").val(data.d[i].GR_WT);
                     $("#ST_WT1").val(data.d[i].ST_WT);
@@ -528,8 +589,8 @@ $(function () {
                     $("#TAXABLE_AMT1").val(data.d[i].TAXABLE_AMT);
                     $("#TAX_PER1").val(data.d[i].TAX_PER);
                     $("#TAX_AMT1").val(data.d[i].TAX_AMT);
-                    $("#NET_AMT1").val(data.d[i].NET_AMT);                  
-                   
+                    $("#NET_AMT1").val(data.d[i].NET_AMT);
+
                     if (data.d[i].ACTIVE_STATUS == true)
                         $("#ACTIVE_STATUS1").prop('checked', true);
                     else
@@ -544,7 +605,7 @@ $(function () {
                         $("#SHOW_TRENDING1").prop('checked', true);
                     else
                         $("#SHOW_TRENDING1").prop('checked', false);
-                }               
+                }
                 Datalodaing = 0;
                 CalcAmt();
                 $('#TITLE1').focus();
@@ -735,11 +796,28 @@ $(function () {
         });
     });
 
+    $(document).on("click", ".deleteButtonImage", function () {
+        if (confirm("Are you sure you want to delete the Image!") == true) {
+            var phyimage = $(this).attr("data-id");
+            var catalogid = $("#btnUploadImage").attr("edit-id");
+            var orgfilename = '';
+            $.ajax({
+                url: 'CatalogImageUpload.ashx?action=DELETE&catalogid=' + catalogid + '&phy_file_name=' + phyimage + '&org_file_name=' + orgfilename,
+                type: "GET",
+                cache: false,
+                async: true,
+                success: function (html) {
+                    ShowUploadedFiles();
+                    alert('File Deleted successfully.')
+                }
+            });
+        }
+
+    });        
 });
 
 
-function CalcAmt()
-{
+function CalcAmt() {
     if (Datalodaing != 0)
         return;
     else if ($.isNumeric($("#RATE1").val()) == false)
@@ -753,22 +831,97 @@ function CalcAmt()
     else if ($.isNumeric($("#ST_AMT1").val()) == false)
         return;
     else if ($.isNumeric($("#TAX_PER1").val()) == false)
-        return;    
-    else if (Datalodaing == 0)
-    {
+        return;
+    else if (Datalodaing == 0) {
         $("#NET_WT1").val(parseFloat($("#GR_WT1").val() - $("#ST_WT1").val()).toFixed(3));
-        if ($("#RATE1").val() <= 0) {           
+        if ($("#RATE1").val() <= 0) {
             $("#VA_AMT1").val(0);
             $("#TAXABLE_AMT1").val(0);
             $("#TAX_AMT1").val(0);
             $("#NET_AMT1").val(0);
         }
-        else
-        {
+        else {
             $("#VA_AMT1").val(parseFloat(parseFloat($("#NET_WT1").val() * ($("#VA_PER1").val() / 100.0)) * parseFloat($("#RATE1").val())).toFixed(2));
             $("#TAXABLE_AMT1").val(parseFloat(parseFloat($("#RATE1").val()) * parseFloat(($("#NET_WT1").val())) + parseFloat($("#VA_AMT1").val()) + parseFloat(($("#ST_AMT1").val()))).toFixed(2));
             $("#TAX_AMT1").val(parseFloat(parseFloat($("#TAXABLE_AMT1").val()) * parseFloat($("#TAX_PER1").val() / 100.0)).toFixed(2));
             $("#NET_AMT1").val(parseFloat(parseFloat($("#TAXABLE_AMT1").val()) + parseFloat($("#TAX_AMT1").val())).toFixed(2));
         }
     }
+}
+
+function checkFileExtension(file) {
+    var flag = true;
+    var extension = file.substr((file.lastIndexOf('.') + 1));
+
+    switch (extension) {
+        case 'jpg':
+        case 'jpeg':
+        case 'png':
+        case 'JPG':
+        case 'JPEG':
+        case 'PNG':
+            flag = true;
+            break;
+        default:
+            flag = false;
+    }
+
+    return flag;
+}
+
+//get file path from client system
+function getNameFromPath(strFilepath) {
+
+    var objRE = new RegExp(/([^\/\\]+)$/);
+    var strName = objRE.exec(strFilepath);
+
+    if (strName == null) {
+        return null;
+    }
+    else {
+        return strName[0];
+    }
+}
+
+function ShowUploadedFiles() {
+    var catalogid = $("#btnUploadImage").attr("edit-id");
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: "CatalogMaster.aspx/GetCatalogImagesData",
+        data: '{id: ' + catalogid + '}',
+        dataType: "json",
+        success: function (data) {
+            $('#tableupload tbody').remove();
+            $('#tableupload').append("<tbody>");
+            for (var i = 0; i < data.d.length; i++) {
+                $('#tableupload').append(
+                    "<tr><td>" + data.d[i].ORG_FILE_NAME + "</td><td><input type='checkbox' onclick='return false;' " + (data.d[i].IS_THUMBNAIL == true ? "checked='checked'" : "") + "/></td>" +
+                    //"<td><input type='button' class='btn btn-success btn-sm downloadButton' data-id='" + data.d[i].PHY_FILE_NAME + "' name='submitButton' id='btndownload' value='Download' style='margin-right:5px;margin-left:5px'/>" + "</td>" +
+                    "<td><span style='float:left; margin-left:10px; width:40px;' ><a class='btn btn-success btn-sm downloadButton' href='CatalogImageUpload.ashx?action=DOWNLOAD&catalogid=" + catalogid + "&phy_file_name=" + data.d[i].PHY_FILE_NAME + "&org_file_name=" + data.d[i].ORG_FILE_NAME + "'>Download</a></span></td>" +
+                    "<td><input type='button' class='btn btn-danger btn-sm deleteButtonImage' data-id='" + data.d[i].PHY_FILE_NAME + "' name='submitButton' id='btnDeleteImage' value='Delete' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+            }
+            $('#tableupload').append("</tbody>");
+        },
+        error: function () {
+            alert("Error while Showing update data");
+        }
+
+        //
+    });
+
+}
+
+function getFormattedTimeStamp() {
+    var today = new Date();
+    var y = today.getFullYear();
+    // JavaScript months are 0-based.
+    var m = today.getMonth() + 1;
+    var d = today.getDate();
+    var h = today.getHours();
+    var mi = today.getMinutes();
+    var s = today.getSeconds();
+    var ms = today.getMilliseconds();
+    return y + "-" + m + "-" + d + "-" + h + "-" + mi + "-" + s + "-" + ms;
 }

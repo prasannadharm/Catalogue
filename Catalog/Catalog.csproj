@@ -101,6 +101,7 @@
     <Content Include="css\forgotpassword.css" />
     <Content Include="images\static\loader.gif" />
     <Content Include="images\static\loader1.gif" />
+    <Content Include="images\static\loading.gif" />
     <Content Include="images\static\logout.png" />
     <Content Include="images\static\sort_asc.png" />
     <Content Include="images\static\sort_both.png" />
@@ -110,6 +111,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Pages\CatalogAdmin.Master" />
+    <Content Include="Pages\CatalogImageUpload.ashx" />
     <None Include="Properties\PublishProfiles\File.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -158,6 +160,7 @@
     <Content Include="Pages\UserMaster.aspx" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="scripts\AjaxFileupload.js" />
     <Content Include="scripts\app\catalogmaster.js" />
     <Content Include="scripts\app\changepassword.js" />
     <Content Include="scripts\app\citystatemaster.js" />
@@ -175,11 +178,18 @@
     <Content Include="scripts\baguetteBox.min.js" />
     <Content Include="scripts\bootstrap.4.3.1.min.js" />
     <Content Include="scripts\dataTables.bootstrap4.min.js" />
+    <Content Include="scripts\jquery-1.7.1.min.js" />
     <Content Include="scripts\jquery-3.0.0.min.js" />
     <Content Include="scripts\jquery.dataTables.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\CatalogImageEntity.cs" />
+    <Compile Include="Pages\CatalogImageUpload.ashx.cs">
+      <DependentUpon>CatalogImageUpload.ashx</DependentUpon>
+    </Compile>
     <Compile Include="DAO\CatalogMasterDAO.cs" />
     <Compile Include="DAO\ChangePasswordDAO.cs" />
     <Compile Include="DAO\CityStateMasterDAO.cs" />
@@ -380,6 +390,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="images\upload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="scripts\app\ledgertypemaster.js" />

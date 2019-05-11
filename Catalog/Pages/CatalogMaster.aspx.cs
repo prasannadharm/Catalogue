@@ -200,5 +200,20 @@ namespace Catalog.Pages
             }
             return details.ToArray();
         }
+
+        [WebMethod]
+        public static CatalogImageEntity[] GetCatalogImagesData(long id) //Show the details of the data after insert in HTML Table
+        {
+            var details = new List<CatalogImageEntity>();
+            try
+            {
+                details = new CatalogMasterDAO().GetCalatogImages(id);
+            }
+            catch (Exception ex)
+            {
+                // details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
     }
 }
