@@ -816,7 +816,36 @@ $(function () {
             });
         }
 
-    });        
+    });
+
+    $(document).on("click", ".chkkstatus", function () {
+        var phyimage = $(this).attr("data-id");
+        var catalogid = $("#btnUploadImage").attr("edit-id");
+        $.ajax({
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            url: "CatalogMaster.aspx/UpdateCatalogImageStatus",
+            data: "{id: " + catalogid + ", str: '"+ phyimage +"'}",
+            dataType: "json",
+            success: function (data) {
+                for (var i = 0; i < data.d.length; i++) {
+                    if (data.d[i].RESULT === 1) {
+                        ShowUploadedFiles();
+                        //alert(data.d[i].MSG);
+                    }
+                    else {
+                        alert(data.d[i].MSG);
+                        return false;
+                    }
+                }
+            },
+            error: function (data) {
+                alert("Error while Deleting data of :" + id);
+            }
+        });
+
+    });
+
 });
 
 
@@ -900,8 +929,7 @@ function ShowUploadedFiles() {
             $('#tableupload').append("<tbody>");
             for (var i = 0; i < data.d.length; i++) {
                 $('#tableupload').append(
-                    "<tr><td>" + data.d[i].ORG_FILE_NAME + "</td><td><input type='checkbox' onclick='return false;' " + (data.d[i].IS_THUMBNAIL == true ? "checked='checked'" : "") + "/></td>" +
-                    //"<td><input type='button' class='btn btn-success btn-sm downloadButton' data-id='" + data.d[i].PHY_FILE_NAME + "' name='submitButton' id='btndownload' value='Download' style='margin-right:5px;margin-left:5px'/>" + "</td>" +
+                    "<tr><td>" + data.d[i].ORG_FILE_NAME + "</td><td><input type='checkbox'  class='chkkstatus' data-id=" + data.d[i].PHY_FILE_NAME + " " + (data.d[i].IS_THUMBNAIL == true ? "checked='checked'" : "") + "/></td>" +
                     "<td><span style='float:left; margin-left:10px; width:40px;' ><a class='btn btn-success btn-sm downloadButton' href='CatalogImageUpload.ashx?action=DOWNLOAD&catalogid=" + catalogid + "&phy_file_name=" + data.d[i].PHY_FILE_NAME + "&org_file_name=" + data.d[i].ORG_FILE_NAME + "'>Download</a></span></td>" +
                     "<td><input type='button' class='btn btn-danger btn-sm deleteButtonImage' data-id='" + data.d[i].PHY_FILE_NAME + "' name='submitButton' id='btnDeleteImage' value='Delete' style='margin-right:5px;margin-left:5px'/> </td></tr>");
             }

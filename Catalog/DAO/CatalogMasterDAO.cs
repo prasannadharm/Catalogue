@@ -367,5 +367,40 @@ namespace Catalog.DAO
             return objreturn;
         }
 
+
+        public DbStatusEntity UpdateCatalogImagesStatus(long id, string phy_file_name)
+        {
+            DbStatusEntity objreturn = new DbStatusEntity();
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("USP_UpdateCatalogImageStatus", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", id);
+                    cmd.Parameters.AddWithValue("@PHY_FILE_NAME", phy_file_name);
+
+                    cmd.Parameters.Add("@RESULT", SqlDbType.Int);
+                    cmd.Parameters["@RESULT"].Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@CNT", SqlDbType.Int);
+                    cmd.Parameters["@CNT"].Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@MSG", SqlDbType.NVarChar, 500);
+                    cmd.Parameters["@MSG"].Direction = ParameterDirection.Output;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    objreturn.RESULT = Convert.ToInt32(cmd.Parameters["@RESULT"].Value);
+                    objreturn.CNT = Convert.ToInt32(cmd.Parameters["@CNT"].Value);
+                    objreturn.MSG = Convert.ToString(cmd.Parameters["@MSG"].Value);
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return objreturn;
+        }
+
     }
 }

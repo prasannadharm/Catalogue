@@ -215,5 +215,21 @@ namespace Catalog.Pages
             }
             return details.ToArray();
         }
+
+        [WebMethod]
+        public static DbStatusEntity[] UpdateCatalogImageStatus(long id, string str)
+        {
+            var details = new List<DbStatusEntity>();
+            try
+            {
+                details.Add(new CatalogMasterDAO().UpdateCatalogImagesStatus(id, str));
+            }
+            catch (Exception ex)
+            {
+                details.Clear();
+                details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
     }
 }
