@@ -225,13 +225,14 @@ $(function () {
 
         if (checkFileExtension(fileToUpload)) {
             if (orgfilename != "" && orgfilename != null) {
-                $("#loading").ajaxStart(function () {
-                    $(this).show();
-                }).ajaxComplete(function () {
-                    $(this).hide();
-                    return false;
-                });
+                //$("#loading").ajaxStart(function () {
+                //    $(this).show();
+                //}).ajaxComplete(function () {
+                //    $(this).hide();
+                //    return false;
+                //});
 
+                $("#loading").show();
                 $.ajaxFileUpload({
                     url: 'CatalogImageUpload.ashx?action=UPLOAD&catalogid=' + id + '&phy_file_name=' + phyfilename + '&org_file_name=' + orgfilename,
                     secureuri: false,
@@ -246,9 +247,11 @@ $(function () {
                                 $('#fileToUpload').val("");
                             }
                         }
+                        $("#loading").hide();
                     },
                     error: function (data, status, e) {
                         alert(e);
+                        $("#loading").hide();
                     }
                 });
 
