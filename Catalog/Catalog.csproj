@@ -115,8 +115,10 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Pages\Banner.aspx" />
     <Content Include="Pages\CatalogAdmin.Master" />
     <Content Include="Pages\CatalogImageUpload.ashx" />
+    <Content Include="Pages\BannerImageUpload.ashx" />
     <None Include="Properties\PublishProfiles\File.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -167,6 +169,7 @@
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\AjaxFileupload.js" />
+    <Content Include="scripts\app\bannermaster.js" />
     <Content Include="scripts\app\catalogmaster.js" />
     <Content Include="scripts\app\changepassword.js" />
     <Content Include="scripts\app\citystatemaster.js" />
@@ -193,7 +196,19 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\BannerMasterDAO.cs" />
+    <Compile Include="Models\BannerImageEntity.cs" />
     <Compile Include="Models\CatalogImageEntity.cs" />
+    <Compile Include="Pages\Banner.aspx.cs">
+      <DependentUpon>Banner.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Banner.aspx.designer.cs">
+      <DependentUpon>Banner.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BannerImageUpload.ashx.cs">
+      <DependentUpon>BannerImageUpload.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\CatalogImageUpload.ashx.cs">
       <DependentUpon>CatalogImageUpload.ashx</DependentUpon>
     </Compile>
