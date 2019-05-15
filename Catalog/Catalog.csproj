@@ -99,10 +99,15 @@
     <Content Include="css\CatalogAdminMasterPage.css" />
     <Content Include="css\dataTables.bootstrap4.min.css" />
     <Content Include="css\forgotpassword.css" />
+    <Content Include="images\static\IM.jpg" />
+    <Content Include="images\static\IM1.jpg" />
+    <Content Include="images\static\IM2.jpg" />
+    <Content Include="images\static\IM3.jpg" />
     <Content Include="images\static\loader.gif" />
     <Content Include="images\static\loader1.gif" />
     <Content Include="images\static\loading.gif" />
     <Content Include="images\static\logout.png" />
+    <Content Include="images\static\search-icon.png" />
     <Content Include="images\static\sort_asc.png" />
     <Content Include="images\static\sort_both.png" />
     <Content Include="images\static\sort_desc.png" />
@@ -155,6 +160,7 @@
     <Content Include="Pages\MaterialMaster.aspx" />
     <Content Include="Pages\OccasionMaster.aspx" />
     <Content Include="Pages\RolesMaster.aspx" />
+    <Content Include="Pages\Search.aspx" />
     <Content Include="Pages\UserDashboard.aspx" />
     <Content Include="Pages\UserLogin.aspx" />
     <Content Include="Pages\UserMaster.aspx" />
@@ -181,6 +187,7 @@
     <Content Include="scripts\jquery-1.7.1.min.js" />
     <Content Include="scripts\jquery-3.0.0.min.js" />
     <Content Include="scripts\jquery.dataTables.min.js" />
+    <Content Include="scripts\popper.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -364,6 +371,13 @@
     </Compile>
     <Compile Include="Pages\RolesMaster.aspx.designer.cs">
       <DependentUpon>RolesMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Search.aspx.cs">
+      <DependentUpon>Search.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Search.aspx.designer.cs">
+      <DependentUpon>Search.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\UserDashboard.aspx.cs">
       <DependentUpon>UserDashboard.aspx</DependentUpon>
