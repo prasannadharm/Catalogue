@@ -117,6 +117,7 @@
     </Content>
     <Content Include="Pages\Banner.aspx" />
     <Content Include="Pages\CatalogAdmin.Master" />
+    <Content Include="Pages\CatalogDetails.aspx" />
     <Content Include="Pages\CatalogImageUpload.ashx" />
     <Content Include="Pages\BannerImageUpload.ashx" />
     <None Include="Properties\PublishProfiles\File.pubxml" />
@@ -177,6 +178,7 @@
     <Content Include="scripts\app\designmaster.js" />
     <Content Include="scripts\app\forgotpassword.js" />
     <Content Include="scripts\app\gramslabmaster.js" />
+    <Content Include="scripts\app\home.js" />
     <Content Include="scripts\app\jewellerymaster.js" />
     <Content Include="scripts\app\karatmaster.js" />
     <Content Include="scripts\app\ledgermaster.js" />
@@ -197,8 +199,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAO\BannerMasterDAO.cs" />
+    <Compile Include="DAO\HomeDAO.cs" />
     <Compile Include="Models\BannerImageEntity.cs" />
     <Compile Include="Models\CatalogImageEntity.cs" />
+    <Compile Include="Models\TrendingEntity.cs" />
     <Compile Include="Pages\Banner.aspx.cs">
       <DependentUpon>Banner.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -208,6 +212,10 @@
     </Compile>
     <Compile Include="Pages\BannerImageUpload.ashx.cs">
       <DependentUpon>BannerImageUpload.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CatalogDetails.aspx.cs">
+      <DependentUpon>CatalogDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Pages\CatalogImageUpload.ashx.cs">
       <DependentUpon>CatalogImageUpload.ashx</DependentUpon>

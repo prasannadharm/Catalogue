@@ -30,6 +30,7 @@ namespace Catalog.DAO
                         BannerImageEntity obj = new BannerImageEntity();
                         obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
                         obj.HEADING = ds.Tables[0].Rows[i]["HEADING"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["HEADING"].ToString();
+                        obj.DESCRIPTION = ds.Tables[0].Rows[i]["DESCRIPTION"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["DESCRIPTION"].ToString();
                         obj.ORG_FILE_NAME = ds.Tables[0].Rows[i]["ORG_FILE_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["ORG_FILE_NAME"].ToString();
                         obj.PHY_FILE_NAME = ds.Tables[0].Rows[i]["PHY_FILE_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["PHY_FILE_NAME"].ToString();
                         obj.SORT_ORDER = ds.Tables[0].Rows[i]["SORT_ORDER"] == DBNull.Value ? 0: Convert.ToInt32(ds.Tables[0].Rows[i]["SORT_ORDER"].ToString());

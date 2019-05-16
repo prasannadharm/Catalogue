@@ -42,7 +42,7 @@
                 </asp:ContentPlaceHolder>
             </div>
 
-            <div class="d-flex align-items-center p-3 my-3 rounded shadow-sm" style="background-color: #232f3e;color: #ffd500;">
+            <div class="align-items-center p-3 my-3 rounded shadow-sm" style="background-color: #232f3e;color: #ffd500;text-align:center;align-content:center">
                 © Copyright 2019 Jewellery Catalog. All Rights Reserved.        
             </div>
 
