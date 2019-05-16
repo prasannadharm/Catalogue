@@ -30,11 +30,12 @@
         <%--<div class="container">--%>
         <nav class="navbar navbar-inverse" style="background-color: #232f3e;">
             <a class="navbar-brand mb-0 h1" href="#" style="color: #ffd500;">Jewellery Catalog</a>
+            <input type="text" placeholder="Search.." class="form-control" style="width: 50%">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
              
-            <input type="text" placeholder="Search.." class="form-control" style="width: 50%">
+            
             
             <ul class="nav navbar-nav navbar-right">
                 <li style="align-content: center">

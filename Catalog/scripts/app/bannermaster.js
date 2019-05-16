@@ -7,19 +7,20 @@ function getDetails() {
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: "JewelleryMaster.aspx/GetData",
+        url: "Banner.aspx/GetData",
         data: {},
         dataType: "json",
         success: function (data) {
             $('#griddiv').remove();
             $('#maindiv').append("<div class='table-responsive' id='griddiv'></div>");
             $('#griddiv').append("<table id='tablemain' class='table table-striped table-bordered' style='width: 100%'></table>");
-            $('#tablemain').append("<thead><tr><th>Name</th><th>Active</th><th></th><th></th></tr></thead><tbody></tbody>");
+            $('#tablemain').append("<thead><tr><th>Heading</th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
             $('#tablemain tbody').remove();
             $('#tablemain').append("<tbody>");
             for (var i = 0; i < data.d.length; i++) {
                 $('#tablemain').append(
-                    "<tr><td>" + data.d[i].NAME + "</td><td>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].ACTIVE_STATUS == true ? "checked='checked'" : "") + "/></td>" +
+                    "<tr><td>" + data.d[i].HEADING + "</td>" +
+                    "<td><span style='float:left; margin-left:10px; width:40px;' ><a class='btn btn-success btn-sm downloadButton' href='BannerImageUpload.ashx?action=DOWNLOAD&id=" + data.d[i].ID + "'>Download</a></span></td>"  +
                     "<td>" + "<input type='button' class='btn btn-warning btn-sm editButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' />" + "</td>" +
                     "<td><input type='button' class='btn btn-danger btn-sm deleteButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete'/> </td></tr>");
             }
@@ -37,46 +38,66 @@ function getDetails() {
 
 $(function () {
     $("#btnSave").click(function () {
-        if ($("#NAME1").val().trim() == "") {
-            alert("Please enter Name.");
-            $("#NAME1").focus();
+
+        if ($("#HEADING1").val().trim() == "") {
+            alert("Please enter Heading.");
+            $("#HEADING1").focus();
             return false;
         }
-        var obj = {};
-        obj.NAME = $("#NAME1").val();
-        if ($('#ACTIVE_STATUS1').is(":checked")) {
-            obj.ACTIVE_STATUS = true;
-        }
-        else {
-            obj.ACTIVE_STATUS = false;
+
+        if ($("#DESCRIPTION1").val().trim() == "") {
+            alert("Please enter Description.");
+            $("#DESCRIPTION1").focus();
+            return false;
         }
 
-        $.ajax({
-            type: "Post",
-            contentType: "application/json; charset=utf-8",
-            url: "JewelleryMaster.aspx/InsertData",
-            data: '{obj: ' + JSON.stringify(obj) + '}',
-            dataType: "json",
-            success: function (data) {
-                for (var i = 0; i < data.d.length; i++) {
-                    if (data.d[i].RESULT === 1) {
-                        getDetails();
-                        alert(data.d[i].MSG);
-                        $('#PopupModal').modal('hide');
+        if ($('#fileToUpload').val() == null || $('#fileToUpload').val() == "") {
+            alert('Please Select an Image file upload');
+            $('#fileToUpload').focus();
+            return;
+        }
+
+        var heading = $("#HEADING1").val().trim();
+        var desc = $("#DESCRIPTION1").val().trim();
+
+        var fileToUpload = getNameFromPath($('#fileToUpload').val());
+        var orgfilename = fileToUpload;
+        var phyfilename = 'BannerImage_' + String(getFormattedTimeStamp()) + '.' + orgfilename.substr((orgfilename.lastIndexOf('.') + 1));
+
+        if (checkFileExtension(fileToUpload)) {
+            if (orgfilename != "" && orgfilename != null) {                
+
+                $("#loading").show();
+                $.ajaxFileUpload({
+                    url: 'BannerImageUpload.ashx?action=UPLOAD&phy_file_name=' + phyfilename + '&org_file_name=' + orgfilename + '&heading=' + heading + '&desc=' + desc,
+                    secureuri: false,
+                    fileElementId: 'fileToUpload',
+                    dataType: 'json',
+                    success: function (data, status) {
+                        if (typeof (data.error) != 'undefined') {
+                            if (data.error != '') {
+                                alert(data.error);
+                            } else {
+                                $('#fileToUpload').val("");
+                                $('#PopupModal').modal('hide');
+                                alert('File Uploaded Successfully.')
+                                getDetails();
+                                
+                            }
+                        }
+                        $("#loading").hide();
+                    },
+                    error: function (data, status, e) {
+                        alert(e);
+                        $("#loading").hide();
                     }
-                    else {
-                        alert(data.d[i].MSG);
-                        $("#NAME1").focus();
-                        return false;
-                    }
-                }
-            },
-            error: function (data) {
-                alert("Error while Adding data of :" + obj.NAME);
-                $("#NAME1").focus();
-                return false;
+                });
+
             }
-        });
+        }
+        else {
+            alert('You can upload only jpg,jpeg,png extension Image files.');
+        }
 
     });
 
@@ -84,25 +105,13 @@ $(function () {
         if (confirm("Are you sure you want to delete !") == true) {
             var id = $(this).attr("data-id");
             $.ajax({
-                type: "Post",
-                contentType: "application/json; charset=utf-8",
-                url: "JewelleryMaster.aspx/DeleteData",
-                data: '{id: ' + id + '}',
-                dataType: "json",
-                success: function (data) {
-                    for (var i = 0; i < data.d.length; i++) {
-                        if (data.d[i].RESULT === 1) {
-                            getDetails();
-                            alert(data.d[i].MSG);
-                        }
-                        else {
-                            alert(data.d[i].MSG);
-                            return false;
-                        }
-                    }
-                },
-                error: function (data) {
-                    alert("Error while Deleting data of :" + id);
+                url: 'BannerImageUpload.ashx?action=DELETE&id=' + id,
+                type: "GET",
+                cache: false,
+                async: true,
+                success: function (html) {
+                    getDetails();
+                    alert('File Deleted successfully.')
                 }
             });
         }
@@ -114,10 +123,12 @@ $(function () {
         $('#btnUpdate').hide();
         $('#PopupModal').modal('show');
         $('#PopupModal').focus();
-        $("#NAME1").val('');
-        $("#ACTIVE_STATUS1").prop('checked', true);
-        $("div.modal-header h2").html("Add Jewellery Details");
-        $('#NAME1').focus();
+        $("#HEADING1").val('');
+        $("#DESCRIPTION1").val('');
+        $("#fileToUpload").val('');
+        $("#fileToUpload").show();
+        $("div.modal-header h2").html("Add Banner Details");
+        $('#HEADING1').focus();
     });
 
     $(document).on("click", ".editButton", function () {
@@ -125,8 +136,11 @@ $(function () {
         $('#btnUpdate').show();
         $('#PopupModal').modal('show');
         $('#PopupModal').focus();
-        $("#NAME1").val("");
-        $("div.modal-header h2").html("Edit Jewellery Details");
+        $("#HEADING1").val('');
+        $("#DESCRIPTION1").val('');
+        $("#fileToUpload").val('');
+        $("#fileToUpload").hide();
+        $("div.modal-header h2").html("Edit Banner Details");
         var id = $(this).attr("data-id");
         console.log(id);
         $("#btnUpdate").attr("edit-id", id);
@@ -134,18 +148,15 @@ $(function () {
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
-            url: "JewelleryMaster.aspx/EditData",
+            url: "Banner.aspx/EditData",
             data: '{id: ' + id + '}',
             dataType: "json",
             success: function (data) {
                 for (var i = 0; i < data.d.length; i++) {
-                    $("#NAME1").val(data.d[i].NAME);
-                    if (data.d[i].ACTIVE_STATUS == true)
-                        $("#ACTIVE_STATUS1").prop('checked', true);
-                    else
-                        $("#ACTIVE_STATUS1").prop('checked', false);
+                    $("#HEADING1").val(data.d[i].HEADING);
+                    $("#DESCRIPTION1").val(data.d[i].DESCRIPTION);
                 }
-                $('#NAME1').focus();
+                $('#HEADING1').focus();
             },
             error: function () {
                 alert("Error while retrieving data of :" + id);
@@ -154,26 +165,27 @@ $(function () {
     });
 
     $("#btnUpdate").click(function () {
-        if ($("#NAME1").val().trim() == "") {
-            alert("Please enter Name.");
-            $("#NAME1").focus();
+        if ($("#HEADING1").val().trim() == "") {
+            alert("Please enter Heading.");
+            $("#HEADING1").focus();
+            return false;
+        }
+
+        if ($("#DESCRIPTION1").val().trim() == "") {
+            alert("Please enter Description.");
+            $("#DESCRIPTION1").focus();
             return false;
         }
         var id = $(this).attr("edit-id");
         var obj = {};
         obj.ID = id;
-        obj.NAME = $("#NAME1").val();
-        if ($('#ACTIVE_STATUS1').is(":checked")) {
-            obj.ACTIVE_STATUS = true;
-        }
-        else {
-            obj.ACTIVE_STATUS = false;
-        }
+        obj.HEADING = $("#HEADING1").val();
+        obj.DESCRIPTION = $("#DESCRIPTION1").val();
 
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
-            url: "JewelleryMaster.aspx/UpdateData",
+            url: "Banner.aspx/UpdateData",
             data: '{obj: ' + JSON.stringify(obj) + ', id : ' + id + '}',
             dataType: "json",
             success: function (data) {
@@ -185,17 +197,64 @@ $(function () {
                     }
                     else {
                         alert(data.d[i].MSG);
-                        $("#NAME1").focus();
+                        $("#HEADING1").focus();
                         return false;
                     }
                 }
             },
             error: function (data) {
                 alert("Error while Updating data of :" + id);
-                $("#NAME1").focus();
+                $("#HEADING1").focus();
                 return false;
             }
         });
     });
 
 });
+
+function getFormattedTimeStamp() {
+    var today = new Date();
+    var y = today.getFullYear();
+    // JavaScript months are 0-based.
+    var m = today.getMonth() + 1;
+    var d = today.getDate();
+    var h = today.getHours();
+    var mi = today.getMinutes();
+    var s = today.getSeconds();
+    var ms = today.getMilliseconds();
+    return y + "-" + m + "-" + d + "-" + h + "-" + mi + "-" + s + "-" + ms;
+}
+
+function checkFileExtension(file) {
+    var flag = true;
+    var extension = file.substr((file.lastIndexOf('.') + 1));
+
+    switch (extension) {
+        case 'jpg':
+        case 'jpeg':
+        case 'png':
+        case 'JPG':
+        case 'JPEG':
+        case 'PNG':
+            flag = true;
+            break;
+        default:
+            flag = false;
+    }
+
+    return flag;
+}
+
+//get file path from client system
+function getNameFromPath(strFilepath) {
+
+    var objRE = new RegExp(/([^\/\\]+)$/);
+    var strName = objRE.exec(strFilepath);
+
+    if (strName == null) {
+        return null;
+    }
+    else {
+        return strName[0];
+    }
+}

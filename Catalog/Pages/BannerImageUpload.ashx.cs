@@ -17,8 +17,10 @@ namespace Catalog.Pages
         string actiontype;
         string org_file_name;
         string phy_file_name;
-        string catelogid;
+        string id;
         int mFileSize = 0;
+        string heading = "";
+        string desc = "";
         public void ProcessRequest(HttpContext context)
         {
             if (context.Request.QueryString["action"] != null)
@@ -34,24 +36,24 @@ namespace Catalog.Pages
                     string Savepath = context.Server.MapPath("~//" + folderpath);
                     if (mFileSize <= Convert.ToInt32(filesize))
                     {
-                        // Get Server Folder to upload file
-                        catelogid = context.Request.QueryString["catalogid"].ToString();
+                        // Get Server Folder to upload file                       
                         phy_file_name = context.Request.QueryString["phy_file_name"].ToString();
                         org_file_name = context.Request.QueryString["org_file_name"].ToString();
-
+                        heading = context.Request.QueryString["heading"].ToString();
+                        desc = context.Request.QueryString["desc"].ToString();
                         if (!Directory.Exists(Savepath))
                             Directory.CreateDirectory(Savepath);
 
                         postedFile.SaveAs(Savepath + "\\" + phy_file_name);
 
-                        CatalogImageEntity objimg = new CatalogImageEntity();
-                        objimg.CATALOG_ID = Convert.ToInt64(catelogid);
-                        objimg.IS_THUMBNAIL = true;
+                        BannerImageEntity objimg = new BannerImageEntity();
+                        objimg.HEADING = heading;
+                        objimg.DESCRIPTION = desc;
                         objimg.ORG_FILE_NAME = org_file_name;
                         objimg.PHY_FILE_NAME = phy_file_name;
                         List<DbStatusEntity> details = new List<DbStatusEntity>();
 
-                        details.Add(new CatalogMasterDAO().InsertCatalogImages(objimg));
+                        details.Add(new BannerMasterDAO().InsertBanner(objimg));
 
                         //Set response message
                         string msg = "{";
@@ -64,9 +66,15 @@ namespace Catalog.Pages
                 else if (actiontype.Trim().ToUpper() == "DELETE")
                 {
                     folderpath = System.Configuration.ConfigurationManager.AppSettings["FolderPath"];
-                    catelogid = context.Request.QueryString["catalogid"].ToString();
-                    phy_file_name = context.Request.QueryString["phy_file_name"].ToString();
+                    id = context.Request.QueryString["id"].ToString();
 
+                    List<BannerImageEntity> objimg = new List<BannerImageEntity>();
+                    objimg = new BannerMasterDAO().EditBanner(Convert.ToInt64(id));
+                    if (objimg.Count > 0)
+                    {
+                        phy_file_name = objimg[0].PHY_FILE_NAME;
+                    }
+                    
                     string Savepath = context.Server.MapPath("~//" + folderpath);
 
                     if (File.Exists(Savepath + "\\" + phy_file_name))
@@ -76,14 +84,20 @@ namespace Catalog.Pages
 
                     List<DbStatusEntity> details = new List<DbStatusEntity>();
 
-                    details.Add(new CatalogMasterDAO().DeleteCatalogImages(Convert.ToInt64(catelogid), phy_file_name));
+                    details.Add(new BannerMasterDAO().DeleteBanner(Convert.ToInt64(id)));
                 }
                 else if (actiontype.Trim().ToUpper() == "DOWNLOAD")
                 {
                     folderpath = System.Configuration.ConfigurationManager.AppSettings["FolderPath"];
-                    catelogid = context.Request.QueryString["catalogid"].ToString();
-                    phy_file_name = context.Request.QueryString["phy_file_name"].ToString();
-                    org_file_name = context.Request.QueryString["org_file_name"].ToString();
+                    id = context.Request.QueryString["id"].ToString();
+                    List<BannerImageEntity> objimg = new List<BannerImageEntity>();
+                    objimg = new BannerMasterDAO().EditBanner(Convert.ToInt64(id));
+                    if (objimg.Count > 0)
+                    {
+                        phy_file_name = objimg[0].PHY_FILE_NAME;
+                        org_file_name = objimg[0].ORG_FILE_NAME;
+                    }
+
                     string Savepath = context.Server.MapPath("~//" + folderpath);
                     if (File.Exists(Savepath + "\\" + phy_file_name))
                     {

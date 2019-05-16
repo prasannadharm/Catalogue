@@ -45,7 +45,7 @@ namespace Catalog.DAO
         }
 
 
-        public List<BannerImageEntity> EditBanner(int id)
+        public List<BannerImageEntity> EditBanner(Int64 id)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
@@ -96,8 +96,6 @@ namespace Catalog.DAO
                     cmd.Parameters.AddWithValue("@ID", id);
                     cmd.Parameters.AddWithValue("@HEADING", obj.HEADING);
                     cmd.Parameters.AddWithValue("@DESCRIPTION", obj.DESCRIPTION);
-                    cmd.Parameters.AddWithValue("@ORG_FILE_NAME", obj.ORG_FILE_NAME);
-                    cmd.Parameters.AddWithValue("@PHY_FILE_NAME", obj.PHY_FILE_NAME);
                     cmd.Parameters.Add("@RESULT", SqlDbType.Int);
                     cmd.Parameters["@RESULT"].Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("@CNT", SqlDbType.Int);
@@ -155,7 +153,7 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public DbStatusEntity DeleteBanner(int id)
+        public DbStatusEntity DeleteBanner(Int64 id)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
