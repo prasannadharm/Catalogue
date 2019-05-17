@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\CatalogAdminMasterPage.css" />
+    <Content Include="css\catalogdetail.css" />
     <Content Include="css\dataTables.bootstrap4.min.css" />
     <Content Include="css\forgotpassword.css" />
     <Content Include="images\static\IM.jpg" />
@@ -171,6 +172,8 @@
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\AjaxFileupload.js" />
     <Content Include="scripts\app\bannermaster.js" />
+    <Content Include="scripts\app\catalogdetail.js" />
+    <Content Include="scripts\app\catalogdetialdata.js" />
     <Content Include="scripts\app\catalogmaster.js" />
     <Content Include="scripts\app\changepassword.js" />
     <Content Include="scripts\app\citystatemaster.js" />
@@ -199,8 +202,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAO\BannerMasterDAO.cs" />
+    <Compile Include="DAO\CatalogDetailsDAO.cs" />
     <Compile Include="DAO\HomeDAO.cs" />
     <Compile Include="Models\BannerImageEntity.cs" />
+    <Compile Include="Models\CatalogDetailsEntity.cs" />
     <Compile Include="Models\CatalogImageEntity.cs" />
     <Compile Include="Models\TrendingEntity.cs" />
     <Compile Include="Pages\Banner.aspx.cs">
