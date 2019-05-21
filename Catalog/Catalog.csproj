@@ -96,10 +96,14 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\ajaxloader.css" />
+    <Content Include="css\bootstrap-select.css" />
+    <Content Include="css\bootstrap4.1.1.min.css" />
     <Content Include="css\CatalogAdminMasterPage.css" />
     <Content Include="css\catalogdetail.css" />
     <Content Include="css\dataTables.bootstrap4.min.css" />
     <Content Include="css\forgotpassword.css" />
+    <Content Include="images\static\favicon.ico" />
     <Content Include="images\static\IM.jpg" />
     <Content Include="images\static\IM1.jpg" />
     <Content Include="images\static\IM2.jpg" />
@@ -188,9 +192,12 @@
     <Content Include="scripts\app\materialmaster.js" />
     <Content Include="scripts\app\occasionmaster.js" />
     <Content Include="scripts\app\rolesmaster.js" />
+    <Content Include="scripts\app\search.js" />
     <Content Include="scripts\app\usermaster.js" />
     <Content Include="scripts\baguetteBox.min.js" />
+    <Content Include="scripts\bootstrap-select.min.js" />
     <Content Include="scripts\bootstrap.4.3.1.min.js" />
+    <Content Include="scripts\bootstrap4.1.1.bundle.min.js" />
     <Content Include="scripts\dataTables.bootstrap4.min.js" />
     <Content Include="scripts\jquery-1.7.1.min.js" />
     <Content Include="scripts\jquery-3.0.0.min.js" />
@@ -204,9 +211,11 @@
     <Compile Include="DAO\BannerMasterDAO.cs" />
     <Compile Include="DAO\CatalogDetailsDAO.cs" />
     <Compile Include="DAO\HomeDAO.cs" />
+    <Compile Include="DAO\SearchItemDAO.cs" />
     <Compile Include="Models\BannerImageEntity.cs" />
     <Compile Include="Models\CatalogDetailsEntity.cs" />
     <Compile Include="Models\CatalogImageEntity.cs" />
+    <Compile Include="Models\SearchIetmEntity.cs" />
     <Compile Include="Models\TrendingEntity.cs" />
     <Compile Include="Pages\Banner.aspx.cs">
       <DependentUpon>Banner.aspx</DependentUpon>

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Forgot Password</title>
-
+    <link rel="shortcut icon" href="../images/static/favicon.ico" type="image/x-icon"/>
     <style>
         
 
