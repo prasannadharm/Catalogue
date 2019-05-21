@@ -40,12 +40,85 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static JewelleryMasterEntity[] GetActiveJewelleryList()
+        public static DropdownEntity[] GetDropdownLisDatat()
         {
-            var details = new List<JewelleryMasterEntity>();
+            var details = new List<DropdownEntity>();
             try
             {
-                details = new GenericDAO().GetActiveJewelleryList();
+                List<JewelleryMasterEntity> objlst = new List<JewelleryMasterEntity>();
+                objlst = new GenericDAO().GetActiveJewelleryList();
+                foreach (JewelleryMasterEntity obj in objlst)
+                {
+                    DropdownEntity objnew = new DropdownEntity();
+                    objnew.NAME = obj.NAME;
+                    objnew.ID = obj.ID;
+                    objnew.TYPE = "JEWELLERY";
+                    details.Add(objnew);
+                }
+                List<DesignMasterEntity> objlstdesign = new List<DesignMasterEntity>();
+                objlstdesign = new GenericDAO().GetActiveDesignList();
+                foreach (DesignMasterEntity obj in objlstdesign)
+                {
+                    DropdownEntity objnew = new DropdownEntity();
+                    objnew.NAME = obj.NAME;
+                    objnew.ID = obj.ID;
+                    objnew.TYPE = "DESIGN";
+                    details.Add(objnew);
+                }
+                List<CollectionsMasterEntity> objlstcol = new List<CollectionsMasterEntity>();
+                objlstcol = new GenericDAO().GetActiveCollectionsList();
+                foreach (CollectionsMasterEntity obj in objlstcol)
+                {
+                    DropdownEntity objnew = new DropdownEntity();
+                    objnew.NAME = obj.NAME;
+                    objnew.ID = obj.ID;
+                    objnew.TYPE = "COLLECTON";
+                    details.Add(objnew);
+                }
+
+                List<MaterialMasterEntity> objlstmat = new List<MaterialMasterEntity>();
+                objlstmat = new GenericDAO().GetActiveMaterialList();
+                foreach (MaterialMasterEntity obj in objlstmat)
+                {
+                    DropdownEntity objnew = new DropdownEntity();
+                    objnew.NAME = obj.NAME;
+                    objnew.ID = obj.ID;
+                    objnew.TYPE = "MATERIAL";
+                    details.Add(objnew);
+                }
+
+                List<OccasionMasterEntity> objlstosscat = new List<OccasionMasterEntity>();
+                objlstosscat = new GenericDAO().GetActiveOccasionList();
+                foreach (OccasionMasterEntity obj in objlstosscat)
+                {
+                    DropdownEntity objnew = new DropdownEntity();
+                    objnew.NAME = obj.NAME;
+                    objnew.ID = obj.ID;
+                    objnew.TYPE = "OCCASION";
+                    details.Add(objnew);
+                }
+
+                List<GramSlabMasterEntity> objlstgs = new List<GramSlabMasterEntity>();
+                objlstgs = new GenericDAO().GetActiveGramSlabList();
+                foreach (GramSlabMasterEntity obj in objlstgs)
+                {
+                    DropdownEntity objnew = new DropdownEntity();
+                    objnew.NAME = obj.NAME;
+                    objnew.ID = obj.ID;
+                    objnew.TYPE = "GRAMSLAB";
+                    details.Add(objnew);
+                }
+
+                List<KaratMasterEntity> objlstkarat = new List<KaratMasterEntity>();
+                objlstkarat = new GenericDAO().GetActiveKaratList();
+                foreach (KaratMasterEntity obj in objlstkarat)
+                {
+                    DropdownEntity objnew = new DropdownEntity();
+                    objnew.NAME = obj.NAME;
+                    objnew.ID = obj.ID;
+                    objnew.TYPE = "KARAT";
+                    details.Add(objnew);
+                }
             }
             catch (Exception ex)
             {
@@ -54,94 +127,5 @@ namespace Catalog.Pages
             return details.ToArray();
         }
 
-        [WebMethod]
-        public static DesignMasterEntity[] GetActiveDesignList()
-        {
-            var details = new List<DesignMasterEntity>();
-            try
-            {
-                details = new GenericDAO().GetActiveDesignList();
-            }
-            catch (Exception ex)
-            {
-                //details.Add(new DbStatusEntity(ex.Message));
-            }
-            return details.ToArray();
-        }
-
-        [WebMethod]
-        public static CollectionsMasterEntity[] GetActiveCollectionsList()
-        {
-            var details = new List<CollectionsMasterEntity>();
-            try
-            {
-                details = new GenericDAO().GetActiveCollectionsList();
-            }
-            catch (Exception ex)
-            {
-                //details.Add(new DbStatusEntity(ex.Message));
-            }
-            return details.ToArray();
-        }
-
-        [WebMethod]
-        public static MaterialMasterEntity[] GetActiveMaterialList()
-        {
-            var details = new List<MaterialMasterEntity>();
-            try
-            {
-                details = new GenericDAO().GetActiveMaterialList();
-            }
-            catch (Exception ex)
-            {
-                //details.Add(new DbStatusEntity(ex.Message));
-            }
-            return details.ToArray();
-        }
-
-        [WebMethod]
-        public static OccasionMasterEntity[] GetActiveOccasionList()
-        {
-            var details = new List<OccasionMasterEntity>();
-            try
-            {
-                details = new GenericDAO().GetActiveOccasionList();
-            }
-            catch (Exception ex)
-            {
-                //details.Add(new DbStatusEntity(ex.Message));
-            }
-            return details.ToArray();
-        }
-
-        [WebMethod]
-        public static GramSlabMasterEntity[] GetActiveGramSlabList()
-        {
-            var details = new List<GramSlabMasterEntity>();
-            try
-            {
-                details = new GenericDAO().GetActiveGramSlabList();
-            }
-            catch (Exception ex)
-            {
-                //details.Add(new DbStatusEntity(ex.Message));
-            }
-            return details.ToArray();
-        }
-
-        [WebMethod]
-        public static KaratMasterEntity[] GetActiveKaratList()
-        {
-            var details = new List<KaratMasterEntity>();
-            try
-            {
-                details = new GenericDAO().GetActiveKaratList();
-            }
-            catch (Exception ex)
-            {
-                //details.Add(new DbStatusEntity(ex.Message));
-            }
-            return details.ToArray();
-        }
     }
 }

@@ -4,17 +4,15 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Catalog Detail</title>
+    <link rel="shortcut icon" href="../images/static/favicon.ico" type="image/x-icon"/>
     <link href="../css/catalogdetail.css" rel="stylesheet" />
-    <%--    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>--%>
-
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
+
     <script src="../scripts/bootstrap.4.3.1.min.js"></script>
     <script src="../scripts/jquery-3.0.0.min.js"></script>
     <script src="../scripts/app/catalogdetail.js"></script>
-
+    <link href="../css/ajaxloader.css" rel="stylesheet" />
 
     <link href="../css/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <script src="../scripts/jquery.dataTables.min.js"></script>
@@ -25,6 +23,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <div id="loader"></div>
         <div class="container">
             <asp:HiddenField ID="hdnid" runat="server" value="-1"/>
             <div class="row">

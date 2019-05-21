@@ -1,6 +1,5 @@
 ﻿$(document).ready(function () {
-    getImageDetails();
-    getContentDetails();    
+    getContentDetails();
 });
 
 
@@ -23,10 +22,12 @@ function getContentDetails() {
             {
                 $('#headerdiv').html("<h4>" + data.d[0].VALUE + "</h4>");
             }
-            $('#tabledetails').append("</tbody>");                        
+            $('#tabledetails').append("</tbody>");
+            getImageDetails();
         },
         error: function () {
             alert("Error while Showing update data");
+            getImageDetails();
         }
 
         //
@@ -46,8 +47,10 @@ function getImageDetails() {
                 $('#glasscase').append("<li><img src='../images/upload/" + data.d[i].PHY_FILE_NAME + "' alt='Text' /></li>");
             }
             $('#glasscase').glassCase({ 'thumbsPosition': 'bottom', 'widthDisplay': 560 });
+            document.getElementById("loader").style.display = "none";
         },
         error: function () {
+            document.getElementById("loader").style.display = "none";
             alert("Error while Showing update data");
         }
 

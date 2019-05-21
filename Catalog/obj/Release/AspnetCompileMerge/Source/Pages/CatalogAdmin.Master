@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Catalog Admin</title>
+    <link rel="shortcut icon" href="../images/static/favicon.ico" type="image/x-icon"/>
     <link href="../css/bootstrap4.3.min.css" rel="stylesheet" />
     <link href="../css/CatalogAdminMasterPage.css" rel="stylesheet" />
     <script src="../scripts/jquery-3.0.0.min.js"></script>
