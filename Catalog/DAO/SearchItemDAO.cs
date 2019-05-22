@@ -9,12 +9,12 @@ namespace Catalog.DAO
 {
     public class SearchItemDAO
     {
-        public List<SearchIetmEntity> GetSearchData()
+        public List<SearchItemEntity> GetSearchData(SearchItemQueryEntity obj)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
             DataSet ds = new DataSet();
-            List<SearchIetmEntity> retlst = new List<SearchIetmEntity>();
+            List<SearchItemEntity> retlst = new List<SearchItemEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
@@ -22,17 +22,17 @@ namespace Catalog.DAO
                     SqlCommand cmd = new SqlCommand("USP_GetSearchList", con);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@SearchText", "");
-                    cmd.Parameters.AddWithValue("@SKU", "");
-                    cmd.Parameters.AddWithValue("@CODE", "");
-                    cmd.Parameters.AddWithValue("@JewelleryIDs", "");
-                    cmd.Parameters.AddWithValue("@DesignIDs", "");
-                    cmd.Parameters.AddWithValue("@CollectionsIDs", "");
-                    cmd.Parameters.AddWithValue("@MaterialIDs", "");
-                    cmd.Parameters.AddWithValue("@OccasionIDs", "");
-                    cmd.Parameters.AddWithValue("@GramSlabIDs", "");
-                    cmd.Parameters.AddWithValue("@KaratIDs", "");
-                    cmd.Parameters.AddWithValue("@ShowInStock", true);   
+                    cmd.Parameters.AddWithValue("@SearchText", obj.SEARCHTEXT);
+                    cmd.Parameters.AddWithValue("@SKU",obj.SKU);
+                    cmd.Parameters.AddWithValue("@CODE", obj.CODE);
+                    cmd.Parameters.AddWithValue("@JewelleryIDs", obj.JEWELLERYIDS);
+                    cmd.Parameters.AddWithValue("@DesignIDs", obj.DESIGNIDS);
+                    cmd.Parameters.AddWithValue("@CollectionsIDs", obj.COLLECTIONSIDS);
+                    cmd.Parameters.AddWithValue("@MaterialIDs", obj.MATERIALIDS);
+                    cmd.Parameters.AddWithValue("@OccasionIDs", obj.OCCASIONIDS);
+                    cmd.Parameters.AddWithValue("@GramSlabIDs", obj.GRAMSLABIDS);
+                    cmd.Parameters.AddWithValue("@KaratIDs", obj.KARATIDS);
+                    cmd.Parameters.AddWithValue("@ShowInStock", obj.SHOWINSTOCK);   
 
                     con.Open();
                     adapter = new SqlDataAdapter(cmd);
@@ -40,12 +40,12 @@ namespace Catalog.DAO
 
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
-                        SearchIetmEntity obj = new SearchIetmEntity();
-                        obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
-                        obj.HEADING = ds.Tables[0].Rows[i]["HEADING"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["HEADING"].ToString();
-                        obj.DESCRIPTION = ds.Tables[0].Rows[i]["DESCRIPTION"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["DESCRIPTION"].ToString();
-                        obj.PHY_FILE_NAME = ds.Tables[0].Rows[i]["PHY_FILE_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["PHY_FILE_NAME"].ToString();
-                        retlst.Add(obj);
+                        SearchItemEntity objres = new SearchItemEntity();
+                        objres.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
+                        objres.HEADING = ds.Tables[0].Rows[i]["HEADING"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["HEADING"].ToString();
+                        objres.DESCRIPTION = ds.Tables[0].Rows[i]["DESCRIPTION"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["DESCRIPTION"].ToString();
+                        objres.PHY_FILE_NAME = ds.Tables[0].Rows[i]["PHY_FILE_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["PHY_FILE_NAME"].ToString();
+                        retlst.Add(objres);
                     }
                 }
             }

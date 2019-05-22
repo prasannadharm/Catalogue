@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Catalog.Models
 {
-    public class SearchIetmEntity
+    public class SearchItemEntity
     {
         public long ID { get; set; }
         public string HEADING { get; set; }

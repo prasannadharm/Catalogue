@@ -25,12 +25,12 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static SearchIetmEntity[] GetSearchData() //Show the details of the data after insert in HTML Table
+        public static SearchItemEntity[] GetSearchData(SearchItemQueryEntity obj) //Show the details of the data after insert in HTML Table
         {
-            var details = new List<SearchIetmEntity>();
+            var details = new List<SearchItemEntity>();
             try
             {
-                details = new SearchItemDAO().GetSearchData();
+                details = new SearchItemDAO().GetSearchData(obj);
             }
             catch (Exception ex)
             {

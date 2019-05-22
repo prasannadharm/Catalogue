@@ -7,6 +7,15 @@ $(function () {
     $("#btnsearch").click(function () {
         document.location.href = '../Pages/Search.aspx?search=' + $.trim($("#txtsearch").val());
     });
+
+    $('#txtsearch').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            document.location.href = '../Pages/Search.aspx?search=' + $.trim($("#txtsearch").val());
+            return false;
+        }
+    });
 });
 
 function BuildBanner() {

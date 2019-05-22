@@ -17,7 +17,7 @@
     <script src="../scripts/jquery-3.0.0.min.js"></script>
     <script src="../scripts/popper.min.js"></script>
     <script src="../scripts/bootstrap.4.3.1.min.js"></script>
-    <script src="../scripts/app/home.js"></script>
+    <script src="../scripts/app/home.js?v=2"></script>
     <style>
         /* Make the image fully responsive */
         .carousel-inner img {

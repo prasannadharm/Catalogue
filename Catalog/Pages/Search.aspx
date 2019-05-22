@@ -16,7 +16,7 @@
     <script src="../scripts/bootstrap4.1.1.bundle.min.js"></script>
     <script src="../scripts/bootstrap-select.min.js"></script>
     <script src="../scripts/baguetteBox.min.js"></script>
-    <script src="../scripts/app/search.js"></script>
+    <script src="../scripts/app/search.js?v=1"></script>
 
 </head>
 <body>
@@ -102,7 +102,7 @@
             </div>
 
             <div id="maindiv" class="align-items-center p-3 my-3 rounded shadow-sm">
-                <section class="gallery-block cards-gallery">
+                <section class="gallery-block cards-gallery" id="secsearch">
                     <div class="row" id="divsearch">
                     </div>
                 </section>

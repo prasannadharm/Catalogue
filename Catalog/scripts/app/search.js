@@ -6,24 +6,109 @@ $(function () {
     $("#btnSearch").click(function () {        
         searchdata();
     });
+
+    $('#txtSku').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            searchdata();
+        }
+    });
+
+    $('#txtCode').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            searchdata();
+        }
+    });
+
+    $('#txtSearch').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            searchdata();
+        }
+    });
 });
 
 function searchdata()
 {
     $('#democollapseBtn').collapse('hide');
     document.getElementById("loader").style.display = "block";
-    //$('#cmbJewellery > option:selected').each(function () {
-    //    alert($(this).text());
-    //    alert($(this).val());
-    //});
+
+    var obj = {};
+    obj.SEARCHTEXT = $("#txtSearch").val();
+    obj.SKU = $("#txtSku").val();
+    obj.CODE = $("#txtCode").val();
+
+
+    var strjewel = [];
+    $('#cmbJewellery > option:selected').each(function () {
+        strjewel.push($(this).val());
+    });
+    obj.JEWELLERYIDS = strjewel.join(',');
+
+
+    var strjdesign = [];
+    $('#cmbDesign > option:selected').each(function () {
+        strjdesign.push($(this).val());
+    });
+    obj.DESIGNIDS = strjdesign.join(',');
+
+    var strcoll = [];
+    $('#cmbCollection > option:selected').each(function () {
+        strcoll.push($(this).val());
+    });
+    obj.COLLECTIONSIDS = strcoll.join(',');
+
+    var strmat = [];
+    $('#cmbMaterial > option:selected').each(function () {
+        strmat.push($(this).val());
+    });
+    obj.MATERIALIDS = strmat.join(',');
+
+    var strocc = [];
+    $('#cmbOccasion > option:selected').each(function () {
+        strocc.push($(this).val());
+    });
+    obj.OCCASIONIDS = strocc.join(',');
+
+    var strgramslab = [];
+    $('#CmbGramSlab > option:selected').each(function () {
+        strgramslab.push($(this).val());
+    });
+    obj.GRAMSLABIDS = strgramslab.join(',');
+
+    var strkarat = [];
+    $('#cmbKarat > option:selected').each(function () {
+        strkarat.push($(this).val());
+    });
+    obj.KARATIDS = strkarat.join(',');
+
+    if ($('#chk_Showall').is(":checked")) {
+        obj.SHOWINSTOCK = false;
+    }
+    else {
+        obj.SHOWINSTOCK = true;
+    }
 
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
         url: "../pages/Search.aspx/GetSearchData",
-        data: {},
+        data: '{obj: ' + JSON.stringify(obj) + '}',
         dataType: "json",
         success: function (data) {
+            $('#divsearch').remove();
+            $('#secsearch').append("<div class='row' id='divsearch'></div>");
+            if (data.d.length <= 0)
+            {
+                if ($.trim(obj.SEARCHTEXT) == '')
+                    $('#divsearch').append("<label style='margin-left:15px'>No results found.</label>");
+                else
+                    $('#divsearch').append("<label style='margin-left:15px'>No results for " + obj.SEARCHTEXT + "</label>");
+            }
             for (var i = 0; i < data.d.length; i++) {
                 $('#divsearch').append("<div class='col-6 col-md-4 col-lg-3'><div class='card border-0 transform-on-hover'>" +
                 "<a class='lightbox' href='../images/upload/" + data.d[i].PHY_FILE_NAME + "'><img src='../images/upload/" + data.d[i].PHY_FILE_NAME + "' alt='Card Image' class='card-img-top'>" +

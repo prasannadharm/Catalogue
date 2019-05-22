@@ -216,7 +216,8 @@
     <Compile Include="Models\CatalogDetailsEntity.cs" />
     <Compile Include="Models\CatalogImageEntity.cs" />
     <Compile Include="Models\DropdownEntity.cs" />
-    <Compile Include="Models\SearchIetmEntity.cs" />
+    <Compile Include="Models\SearchItemEntity.cs" />
+    <Compile Include="Models\SearchItemQueryEntity.cs" />
     <Compile Include="Models\TrendingEntity.cs" />
     <Compile Include="Pages\Banner.aspx.cs">
       <DependentUpon>Banner.aspx</DependentUpon>
