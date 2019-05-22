@@ -10,6 +10,7 @@ $(function () {
 
 function searchdata()
 {
+    $('#democollapseBtn').collapse('hide');
     document.getElementById("loader").style.display = "block";
     //$('#cmbJewellery > option:selected').each(function () {
     //    alert($(this).text());
@@ -38,149 +39,91 @@ function searchdata()
     });
 }
 
-
 $(function () {
     $.ajax({
         type: "POST",
-        url: "Search.aspx/GetActiveJewelleryList",
+        url: "Search.aspx/GetDropdownLisDatat",
         data: '{}',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: LoadJewelleryCombo
+        success: LoadCombos
     });
 });
 
-function LoadJewelleryCombo(data) {
-    var options = [];    
+function LoadCombos(data)
+{
+    var optionsJewel = [];
+    var optionsDesign = [];
+    var optionsCollection = [];
+    var optionsMaterial = [];
+    var optionsOccasion = [];
+    var optionsGramSlab = [];
+    var optionsKarat = [];
     for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
+        if (data.d[i].TYPE == 'JEWELLERY')
+        {
+              optionsJewel.push('<option value="',
+              data.d[i].ID, '">',
+              data.d[i].NAME, '</option>');
+        }
+        else if (data.d[i].TYPE == 'DESIGN')
+        {
+              optionsDesign.push('<option value="',
+              data.d[i].ID, '">',
+              data.d[i].NAME, '</option>');
+        }
+        else if (data.d[i].TYPE == 'COLLECTON') {
+            optionsCollection.push('<option value="',
+            data.d[i].ID, '">',
+            data.d[i].NAME, '</option>');
+        }
+        else if (data.d[i].TYPE == 'MATERIAL') {
+            optionsMaterial.push('<option value="',
+            data.d[i].ID, '">',
+            data.d[i].NAME, '</option>');
+        }
+        else if (data.d[i].TYPE == 'OCCASION') {
+            optionsOccasion.push('<option value="',
+            data.d[i].ID, '">',
+            data.d[i].NAME, '</option>');
+        }
+        else if (data.d[i].TYPE == 'GRAMSLAB') {
+            optionsGramSlab.push('<option value="',
+            data.d[i].ID, '">',
+            data.d[i].NAME, '</option>');
+        }
+        else if (data.d[i].TYPE == 'KARAT') {
+            optionsKarat.push('<option value="',
+            data.d[i].ID, '">',
+            data.d[i].NAME, '</option>');
+        }
     }
-    $("#cmbJewellery").html(options.join(''));
+
+    $("#cmbJewellery").html(optionsJewel.join(''));
     $("#cmbJewellery").addClass("selectpicker");
     $("#cmbJewellery").addClass("form-control");
-    $.ajax({
-        type: "POST",
-        url: "Search.aspx/GetActiveDesignList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadDesignCombo
-    });
-}
 
-
-function LoadDesignCombo(data) {
-    var options = [];
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#cmbDesign").html(options.join(''));
+    $("#cmbDesign").html(optionsDesign.join(''));
     $("#cmbDesign").addClass("selectpicker");
     $("#cmbDesign").addClass("form-control");
-    $.ajax({
-        type: "POST",
-        url: "Search.aspx/GetActiveCollectionsList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadCollectionsCombo
-    });
-}
 
-function LoadCollectionsCombo(data) {
-    var options = [];   
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#cmbCollection").html(options.join(''));
+    $("#cmbCollection").html(optionsCollection.join(''));
     $("#cmbCollection").addClass("selectpicker");
     $("#cmbCollection").addClass("form-control");
-    $.ajax({
-        type: "POST",
-        url: "Search.aspx/GetActiveMaterialList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadMaterialCombo
-    });
-}
 
-function LoadMaterialCombo(data) {
-    var options = [];  
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#cmbMaterial").html(options.join(''));
+    $("#cmbMaterial").html(optionsMaterial.join(''));
     $("#cmbMaterial").addClass("selectpicker");
     $("#cmbMaterial").addClass("form-control");
-    $.ajax({
-        type: "POST",
-        url: "Search.aspx/GetActiveOccasionList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadOccasionCombo
-    });
-}
 
-
-function LoadOccasionCombo(data) {
-    var options = []; 
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#cmbOccasion").html(options.join(''));
+    $("#cmbOccasion").html(optionsOccasion.join(''));
     $("#cmbOccasion").addClass("selectpicker");
     $("#cmbOccasion").addClass("form-control");
-    $.ajax({
-        type: "POST",
-        url: "Search.aspx/GetActiveGramSlabList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadGramSlabCombo
-    });
-}
 
-
-function LoadGramSlabCombo(data) {
-    var options = [];    
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#CmbGramSlab").html(options.join(''));
+    $("#CmbGramSlab").html(optionsGramSlab.join(''));
     $("#CmbGramSlab").addClass("selectpicker");
     $("#CmbGramSlab").addClass("form-control");
-    $.ajax({
-        type: "POST",
-        url: "Search.aspx/GetActiveKaratList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadKaratCombo
-    });
-}
 
-function LoadKaratCombo(data) {
-    var options = [];   
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#cmbKarat").html(options.join(''));
+    $("#cmbKarat").html(optionsKarat.join(''));
     $("#cmbKarat").addClass("selectpicker");
     $("#cmbKarat").addClass("form-control");
     $('.selectpicker').selectpicker('');
@@ -188,5 +131,5 @@ function LoadKaratCombo(data) {
     searchdata();
 }
 
-//Combos Loading Code - End
+
 

@@ -43,65 +43,59 @@
                     <div class="card card-body">
                         <div class="row">
 
-                            <div class="col-6 col-md-4 col-lg-3">
+                            <div class="col-6 col-md-4 col-lg-4">
                                 <label>SKU</label>
                                 <input type="text" id="txtSku" class="form-control" placeholder="Search by SKU" />
                             </div>
 
-                            <div class="col-6 col-md-4 col-lg-3">
+                            <div class="col-6 col-md-4 col-lg-4">
                                 <label>Code</label>
                                 <input type="text" id="txtCode" class="form-control" placeholder="Search by Code" />
                             </div>
 
-                            <div class="col-6 col-md-4 col-lg-3">
+                            <div class="col-6 col-md-4 col-lg-4">
                                 <label>Jewellery</label>
                                 <select id="cmbJewellery" multiple data-live-search="true">
                                 </select>
                             </div>
 
-                            <div class="col-6 col-md-4 col-lg-3">
+                            <div class="col-6 col-md-4 col-lg-4">
                                 <label>Design</label>
                                 <select id="cmbDesign" multiple data-live-search="true">
                                 </select>
                             </div>
 
-                            <div class="col-6 col-md-4 col-lg-3">
+                            <div class="col-6 col-md-4 col-lg-4">
                                 <label>Collection</label>
                                 <select id="cmbCollection" multiple data-live-search="true">
                                 </select>
                             </div>
 
-                            <div class="col-6 col-md-4 col-lg-3">
+                            <div class="col-6 col-md-4 col-lg-4">
                                 <label>Material</label>
                                 <select id="cmbMaterial" multiple data-live-search="true">
                                 </select>
                             </div>
 
-                            <div class="col-6 col-md-4 col-lg-3">
+                            <div class="col-6 col-md-4 col-lg-4">
                                 <label>Occasion</label>
                                 <select id="cmbOccasion" multiple data-live-search="true">
                                 </select>
                             </div>
 
-                            <div class="col-6 col-md-4 col-lg-3">
+                            <div class="col-6 col-md-4 col-lg-4">
                                 <label>Gram Slab</label>
                                 <select id="CmbGramSlab" multiple data-live-search="true">
                                 </select>
                             </div>
 
-                            <div class="col-6 col-md-4 col-lg-3">
+                            <div class="col-6 col-md-4 col-lg-4">
                                 <label>Karat</label>
+                                <input type="checkbox" id="chk_Showall" style="margin-left: 10px; margin-right: 5px; vertical-align: middle;" checked="checked" />
+                                <label>Show All</label>
                                 <select id="cmbKarat" multiple data-live-search="true">
                                 </select>
-                            </div>
-
-                            <div class="col-6 col-md-4 col-lg-3">
-                                <label>In Stock</label>
-                                <select id="CmbStock" class="selectpicker form-control" multiple data-live-search="true">
-                                    <option value="1">Show All</option>
-                                    <option value="0">Exclude Out of Stock</option>
-                                </select>
-                            </div>
+                            </div>                            
                         </div>
                     </div>
                 </div>

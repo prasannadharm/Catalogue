@@ -5,7 +5,7 @@
 
 $(function () {
     $("#btnsearch").click(function () {
-        window.location = 'Search.aspx?search=' + $.trim($("#txtsearch").val());
+        document.location.href = '../Pages/Search.aspx?search=' + $.trim($("#txtsearch").val());
     });
 });
 
