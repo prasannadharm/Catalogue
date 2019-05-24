@@ -8,7 +8,7 @@
     <script src="../scripts/dataTables.bootstrap4.min.js"></script>
     <%--<script src="../scripts/jquery-1.7.1.min.js"></script>--%>
     <script src="../scripts/AjaxFileupload.js"></script>
-    <script src="../scripts/app/catalogmaster.js"></script>
+    <script src="../scripts/app/catalogmaster.js?v=1"></script>
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="row">

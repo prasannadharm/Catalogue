@@ -14,15 +14,15 @@ function getDetails() {
             $('#griddiv').remove();
             $('#maindiv').append("<div class='table-responsive' id='griddiv'></div>");
             $('#griddiv').append("<table id='tablemain' class='table table-striped table-bordered' style='width: 100%'></table>");
-            $('#tablemain').append("<thead><tr><th>SKU</th><th>Code</th><th>Description</th><th>Stock</th><th>Jelwellery</th><th>Design</th><th>Collection</th><th></th></tr></thead><tbody></tbody>");
+            $('#tablemain').append("<thead><tr><th>SKU</th><th>Code</th><th>Description</th><th>Stock</th><th>Jelwellery</th><th>Design</th><th>Collection</th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
             $('#tablemain tbody').remove();
             $('#tablemain').append("<tbody>");
             for (var i = 0; i < data.d.length; i++) {
                 $('#tablemain').append(
                     "<tr><td>" + data.d[i].SKU + "</td><td>" + data.d[i].CODE + "</td><td>" + data.d[i].TITLE + "</td><td>" + data.d[i].STK_QTY + "</td><td>" + data.d[i].JEWELLERY_NAME + "</td><td>" + data.d[i].DESIGN_NAME +
-                    "</td><td>" + data.d[i].COLLECTIONS_NAME + "</td>" + "<td>" + "<input type='button' class='btn btn-warning btn-sm editButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "" +
-                    "" + "<input type='button' class='btn btn-primary btn-sm uploadButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnUpload' value='Upload' style='margin-right:5px;margin-left:5px'/>" + "" +
-                    "<input type='button' class='btn btn-danger btn-sm deleteButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+                    "</td><td>" + data.d[i].COLLECTIONS_NAME + "</td>" + "<td>" + "<input type='button' class='btn btn-warning btn-sm editButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
+                    "<td>" + "<input type='button' class='btn btn-primary btn-sm uploadButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnUpload' value='Upload' style='margin-right:5px;margin-left:5px'/>" + "</td>" +
+                    "<td><input type='button' class='btn btn-danger btn-sm deleteButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td></tr>");
             }
             $('#tablemain').append("</tbody>");
             $('#tablemain').DataTable();
@@ -511,6 +511,7 @@ $(function () {
     $(document).on("click", ".uploadButton", function () {
         $('#PopupModalUpload').modal('show');
         $('#PopupModalUpload').focus();
+        $("div.modal-header h2").html("Catalog Images Upload Area");
         var id = $(this).attr("data-id");
         console.log(id);
         $('#fileToUpload').val("");
