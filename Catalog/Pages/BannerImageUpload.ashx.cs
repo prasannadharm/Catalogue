@@ -20,7 +20,7 @@ namespace Catalog.Pages
         string id;
         int mFileSize = 0;
         string heading = "";
-        string desc = "";
+        string desc = "", fcolor="000000";
         public void ProcessRequest(HttpContext context)
         {
             if (context.Request.QueryString["action"] != null)
@@ -41,6 +41,7 @@ namespace Catalog.Pages
                         org_file_name = context.Request.QueryString["org_file_name"].ToString();
                         heading = context.Request.QueryString["heading"].ToString();
                         desc = context.Request.QueryString["desc"].ToString();
+                        fcolor = context.Request.QueryString["fcolor"].ToString();
                         if (!Directory.Exists(Savepath))
                             Directory.CreateDirectory(Savepath);
 
@@ -51,6 +52,7 @@ namespace Catalog.Pages
                         objimg.DESCRIPTION = desc;
                         objimg.ORG_FILE_NAME = org_file_name;
                         objimg.PHY_FILE_NAME = phy_file_name;
+                        objimg.FCOLOR = fcolor;
                         List<DbStatusEntity> details = new List<DbStatusEntity>();
 
                         details.Add(new BannerMasterDAO().InsertBanner(objimg));

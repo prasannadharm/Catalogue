@@ -202,6 +202,7 @@
     <Content Include="scripts\jquery-1.7.1.min.js" />
     <Content Include="scripts\jquery-3.0.0.min.js" />
     <Content Include="scripts\jquery.dataTables.min.js" />
+    <Content Include="scripts\jscolor.js" />
     <Content Include="scripts\popper.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

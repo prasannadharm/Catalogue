@@ -33,6 +33,7 @@ namespace Catalog.DAO
                         obj.DESCRIPTION = ds.Tables[0].Rows[i]["DESCRIPTION"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["DESCRIPTION"].ToString();
                         obj.ORG_FILE_NAME = ds.Tables[0].Rows[i]["ORG_FILE_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["ORG_FILE_NAME"].ToString();
                         obj.PHY_FILE_NAME = ds.Tables[0].Rows[i]["PHY_FILE_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["PHY_FILE_NAME"].ToString();
+                        obj.FCOLOR = ds.Tables[0].Rows[i]["FCOLOR"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["FCOLOR"].ToString();
                         obj.SORT_ORDER = ds.Tables[0].Rows[i]["SORT_ORDER"] == DBNull.Value ? 0: Convert.ToInt32(ds.Tables[0].Rows[i]["SORT_ORDER"].ToString());
                         retlst.Add(obj);
                     }
@@ -71,6 +72,7 @@ namespace Catalog.DAO
                         obj.DESCRIPTION = ds.Tables[0].Rows[i]["DESCRIPTION"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["DESCRIPTION"].ToString();
                         obj.ORG_FILE_NAME = ds.Tables[0].Rows[i]["ORG_FILE_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["ORG_FILE_NAME"].ToString();
                         obj.PHY_FILE_NAME = ds.Tables[0].Rows[i]["PHY_FILE_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["PHY_FILE_NAME"].ToString();
+                        obj.FCOLOR = ds.Tables[0].Rows[i]["FCOLOR"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["FCOLOR"].ToString();
                         obj.SORT_ORDER = ds.Tables[0].Rows[i]["SORT_ORDER"] == DBNull.Value ? 0 : Convert.ToInt32(ds.Tables[0].Rows[i]["SORT_ORDER"].ToString());
                         retlst.Add(obj);
                     }
@@ -97,6 +99,8 @@ namespace Catalog.DAO
                     cmd.Parameters.AddWithValue("@ID", id);
                     cmd.Parameters.AddWithValue("@HEADING", obj.HEADING);
                     cmd.Parameters.AddWithValue("@DESCRIPTION", obj.DESCRIPTION);
+                    cmd.Parameters.AddWithValue("@FCOLOR", obj.FCOLOR);
+
                     cmd.Parameters.Add("@RESULT", SqlDbType.Int);
                     cmd.Parameters["@RESULT"].Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("@CNT", SqlDbType.Int);
@@ -132,6 +136,7 @@ namespace Catalog.DAO
                     cmd.Parameters.AddWithValue("@DESCRIPTION", obj.DESCRIPTION);
                     cmd.Parameters.AddWithValue("@ORG_FILE_NAME", obj.ORG_FILE_NAME);
                     cmd.Parameters.AddWithValue("@PHY_FILE_NAME", obj.PHY_FILE_NAME);
+                    cmd.Parameters.AddWithValue("@FCOLOR", obj.FCOLOR);
 
                     cmd.Parameters.Add("@RESULT", SqlDbType.Int);
                     cmd.Parameters["@RESULT"].Direction = ParameterDirection.Output;
