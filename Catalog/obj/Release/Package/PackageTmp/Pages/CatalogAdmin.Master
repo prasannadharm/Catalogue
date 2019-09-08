@@ -1,0 +1,55 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="CatalogAdmin.master.cs" Inherits="Catalog.Pages.CatalogAdmin" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Catalog Admin</title>
+    <link rel="shortcut icon" href="../images/static/favicon.ico" type="image/x-icon"/>
+    <link href="../css/bootstrap4.3.min.css" rel="stylesheet" />
+    <link href="../css/CatalogAdminMasterPage.css" rel="stylesheet" />
+    <script src="../scripts/jquery-3.0.0.min.js"></script>
+    <script src="../scripts/bootstrap.4.3.1.min.js"></script>
+	
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="bg-white">
+    <div class="container">
+        <form id="form1" runat="server">
+            <nav class="navbar navbar-expand-lg navbar-light my-3 rounded shadow-sm" style="background-color: #232f3e;">
+                <a class="navbar-brand mb-0 h1" href="UserDashboard.aspx" style="color: #ffd500;">Jewellery Catalog Configuration</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse">
+                    <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" RenderingMode="Default" CssClass="navbar navbar-fixed-top rounded"
+                        IncludeStyleBlock="false" StaticMenuStyle-CssClass="nav" DynamicMenuStyle-CssClass="dropdown-menu">
+                    </asp:Menu>
+                </div>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li style="align-content: center">
+                        <asp:Label ID="lblwecome" runat="server" ForeColor="white" Text="Hi,&nbsp"></asp:Label>                    
+                        <asp:Label ID="lblLoginName" runat="server" Text="UserName" style="color: #fdf8bc;font-style:italic;"></asp:Label>                       
+                         <a href="UserLogin.aspx"><img src="../images/static/logout.png" alt="Sign Out"/></a>
+                    </li>
+                </ul>
+
+            </nav>
+            <div class="d-flex align-items-center p-3 my-3 rounded shadow-sm">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+
+            <div class="align-items-center p-3 my-3 rounded shadow-sm" style="background-color: #232f3e;color: #ffd500;text-align:center;align-content:center">
+                © Copyright 2019 Jewellery Catalog. All Rights Reserved.        
+            </div>
+
+        </form>
+
+    </div>
+</body>
+</html>
+

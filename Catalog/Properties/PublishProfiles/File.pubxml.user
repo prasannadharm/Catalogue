@@ -16,13 +16,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/16/2019 20:23:16</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>05/22/2019 20:14:55</publishTime>
+      <publishTime>05/25/2019 08:53:09</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>05/22/2019 20:14:55</publishTime>
+      <publishTime>05/25/2019 08:53:09</publishTime>
     </File>
     <File Include="bin/Catalog.dll">
-      <publishTime>05/22/2019 20:14:39</publishTime>
+      <publishTime>05/25/2019 08:30:25</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>12/07/2015 19:04:38</publishTime>
@@ -100,7 +100,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/17/2019 21:16:16</publishTime>
     </File>
     <File Include="css/bootstrap4.3.min.css">
-      <publishTime>03/16/2019 17:45:44</publishTime>
+      <publishTime>05/24/2019 13:25:56</publishTime>
     </File>
     <File Include="css/cards-gallery.css">
       <publishTime>05/21/2019 21:40:59</publishTime>
@@ -193,7 +193,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/16/2019 20:23:16</publishTime>
     </File>
     <File Include="Pages/Banner.aspx">
-      <publishTime>05/16/2019 06:47:07</publishTime>
+      <publishTime>05/25/2019 08:50:25</publishTime>
     </File>
     <File Include="Pages/BannerImageUpload.ashx">
       <publishTime>05/15/2019 07:18:20</publishTime>
@@ -208,7 +208,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/11/2019 20:43:18</publishTime>
     </File>
     <File Include="Pages/CatalogMaster.aspx">
-      <publishTime>05/11/2019 20:07:47</publishTime>
+      <publishTime>05/24/2019 07:05:50</publishTime>
     </File>
     <File Include="Pages/CatalogueMaster.aspx">
       <publishTime>04/29/2019 06:12:03</publishTime>
@@ -241,7 +241,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/29/2019 20:56:43</publishTime>
     </File>
     <File Include="Pages/home.aspx">
-      <publishTime>05/22/2019 20:14:28</publishTime>
+      <publishTime>05/22/2019 20:33:56</publishTime>
     </File>
     <File Include="Pages/home.html">
       <publishTime>05/02/2019 12:50:12</publishTime>
@@ -280,7 +280,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/01/2019 10:40:40</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>05/22/2019 20:14:48</publishTime>
+      <publishTime>05/25/2019 08:53:05</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>04/16/2019 20:23:16</publishTime>
@@ -292,7 +292,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/11/2019 20:35:15</publishTime>
     </File>
     <File Include="scripts/app/bannermaster.js">
-      <publishTime>05/16/2019 07:05:29</publishTime>
+      <publishTime>05/25/2019 08:52:42</publishTime>
     </File>
     <File Include="scripts/app/catalogdetail.js">
       <publishTime>05/16/2019 21:08:58</publishTime>
@@ -301,7 +301,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/21/2019 20:45:54</publishTime>
     </File>
     <File Include="scripts/app/catalogmaster.js">
-      <publishTime>05/12/2019 23:11:00</publishTime>
+      <publishTime>05/24/2019 07:03:36</publishTime>
     </File>
     <File Include="scripts/app/cataloguemaster.js">
       <publishTime>04/29/2019 06:13:12</publishTime>
@@ -331,7 +331,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/29/2019 20:55:41</publishTime>
     </File>
     <File Include="scripts/app/home.js">
-      <publishTime>05/22/2019 20:12:25</publishTime>
+      <publishTime>05/24/2019 18:40:44</publishTime>
     </File>
     <File Include="scripts/app/jewellerymaster.js">
       <publishTime>04/28/2019 22:34:44</publishTime>
@@ -384,11 +384,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="scripts/jquery.dataTables.min.js">
       <publishTime>04/21/2019 21:35:20</publishTime>
     </File>
+    <File Include="scripts/jscolor.js">
+      <publishTime>05/25/2019 08:25:08</publishTime>
+    </File>
     <File Include="scripts/popper.min.js">
       <publishTime>05/14/2019 20:06:56</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/22/2019 20:14:47</publishTime>
+      <publishTime>05/25/2019 08:53:04</publishTime>
     </File>
   </ItemGroup>
 </Project>

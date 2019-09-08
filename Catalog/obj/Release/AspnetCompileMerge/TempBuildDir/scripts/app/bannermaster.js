@@ -1,6 +1,5 @@
 ﻿$(document).ready(function () {
-    getDetails();
-
+    getDetails();  
 });
 
 function getDetails() {
@@ -59,7 +58,7 @@ $(function () {
 
         var heading = $("#HEADING1").val().trim();
         var desc = $("#DESCRIPTION1").val().trim();
-
+        var fcolor = $("#FCOLOR1").val().trim();
         var fileToUpload = getNameFromPath($('#fileToUpload').val());
         var orgfilename = fileToUpload;
         var phyfilename = 'BannerImage_' + String(getFormattedTimeStamp()) + '.' + orgfilename.substr((orgfilename.lastIndexOf('.') + 1));
@@ -69,7 +68,7 @@ $(function () {
 
                 $("#loading").show();
                 $.ajaxFileUpload({
-                    url: 'BannerImageUpload.ashx?action=UPLOAD&phy_file_name=' + phyfilename + '&org_file_name=' + orgfilename + '&heading=' + heading + '&desc=' + desc,
+                    url: 'BannerImageUpload.ashx?action=UPLOAD&phy_file_name=' + phyfilename + '&org_file_name=' + orgfilename + '&heading=' + heading + '&desc=' + desc + '&fcolor=' + fcolor,
                     secureuri: false,
                     fileElementId: 'fileToUpload',
                     dataType: 'json',
@@ -127,6 +126,10 @@ $(function () {
         $("#DESCRIPTION1").val('');
         $("#fileToUpload").val('');
         $("#fileToUpload").show();
+
+        $("#FCOLOR1").val('#ffffff');
+        $('#FCOLOR1').css('background-color', '#ffffff');      
+
         $("div.modal-header h2").html("Add Banner Details");
         $('#HEADING1').focus();
     });
@@ -155,6 +158,8 @@ $(function () {
                 for (var i = 0; i < data.d.length; i++) {
                     $("#HEADING1").val(data.d[i].HEADING);
                     $("#DESCRIPTION1").val(data.d[i].DESCRIPTION);
+                    $("#FCOLOR1").val(data.d[i].FCOLOR);
+                    $('#FCOLOR1').css('background-color', data.d[i].FCOLOR);                   
                 }
                 $('#HEADING1').focus();
             },
@@ -181,7 +186,7 @@ $(function () {
         obj.ID = id;
         obj.HEADING = $("#HEADING1").val();
         obj.DESCRIPTION = $("#DESCRIPTION1").val();
-
+        obj.FCOLOR = $("#FCOLOR1").val();
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",

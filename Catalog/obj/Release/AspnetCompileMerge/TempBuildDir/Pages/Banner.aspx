@@ -8,6 +8,7 @@
     <script src="../scripts/dataTables.bootstrap4.min.js"></script>
      <script src="../scripts/AjaxFileupload.js"></script>
     <script src="../scripts/app/bannermaster.js"></script>
+    <script src="../scripts/jscolor.js"></script>
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="row">
@@ -55,6 +56,10 @@
                         <div class="form-group col-lg-12">
                             <label>Description</label>
                             <textarea rows="3" name="DESCRIPTION" id="DESCRIPTION1" class="form-control" placeholder="Please enter description"></textarea>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label>Fore Color</label>
+                            <input class="jscolor {hash:true} {uppercase:false}" value="#ffffff" id="FCOLOR1">                            
                         </div>
                         <div class="form-group col-lg-12">
                             <asp:FileUpload ID="fileToUpload" runat="server" ClientIDMode="Static" />

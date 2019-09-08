@@ -161,12 +161,14 @@
     <Content Include="Pages\GramSlabMaster.aspx" />
     <Content Include="Pages\home.aspx" />
     <Content Include="Pages\home.html" />
+    <Content Include="Pages\InwardTypeMaster.aspx" />
     <Content Include="Pages\JewelleryMaster.aspx" />
     <Content Include="Pages\KaratMaster.aspx" />
     <Content Include="Pages\LedgerMaster.aspx" />
     <Content Include="Pages\LedgerTypeMaster.aspx" />
     <Content Include="Pages\MaterialMaster.aspx" />
     <Content Include="Pages\OccasionMaster.aspx" />
+    <Content Include="Pages\OutwardTypeMaster.aspx" />
     <Content Include="Pages\RolesMaster.aspx" />
     <Content Include="Pages\Search.aspx" />
     <Content Include="Pages\UserDashboard.aspx" />
@@ -186,11 +188,13 @@
     <Content Include="scripts\app\forgotpassword.js" />
     <Content Include="scripts\app\gramslabmaster.js" />
     <Content Include="scripts\app\home.js" />
+    <Content Include="scripts\app\inwardtypemaster.js" />
     <Content Include="scripts\app\jewellerymaster.js" />
     <Content Include="scripts\app\karatmaster.js" />
     <Content Include="scripts\app\ledgermaster.js" />
     <Content Include="scripts\app\materialmaster.js" />
     <Content Include="scripts\app\occasionmaster.js" />
+    <Content Include="scripts\app\outwardtypemaster.js" />
     <Content Include="scripts\app\rolesmaster.js" />
     <Content Include="scripts\app\search.js" />
     <Content Include="scripts\app\usermaster.js" />
@@ -212,11 +216,15 @@
     <Compile Include="DAO\BannerMasterDAO.cs" />
     <Compile Include="DAO\CatalogDetailsDAO.cs" />
     <Compile Include="DAO\HomeDAO.cs" />
+    <Compile Include="DAO\InwardTypeMasterDAO.cs" />
+    <Compile Include="DAO\OutwardTypeMasterDAO.cs" />
     <Compile Include="DAO\SearchItemDAO.cs" />
     <Compile Include="Models\BannerImageEntity.cs" />
     <Compile Include="Models\CatalogDetailsEntity.cs" />
     <Compile Include="Models\CatalogImageEntity.cs" />
     <Compile Include="Models\DropdownEntity.cs" />
+    <Compile Include="Models\InwardTypeMasterEntity.cs" />
+    <Compile Include="Models\OutwardTypeMasterEntity.cs" />
     <Compile Include="Models\SearchItemEntity.cs" />
     <Compile Include="Models\SearchItemQueryEntity.cs" />
     <Compile Include="Models\TrendingEntity.cs" />
@@ -363,6 +371,13 @@
     <Compile Include="Pages\home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\InwardTypeMaster.aspx.cs">
+      <DependentUpon>InwardTypeMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\InwardTypeMaster.aspx.designer.cs">
+      <DependentUpon>InwardTypeMaster.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\JewelleryMaster.aspx.cs">
       <DependentUpon>JewelleryMaster.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -404,6 +419,13 @@
     </Compile>
     <Compile Include="Pages\OccasionMaster.aspx.designer.cs">
       <DependentUpon>OccasionMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OutwardTypeMaster.aspx.cs">
+      <DependentUpon>OutwardTypeMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\OutwardTypeMaster.aspx.designer.cs">
+      <DependentUpon>OutwardTypeMaster.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\RolesMaster.aspx.cs">
       <DependentUpon>RolesMaster.aspx</DependentUpon>
