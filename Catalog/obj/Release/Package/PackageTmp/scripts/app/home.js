@@ -37,9 +37,9 @@ function BuildBanner() {
                 else
                     indiators = indiators + "<li data-target='#divbanner' data-slide-to=" + i + "></li>";
                 if (i == 0)
-                    details = details + "<div class='carousel-item active'><img src='../images/upload/" + data.d[i].PHY_FILE_NAME + "' alt='" + data.d[i].HEADING + "' width='100%' height='500'><div class='carousel-caption' style='color:" + data.d[i].FCOLOR + "'><h1>" + data.d[i].HEADING + "</h1><p>" + data.d[i].DESCRIPTION + "</p></div></div>";
+                    details = details + "<div class='carousel-item active'><img src='../images/upload/" + data.d[i].PHY_FILE_NAME + "' alt='" + data.d[i].HEADING + "' width='100%' height='100%'><div class='carousel-caption' style='color:" + data.d[i].FCOLOR + "'><h1>" + data.d[i].HEADING + "</h1><p>" + data.d[i].DESCRIPTION + "</p></div></div>";
                 else
-                    details = details + "<div class='carousel-item'><img src='../images/upload/" + data.d[i].PHY_FILE_NAME + "' alt='" + data.d[i].HEADING + "' width='100%' height='500'><div class='carousel-caption' style='color:"+ data.d[i].FCOLOR +"' ><h1>" + data.d[i].HEADING + "</h1><p>" + data.d[i].DESCRIPTION + "</p></div></div>";
+                    details = details + "<div class='carousel-item'><img src='../images/upload/" + data.d[i].PHY_FILE_NAME + "' alt='" + data.d[i].HEADING + "' width='100%' height='100%'><div class='carousel-caption' style='color:"+ data.d[i].FCOLOR +"' ><h1>" + data.d[i].HEADING + "</h1><p>" + data.d[i].DESCRIPTION + "</p></div></div>";
             }
             indiators = indiators + "</ul>";
             details = details + "</div>";
