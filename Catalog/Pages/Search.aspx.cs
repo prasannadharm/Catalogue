@@ -40,7 +40,7 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static DropdownEntity[] GetDropdownLisDatat()
+        public static DropdownEntity[] GetDropdownLisData()
         {
             var details = new List<DropdownEntity>();
             try
