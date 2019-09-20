@@ -5,12 +5,13 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <link href="../css/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <link href="../css/ajaxloader.css" rel="stylesheet" />
-    <%--<link href="../css/bootstrap-select.css" rel="stylesheet" />--%>
+    <link href="../css/bootstrap-select.css" rel="stylesheet" />    
     <script src="../scripts/jquery.dataTables.min.js"></script>
     <script src="../scripts/dataTables.bootstrap4.min.js"></script> 
      <script src="../scripts/AjaxFileupload.js"></script>
-     <%--<script src="../scripts/popper.min.js"></script>
-    <script src="../scripts/bootstrap-select.min.js"></script>--%>
+     <script src="../scripts/popper.min.js"></script>
+    <script src="../scripts/bootstrap-select.min.js"></script>    
+    
     <script src="../scripts/app/catalogmaster.js?v=1"></script>
     <div id="loader"></div>
     <div class="col-lg-12">
