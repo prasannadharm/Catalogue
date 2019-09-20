@@ -225,6 +225,7 @@
     <Compile Include="Models\DropdownEntity.cs" />
     <Compile Include="Models\InwardTypeMasterEntity.cs" />
     <Compile Include="Models\OutwardTypeMasterEntity.cs" />
+    <Compile Include="Models\SearchCatalogEntity.cs" />
     <Compile Include="Models\SearchItemEntity.cs" />
     <Compile Include="Models\SearchItemQueryEntity.cs" />
     <Compile Include="Models\TrendingEntity.cs" />

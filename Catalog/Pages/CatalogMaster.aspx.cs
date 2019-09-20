@@ -18,12 +18,12 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static CatalogMasterEntity[] GetData() //Show the details of the data after insert in HTML Table
+        public static CatalogMasterEntity[] GetData(SearchCatalogEntity obj) //Show the details of the data after insert in HTML Table
         {
             var details = new List<CatalogMasterEntity>();
             try
             {
-                details = new CatalogMasterDAO().GetCatalogList();
+                details = new CatalogMasterDAO().GetCatalogList(obj);
             }
             catch (Exception ex)
             {

@@ -9,7 +9,7 @@ namespace Catalog.DAO
 {
     public class CatalogMasterDAO
     {
-        public List<CatalogMasterEntity> GetCatalogList()
+        public List<CatalogMasterEntity> GetCatalogList(SearchCatalogEntity obj)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
@@ -21,22 +21,33 @@ namespace Catalog.DAO
                 {
                     SqlCommand cmd = new SqlCommand("USP_GetCatalogMasterList", con);
                     cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SearchText", obj.SEARCHTEXT);
+                    cmd.Parameters.AddWithValue("@SKU", obj.SKU);
+                    cmd.Parameters.AddWithValue("@CODE", obj.CODE);
+                    cmd.Parameters.AddWithValue("@JewelleryIDs", obj.JEWELLERYIDS);
+                    cmd.Parameters.AddWithValue("@DesignIDs", obj.DESIGNIDS);
+                    cmd.Parameters.AddWithValue("@CollectionsIDs", obj.COLLECTIONSIDS);
+                    cmd.Parameters.AddWithValue("@MaterialIDs", obj.MATERIALIDS);
+                    cmd.Parameters.AddWithValue("@OccasionIDs", obj.OCCASIONIDS);
+                    cmd.Parameters.AddWithValue("@GramSlabIDs", obj.GRAMSLABIDS);
+                    cmd.Parameters.AddWithValue("@KaratIDs", obj.KARATIDS);
+                    cmd.Parameters.AddWithValue("@Cnt", obj.CNT);
                     con.Open();
                     adapter = new SqlDataAdapter(cmd);
                     adapter.Fill(ds);
 
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
-                        CatalogMasterEntity obj = new CatalogMasterEntity();
-                        obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
-                        obj.SKU = ds.Tables[0].Rows[i]["SKU"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["SKU"].ToString();
-                        obj.CODE = ds.Tables[0].Rows[i]["CODE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["CODE"].ToString();
-                        obj.TITLE = ds.Tables[0].Rows[i]["TITLE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["TITLE"].ToString();
-                        obj.STK_QTY = ds.Tables[0].Rows[i]["STK_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["STK_QTY"]);
-                        obj.JEWELLERY_NAME = ds.Tables[0].Rows[i]["JEWELLERY_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["JEWELLERY_NAME"].ToString();
-                        obj.DESIGN_NAME = ds.Tables[0].Rows[i]["DESIGN_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["DESIGN_NAME"].ToString();
-                        obj.COLLECTIONS_NAME = ds.Tables[0].Rows[i]["COLLECTIONS_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["COLLECTIONS_NAME"].ToString();
-                        retlst.Add(obj);
+                        CatalogMasterEntity obj1 = new CatalogMasterEntity();
+                        obj1.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
+                        obj1.SKU = ds.Tables[0].Rows[i]["SKU"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["SKU"].ToString();
+                        obj1.CODE = ds.Tables[0].Rows[i]["CODE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["CODE"].ToString();
+                        obj1.TITLE = ds.Tables[0].Rows[i]["TITLE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["TITLE"].ToString();
+                        obj1.STK_QTY = ds.Tables[0].Rows[i]["STK_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["STK_QTY"]);
+                        obj1.JEWELLERY_NAME = ds.Tables[0].Rows[i]["JEWELLERY_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["JEWELLERY_NAME"].ToString();
+                        obj1.DESIGN_NAME = ds.Tables[0].Rows[i]["DESIGN_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["DESIGN_NAME"].ToString();
+                        obj1.COLLECTIONS_NAME = ds.Tables[0].Rows[i]["COLLECTIONS_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["COLLECTIONS_NAME"].ToString();
+                        retlst.Add(obj1);
                     }
                 }
             }

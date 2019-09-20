@@ -16,19 +16,20 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="row">
-                <div class="col-3">
+                <div class="col-2">
                     <h2>Catalog</h2>
                 </div>
-                <div class="col-9">
-                    <input type="text" name="SEARCH" id="txtSearch" class="form-control" placeholder="Search by Description.." style="width: 50%; display: inline; margin-right: 10px;" />
-                    <select name="cmbRows" id="cmbRows" class="form-control" style="width: 100px;display: inline;margin-right: 10px;">
+                <div class="col-10">
+                    <input type="text" name="SEARCH" id="txtSearch" class="form-control" placeholder="Search by Description.." style="width: 35%; display: inline; margin-right: 10px;" />
+                    <select name="cmbRows" id="cmbRows" class="form-control" style="width: 110px;display: inline;margin-right: 10px;">
                         <option value="20">Last 20</option>
                         <option value="50">Last 50</option>
                         <option value="100">Last 100</option>
                         <option value="0">All Items</option>
                     </select>
                     <button type="button" id="btnSearch" class="btn btn-success" style="display: inline; margin-right: 10px; margin-top: -5px">Search</button>
-                    <button type="button" id="btnAdvanced" class="btn btn-primary" style="display: inline; margin-top: -5px" data-toggle="collapse" data-target="#democollapseBtn" aria-expanded="false" aria-controls="democollapseBtn">Filters</button>
+                    <button type="button" id="btnAdvanced" class="btn btn-primary" style="display: inline; margin-top: -5px;margin-right: 10px" data-toggle="collapse" data-target="#democollapseBtn" aria-expanded="false" aria-controls="democollapseBtn">More Filters</button>
+                    <button type="button" id="btnClearfilter" class="btn btn-danger" style="display: inline; margin-top: -5px;margin-right: 10px">Reset Filters</button>
                     <button type="button" id="btnAddNew" class="btn btn-success addNewButton" style="position: relative; float: right;">Add New</button>
                 </div>
             </div>
