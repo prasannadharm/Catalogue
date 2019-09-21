@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\ajaxloader.css" />
+    <Content Include="css\bootstrap-datepicker3.css" />
     <Content Include="css\bootstrap-select.css" />
     <Content Include="css\bootstrap4.1.1.min.css" />
     <Content Include="css\CatalogAdminMasterPage.css" />
@@ -161,6 +162,7 @@
     <Content Include="Pages\OutwardTypeMaster.aspx" />
     <Content Include="Pages\RolesMaster.aspx" />
     <Content Include="Pages\Search.aspx" />
+    <Content Include="Pages\Stock.aspx" />
     <Content Include="Pages\UserDashboard.aspx" />
     <Content Include="Pages\UserLogin.aspx" />
     <Content Include="Pages\UserMaster.aspx" />
@@ -187,8 +189,10 @@
     <Content Include="scripts\app\outwardtypemaster.js" />
     <Content Include="scripts\app\rolesmaster.js" />
     <Content Include="scripts\app\search.js" />
+    <Content Include="scripts\app\stockentry.js" />
     <Content Include="scripts\app\usermaster.js" />
     <Content Include="scripts\baguetteBox.min.js" />
+    <Content Include="scripts\bootstrap-datepicker.min.js" />
     <Content Include="scripts\bootstrap-select.min.js" />
     <Content Include="scripts\bootstrap.4.3.1.min.js" />
     <Content Include="scripts\bootstrap4.1.1.bundle.min.js" />
@@ -431,6 +435,13 @@
     </Compile>
     <Compile Include="Pages\Search.aspx.designer.cs">
       <DependentUpon>Search.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Stock.aspx.cs">
+      <DependentUpon>Stock.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Stock.aspx.designer.cs">
+      <DependentUpon>Stock.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\UserDashboard.aspx.cs">
       <DependentUpon>UserDashboard.aspx</DependentUpon>
