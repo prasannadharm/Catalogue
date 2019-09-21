@@ -127,7 +127,7 @@ function searchdata()
 $(function () {
     $.ajax({
         type: "POST",
-        url: "Search.aspx/GetDropdownLisDatat",
+        url: "Search.aspx/GetDropdownLisData",
         data: '{}',
         contentType: "application/json; charset=utf-8",
         dataType: "json",

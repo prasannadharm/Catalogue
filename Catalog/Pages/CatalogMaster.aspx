@@ -3,6 +3,24 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <style>
+        .filters .dropdown-menu > li > a {
+            display: block;
+            padding: 2px 15px;
+            clear: both; 
+            font-weight: 400;          
+            line-height: 1.5; 
+            color: #000000;
+            white-space: nowrap;
+        }
+
+        .handcursor{
+	        cursor:pointer;
+	        cursor:hand;
+        }
+    </style>
+    <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>--%>
+    <link href="../css/fontawesome.min.css" rel="stylesheet" />
     <link href="../css/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <link href="../css/ajaxloader.css" rel="stylesheet" />
     <link href="../css/bootstrap-select.css" rel="stylesheet" />    
@@ -19,6 +37,7 @@
             <div class="row">
                 <div class="col-2">
                     <h2>Catalog</h2>
+                    
                 </div>
                 <div class="col-10">
                     <input type="text" name="SEARCH" id="txtSearch" class="form-control" placeholder="Search by Description.." style="width: 35%; display: inline; margin-right: 10px;" />
@@ -31,6 +50,7 @@
                     <button type="button" id="btnSearch" class="btn btn-success" style="display: inline; margin-right: 10px; margin-top: -5px">Search</button>
                     <button type="button" id="btnAdvanced" class="btn btn-primary" style="display: inline; margin-top: -5px;margin-right: 10px" data-toggle="collapse" data-target="#democollapseBtn" aria-expanded="false" aria-controls="democollapseBtn">More Filters</button>
                     <button type="button" id="btnClearfilter" class="btn btn-danger" style="display: inline; margin-top: -5px;margin-right: 10px">Reset Filters</button>
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
                     <button type="button" id="btnAddNew" class="btn btn-success addNewButton" style="position: relative; float: right;">Add New</button>
                 </div>
             </div>
@@ -51,43 +71,43 @@
 
                             <div class="col-6 col-md-4 col-lg-4">
                                 <label>Jewellery</label>
-                                <select id="cmbJewellery" multiple data-live-search="true">
+                                <select id="cmbJewellery" multiple data-live-search="true" class="filters">
                                 </select>
                             </div>
 
                             <div class="col-6 col-md-4 col-lg-4">
                                 <label>Design</label>
-                                <select id="cmbDesign" multiple data-live-search="true">
+                                <select id="cmbDesign" multiple data-live-search="true" class="filters">
                                 </select>
                             </div>
 
                             <div class="col-6 col-md-4 col-lg-4">
                                 <label>Collection</label>
-                                <select id="cmbCollection" multiple data-live-search="true">
+                                <select id="cmbCollection" multiple data-live-search="true" class="filters">
                                 </select>
                             </div>
 
                             <div class="col-6 col-md-4 col-lg-4">
                                 <label>Material</label>
-                                <select id="cmbMaterial" multiple data-live-search="true">
+                                <select id="cmbMaterial" multiple data-live-search="true" class="filters">
                                 </select>
                             </div>
 
                             <div class="col-6 col-md-4 col-lg-4">
                                 <label>Occasion</label>
-                                <select id="cmbOccasion" multiple data-live-search="true">
+                                <select id="cmbOccasion" multiple data-live-search="true" class="filters">
                                 </select>
                             </div>
 
                             <div class="col-6 col-md-4 col-lg-4">
                                 <label>Gram Slab</label>
-                                <select id="CmbGramSlab" multiple data-live-search="true">
+                                <select id="CmbGramSlab" multiple data-live-search="true" class="filters">
                                 </select>
                             </div>
 
                             <div class="col-6 col-md-4 col-lg-4">
                                 <label>Karat</label>                                
-                                <select id="cmbKarat" multiple data-live-search="true">
+                                <select id="cmbKarat" multiple data-live-search="true" class="filters">
                                 </select>
                             </div>                            
                         </div>
@@ -110,6 +130,9 @@
                                 <th>Jelwellery</th>
                                 <th>Design</th>
                                 <th>Collection</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>

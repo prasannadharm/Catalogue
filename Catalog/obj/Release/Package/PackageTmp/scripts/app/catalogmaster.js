@@ -1,14 +1,206 @@
 ﻿var Datalodaing = 0;
 $(document).ready(function () {
-    getDetails();
+    //getDetails();
 });
 
+$(function () {
+    $.ajax({
+        type: "POST",
+        url: "CatalogMaster.aspx/GetDropdownLisData",
+        data: '{}',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: LoadCombos
+    });
+
+    $("#btnSearch").click(function () {
+        getDetails();
+    });
+
+    $("#btnClearfilter").click(function () {
+        clearfilter();
+    });
+
+    $('#txtSku').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            getDetails();
+        }
+    });
+
+    $('#txtCode').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            getDetails();
+        }
+    });
+
+    $('#txtSearch').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            getDetails();
+        }
+    });
+});
+
+function LoadCombos(data) {   
+   
+    var optionsJewel = [];
+    var optionsDesign = [];
+    var optionsCollection = [];
+    var optionsMaterial = [];
+    var optionsOccasion = [];
+    var optionsGramSlab = [];
+    var optionsKarat = [];
+    for (var i = 0; i < data.d.length; i++) {
+        if (data.d[i].TYPE == 'JEWELLERY') {
+            optionsJewel.push('<option value="',
+            data.d[i].ID, '">',
+            data.d[i].NAME, '</option>');
+        }
+        else if (data.d[i].TYPE == 'DESIGN') {
+            optionsDesign.push('<option value="',
+            data.d[i].ID, '">',
+            data.d[i].NAME, '</option>');
+        }
+        else if (data.d[i].TYPE == 'COLLECTON') {
+            optionsCollection.push('<option value="',
+            data.d[i].ID, '">',
+            data.d[i].NAME, '</option>');
+        }
+        else if (data.d[i].TYPE == 'MATERIAL') {
+            optionsMaterial.push('<option value="',
+            data.d[i].ID, '">',
+            data.d[i].NAME, '</option>');
+        }
+        else if (data.d[i].TYPE == 'OCCASION') {
+            optionsOccasion.push('<option value="',
+            data.d[i].ID, '">',
+            data.d[i].NAME, '</option>');
+        }
+        else if (data.d[i].TYPE == 'GRAMSLAB') {
+            optionsGramSlab.push('<option value="',
+            data.d[i].ID, '">',
+            data.d[i].NAME, '</option>');
+        }
+        else if (data.d[i].TYPE == 'KARAT') {
+            optionsKarat.push('<option value="',
+            data.d[i].ID, '">',
+            data.d[i].NAME, '</option>');
+        }
+    }
+    
+    $("#cmbJewellery").html(optionsJewel.join(''));
+    $("#cmbJewellery").addClass("selectpicker");
+    $("#cmbJewellery").addClass("form-control");
+
+    $("#cmbDesign").html(optionsDesign.join(''));
+    $("#cmbDesign").addClass("selectpicker");
+    $("#cmbDesign").addClass("form-control");
+
+    $("#cmbCollection").html(optionsCollection.join(''));
+    $("#cmbCollection").addClass("selectpicker");
+    $("#cmbCollection").addClass("form-control");
+
+    $("#cmbMaterial").html(optionsMaterial.join(''));
+    $("#cmbMaterial").addClass("selectpicker");
+    $("#cmbMaterial").addClass("form-control");
+
+    $("#cmbOccasion").html(optionsOccasion.join(''));
+    $("#cmbOccasion").addClass("selectpicker");
+    $("#cmbOccasion").addClass("form-control");
+
+    $("#CmbGramSlab").html(optionsGramSlab.join(''));
+    $("#CmbGramSlab").addClass("selectpicker");
+    $("#CmbGramSlab").addClass("form-control");
+
+    $("#cmbKarat").html(optionsKarat.join(''));
+    $("#cmbKarat").addClass("selectpicker");
+    $("#cmbKarat").addClass("form-control");
+    getDetails();
+    $('.selectpicker').selectpicker('');   
+    
+}
+
+function clearfilter() {
+    $('#democollapseBtn').collapse('hide');
+
+    $("#txtSearch").val('');
+    $("#txtSku").val('');
+    $("#txtCode").val('');
+    $("#cmbJewellery").val('default').selectpicker("refresh");
+    $("#cmbDesign").val('default').selectpicker("refresh");
+    $("#cmbCollection").val('default').selectpicker("refresh");
+    $("#cmbMaterial").val('default').selectpicker("refresh");
+    $("#cmbOccasion").val('default').selectpicker("refresh");
+    $("#CmbGramSlab").val('default').selectpicker("refresh");
+    $("#cmbKarat").val('default').selectpicker("refresh");
+    getDetails();
+}
+
 function getDetails() {
+    $('#democollapseBtn').collapse('hide');
+    document.getElementById("loader").style.display = "block";
+
+    var obj = {};
+    obj.SEARCHTEXT = $("#txtSearch").val();
+    obj.SKU = $("#txtSku").val();
+    obj.CODE = $("#txtCode").val();
+
+
+    var strjewel = [];
+    $('#cmbJewellery > option:selected').each(function () {
+        strjewel.push($(this).val());
+    });
+    obj.JEWELLERYIDS = strjewel.join(',');
+
+
+    var strjdesign = [];
+    $('#cmbDesign > option:selected').each(function () {
+        strjdesign.push($(this).val());
+    });
+    obj.DESIGNIDS = strjdesign.join(',');
+
+    var strcoll = [];
+    $('#cmbCollection > option:selected').each(function () {
+        strcoll.push($(this).val());
+    });
+    obj.COLLECTIONSIDS = strcoll.join(',');
+
+    var strmat = [];
+    $('#cmbMaterial > option:selected').each(function () {
+        strmat.push($(this).val());
+    });
+    obj.MATERIALIDS = strmat.join(',');
+
+    var strocc = [];
+    $('#cmbOccasion > option:selected').each(function () {
+        strocc.push($(this).val());
+    });
+    obj.OCCASIONIDS = strocc.join(',');
+
+    var strgramslab = [];
+    $('#CmbGramSlab > option:selected').each(function () {
+        strgramslab.push($(this).val());
+    });
+    obj.GRAMSLABIDS = strgramslab.join(',');
+
+    var strkarat = [];
+    $('#cmbKarat > option:selected').each(function () {
+        strkarat.push($(this).val());
+    });
+    obj.KARATIDS = strkarat.join(',');
+
+    obj.CNT = $("#cmbRows").val();
+
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
         url: "CatalogMaster.aspx/GetData",
-        data: {},
+        data: '{obj: ' + JSON.stringify(obj) + '}',
         dataType: "json",
         success: function (data) {
             $('#griddiv').remove();
@@ -34,6 +226,7 @@ function getDetails() {
 
         //
     });
+    document.getElementById("loader").style.display = "none";
 }
 
 //Combos Loading Code - Start
