@@ -120,6 +120,7 @@
     <Content Include="images\static\loader1.gif" />
     <Content Include="images\static\loading.gif" />
     <Content Include="images\static\logout.png" />
+    <Content Include="images\static\preview.png" />
     <Content Include="images\static\print.png" />
     <Content Include="images\static\search-icon.png" />
     <Content Include="images\static\sort_asc.png" />

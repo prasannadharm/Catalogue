@@ -136,7 +136,7 @@
                     <input type="text" id="txtSearchItem" class="form-control" placeholder="Enter search keyword..." />
                 </div>
                 <div class="form-group col-md-3 col-lg-3">
-                    <button type="button" id="btnSearchItem" class="btn btn-primary" style="margin-top:32px">Search</button>
+                    <button type="button" id="btnSearchItem" class="btn btn-primary" style="margin-top: 32px">Search</button>
                 </div>
             </div>
 
@@ -148,7 +148,7 @@
                             <th>Code</th>
                             <th>Title</th>
                             <th>Qty</th>
-                            <th>Remarks</th>                            
+                            <th>Remarks</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -156,6 +156,16 @@
                     <tbody>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="row" id="divimgpreview" style="display: none;">
+                <div class="form-group col-12">
+                    <button type="button" id="btnCloseImgPreview" class="btn btn-danger btn-sm">Close Preview</button>
+                </div>
+                <div class="form-group col-12">
+                    <img id="imgpreviewsub" src="../images/static/preview.png" style="height: 300px; width: 300px" />
+                </div>
+
             </div>
 
             <div class="row">
