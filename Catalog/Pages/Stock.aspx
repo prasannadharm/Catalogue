@@ -63,6 +63,7 @@
                             <th>Created By</th>
                             <th>Modified By</th>
                             <th></th>
+                            <th></th>
                             <th></th>   
                         </tr>
                     </thead>
