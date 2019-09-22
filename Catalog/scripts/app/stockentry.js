@@ -1,6 +1,8 @@
-﻿$(document).ready(function () {
+﻿var subItemsList = [];
+$(document).ready(function () {
     var date = new Date();
     var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    subItemsList = [];
     $(".datepicker").datepicker({ dateFormat: 'dd-mm-yy' });  
     $('#dtpFrom').datepicker('setDate', today);
     $('#dtpTo').datepicker('setDate', today);
@@ -8,6 +10,42 @@
         getStockEntryDetails();
     })
     getStockEntryDetails();
+
+    $('#ContentPlaceHolder1_LED_NAME').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            $('#REMARKS').focus();
+        }
+    });
+
+    $('#REMARKS').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            $('#REF_NO').focus();
+        }
+    });
+
+    $('#REF_NO').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            $('#txtSearchItem').focus();
+        }
+    });   
+
+    $('#txtSearchItem').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            searchItem();
+        }
+    });
+
+    $("#btnSearchItem").click(function () {
+        searchItem();
+    });
 })
 
 
@@ -26,6 +64,10 @@ $(function () {
         $("#ContentPlaceHolder1_LED_ID").val('');
         $('#REMARKS').val('');
         $('#REF_NO').val('');
+        subItemsList = [];
+        $('#tablesub tbody').remove();
+        $('#tablesub').append("<tbody>");
+        $('#tablesub').append("</tbody>");
 
         $("#subheaderdiv").html("<h2>Stock Entry -> Add Stock Entry</h2>");
 
@@ -49,6 +91,8 @@ $(function () {
             }
         });
 
+        $("#ContentPlaceHolder1_LED_NAME").focus();
+
     });
 
     $(document).on("click", ".editButton", function () {
@@ -57,6 +101,12 @@ $(function () {
         $('#mainlistingdiv').hide();
         $('#mainldetaildiv').show();
         $("#subheaderdiv").html("<h2>Stock Entry -> Edit Stock Entry</h2>");
+        subItemsList = [];
+        $('#tablesub tbody').remove();
+        $('#tablesub').append("<tbody>");
+        $('#tablesub').append("</tbody>");
+
+        $("#ContentPlaceHolder1_LED_NAME").focus();
     });
 
     $(document).on("click", ".cancelButton", function () {       
@@ -96,6 +146,75 @@ $(function () {
 
 });
 
+
+function searchItem()
+{
+    if ($.trim($("#cmbSeacrhField").val()) == '')
+    {
+        alert('Please select search field.');
+        $("#cmbSeacrhField").focus();
+        return;
+    }
+
+    if ($.trim($("#cmbSeacrhCondition").val()) == '')
+    {
+        alert('Please select search condition.');
+        $("#cmbSeacrhCondition").focus();
+        return;
+    }
+
+    if ($.trim($("#txtSearchItem").val()) == '') {
+        alert('Please enter search text.');
+        $("#txtSearchItem").focus();
+        return;
+    }    
+
+    document.getElementById("loader").style.display = "block";
+
+    var obj = {};
+    obj.SEARCHBY = $("#cmbSeacrhField").val();
+    obj.CONDITION = $("#cmbSeacrhCondition").val();
+    obj.SEARCHITEM = $.trim($("#txtSearchItem").val());
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: "Stock.aspx/SearchCatalogbyText",
+        data: '{obj: ' + JSON.stringify(obj) + '}',
+        dataType: "json",
+        success: function (data) {
+            for (var i = 0; i < data.d.length; i++) {
+                var objdetail = {};
+                objdetail.ID = data.d[i].ID;
+                objdetail.SKU = data.d[i].SKU;
+                objdetail.CODE = data.d[i].CODE;
+                objdetail.TITLE = data.d[i].TITLE;
+                objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
+                objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
+                objdetail.GENID = Math.floor((Math.random() * 10000) + 1);
+                subItemsList.push(objdetail);             
+            }
+
+            $('#tablesub tbody').remove();
+            $('#tablesub').append("<tbody>");
+            for (var i = 0; i < subItemsList.length; i++) {                
+                $('#tablesub').append(
+                    "<tr><td>" + subItemsList[i].SKU + "</td><td>" + subItemsList[i].CODE + "</td><td>" + subItemsList[i].TITLE + "</td>" +
+                    "<td><input type='number' id='txtqty_" + subItemsList[i].GENID + "' class='form-control' value=1 style='width:80px' /></td>" +
+                    "<td><input type='text' id='txtsubremarks_" + subItemsList[i].GENID + "' class='form-control' value='' /></td>" +
+                    "<td style='text-align: center'><img src='../images/static/delete.png' alt='Delete Record' class='deleteButtonSub handcursor' data-id='" + subItemsList[i].ID + "' id='btnDeleteSub' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
+                    "<td style='text-align: center'><img src='../images/static/imageview.png' alt='Preview' class='previewButtonSub handcursor' data-id='" + subItemsList[i].PHY_FILE_NAME + "' id='btnPreviewSub' value='Preview' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+            }
+            $('#tablesub').append("</tbody>");
+        },
+        error: function (request, status, error) {
+            alert(request.responseText);
+            alert("Error while Showing update data");
+        }
+    });
+
+    document.getElementById("loader").style.display = "none";
+}
 
 function getStockEntryDetails() {
 
@@ -147,7 +266,7 @@ function getStockEntryDetails() {
                     "<tr><td>" + data.d[i].TRANS_NO + "</td><td>" + data.d[i].TRASN_DATE + "</td><td>" + data.d[i].LED_NAME + "</td><td>" + data.d[i].REMARKS + "</td><td>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td><td>" + data.d[i].CREATEDBY + "</td><td>" + data.d[i].MODIFIEDBY +
                     "</td>" + "<td>" + "<img src='../images/static/edit.png' alt='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
                     "<td><img src='../images/static/delete.png' alt='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
-                    "<td><img src='../images/static/print.png' alt='Print Recodr' class='printButton handcursor' data-id='" + data.d[i].ID + "' id='btnPrint' value='Print' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+                    "<td><img src='../images/static/print.png' alt='Print Record' class='printButton handcursor' data-id='" + data.d[i].ID + "' id='btnPrint' value='Print' style='margin-right:5px;margin-left:5px'/> </td></tr>");
             }
             $('#tablemain').append("</tbody>");
             $('#tablemain').DataTable({

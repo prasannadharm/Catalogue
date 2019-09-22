@@ -115,6 +115,7 @@
     <Content Include="images\static\delete.png" />
     <Content Include="images\static\edit.png" />
     <Content Include="images\static\favicon.ico" />
+    <Content Include="images\static\imageview.png" />
     <Content Include="images\static\loader.gif" />
     <Content Include="images\static\loader1.gif" />
     <Content Include="images\static\loading.gif" />
@@ -229,6 +230,7 @@
     <Compile Include="Models\DropdownEntity.cs" />
     <Compile Include="Models\InwardTypeMasterEntity.cs" />
     <Compile Include="Models\OutwardTypeMasterEntity.cs" />
+    <Compile Include="Models\SearchCatalogByTextEntity.cs" />
     <Compile Include="Models\SearchCatalogEntity.cs" />
     <Compile Include="Models\SearchItemEntity.cs" />
     <Compile Include="Models\SearchItemQueryEntity.cs" />

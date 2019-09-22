@@ -64,5 +64,21 @@ namespace Catalog.Pages
             }
             return lstvalues.ToArray();
         }
+
+
+        [WebMethod]
+        public static SearchCatalogByTextEntity[] SearchCatalogbyText(SearchCatalogByConditionEntity obj)
+        {
+            List<SearchCatalogByTextEntity> details = new List<SearchCatalogByTextEntity>();
+            try
+            {
+                details = new GenericDAO().SearchCatalogbyText(obj);
+            }
+            catch (Exception ex)
+            {
+                // details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
     }
 }

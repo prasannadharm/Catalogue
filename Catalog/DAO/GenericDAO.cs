@@ -358,5 +358,47 @@ namespace Catalog.DAO
             }
             return retlst;
         }
+
+        public List<SearchCatalogByTextEntity> SearchCatalogbyText( SearchCatalogByConditionEntity obj)
+        {
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlDataAdapter adapter;
+            DataSet ds = new DataSet();
+            List<SearchCatalogByTextEntity> retlst = new List<SearchCatalogByTextEntity>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("USP_GetCatalogForSearchDetails", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SearchBy", obj.SEARCHBY);
+                    cmd.Parameters.AddWithValue("@Condition", obj.CONDITION);
+                    cmd.Parameters.AddWithValue("@SearchItem", obj.SEARCHITEM);
+                    con.Open();
+                    adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        SearchCatalogByTextEntity objres = new SearchCatalogByTextEntity();
+                        objres.ID = Convert.ToInt64(ds.Tables[0].Rows[i]["ID"].ToString());
+                        objres.SKU = ds.Tables[0].Rows[i]["SKU"] == DBNull.Value? "" : ds.Tables[0].Rows[i]["SKU"].ToString();
+                        objres.CODE = ds.Tables[0].Rows[i]["CODE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["CODE"].ToString();
+                        objres.TITLE = ds.Tables[0].Rows[i]["TITLE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["TITLE"].ToString();
+                        objres.JEWELLERY_NAME = ds.Tables[0].Rows[i]["JEWELLERY_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["JEWELLERY_NAME"].ToString();
+                        objres.COLLECTIONS_NAME = ds.Tables[0].Rows[i]["COLLECTIONS_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["COLLECTIONS_NAME"].ToString();
+                        objres.DESIGN_NAME = ds.Tables[0].Rows[i]["DESIGN_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["DESIGN_NAME"].ToString();
+                        objres.ORG_FILE_NAME = ds.Tables[0].Rows[i]["ORG_FILE_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["ORG_FILE_NAME"].ToString();
+                        objres.PHY_FILE_NAME = ds.Tables[0].Rows[i]["PHY_FILE_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["PHY_FILE_NAME"].ToString();
+                        retlst.Add(objres);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return retlst;
+        }
     }
 }
