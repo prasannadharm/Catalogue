@@ -46,6 +46,7 @@ $(document).ready(function () {
     $("#btnSearchItem").click(function () {
         searchItem();
     });
+   
 })
 
 
@@ -192,20 +193,11 @@ function searchItem()
                 objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
                 objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
                 objdetail.GENID = Math.floor((Math.random() * 10000) + 1);
+                objdetail.QTY = 1;
+                objdetail.REMARKS = '';
                 subItemsList.push(objdetail);             
             }
-
-            $('#tablesub tbody').remove();
-            $('#tablesub').append("<tbody>");
-            for (var i = 0; i < subItemsList.length; i++) {                
-                $('#tablesub').append(
-                    "<tr><td>" + subItemsList[i].SKU + "</td><td>" + subItemsList[i].CODE + "</td><td>" + subItemsList[i].TITLE + "</td>" +
-                    "<td><input type='number' id='txtqty_" + subItemsList[i].GENID + "' class='form-control' value=1 style='width:80px' /></td>" +
-                    "<td><input type='text' id='txtsubremarks_" + subItemsList[i].GENID + "' class='form-control' value='' /></td>" +
-                    "<td style='text-align: center'><img src='../images/static/delete.png' alt='Delete Record' class='deleteButtonSub handcursor' data-id='" + subItemsList[i].ID + "' id='btnDeleteSub' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
-                    "<td style='text-align: center'><img src='../images/static/imageview.png' alt='Preview' class='previewButtonSub handcursor' data-id='" + subItemsList[i].PHY_FILE_NAME + "' id='btnPreviewSub' value='Preview' style='margin-right:5px;margin-left:5px'/> </td></tr>");
-            }
-            $('#tablesub').append("</tbody>");
+            rebuildSubTable();            
         },
         error: function (request, status, error) {
             alert(request.responseText);
@@ -214,6 +206,41 @@ function searchItem()
     });
 
     document.getElementById("loader").style.display = "none";
+}
+
+function rebuildSubTable()
+{
+    $('#tablesub tbody').remove();
+    $('#tablesub').append("<tbody>");
+    for (var i = 0; i < subItemsList.length; i++) {
+        $('#tablesub').append(
+            "<tr><td>" + subItemsList[i].SKU + "</td><td>" + subItemsList[i].CODE + "</td><td>" + subItemsList[i].TITLE + "</td>" +
+            "<td><input type='number' id='txtqty_" + subItemsList[i].GENID + "' class='form-control subqty' value=" + subItemsList[i].QTY + " style='width:80px' /></td>" +
+            "<td><input type='text' id='txtsubremarks_" + subItemsList[i].GENID + "' class='form-control subremarks' value='" + subItemsList[i].REMARKS + "' /></td>" +
+            "<td style='text-align: center'><img src='../images/static/delete.png' alt='Delete Record' class='deleteButtonSub handcursor' data-id='" + subItemsList[i].ID + '_' + subItemsList[i].GENID + "' id='btnDeleteSub' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
+            "<td style='text-align: center'><img src='../images/static/imageview.png' alt='Preview' class='previewButtonSub handcursor' data-id='" + subItemsList[i].PHY_FILE_NAME + "' id='btnPreviewSub' value='Preview' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+    }
+    $('#tablesub').append("</tbody>");
+
+    $('.subqty').on('input', function () {
+        var id = this.id.split("_");;
+        for (var i = 0; i < subItemsList.length; i++) {
+            if (subItemsList[i].GENID == id[1]) {
+                subItemsList[i].QTY = $(this).val();                
+                return;
+            }
+        }
+    });
+
+    $('.subremarks').on('input', function () {
+        var id = this.id.split("_");;
+        for (var i = 0; i < subItemsList.length; i++) {
+            if (subItemsList[i].GENID == id[1]) {
+                subItemsList[i].REMARKS = $(this).val();                
+                return;
+            }
+        }
+    });
 }
 
 function getStockEntryDetails() {
