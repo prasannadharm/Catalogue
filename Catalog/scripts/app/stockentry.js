@@ -1,24 +1,100 @@
 ﻿$(document).ready(function () {
     var date = new Date();
     var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    var date_input = $('input[name="date"]'); //our date input has the name "date"
-    var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
-    var options = {
-        format: 'dd/mm/yyyy',
-        container: container,
-        todayHighlight: true,
-        autoclose: true,
-    };
-    date_input.datepicker(options);
+    $(".datepicker").datepicker({ dateFormat: 'dd-mm-yy' });  
     $('#dtpFrom').datepicker('setDate', today);
     $('#dtpTo').datepicker('setDate', today);
-
     $("#btnSearch").click(function () {
         getStockEntryDetails();
     })
-
     getStockEntryDetails();
 })
+
+
+
+$(function () {
+    $(document).on("click", ".addNewButton", function () {
+        var date = new Date();
+        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());        
+        $('#btnSave').show();
+        $('#btnUpdate').hide();       
+        $('#mainlistingdiv').hide();
+        $('#mainldetaildiv').show();
+        $('#TRANS_NO').val('0');       
+        $('#TRASN_DATE').datepicker('setDate', today);
+        $("#ContentPlaceHolder1_LED_NAME").val('');
+        $("#ContentPlaceHolder1_LED_ID").val('');
+        $('#REMARKS').val('');
+        $('#REF_NO').val('');
+
+        $("#subheaderdiv").html("<h2>Stock Entry -> Add Stock Entry</h2>");
+
+        $.ajax({
+            url: "Stock.aspx/GetLatestTrasnsactionNumber",
+            data: '{}',
+            dataType: "json",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                for (var i = 0; i < data.d.length; i++) {
+                    $('#TRANS_NO').val(data.d[i].split('-')[0]);                   
+                    $('#TRASN_DATE').datepicker('setDate', Date.parse(data.d[i].split('-')[1]));
+                }                
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    });
+
+    $(document).on("click", ".editButton", function () {
+        $('#btnSave').hide();
+        $('#btnUpdate').show();
+        $('#mainlistingdiv').hide();
+        $('#mainldetaildiv').show();
+        $("#subheaderdiv").html("<h2>Stock Entry -> Edit Stock Entry</h2>");
+    });
+
+    $(document).on("click", ".cancelButton", function () {       
+        $('#mainlistingdiv').show();
+        $('#mainldetaildiv').hide();       
+    });
+
+    $("[id$=LED_NAME]").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "Stock.aspx/GetLedgersbyName",
+                data: "{ 'str': '" + request.term + "'}",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    response($.map(data.d, function (item) {
+                        return {
+                            label: item.split('-')[0],
+                            val: item.split('-')[1]
+                        }
+                    }))
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        },
+        select: function (e, i) {
+            $("[id$=LED_ID]").val(i.item.val);
+        },
+        minLength: 1
+    });
+
+});
 
 
 function getStockEntryDetails() {
@@ -76,20 +152,15 @@ function getStockEntryDetails() {
             $('#tablemain').append("</tbody>");
             $('#tablemain').DataTable({
                 "order": [[0, "desc"]]
-            });
-            //data-toggle='modal' data-target='#PopupModal'
+            });           
         },
         error: function (request, status, error) {
             alert(request.responseText);
             alert("Error while Showing update data");
-        }
-
-        //
+        }      
     });
     document.getElementById("loader").style.display = "none";
 }
-
-
 
 function isDate(txtDate) {
     var currVal = txtDate;

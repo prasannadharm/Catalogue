@@ -206,18 +206,21 @@ function getDetails() {
             $('#griddiv').remove();
             $('#maindiv').append("<div class='table-responsive' id='griddiv'></div>");
             $('#griddiv').append("<table id='tablemain' class='table table-striped table-bordered' style='width: 100%'></table>");
-            $('#tablemain').append("<thead><tr><th>SKU</th><th>Code</th><th>Description</th><th>Stock</th><th>Jelwellery</th><th>Design</th><th>Collection</th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
+            $('#tablemain').append("<thead><tr><th>SKU</th><th>Code</th><th>Description</th><th>Stock</th><th>Jelwellery</th><th>Design</th><th>Collection</th><th></th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
             $('#tablemain tbody').remove();
             $('#tablemain').append("<tbody>");
             for (var i = 0; i < data.d.length; i++) {
                 $('#tablemain').append(
                     "<tr><td>" + data.d[i].SKU + "</td><td>" + data.d[i].CODE + "</td><td>" + data.d[i].TITLE + "</td><td>" + data.d[i].STK_QTY + "</td><td>" + data.d[i].JEWELLERY_NAME + "</td><td>" + data.d[i].DESIGN_NAME +
-                    "</td><td>" + data.d[i].COLLECTIONS_NAME + "</td>" + "<td>" + "<input type='button' class='btn btn-warning btn-sm editButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
-                    "<td>" + "<input type='button' class='btn btn-primary btn-sm uploadButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnUpload' value='Upload' style='margin-right:5px;margin-left:5px'/>" + "</td>" +
-                    "<td><input type='button' class='btn btn-danger btn-sm deleteButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+                    "</td><td>" + data.d[i].COLLECTIONS_NAME + "</td>" + "<td>" + "<img src='../images/static/edit.png' alt='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
+                    "<td><img src='../images/static/delete.png' alt='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
+                    "<td>" + "<img src='../images/static/upload.png' alt='Upload Image' class='uploadButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnUpload' value='Upload' style='margin-right:5px;margin-left:5px'/>" + "</td>" +
+                    "<td><img src='../images/static/barcode.png' alt='Print Barcode' class='barcodeButton handcursor' data-id='" + data.d[i].ID + "' id='btnBarcode' value='Barcode' style='margin-right:5px;margin-left:5px'/> </td></tr>");
             }
             $('#tablemain').append("</tbody>");
-            $('#tablemain').DataTable();
+            $('#tablemain').DataTable({
+                "order": [[0, "desc"]]
+            });
             //data-toggle='modal' data-target='#PopupModal'
         },
         error: function () {

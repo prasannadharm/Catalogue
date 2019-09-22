@@ -13,6 +13,24 @@ namespace Catalog.Pages {
     public partial class Stock {
         
         /// <summary>
+        /// LED_NAME control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox LED_NAME;
+        
+        /// <summary>
+        /// LED_ID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField LED_ID;
+        
+        /// <summary>
         /// fileToUpload control.
         /// </summary>
         /// <remarks>

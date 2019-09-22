@@ -16,13 +16,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/16/2019 20:23:16</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>09/20/2019 21:44:21</publishTime>
+      <publishTime>09/22/2019 08:10:53</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>09/20/2019 21:44:21</publishTime>
+      <publishTime>09/22/2019 08:10:53</publishTime>
     </File>
     <File Include="bin/Catalog.dll">
-      <publishTime>09/20/2019 21:44:09</publishTime>
+      <publishTime>09/22/2019 08:10:39</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>12/07/2015 19:04:38</publishTime>
@@ -90,6 +90,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="css/baguetteBox.min.css">
       <publishTime>04/16/2019 06:02:39</publishTime>
     </File>
+    <File Include="css/bootstrap-datepicker3.css">
+      <publishTime>09/21/2019 16:09:02</publishTime>
+    </File>
     <File Include="css/bootstrap-select.css">
       <publishTime>05/17/2019 20:50:34</publishTime>
     </File>
@@ -117,8 +120,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="css/forgotpassword.css">
       <publishTime>05/01/2019 08:44:10</publishTime>
     </File>
+    <File Include="images/static/barcode.png">
+      <publishTime>09/21/2019 14:55:13</publishTime>
+    </File>
     <File Include="images/static/dashboard.png">
       <publishTime>04/09/2019 21:07:00</publishTime>
+    </File>
+    <File Include="images/static/delete.png">
+      <publishTime>09/21/2019 14:24:13</publishTime>
+    </File>
+    <File Include="images/static/edit.png">
+      <publishTime>09/21/2019 14:21:36</publishTime>
     </File>
     <File Include="images/static/favicon.ico">
       <publishTime>05/19/2019 20:10:16</publishTime>
@@ -177,6 +189,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="images/static/logout.png">
       <publishTime>05/03/2019 00:33:26</publishTime>
     </File>
+    <File Include="images/static/print.png">
+      <publishTime>09/22/2019 07:13:40</publishTime>
+    </File>
     <File Include="images/static/search-icon.png">
       <publishTime>05/14/2019 21:11:26</publishTime>
     </File>
@@ -188,6 +203,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="images/static/sort_desc.png">
       <publishTime>04/21/2019 19:54:36</publishTime>
+    </File>
+    <File Include="images/static/upload.png">
+      <publishTime>09/21/2019 14:54:36</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>04/16/2019 20:23:16</publishTime>
@@ -208,7 +226,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/11/2019 20:43:18</publishTime>
     </File>
     <File Include="Pages/CatalogMaster.aspx">
-      <publishTime>09/20/2019 21:41:15</publishTime>
+      <publishTime>09/21/2019 16:09:56</publishTime>
     </File>
     <File Include="Pages/CatalogueMaster.aspx">
       <publishTime>04/29/2019 06:12:03</publishTime>
@@ -276,6 +294,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Pages/Search.aspx">
       <publishTime>09/16/2019 21:05:00</publishTime>
     </File>
+    <File Include="Pages/Stock.aspx">
+      <publishTime>09/22/2019 07:14:25</publishTime>
+    </File>
     <File Include="Pages/UserDashboard.aspx">
       <publishTime>04/26/2019 13:00:36</publishTime>
     </File>
@@ -286,7 +307,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/01/2019 10:40:40</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>09/20/2019 21:44:17</publishTime>
+      <publishTime>09/22/2019 08:10:49</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>04/16/2019 20:23:16</publishTime>
@@ -307,7 +328,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/21/2019 20:45:54</publishTime>
     </File>
     <File Include="scripts/app/catalogmaster.js">
-      <publishTime>09/20/2019 20:59:37</publishTime>
+      <publishTime>09/21/2019 14:57:56</publishTime>
     </File>
     <File Include="scripts/app/cataloguemaster.js">
       <publishTime>04/29/2019 06:13:12</publishTime>
@@ -349,7 +370,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/29/2019 21:04:52</publishTime>
     </File>
     <File Include="scripts/app/ledgermaster.js">
-      <publishTime>05/02/2019 12:44:37</publishTime>
+      <publishTime>09/21/2019 14:52:56</publishTime>
     </File>
     <File Include="scripts/app/ledgertypemaster.js">
       <publishTime>04/29/2019 19:56:12</publishTime>
@@ -369,11 +390,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="scripts/app/search.js">
       <publishTime>09/20/2019 20:26:08</publishTime>
     </File>
+    <File Include="scripts/app/stockentry.js">
+      <publishTime>09/22/2019 08:08:16</publishTime>
+    </File>
     <File Include="scripts/app/usermaster.js">
       <publishTime>05/03/2019 00:46:53</publishTime>
     </File>
     <File Include="scripts/baguetteBox.min.js">
       <publishTime>04/16/2019 06:03:29</publishTime>
+    </File>
+    <File Include="scripts/bootstrap-datepicker.min.js">
+      <publishTime>09/21/2019 16:08:41</publishTime>
     </File>
     <File Include="scripts/bootstrap-select.min.js">
       <publishTime>05/17/2019 20:50:00</publishTime>
@@ -403,7 +430,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/14/2019 20:06:56</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/20/2019 21:44:16</publishTime>
+      <publishTime>09/22/2019 08:10:48</publishTime>
     </File>
   </ItemGroup>
 </Project>

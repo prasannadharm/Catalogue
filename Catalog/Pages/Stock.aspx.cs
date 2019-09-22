@@ -19,7 +19,7 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static StockEntryEntity[] GetData(DateFilterEntity obj) //Show the details of the data after insert in HTML Table
+        public static StockEntryEntity[] GetData(DateFilterEntity obj)
         {
             var details = new List<StockEntryEntity>();
             try
@@ -31,6 +31,38 @@ namespace Catalog.Pages
                 // details.Add(new DbStatusEntity(ex.Message));
             }
             return details.ToArray();
+        }
+
+
+        [WebMethod]
+        public static string[] GetLedgersbyName(string str) 
+        {
+            List<string> ledgers = new List<string>();
+            try
+            {
+                ledgers = new StockEntryDAO().GetLedgersbyName(str);
+            }
+            catch (Exception ex)
+            {
+                // details.Add(new DbStatusEntity(ex.Message));
+            }
+            return ledgers.ToArray();
+        }
+
+
+        [WebMethod]
+        public static string[] GetLatestTrasnsactionNumber() 
+        {
+            List<string> lstvalues = new List<string>();
+            try
+            {
+                lstvalues = new StockEntryDAO().GetLatestTrasnsactionNumber("STOCK");
+            }
+            catch (Exception ex)
+            {
+                // details.Add(new DbStatusEntity(ex.Message));
+            }
+            return lstvalues.ToArray();
         }
     }
 }
