@@ -1,25 +1,272 @@
-﻿$(document).ready(function () {
+﻿var subItemsList = [];
+$(document).ready(function () {
     var date = new Date();
     var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    var date_input = $('input[name="date"]'); //our date input has the name "date"
-    var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
-    var options = {
-        format: 'dd/mm/yyyy',
-        container: container,
-        todayHighlight: true,
-        autoclose: true,
-    };
-    date_input.datepicker(options);
+    subItemsList = [];
+    $(".datepicker").datepicker({ dateFormat: 'dd-mm-yy' });  
     $('#dtpFrom').datepicker('setDate', today);
     $('#dtpTo').datepicker('setDate', today);
-
     $("#btnSearch").click(function () {
         getStockEntryDetails();
     })
-
     getStockEntryDetails();
+
+    $('#ContentPlaceHolder1_LED_NAME').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            $('#REMARKS').focus();
+        }
+    });
+
+    $('#REMARKS').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            $('#REF_NO').focus();
+        }
+    });
+
+    $('#REF_NO').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            $('#txtSearchItem').focus();
+        }
+    });   
+
+    $('#txtSearchItem').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            searchItem();
+        }
+    });
+
+    $("#btnSearchItem").click(function () {
+        searchItem();
+    });
+
+    $("#btnCloseImgPreview").click(function () {
+        $('#divimgpreview').hide();
+    });  
+   
 })
 
+
+
+$(function () {
+    $(document).on("click", ".addNewButton", function () {
+        var date = new Date();
+        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());        
+        $('#btnSave').show();
+        $('#btnUpdate').hide();       
+        $('#mainlistingdiv').hide();
+        $('#mainldetaildiv').show();
+        $('#TRANS_NO').val('0');       
+        $('#TRASN_DATE').datepicker('setDate', today);
+        $("#ContentPlaceHolder1_LED_NAME").val('');
+        $("#ContentPlaceHolder1_LED_ID").val('');
+        $('#REMARKS').val('');
+        $('#REF_NO').val('');
+        subItemsList = [];
+        $('#tablesub tbody').remove();
+        $('#tablesub').append("<tbody>");
+        $('#tablesub').append("</tbody>");
+
+        $("#subheaderdiv").html("<h2>Stock Entry -> Add Stock Entry</h2>");
+
+        $.ajax({
+            url: "Stock.aspx/GetLatestTrasnsactionNumber",
+            data: '{}',
+            dataType: "json",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                for (var i = 0; i < data.d.length; i++) {
+                    $('#TRANS_NO').val(data.d[i].split('-')[0]);                   
+                    $('#TRASN_DATE').datepicker('setDate', Date.parse(data.d[i].split('-')[1]));
+                }                
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+        $("#ContentPlaceHolder1_LED_NAME").focus();
+
+    });
+
+    $(document).on("click", ".editButton", function () {
+        $('#btnSave').hide();
+        $('#btnUpdate').show();
+        $('#mainlistingdiv').hide();
+        $('#mainldetaildiv').show();
+        $("#subheaderdiv").html("<h2>Stock Entry -> Edit Stock Entry</h2>");
+        subItemsList = [];
+        $('#tablesub tbody').remove();
+        $('#tablesub').append("<tbody>");
+        $('#tablesub').append("</tbody>");
+
+        $("#ContentPlaceHolder1_LED_NAME").focus();
+    });
+
+    $(document).on("click", ".cancelButton", function () {       
+        $('#mainlistingdiv').show();
+        $('#mainldetaildiv').hide();       
+    });
+
+    $("[id$=LED_NAME]").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "Stock.aspx/GetLedgersbyName",
+                data: "{ 'str': '" + request.term + "'}",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    response($.map(data.d, function (item) {
+                        return {
+                            label: item.split('-')[0],
+                            val: item.split('-')[1]
+                        }
+                    }))
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        },
+        select: function (e, i) {
+            $("[id$=LED_ID]").val(i.item.val);
+        },
+        minLength: 1
+    });
+
+});
+
+
+function searchItem()
+{
+    if ($.trim($("#cmbSeacrhField").val()) == '')
+    {
+        alert('Please select search field.');
+        $("#cmbSeacrhField").focus();
+        return;
+    }
+
+    if ($.trim($("#cmbSeacrhCondition").val()) == '')
+    {
+        alert('Please select search condition.');
+        $("#cmbSeacrhCondition").focus();
+        return;
+    }
+
+    if ($.trim($("#txtSearchItem").val()) == '') {
+        alert('Please enter search text.');
+        $("#txtSearchItem").focus();
+        return;
+    }    
+
+    document.getElementById("loader").style.display = "block";
+
+    var obj = {};
+    obj.SEARCHBY = $("#cmbSeacrhField").val();
+    obj.CONDITION = $("#cmbSeacrhCondition").val();
+    obj.SEARCHITEM = $.trim($("#txtSearchItem").val());
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: "Stock.aspx/SearchCatalogbyText",
+        data: '{obj: ' + JSON.stringify(obj) + '}',
+        dataType: "json",
+        success: function (data) {
+            for (var i = 0; i < data.d.length; i++) {
+                var objdetail = {};
+                objdetail.ID = data.d[i].ID;
+                objdetail.SKU = data.d[i].SKU;
+                objdetail.CODE = data.d[i].CODE;
+                objdetail.TITLE = data.d[i].TITLE;
+                objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
+                objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
+                objdetail.GENID = Math.floor((Math.random() * 10000) + 1);
+                objdetail.QTY = 1;
+                objdetail.REMARKS = '';
+                subItemsList.push(objdetail);             
+            }
+            rebuildSubTable();            
+        },
+        error: function (request, status, error) {
+            alert(request.responseText);
+            alert("Error while Showing update data");
+        }
+    });
+
+    document.getElementById("loader").style.display = "none";
+    $("#txtSearchItem").val('');
+    $("#txtSearchItem").focus();
+}
+
+function rebuildSubTable()
+{
+    $('#tablesub tbody').remove();
+    $('#tablesub').append("<tbody>");
+    for (var i = 0; i < subItemsList.length; i++) {
+        $('#tablesub').append(
+            "<tr><td style='text-align:center'>" + subItemsList[i].SKU + "</td><td>" + subItemsList[i].CODE + "</td><td>" + subItemsList[i].TITLE + "</td>" +
+            "<td><input type='number' id='txtqty_" + subItemsList[i].GENID + "' class='form-control subqty' value=" + subItemsList[i].QTY + " style='width:80px;text-align:center' /></td>" +
+            "<td><input type='text' id='txtsubremarks_" + subItemsList[i].GENID + "' class='form-control subremarks' value='" + subItemsList[i].REMARKS + "' /></td>" +
+            "<td style='text-align: center'><img src='../images/static/delete.png' alt='Delete Record' class='deleteButtonSub handcursor' data-id='" + subItemsList[i].ID + '_' + subItemsList[i].GENID + "' id='btnDeleteSub_" + subItemsList[i].GENID + "' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
+            "<td style='text-align: center'><img src='../images/static/imageview.png' alt='Preview' class='previewButtonSub handcursor' data-id='" + subItemsList[i].PHY_FILE_NAME + "' id='btnPreviewSub' value='Preview' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+    }
+    $('#tablesub').append("</tbody>");
+
+    $('.subqty').on('input', function () {
+        var id = this.id.split("_");
+        for (var i = 0; i < subItemsList.length; i++) {
+            if (subItemsList[i].GENID == id[1]) {
+                subItemsList[i].QTY = $(this).val();                
+                return;
+            }
+        }
+    });
+
+    $('.subremarks').on('input', function () {
+        var id = this.id.split("_");
+        for (var i = 0; i < subItemsList.length; i++) {
+            if (subItemsList[i].GENID == id[1]) {
+                subItemsList[i].REMARKS = $(this).val();                
+                return;
+            }
+        }
+    });
+
+    $(".deleteButtonSub").click(function () {
+        var id = this.id.split("_");
+        var newsubItemsList = [];
+        for (var i = 0; i < subItemsList.length; i++) {
+            if (subItemsList[i].GENID != id[1]) {
+                newsubItemsList.push(subItemsList[i])
+            }
+        }
+        subItemsList = [];
+        subItemsList = newsubItemsList;
+        rebuildSubTable();
+    });
+
+    $(".previewButtonSub").click(function () {       
+        var file = $(this).attr("data-id");
+        $('#imgpreviewsub').attr("src", "../images/upload/" + file);
+        $('#divimgpreview').show();
+    });
+}
 
 function getStockEntryDetails() {
 
@@ -71,25 +318,20 @@ function getStockEntryDetails() {
                     "<tr><td>" + data.d[i].TRANS_NO + "</td><td>" + data.d[i].TRASN_DATE + "</td><td>" + data.d[i].LED_NAME + "</td><td>" + data.d[i].REMARKS + "</td><td>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td><td>" + data.d[i].CREATEDBY + "</td><td>" + data.d[i].MODIFIEDBY +
                     "</td>" + "<td>" + "<img src='../images/static/edit.png' alt='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
                     "<td><img src='../images/static/delete.png' alt='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
-                    "<td><img src='../images/static/print.png' alt='Print Recodr' class='printButton handcursor' data-id='" + data.d[i].ID + "' id='btnPrint' value='Print' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+                    "<td><img src='../images/static/print.png' alt='Print Record' class='printButton handcursor' data-id='" + data.d[i].ID + "' id='btnPrint' value='Print' style='margin-right:5px;margin-left:5px'/> </td></tr>");
             }
             $('#tablemain').append("</tbody>");
             $('#tablemain').DataTable({
                 "order": [[0, "desc"]]
-            });
-            //data-toggle='modal' data-target='#PopupModal'
+            });           
         },
         error: function (request, status, error) {
             alert(request.responseText);
             alert("Error while Showing update data");
-        }
-
-        //
+        }      
     });
     document.getElementById("loader").style.display = "none";
 }
-
-
 
 function isDate(txtDate) {
     var currVal = txtDate;

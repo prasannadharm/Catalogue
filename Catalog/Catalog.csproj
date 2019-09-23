@@ -123,6 +123,7 @@
     <Content Include="images\static\preview.png" />
     <Content Include="images\static\print.png" />
     <Content Include="images\static\search-icon.png" />
+    <Content Include="images\static\select.png" />
     <Content Include="images\static\sort_asc.png" />
     <Content Include="images\static\sort_both.png" />
     <Content Include="images\static\sort_desc.png" />

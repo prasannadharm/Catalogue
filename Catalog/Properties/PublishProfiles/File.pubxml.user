@@ -16,13 +16,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/16/2019 20:23:16</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>09/22/2019 08:10:53</publishTime>
+      <publishTime>09/22/2019 21:16:15</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>09/22/2019 08:10:53</publishTime>
+      <publishTime>09/22/2019 21:16:15</publishTime>
     </File>
     <File Include="bin/Catalog.dll">
-      <publishTime>09/22/2019 08:10:39</publishTime>
+      <publishTime>09/22/2019 21:16:01</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>12/07/2015 19:04:38</publishTime>
@@ -120,6 +120,27 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="css/forgotpassword.css">
       <publishTime>05/01/2019 08:44:10</publishTime>
     </File>
+    <File Include="css/images/ui-icons_444444_256x240.png">
+      <publishTime>09/14/2016 17:34:06</publishTime>
+    </File>
+    <File Include="css/images/ui-icons_555555_256x240.png">
+      <publishTime>09/14/2016 17:34:06</publishTime>
+    </File>
+    <File Include="css/images/ui-icons_777620_256x240.png">
+      <publishTime>09/14/2016 17:34:06</publishTime>
+    </File>
+    <File Include="css/images/ui-icons_777777_256x240.png">
+      <publishTime>09/14/2016 17:34:06</publishTime>
+    </File>
+    <File Include="css/images/ui-icons_cc0000_256x240.png">
+      <publishTime>09/14/2016 17:34:06</publishTime>
+    </File>
+    <File Include="css/images/ui-icons_ffffff_256x240.png">
+      <publishTime>09/14/2016 17:34:06</publishTime>
+    </File>
+    <File Include="css/jquery-ui.min.css">
+      <publishTime>09/14/2016 17:34:06</publishTime>
+    </File>
     <File Include="images/static/barcode.png">
       <publishTime>09/21/2019 14:55:13</publishTime>
     </File>
@@ -174,6 +195,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="images/static/image9.jpg">
       <publishTime>04/16/2019 06:12:27</publishTime>
     </File>
+    <File Include="images/static/imageview.png">
+      <publishTime>09/22/2019 18:32:21</publishTime>
+    </File>
     <File Include="images/static/loader.gif">
       <publishTime>04/28/2019 22:30:11</publishTime>
     </File>
@@ -188,6 +212,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="images/static/logout.png">
       <publishTime>05/03/2019 00:33:26</publishTime>
+    </File>
+    <File Include="images/static/preview.png">
+      <publishTime>09/22/2019 20:50:48</publishTime>
     </File>
     <File Include="images/static/print.png">
       <publishTime>09/22/2019 07:13:40</publishTime>
@@ -295,7 +322,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/16/2019 21:05:00</publishTime>
     </File>
     <File Include="Pages/Stock.aspx">
-      <publishTime>09/22/2019 07:14:25</publishTime>
+      <publishTime>09/22/2019 21:15:57</publishTime>
     </File>
     <File Include="Pages/UserDashboard.aspx">
       <publishTime>04/26/2019 13:00:36</publishTime>
@@ -307,7 +334,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/01/2019 10:40:40</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>09/22/2019 08:10:49</publishTime>
+      <publishTime>09/22/2019 21:16:11</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>04/16/2019 20:23:16</publishTime>
@@ -391,7 +418,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/20/2019 20:26:08</publishTime>
     </File>
     <File Include="scripts/app/stockentry.js">
-      <publishTime>09/22/2019 08:08:16</publishTime>
+      <publishTime>09/22/2019 21:03:26</publishTime>
     </File>
     <File Include="scripts/app/usermaster.js">
       <publishTime>05/03/2019 00:46:53</publishTime>
@@ -420,6 +447,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="scripts/jquery-3.0.0.min.js">
       <publishTime>03/16/2019 17:45:44</publishTime>
     </File>
+    <File Include="scripts/jquery-ui.min.js">
+      <publishTime>09/14/2016 17:34:06</publishTime>
+    </File>
     <File Include="scripts/jquery.dataTables.min.js">
       <publishTime>04/21/2019 21:35:20</publishTime>
     </File>
@@ -430,7 +460,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/14/2019 20:06:56</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/22/2019 08:10:48</publishTime>
+      <publishTime>09/22/2019 21:16:09</publishTime>
     </File>
   </ItemGroup>
 </Project>

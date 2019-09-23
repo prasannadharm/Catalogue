@@ -165,7 +165,6 @@
                 <div class="form-group col-12">
                     <img id="imgpreviewsub" src="../images/static/preview.png" style="height: 300px; width: 300px" />
                 </div>
-
             </div>
 
             <div class="row">
@@ -180,4 +179,50 @@
     </div>
 
 
+    <!-- For Modal Popup Screen Item Selection via Search -->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="PopupModalItemSearch">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header mhs">
+                    <h4>Search results for</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="panel-body">
+                        <div class="table-responsive" id="griditemsearchdiv">
+                            <table id="tableitemsearch" class="table table-striped table-bordered" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>SKU</th>
+                                        <th>Code</th>
+                                        <th>Title</th>
+                                        <th>Jewellery</th>
+                                        <th>Collection</th>
+                                        <th>Design</th>
+                                        <th>Select</th>
+                                        <th>View</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="divISimgpreview" style="display: none;">
+                    <div class="form-group col-12">
+                        <button type="button" id="btnISCloseImgPreview" class="btn btn-danger btn-sm" style="margin-left:15px">Close Preview</button>
+                    </div>
+                    <div class="form-group col-12">
+                        <img id="imgISpreviewsub" src="../images/static/preview.png" style="height: 300px; width: 300px;margin-left:15px" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- For Modal Popup  -->
 </asp:Content>
