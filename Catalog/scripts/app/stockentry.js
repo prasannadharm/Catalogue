@@ -257,7 +257,61 @@ $(function () {
         document.getElementById("loader").style.display = "none";
     });
 
+    $(document).on("click", ".deleteButton", function () {
+        if (confirm("Are you sure you want to delete the entry!") == true) {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                type: "Post",
+                contentType: "application/json; charset=utf-8",
+                url: "Stock.aspx/DeleteData",
+                data: '{id: ' + id + '}',
+                dataType: "json",
+                success: function (data) {
+                    for (var i = 0; i < data.d.length; i++) {
+                        if (data.d[i].RESULT === 1) {
+                            getMainGridDetails();
+                            alert(data.d[i].MSG);
+                        }
+                        else {
+                            alert(data.d[i].MSG);
+                            return false;
+                        }
+                    }
+                },
+                error: function (data) {
+                    alert("Error while Deleting data of :" + id);
+                }
+            });
+        }
+    });
     
+    $(document).on("click", ".voidButton", function () {
+        if (confirm("Are you sure you want to Void/Cancel the entry!") == true) {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                type: "Post",
+                contentType: "application/json; charset=utf-8",
+                url: "Stock.aspx/VoidData",
+                data: '{id: ' + id + '}',
+                dataType: "json",
+                success: function (data) {
+                    for (var i = 0; i < data.d.length; i++) {
+                        if (data.d[i].RESULT === 1) {
+                            getMainGridDetails();
+                            alert(data.d[i].MSG);
+                        }
+                        else {
+                            alert(data.d[i].MSG);
+                            return false;
+                        }
+                    }
+                },
+                error: function (data) {
+                    alert("Error while Deleting data of :" + id);
+                }
+            });
+        }
+    });
 });
 
 function searchItem() {
@@ -378,7 +432,7 @@ function rebuildItemSearchTableGrid() {
                 objdetail.TITLE = tempsubItemsList[i].TITLE;
                 objdetail.PHY_FILE_NAME = tempsubItemsList[i].PHY_FILE_NAME;
                 objdetail.ORG_FILE_NAME = tempsubItemsList[i].ORG_FILE_NAME;
-                objdetail.GENID = tempsubItemsList.GENID;
+                objdetail.GENID = tempsubItemsList[i].GENID;
                 objdetail.QTY = 1;
                 objdetail.REMARKS = '';
                 subItemsList.push(objdetail);
@@ -431,16 +485,18 @@ function rebuildSubTableGrid() {
     });
 
     $(".deleteButtonSub").click(function () {
-        var id = this.id.split("_");
-        var newsubItemsList = [];
-        for (var i = 0; i < subItemsList.length; i++) {
-            if (subItemsList[i].GENID != id[1]) {
-                newsubItemsList.push(subItemsList[i])
+        if (confirm("Are you sure you want to delete !") == true) {
+            var id = this.id.split("_");
+            var newsubItemsList = [];
+            for (var i = 0; i < subItemsList.length; i++) {
+                if (subItemsList[i].GENID != id[1]) {
+                    newsubItemsList.push(subItemsList[i])
+                }
             }
+            subItemsList = [];
+            subItemsList = newsubItemsList;
+            rebuildSubTableGrid();
         }
-        subItemsList = [];
-        subItemsList = newsubItemsList;
-        rebuildSubTableGrid();
     });
 
     $(".previewButtonSub").click(function () {
@@ -491,14 +547,15 @@ function getMainGridDetails() {
             $('#griddiv').remove();
             $('#maindiv').append("<div class='table-responsive' id='griddiv'></div>");
             $('#griddiv').append("<table id='tablemain' class='table table-striped table-bordered' style='width: 100%'></table>");
-            $('#tablemain').append("<thead><tr><th>Stock No</th><th>Date</th><th>Ledger Name</th><th>Remarks</th><th>Void</th><th>Created By</th><th>Modified By</th><th></th><th></th><th></th>   </tr></thead><tbody></tbody>");
+            $('#tablemain').append("<thead><tr><th>Stock No</th><th>Date</th><th>Ledger Name</th><th>Remarks</th><th>Void</th><th>Created By</th><th>Modified By</th><th></th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
             $('#tablemain tbody').remove();
             $('#tablemain').append("<tbody>");
             for (var i = 0; i < data.d.length; i++) {
                 $('#tablemain').append(
-                    "<tr><td>" + data.d[i].TRANS_NO + "</td><td>" + data.d[i].TRASN_DATE + "</td><td>" + data.d[i].LED_NAME + "</td><td>" + data.d[i].REMARKS + "</td><td>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td><td>" + data.d[i].CREATEDBY + "</td><td>" + data.d[i].MODIFIEDBY +
+                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td>" + data.d[i].TRASN_DATE + "</td><td style='text-align:center;color:blue'>" + data.d[i].LED_NAME + "</td><td>" + data.d[i].REMARKS + "</td><td>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td><td>" + data.d[i].CREATEDBY + "</td><td>" + data.d[i].MODIFIEDBY +
                     "</td>" + "<td>" + "<img src='../images/static/edit.png' alt='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
                     "<td><img src='../images/static/delete.png' alt='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
+                    "<td><img src='../images/static/void.png' alt='Void / Cancel Record' class='voidButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnVoid' value='Void' style='margin-right:5px;margin-left:5px'/> </td>" +
                     "<td><img src='../images/static/print.png' alt='Print Record' class='printButton handcursor' data-id='" + data.d[i].ID + "' id='btnPrint' value='Print' style='margin-right:5px;margin-left:5px'/> </td></tr>");
             }
             $('#tablemain').append("</tbody>");

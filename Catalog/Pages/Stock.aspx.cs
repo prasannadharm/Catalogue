@@ -113,5 +113,37 @@ namespace Catalog.Pages
             }
             return details.ToArray();
         }
+
+        [WebMethod]
+        public static DbStatusEntity[] DeleteData(long id)
+        {
+            var details = new List<DbStatusEntity>();
+            try
+            {
+                details.Add(new StockEntryDAO().DeleteStockEntry(id));
+            }
+            catch (Exception ex)
+            {
+                details.Clear();
+                details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
+
+        [WebMethod]
+        public static DbStatusEntity[] VoidData(long id)
+        {
+            var details = new List<DbStatusEntity>();
+            try
+            {
+                details.Add(new StockEntryDAO().VoidStockEntry(id));
+            }
+            catch (Exception ex)
+            {
+                details.Clear();
+                details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
     }
 }

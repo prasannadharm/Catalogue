@@ -128,6 +128,7 @@
     <Content Include="images\static\sort_both.png" />
     <Content Include="images\static\sort_desc.png" />
     <Content Include="images\static\upload.png" />
+    <Content Include="images\static\void.png" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

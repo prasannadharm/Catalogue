@@ -75,8 +75,6 @@ $(document).ready(function () {
     
 })
 
-
-
 $(function () {
     $(document).on("click", ".addNewButton", function () {
         var date = new Date();
@@ -171,26 +169,114 @@ $(function () {
         minLength: 1
     });
 
-});
+    $("#btnSave").click(function () {
 
+        if ($("#ContentPlaceHolder1_LED_NAME").val().trim() == "") {
+            alert("Please enter Ledger name.");
+            $("#ContentPlaceHolder1_LED_NAME").focus();
+            return false;
+        }
+
+        if ($("#TRANS_NO").val().trim() == "") {
+            alert("Please enter Stock entry No.");
+            $("#TRANS_NO").focus();
+            return false;
+        }
+
+        if (isDate($("#TRASN_DATE").val()) == false) {
+            alert('Please enter valid Stock entry date');
+            $("#TRASN_DATE").focus();
+            return false;
+        }
+
+        var ledname = '';
+        var ledid = '0';
+        document.getElementById("loader").style.display = "block";
+        $.ajax({
+            url: "Stock.aspx/VerifyLedgerbyName",
+            data: "{ 'str': '" + $("#ContentPlaceHolder1_LED_NAME").val().trim() + "'}",
+            dataType: "json",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                for (var i = 0; i < data.d.length; i++) {
+                    ledname = data.d[i].split('-')[0];
+                    ledid = data.d[i].split('-')[1];
+                }
+                
+                if ($.trim(ledname) == "") {
+                    alert('Please select valid Ledger from the list');
+                    document.getElementById("loader").style.display = "none";
+                    $("#ContentPlaceHolder1_LED_NAME").focus();                    
+                    return false;
+                }
+
+                var obj1 = {};
+                
+                obj1.LED_NAME = ledname;
+                obj1.LED_ID = ledid;
+                obj1.TRANS_DATE = $("#TRASN_DATE").val();
+                obj1.REF_NO = $("#REF_NO").val();
+                obj1.REMARKS = $("#REMARKS").val();
+
+                $.ajax({
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "Stock.aspx/InsertData",
+                    data: '{obj1: ' + JSON.stringify(obj1) + ', obj2: ' + JSON.stringify(subItemsList) + '}',
+                    dataType: "json",
+                    success: function (data) {
+                        for (var i = 0; i < data.d.length; i++) {
+                            if (data.d[i].RESULT === 1) {
+                                getMainGridDetails();
+                                alert(data.d[i].MSG);
+                                $('#mainlistingdiv').show();
+                                $('#mainldetaildiv').hide();
+                            }
+                            else {
+                                alert(data.d[i].MSG);
+                                $("#TITLE1").focus();
+                                return false;
+                            }
+                        }
+                    },
+                    error: function (data) {
+                        alert("Error while Adding data of :" + obj.NAME);
+                        $("#TITLE1").focus();
+                        return false;
+                    }
+                });                       
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+        document.getElementById("loader").style.display = "none";
+    });
+
+    
+});
 
 function searchItem() {
     if ($.trim($("#cmbSeacrhField").val()) == '') {
         alert('Please select search field.');
         $("#cmbSeacrhField").focus();
-        return;
+        return false;
     }
 
     if ($.trim($("#cmbSeacrhCondition").val()) == '') {
         alert('Please select search condition.');
         $("#cmbSeacrhCondition").focus();
-        return;
+        return false;
     }
 
     if ($.trim($("#txtSearchItem").val()) == '') {
         alert('Please enter search text.');
         $("#txtSearchItem").focus();
-        return;
+        return false;
     }
 
     document.getElementById("loader").style.display = "block";
@@ -210,7 +296,7 @@ function searchItem() {
             if (data.d.length <= 0) {
                 alert('No records found.');
                 $("#txtSearchItem").focus();
-                return;
+                return false;
             }
             else if (data.d.length == 1) {
                 var objdetail = {};
@@ -220,14 +306,14 @@ function searchItem() {
                 objdetail.TITLE = data.d[0].TITLE;
                 objdetail.PHY_FILE_NAME = data.d[0].PHY_FILE_NAME;
                 objdetail.ORG_FILE_NAME = data.d[0].ORG_FILE_NAME;
-                objdetail.GENID = Math.floor((Math.random() * 10000) + 1);
+                objdetail.GENID = Math.floor((Math.random() * 1000000) + 1);
                 objdetail.QTY = 1;
                 objdetail.REMARKS = '';
                 subItemsList.push(objdetail);
                 rebuildSubTableGrid();
                 $("#txtSearchItem").val('');
                 $("#txtSearchItem").focus();
-                return;
+                return false;
             }
             else {
                 tempsubItemsList = [];
@@ -239,7 +325,7 @@ function searchItem() {
                     objdetail.TITLE = data.d[i].TITLE;
                     objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
                     objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
-                    objdetail.GENID = Math.floor((Math.random() * 10000) + 1);
+                    objdetail.GENID = Math.floor((Math.random() * 1000000) + 1);
                     objdetail.QTY = 1;
                     objdetail.REMARKS = '';
                     objdetail.JEWELLERY_NAME = data.d[i].JEWELLERY_NAME;
@@ -248,7 +334,7 @@ function searchItem() {
                     tempsubItemsList.push(objdetail);
                 }
                 rebuildItemSearchTableGrid();
-                return;
+                return false;
             }
 
         },
@@ -262,7 +348,6 @@ function searchItem() {
 
 }
 
-
 function rebuildItemSearchTableGrid() {
     $('#tableitemsearch tbody').remove();
     $('#tableitemsearch').append("<tbody>");
@@ -273,8 +358,8 @@ function rebuildItemSearchTableGrid() {
             "<td style='text-align: center'><img src='../images/static/select.png' alt='Select Record' class='selectButtonSubis handcursor' data-id='" + tempsubItemsList[i].ID + '_' + tempsubItemsList[i].GENID + "' id='btnselectSubIS_" + tempsubItemsList[i].GENID + "' value='Select' style='margin-right:5px;margin-left:5px'/> </td>" +
             "<td style='text-align: center'><img src='../images/static/imageview.png' alt='Preview' class='previewButtonSubIS handcursor' data-id='" + tempsubItemsList[i].PHY_FILE_NAME + "' id='btnPreviewSubis' value='Preview' style='margin-right:5px;margin-left:5px'/> </td></tr>");
     }
-    $('#tableitemsearch').append("</tbody>");   
-    
+    $('#tableitemsearch').append("</tbody>");
+
     $("div.mhs h4").html("Search results for " + $('#cmbSeacrhField').val() + " : " + $('#txtSearchItem').val());
     $("#txtSearchItem").val('');
     $('#divISimgpreview').hide();
@@ -293,7 +378,7 @@ function rebuildItemSearchTableGrid() {
                 objdetail.TITLE = tempsubItemsList[i].TITLE;
                 objdetail.PHY_FILE_NAME = tempsubItemsList[i].PHY_FILE_NAME;
                 objdetail.ORG_FILE_NAME = tempsubItemsList[i].ORG_FILE_NAME;
-                objdetail.GENID = Math.floor((Math.random() * 10000) + 1);
+                objdetail.GENID = tempsubItemsList.GENID;
                 objdetail.QTY = 1;
                 objdetail.REMARKS = '';
                 subItemsList.push(objdetail);
@@ -301,7 +386,7 @@ function rebuildItemSearchTableGrid() {
             }
         }
         rebuildSubTableGrid();
-        $('#PopupModalItemSearch').modal('hide');        
+        $('#PopupModalItemSearch').modal('hide');
         $("#txtSearchItem").focus();
     });
 
@@ -330,7 +415,7 @@ function rebuildSubTableGrid() {
         for (var i = 0; i < subItemsList.length; i++) {
             if (subItemsList[i].GENID == id[1]) {
                 subItemsList[i].QTY = $(this).val();
-                return;
+                return false;
             }
         }
     });
@@ -340,7 +425,7 @@ function rebuildSubTableGrid() {
         for (var i = 0; i < subItemsList.length; i++) {
             if (subItemsList[i].GENID == id[1]) {
                 subItemsList[i].REMARKS = $(this).val();
-                return;
+                return false;
             }
         }
     });
@@ -370,13 +455,13 @@ function getMainGridDetails() {
     if (isDate($("#dtpFrom").val()) == false) {
         alert('Please enter valid date');
         $("#dtpFrom").focus();
-        return;
+        return false;
     }
 
     if (isDate($("#dtpTo").val()) == false) {
         alert('Please enter valid date');
         $("#dtpTo").focus();
-        return;
+        return false;
     }
 
     var fit_start_time = $("#dtpFrom").val(); //2013-09-5
@@ -387,7 +472,7 @@ function getMainGridDetails() {
     if (Date.parse(fit_start_time) > Date.parse(fit_end_time)) {
         alert("Date from must be lesser than Date to.");
         $("#dtpFrom").focus();
-        return;
+        return false;
     }
 
     document.getElementById("loader").style.display = "block";
