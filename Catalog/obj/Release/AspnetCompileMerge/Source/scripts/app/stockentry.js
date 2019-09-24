@@ -1,15 +1,33 @@
 ﻿var subItemsList = [];
+var tempsubItemsList = [];
 $(document).ready(function () {
     var date = new Date();
     var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     subItemsList = [];
-    $(".datepicker").datepicker({ dateFormat: 'dd-mm-yy' });  
+    $(".datepicker").datepicker({ dateFormat: 'dd-mm-yy' });
     $('#dtpFrom').datepicker('setDate', today);
     $('#dtpTo').datepicker('setDate', today);
+
+    $('#dtpFrom').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            $('#dtpTo').focus();
+        }
+    });
+
+    $('#dtpTo').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            getMainGridDetails();
+        }
+    });
+
     $("#btnSearch").click(function () {
-        getStockEntryDetails();
+        getMainGridDetails();
     })
-    getStockEntryDetails();
+    getMainGridDetails();
 
     $('#ContentPlaceHolder1_LED_NAME').keypress(function (e) {
         var key = e.which;
@@ -33,7 +51,7 @@ $(document).ready(function () {
         {
             $('#txtSearchItem').focus();
         }
-    });   
+    });
 
     $('#txtSearchItem').keypress(function (e) {
         var key = e.which;
@@ -49,8 +67,12 @@ $(document).ready(function () {
 
     $("#btnCloseImgPreview").click(function () {
         $('#divimgpreview').hide();
-    });  
-   
+    });
+
+    $("#btnISCloseImgPreview").click(function () {
+        $('#divISimgpreview').hide();
+    });
+    
 })
 
 
@@ -58,12 +80,12 @@ $(document).ready(function () {
 $(function () {
     $(document).on("click", ".addNewButton", function () {
         var date = new Date();
-        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());        
+        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
         $('#btnSave').show();
-        $('#btnUpdate').hide();       
+        $('#btnUpdate').hide();
         $('#mainlistingdiv').hide();
         $('#mainldetaildiv').show();
-        $('#TRANS_NO').val('0');       
+        $('#TRANS_NO').val('0');
         $('#TRASN_DATE').datepicker('setDate', today);
         $("#ContentPlaceHolder1_LED_NAME").val('');
         $("#ContentPlaceHolder1_LED_ID").val('');
@@ -84,9 +106,9 @@ $(function () {
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 for (var i = 0; i < data.d.length; i++) {
-                    $('#TRANS_NO').val(data.d[i].split('-')[0]);                   
+                    $('#TRANS_NO').val(data.d[i].split('-')[0]);
                     $('#TRASN_DATE').datepicker('setDate', Date.parse(data.d[i].split('-')[1]));
-                }                
+                }
             },
             error: function (response) {
                 alert(response.responseText);
@@ -114,9 +136,9 @@ $(function () {
         $("#ContentPlaceHolder1_LED_NAME").focus();
     });
 
-    $(document).on("click", ".cancelButton", function () {       
+    $(document).on("click", ".cancelButton", function () {
         $('#mainlistingdiv').show();
-        $('#mainldetaildiv').hide();       
+        $('#mainldetaildiv').hide();
     });
 
     $("[id$=LED_NAME]").autocomplete({
@@ -152,17 +174,14 @@ $(function () {
 });
 
 
-function searchItem()
-{
-    if ($.trim($("#cmbSeacrhField").val()) == '')
-    {
+function searchItem() {
+    if ($.trim($("#cmbSeacrhField").val()) == '') {
         alert('Please select search field.');
         $("#cmbSeacrhField").focus();
         return;
     }
 
-    if ($.trim($("#cmbSeacrhCondition").val()) == '')
-    {
+    if ($.trim($("#cmbSeacrhCondition").val()) == '') {
         alert('Please select search condition.');
         $("#cmbSeacrhCondition").focus();
         return;
@@ -172,7 +191,7 @@ function searchItem()
         alert('Please enter search text.');
         $("#txtSearchItem").focus();
         return;
-    }    
+    }
 
     document.getElementById("loader").style.display = "block";
 
@@ -188,20 +207,50 @@ function searchItem()
         data: '{obj: ' + JSON.stringify(obj) + '}',
         dataType: "json",
         success: function (data) {
-            for (var i = 0; i < data.d.length; i++) {
+            if (data.d.length <= 0) {
+                alert('No records found.');
+                $("#txtSearchItem").focus();
+                return;
+            }
+            else if (data.d.length == 1) {
                 var objdetail = {};
-                objdetail.ID = data.d[i].ID;
-                objdetail.SKU = data.d[i].SKU;
-                objdetail.CODE = data.d[i].CODE;
-                objdetail.TITLE = data.d[i].TITLE;
-                objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
-                objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
+                objdetail.ID = data.d[0].ID;
+                objdetail.SKU = data.d[0].SKU;
+                objdetail.CODE = data.d[0].CODE;
+                objdetail.TITLE = data.d[0].TITLE;
+                objdetail.PHY_FILE_NAME = data.d[0].PHY_FILE_NAME;
+                objdetail.ORG_FILE_NAME = data.d[0].ORG_FILE_NAME;
                 objdetail.GENID = Math.floor((Math.random() * 10000) + 1);
                 objdetail.QTY = 1;
                 objdetail.REMARKS = '';
-                subItemsList.push(objdetail);             
+                subItemsList.push(objdetail);
+                rebuildSubTableGrid();
+                $("#txtSearchItem").val('');
+                $("#txtSearchItem").focus();
+                return;
             }
-            rebuildSubTable();            
+            else {
+                tempsubItemsList = [];
+                for (var i = 0; i < data.d.length; i++) {
+                    var objdetail = {};
+                    objdetail.ID = data.d[i].ID;
+                    objdetail.SKU = data.d[i].SKU;
+                    objdetail.CODE = data.d[i].CODE;
+                    objdetail.TITLE = data.d[i].TITLE;
+                    objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
+                    objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
+                    objdetail.GENID = Math.floor((Math.random() * 10000) + 1);
+                    objdetail.QTY = 1;
+                    objdetail.REMARKS = '';
+                    objdetail.JEWELLERY_NAME = data.d[i].JEWELLERY_NAME;
+                    objdetail.COLLECTIONS_NAME = data.d[i].COLLECTIONS_NAME;
+                    objdetail.DESIGN_NAME = data.d[i].DESIGN_NAME;
+                    tempsubItemsList.push(objdetail);
+                }
+                rebuildItemSearchTableGrid();
+                return;
+            }
+
         },
         error: function (request, status, error) {
             alert(request.responseText);
@@ -210,12 +259,60 @@ function searchItem()
     });
 
     document.getElementById("loader").style.display = "none";
-    $("#txtSearchItem").val('');
-    $("#txtSearchItem").focus();
+
 }
 
-function rebuildSubTable()
-{
+
+function rebuildItemSearchTableGrid() {
+    $('#tableitemsearch tbody').remove();
+    $('#tableitemsearch').append("<tbody>");
+    for (var i = 0; i < tempsubItemsList.length; i++) {
+        $('#tableitemsearch').append(
+            "<tr><td style='text-align:center'>" + tempsubItemsList[i].SKU + "</td><td>" + tempsubItemsList[i].CODE + "</td><td>" + tempsubItemsList[i].TITLE + "</td>" +
+            "<td>" + tempsubItemsList[i].JEWELLERY_NAME + "</td><td>" + tempsubItemsList[i].COLLECTIONS_NAME + "</td><td>" + tempsubItemsList[i].DESIGN_NAME + "</td>" +
+            "<td style='text-align: center'><img src='../images/static/select.png' alt='Select Record' class='selectButtonSubis handcursor' data-id='" + tempsubItemsList[i].ID + '_' + tempsubItemsList[i].GENID + "' id='btnselectSubIS_" + tempsubItemsList[i].GENID + "' value='Select' style='margin-right:5px;margin-left:5px'/> </td>" +
+            "<td style='text-align: center'><img src='../images/static/imageview.png' alt='Preview' class='previewButtonSubIS handcursor' data-id='" + tempsubItemsList[i].PHY_FILE_NAME + "' id='btnPreviewSubis' value='Preview' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+    }
+    $('#tableitemsearch').append("</tbody>");   
+    
+    $("div.mhs h4").html("Search results for " + $('#cmbSeacrhField').val() + " : " + $('#txtSearchItem').val());
+    $("#txtSearchItem").val('');
+    $('#divISimgpreview').hide();
+    $('#PopupModalItemSearch').modal('show');
+    $('#PopupModalItemSearch').focus();
+
+    $(".selectButtonSubis").click(function () {
+        var id = this.id.split("_");
+        var newsubItemsList = [];
+        for (var i = 0; i < tempsubItemsList.length; i++) {
+            if (tempsubItemsList[i].GENID == id[1]) {
+                var objdetail = {};
+                objdetail.ID = tempsubItemsList[i].ID;
+                objdetail.SKU = tempsubItemsList[i].SKU;
+                objdetail.CODE = tempsubItemsList[i].CODE;
+                objdetail.TITLE = tempsubItemsList[i].TITLE;
+                objdetail.PHY_FILE_NAME = tempsubItemsList[i].PHY_FILE_NAME;
+                objdetail.ORG_FILE_NAME = tempsubItemsList[i].ORG_FILE_NAME;
+                objdetail.GENID = Math.floor((Math.random() * 10000) + 1);
+                objdetail.QTY = 1;
+                objdetail.REMARKS = '';
+                subItemsList.push(objdetail);
+                break;
+            }
+        }
+        rebuildSubTableGrid();
+        $('#PopupModalItemSearch').modal('hide');        
+        $("#txtSearchItem").focus();
+    });
+
+    $(".previewButtonSubIS").click(function () {
+        var file = $(this).attr("data-id");
+        $('#imgISpreviewsub').attr("src", "../images/upload/" + file);
+        $('#divISimgpreview').show();
+    });
+}
+
+function rebuildSubTableGrid() {
     $('#tablesub tbody').remove();
     $('#tablesub').append("<tbody>");
     for (var i = 0; i < subItemsList.length; i++) {
@@ -232,7 +329,7 @@ function rebuildSubTable()
         var id = this.id.split("_");
         for (var i = 0; i < subItemsList.length; i++) {
             if (subItemsList[i].GENID == id[1]) {
-                subItemsList[i].QTY = $(this).val();                
+                subItemsList[i].QTY = $(this).val();
                 return;
             }
         }
@@ -242,7 +339,7 @@ function rebuildSubTable()
         var id = this.id.split("_");
         for (var i = 0; i < subItemsList.length; i++) {
             if (subItemsList[i].GENID == id[1]) {
-                subItemsList[i].REMARKS = $(this).val();                
+                subItemsList[i].REMARKS = $(this).val();
                 return;
             }
         }
@@ -258,20 +355,19 @@ function rebuildSubTable()
         }
         subItemsList = [];
         subItemsList = newsubItemsList;
-        rebuildSubTable();
+        rebuildSubTableGrid();
     });
 
-    $(".previewButtonSub").click(function () {       
+    $(".previewButtonSub").click(function () {
         var file = $(this).attr("data-id");
         $('#imgpreviewsub').attr("src", "../images/upload/" + file);
         $('#divimgpreview').show();
     });
 }
 
-function getStockEntryDetails() {
+function getMainGridDetails() {
 
-    if (isDate($("#dtpFrom").val()) == false)
-    {
+    if (isDate($("#dtpFrom").val()) == false) {
         alert('Please enter valid date');
         $("#dtpFrom").focus();
         return;
@@ -287,7 +383,7 @@ function getStockEntryDetails() {
     fit_start_time = fit_start_time.substring(6, 10) + '-' + fit_start_time.substring(3, 5) + '-' + fit_start_time.substring(0, 2);
     var fit_end_time = $("#dtpTo").val(); //2013-09-10
     fit_end_time = fit_end_time.substring(6, 10) + '-' + fit_end_time.substring(3, 5) + '-' + fit_end_time.substring(0, 2);
-    
+
     if (Date.parse(fit_start_time) > Date.parse(fit_end_time)) {
         alert("Date from must be lesser than Date to.");
         $("#dtpFrom").focus();
@@ -323,12 +419,12 @@ function getStockEntryDetails() {
             $('#tablemain').append("</tbody>");
             $('#tablemain').DataTable({
                 "order": [[0, "desc"]]
-            });           
+            });
         },
         error: function (request, status, error) {
             alert(request.responseText);
             alert("Error while Showing update data");
-        }      
+        }
     });
     document.getElementById("loader").style.display = "none";
 }

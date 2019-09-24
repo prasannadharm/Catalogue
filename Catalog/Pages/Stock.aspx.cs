@@ -13,9 +13,10 @@ namespace Catalog.Pages
 {
     public partial class Stock : System.Web.UI.Page
     {
+        static Int64 userid = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            userid = Convert.ToInt64(Session["USER_ID"]);
         }
 
         [WebMethod]
@@ -40,7 +41,7 @@ namespace Catalog.Pages
             List<string> ledgers = new List<string>();
             try
             {
-                ledgers = new StockEntryDAO().GetLedgersbyName(str);
+                ledgers = new GenericDAO().GetLedgersListbyName(str);
             }
             catch (Exception ex)
             {
@@ -77,6 +78,38 @@ namespace Catalog.Pages
             catch (Exception ex)
             {
                 // details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
+
+
+        [WebMethod]
+        public static string[] VerifyLedgerbyName(string str)
+        {
+            List<string> ledgers = new List<string>();
+            try
+            {
+                ledgers = new GenericDAO().GetLedgerbyName(str);
+            }
+            catch (Exception ex)
+            {
+                // details.Add(new DbStatusEntity(ex.Message));
+            }
+            return ledgers.ToArray();
+        }
+
+        [WebMethod]
+        public static DbStatusEntity[] InsertData(StockEntryInsertParam1 obj1, StockEntryInsertParam2[] obj2)
+        {
+            var details = new List<DbStatusEntity>();
+            try
+            {
+                details.Add(new StockEntryDAO().InsertStockEntry(obj1, obj2, userid));
+            }
+            catch (Exception ex)
+            {
+                details.Clear();
+                details.Add(new DbStatusEntity(ex.Message));
             }
             return details.ToArray();
         }

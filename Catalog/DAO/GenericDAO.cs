@@ -358,7 +358,6 @@ namespace Catalog.DAO
             }
             return retlst;
         }
-
         public List<SearchCatalogByTextEntity> SearchCatalogbyText( SearchCatalogByConditionEntity obj)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
@@ -399,6 +398,63 @@ namespace Catalog.DAO
                 throw ex;
             }
             return retlst;
+        }
+        public List<string> GetLedgersListbyName(string str)
+        {
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlDataAdapter adapter;
+            DataSet ds = new DataSet();
+            List<string> ledgers = new List<string>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("USP_GetLedgerListByName", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@STR", str);
+                    con.Open();
+                    adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(ds);
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        ledgers.Add(string.Format("{0}-{1}", ds.Tables[0].Rows[i]["NAME"].ToString(), ds.Tables[0].Rows[i]["ID"]));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ledgers;
+        }
+
+        public List<string> GetLedgerbyName(string str)
+        {
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlDataAdapter adapter;
+            DataSet ds = new DataSet();
+            List<string> ledgers = new List<string>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("USP_GetLedgerByName", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@STR", str);
+                    con.Open();
+                    adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(ds);
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        ledgers.Add(string.Format("{0}-{1}", ds.Tables[0].Rows[i]["NAME"].ToString(), ds.Tables[0].Rows[i]["ID"]));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ledgers;
         }
     }
 }
