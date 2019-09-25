@@ -175,5 +175,22 @@ namespace Catalog.Pages
             }
             return lstvalues.ToArray();
         }
+
+
+        [WebMethod]
+        public static DbStatusEntity[] UpdatetData(StockEntryInsertParam1 obj1, StockEntryInsertParam2[] obj2, Int64 id)
+        {
+            var details = new List<DbStatusEntity>();
+            try
+            {
+                details.Add(new StockEntryDAO().UpdateStockEntry(obj1, obj2, userid, id));
+            }
+            catch (Exception ex)
+            {
+                details.Clear();
+                details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
     }
 }

@@ -79,7 +79,7 @@
         <div class="panel panel-default">
             <div class="row">
                 <div class="col-12" id="subheaderdiv">
-                    <h2>Stock Entry -> Add Stock Entry</h2>
+                    <h2 style='color:blue'>Stock Entry -> Add Stock Entry</h2>
                 </div>
             </div>
 
@@ -112,7 +112,7 @@
 
             <div class="row">
                 <div class="form-group col-12">
-                    <h3>Add Jewellery Items</h3>
+                    <h3 style='color:orange'>Add Jewellery Items</h3>
                 </div>
             </div>
 
@@ -150,8 +150,8 @@
                             <th>Title</th>
                             <th>Qty</th>
                             <th>Remarks</th>
-                            <th></th>
-                            <th></th>
+                            <th>Delete</th>
+                            <th>View</th>
                         </tr>
                     </thead>
                     <tbody>

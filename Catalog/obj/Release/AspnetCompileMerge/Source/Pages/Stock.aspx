@@ -64,6 +64,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,7 +95,7 @@
                 </div>
                 <div class="form-group col-md-6 col-lg-3">
                     <label>Stock Entry Date</label>
-                    <input class="form-control datepicker" id="TRASN_DATE" name="date" placeholder="DD-MM-YYYY" type="text" style="text-align: center;" />
+                    <input class="form-control datepicker" id="TRANS_DATE" name="date" placeholder="DD-MM-YYYY" type="text" style="text-align: center;" />
                 </div>
             </div>
 

@@ -170,7 +170,7 @@ namespace Catalog.DAO
 
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_InsertStockEntry", con);
+                    SqlCommand cmd = new SqlCommand("USP_UpdateStockEntry", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@TRANS_MAIN_ID", id);
                     cmd.Parameters.AddWithValue("@LED_NAME", obj.LED_NAME);
@@ -342,7 +342,7 @@ namespace Catalog.DAO
                     con.Open();
                     adapter = new SqlDataAdapter(cmd);
                     adapter.Fill(ds);
-                    for (int i = 0; i <= ds.Tables[1].Rows.Count - 1; i++)
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
                         retval = ds.Tables[0].Rows[i]["ID"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[0].Rows[i]["ID"]);
                     }
