@@ -84,12 +84,13 @@ $(function () {
         $('#mainlistingdiv').hide();
         $('#mainldetaildiv').show();
         $('#TRANS_NO').val('0');
-        $('#TRASN_DATE').datepicker('setDate', today);
+        $('#TRANS_DATE').datepicker('setDate', today);
         $("#ContentPlaceHolder1_LED_NAME").val('');
         $("#ContentPlaceHolder1_LED_ID").val('');
         $('#REMARKS').val('');
         $('#REF_NO').val('');
         subItemsList = [];
+        rebuildSubTableGrid()
         $('#tablesub tbody').remove();
         $('#tablesub').append("<tbody>");
         $('#tablesub').append("</tbody>");
@@ -105,7 +106,7 @@ $(function () {
             success: function (data) {
                 for (var i = 0; i < data.d.length; i++) {
                     $('#TRANS_NO').val(data.d[i].split('-')[0]);
-                    $('#TRASN_DATE').datepicker('setDate', Date.parse(data.d[i].split('-')[1]));
+                    $('#TRANS_DATE').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate',  data.d[i].split('-')[3] + '-' + data.d[i].split('-')[2] +'-'+ data.d[i].split('-')[1]);
                 }
             },
             error: function (response) {
@@ -121,17 +122,69 @@ $(function () {
     });
 
     $(document).on("click", ".editButton", function () {
+        var date = new Date();
+        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
         $('#btnSave').hide();
         $('#btnUpdate').show();
         $('#mainlistingdiv').hide();
         $('#mainldetaildiv').show();
         $("#subheaderdiv").html("<h2>Stock Entry -> Edit Stock Entry</h2>");
         subItemsList = [];
+        rebuildSubTableGrid();
         $('#tablesub tbody').remove();
         $('#tablesub').append("<tbody>");
         $('#tablesub').append("</tbody>");
+        $('#TRANS_NO').val('0');
+        $('#TRANS_DATE').datepicker('setDate', today);
+        $("#ContentPlaceHolder1_LED_NAME").val('');
+        $("#ContentPlaceHolder1_LED_ID").val('');
+        $('#REMARKS').val('');
+        $('#REF_NO').val('');
 
-        $("#ContentPlaceHolder1_LED_NAME").focus();
+        var id = $(this).attr("data-id");
+        console.log(id);
+        $("#btnUpdate").attr("edit-id", id);
+        //alert(id);  //getting the row id 
+        $.ajax({
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            url: "Stock.aspx/EditData",
+            data: '{id: ' + id + '}',
+            dataType: "json",
+            success: function (data) {
+                if (data.d.length > 0)
+                {
+                    $("#ContentPlaceHolder1_LED_NAME").val(data.d[0].LED_NAME);
+                    $("#ContentPlaceHolder1_LED_ID").val(data.d[0].LED_ID);
+                    $("#TRANS_NO").val(data.d[0].TRANS_NO);
+                    $('#TRANS_DATE').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
+                    $("#REMARKS").val(data.d[0].REMARKS_MAIN);
+                    $("#REF_NO").val(data.d[0].REF_NO);
+
+                    $("#subheaderdiv").html("<h2>Stock Entry -> Edit Stock Entry No: " + data.d[0].TRANS_NO + "</h2>");
+                }
+                for (var i = 0; i < data.d.length; i++) {                                       
+                    var objdetail = {};
+                    objdetail.ID = data.d[i].CATALOG_ID;
+                    objdetail.SKU = data.d[i].SKU;
+                    objdetail.CODE = data.d[i].CODE;
+                    objdetail.TITLE = data.d[i].CATALOG_TITLE;
+                    objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
+                    objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
+                    objdetail.GENID = data.d[i].GENID;
+                    objdetail.QTY = data.d[i].QTY;
+                    objdetail.REMARKS = data.d[i].REMARKS;
+                    subItemsList.push(objdetail);                    
+                }
+                rebuildSubTableGrid();
+                $("#txtSearchItem").val('');
+                $('#ContentPlaceHolder1_LED_NAME').focus();
+            },
+            error: function () {
+                alert("Error while retrieving data of :" + id);                
+            }
+        });
+
     });
 
     $(document).on("click", ".cancelButton", function () {
@@ -183,9 +236,9 @@ $(function () {
             return false;
         }
 
-        if (isDate($("#TRASN_DATE").val()) == false) {
+        if (isDate($("#TRANS_DATE").val()) == false) {
             alert('Please enter valid Stock entry date');
-            $("#TRASN_DATE").focus();
+            $("#TRANS_DATE").focus();
             return false;
         }
 
@@ -215,7 +268,7 @@ $(function () {
                 
                 obj1.LED_NAME = ledname;
                 obj1.LED_ID = ledid;
-                obj1.TRANS_DATE = $("#TRASN_DATE").val();
+                obj1.TRANS_DATE = $("#TRANS_DATE").val();
                 obj1.REF_NO = $("#REF_NO").val();
                 obj1.REMARKS = $("#REMARKS").val();
 
@@ -452,6 +505,7 @@ function rebuildItemSearchTableGrid() {
 }
 
 function rebuildSubTableGrid() {
+    $('#divimgpreview').hide();
     $('#tablesub tbody').remove();
     $('#tablesub').append("<tbody>");
     for (var i = 0; i < subItemsList.length; i++) {
@@ -552,7 +606,7 @@ function getMainGridDetails() {
             $('#tablemain').append("<tbody>");
             for (var i = 0; i < data.d.length; i++) {
                 $('#tablemain').append(
-                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td>" + data.d[i].TRASN_DATE + "</td><td style='text-align:center;color:blue'>" + data.d[i].LED_NAME + "</td><td>" + data.d[i].REMARKS + "</td><td>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td><td>" + data.d[i].CREATEDBY + "</td><td>" + data.d[i].MODIFIEDBY +
+                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td>" + data.d[i].TRANS_DATE + "</td><td style='text-align:center;color:blue'>" + data.d[i].LED_NAME + "</td><td>" + data.d[i].REMARKS + "</td><td>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td><td>" + data.d[i].CREATEDBY + "</td><td>" + data.d[i].MODIFIEDBY +
                     "</td>" + "<td>" + "<img src='../images/static/edit.png' alt='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
                     "<td><img src='../images/static/delete.png' alt='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
                     "<td><img src='../images/static/void.png' alt='Void / Cancel Record' class='voidButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnVoid' value='Void' style='margin-right:5px;margin-left:5px'/> </td>" +

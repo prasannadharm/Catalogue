@@ -145,5 +145,35 @@ namespace Catalog.Pages
             }
             return details.ToArray();
         }
+
+        [WebMethod]
+        public static StockEntryEditParam[] EditData(Int64 id)
+        {
+            var details = new List<StockEntryEditParam>();
+            try
+            {
+                details = new StockEntryDAO().EditStockEnrty(id);
+            }
+            catch (Exception ex)
+            {
+                //details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
+
+        [WebMethod]
+        public static Int64[] CheckVoidStockEnrty(Int64 id)
+        {
+            List<Int64> lstvalues = new List<Int64>();
+            try
+            {
+                lstvalues = new StockEntryDAO().CheckVoidStockEnrty(id);
+            }
+            catch (Exception ex)
+            {
+                // details.Add(new DbStatusEntity(ex.Message));
+            }
+            return lstvalues.ToArray();
+        }
     }
 }
