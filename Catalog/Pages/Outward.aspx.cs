@@ -8,10 +8,9 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-
 namespace Catalog.Pages
 {
-    public partial class Stock : System.Web.UI.Page
+    public partial class Outward : System.Web.UI.Page
     {
         static Int64 userid = 0;
         protected void Page_Load(object sender, EventArgs e)
@@ -20,12 +19,12 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static StockEntryEntity[] GetData(StockEntryDateFilterEntity obj)
+        public static OutwardEntryEntity[] GetData(OutwardEntryDateFilterEntity obj)
         {
-            var details = new List<StockEntryEntity>();
+            var details = new List<OutwardEntryEntity>();
             try
             {
-                details = new StockEntryDAO().GetStockEntryList(obj);
+                details = new OutwardEntryDAO().GetOutwardEntryList(obj);
             }
             catch (Exception ex)
             {
@@ -36,7 +35,7 @@ namespace Catalog.Pages
 
 
         [WebMethod]
-        public static string[] GetLedgersbyName(string str) 
+        public static string[] GetLedgersbyName(string str)
         {
             List<string> ledgers = new List<string>();
             try
@@ -52,12 +51,12 @@ namespace Catalog.Pages
 
 
         [WebMethod]
-        public static string[] GetLatestTrasnsactionNumber() 
+        public static string[] GetLatestTrasnsactionNumber()
         {
             List<string> lstvalues = new List<string>();
             try
             {
-                lstvalues = new GenericDAO().GetLatestTrasnsactionNumber("STOCK");
+                lstvalues = new GenericDAO().GetLatestTrasnsactionNumber("OUTWARD");
             }
             catch (Exception ex)
             {
@@ -99,12 +98,12 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static DbStatusEntity[] InsertData(StockEntryInsertParam1 obj1, StockEntryInsertParam2[] obj2)
+        public static DbStatusEntity[] InsertData(OutwardEntryInsertParam1 obj1, OutwardEntryInsertParam2[] obj2)
         {
             var details = new List<DbStatusEntity>();
             try
             {
-                details.Add(new StockEntryDAO().InsertStockEntry(obj1, obj2, userid));
+                details.Add(new OutwardEntryDAO().InsertOutwardEntry(obj1, obj2, userid));
             }
             catch (Exception ex)
             {
@@ -120,7 +119,7 @@ namespace Catalog.Pages
             var details = new List<DbStatusEntity>();
             try
             {
-                details.Add(new StockEntryDAO().DeleteStockEntry(id));
+                details.Add(new OutwardEntryDAO().DeleteOutwardEntry(id));
             }
             catch (Exception ex)
             {
@@ -136,7 +135,7 @@ namespace Catalog.Pages
             var details = new List<DbStatusEntity>();
             try
             {
-                details.Add(new StockEntryDAO().VoidStockEntry(id));
+                details.Add(new OutwardEntryDAO().VoidOutwardEntry(id));
             }
             catch (Exception ex)
             {
@@ -147,12 +146,12 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static StockEntryEditParam[] EditData(Int64 id)
+        public static OutwardEntryEditParam[] EditData(Int64 id)
         {
-            var details = new List<StockEntryEditParam>();
+            var details = new List<OutwardEntryEditParam>();
             try
             {
-                details = new StockEntryDAO().EditStockEnrty(id);
+                details = new OutwardEntryDAO().EditOutwardEnrty(id);
             }
             catch (Exception ex)
             {
@@ -162,12 +161,12 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static Int64[] CheckVoidStockEnrty(Int64 id)
+        public static Int64[] CheckVoidOutwardEnrty(Int64 id)
         {
             List<Int64> lstvalues = new List<Int64>();
             try
             {
-                lstvalues = new StockEntryDAO().CheckVoidStockEnrty(id);
+                lstvalues = new OutwardEntryDAO().CheckVoidOutwardEnrty(id);
             }
             catch (Exception ex)
             {
@@ -175,15 +174,14 @@ namespace Catalog.Pages
             }
             return lstvalues.ToArray();
         }
-
-
+        
         [WebMethod]
-        public static DbStatusEntity[] UpdatetData(StockEntryInsertParam1 obj1, StockEntryInsertParam2[] obj2, Int64 id)
+        public static DbStatusEntity[] UpdatetData(OutwardEntryInsertParam1 obj1, OutwardEntryInsertParam2[] obj2, Int64 id)
         {
             var details = new List<DbStatusEntity>();
             try
             {
-                details.Add(new StockEntryDAO().UpdateStockEntry(obj1, obj2, userid, id));
+                details.Add(new OutwardEntryDAO().UpdateOutwardEntry(obj1, obj2, userid, id));
             }
             catch (Exception ex)
             {

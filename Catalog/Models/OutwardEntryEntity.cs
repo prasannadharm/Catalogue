@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Catalog.Models
 {
-    public class StockEntryEntity
+    public class OutwardEntryEntity
     {
         public Int64 ID { get; set; }
         public Int64 TRANS_NO { get; set; }
@@ -19,10 +19,10 @@ namespace Catalog.Models
         public string CREATEDBY { get; set; }
         public string CREATEDON { get; set; }
         public string MODIFIEDBY { get; set; }
-        public string MODIFIEDON { get; set; }
+        public string MODIFIEDON { get; set; }        
     }
 
-    public class StockEntrySubEntity
+    public class OutwardEntrySubEntity
     {
         public Int64 ID { get; set; }
         public Int64 TRANS_MAIN_ID { get; set; }
@@ -39,13 +39,13 @@ namespace Catalog.Models
         public DateTime MODIFIEDON { get; set; }
     }
 
-    public class StockEntryDateFilterEntity
+    public class OutwardEntryDateFilterEntity
     {
         public string DateFrom { get; set; }
         public string DateTo { get; set; }
     }
 
-    public class StockEntryInsertParam1
+    public class OutwardEntryInsertParam1
     {
         public string LED_NAME { get; set; }
         public string LED_ID { get; set; }
@@ -54,7 +54,7 @@ namespace Catalog.Models
         public string REMARKS { get; set; }
     }
 
-    public class StockEntryInsertParam2
+    public class OutwardEntryInsertParam2
     {
         public Int64 ID { get; set; }
         public string SKU { get; set; }
@@ -67,7 +67,7 @@ namespace Catalog.Models
         public string REMARKS { get; set; }
     }
 
-    public class StockEntryEditParam
+    public class OutwardEntryEditParam
     {
         public Int64 TRANS_MAIN_ID { get; set; }
         public string LED_NAME { get; set; }

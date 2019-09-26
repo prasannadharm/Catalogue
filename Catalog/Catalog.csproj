@@ -171,6 +171,7 @@
     <Content Include="Pages\LedgerTypeMaster.aspx" />
     <Content Include="Pages\MaterialMaster.aspx" />
     <Content Include="Pages\OccasionMaster.aspx" />
+    <Content Include="Pages\Outward.aspx" />
     <Content Include="Pages\OutwardTypeMaster.aspx" />
     <Content Include="Pages\RolesMaster.aspx" />
     <Content Include="Pages\Search.aspx" />
@@ -198,6 +199,7 @@
     <Content Include="scripts\app\ledgermaster.js" />
     <Content Include="scripts\app\materialmaster.js" />
     <Content Include="scripts\app\occasionmaster.js" />
+    <Content Include="scripts\app\outwardentry.js" />
     <Content Include="scripts\app\outwardtypemaster.js" />
     <Content Include="scripts\app\rolesmaster.js" />
     <Content Include="scripts\app\search.js" />
@@ -224,6 +226,7 @@
     <Compile Include="DAO\CatalogDetailsDAO.cs" />
     <Compile Include="DAO\HomeDAO.cs" />
     <Compile Include="DAO\InwardTypeMasterDAO.cs" />
+    <Compile Include="DAO\OutwardEntryDAO.cs" />
     <Compile Include="DAO\OutwardTypeMasterDAO.cs" />
     <Compile Include="DAO\SearchItemDAO.cs" />
     <Compile Include="DAO\StockEntryDAO.cs" />
@@ -232,6 +235,7 @@
     <Compile Include="Models\CatalogImageEntity.cs" />
     <Compile Include="Models\DropdownEntity.cs" />
     <Compile Include="Models\InwardTypeMasterEntity.cs" />
+    <Compile Include="Models\OutwardEntryEntity.cs" />
     <Compile Include="Models\OutwardTypeMasterEntity.cs" />
     <Compile Include="Models\SearchCatalogByTextEntity.cs" />
     <Compile Include="Models\SearchCatalogEntity.cs" />
@@ -430,6 +434,13 @@
     </Compile>
     <Compile Include="Pages\OccasionMaster.aspx.designer.cs">
       <DependentUpon>OccasionMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Outward.aspx.cs">
+      <DependentUpon>Outward.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Outward.aspx.designer.cs">
+      <DependentUpon>Outward.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\OutwardTypeMaster.aspx.cs">
       <DependentUpon>OutwardTypeMaster.aspx</DependentUpon>

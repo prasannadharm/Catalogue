@@ -7,19 +7,19 @@ using System.Data.SqlClient;
 
 namespace Catalog.DAO
 {
-    public class StockEntryDAO
+    public class OutwardEntryDAO
     {
-        public List<StockEntryEntity> GetStockEntryList(StockEntryDateFilterEntity obj)
+        public List<OutwardEntryEntity> GetOutwardEntryList(OutwardEntryDateFilterEntity obj)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
             DataSet ds = new DataSet();
-            List<StockEntryEntity> retlst = new List<StockEntryEntity>();
+            List<OutwardEntryEntity> retlst = new List<OutwardEntryEntity>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_GetStockEntryMainList", con);
+                    SqlCommand cmd = new SqlCommand("USP_GetOutwardEntryMainList", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@DateFrom", obj.DateFrom);
                     cmd.Parameters.AddWithValue("@DateTo", obj.DateTo);
@@ -28,7 +28,7 @@ namespace Catalog.DAO
                     adapter.Fill(ds);
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
-                        StockEntryEntity obj1 = new StockEntryEntity();
+                        OutwardEntryEntity obj1 = new OutwardEntryEntity();
                         obj1.ID = Convert.ToInt64(ds.Tables[0].Rows[i]["ID"]);
                         obj1.TRANS_NO = ds.Tables[0].Rows[i]["TRANS_NO"] != DBNull.Value ? Convert.ToInt64(ds.Tables[0].Rows[i]["TRANS_NO"]) : 0;
                         if (ds.Tables[0].Rows[i]["TRANS_DATE"] != DBNull.Value)
@@ -48,8 +48,8 @@ namespace Catalog.DAO
             }
             return retlst;
         }
-                
-        public DbStatusEntity InsertStockEntry(StockEntryInsertParam1 obj, StockEntryInsertParam2[] obj2, Int64 userid)
+        
+        public DbStatusEntity InsertOutwardEntry(OutwardEntryInsertParam1 obj, OutwardEntryInsertParam2[] obj2, Int64 userid)
         {
             DataTable dtsub = new DataTable();
             DbStatusEntity objreturn = new DbStatusEntity();
@@ -63,7 +63,7 @@ namespace Catalog.DAO
                 dtsub.Columns.Add("QTY", typeof(double));
                 dtsub.Columns.Add("REMARKS", typeof(string));
                 dtsub.Columns.Add("GENID", typeof(string));
-                foreach (StockEntryInsertParam2 ob in obj2)
+                foreach (OutwardEntryInsertParam2 ob in obj2)
                 {
                     DataRow dr = dtsub.NewRow();
                     dr["CATALOG_ID"] = ob.ID;
@@ -79,7 +79,7 @@ namespace Catalog.DAO
 
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_InsertStockEntry", con);
+                    SqlCommand cmd = new SqlCommand("USP_InsertOutwardEntry", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@LED_NAME", obj.LED_NAME);
                     cmd.Parameters.AddWithValue("@TRANS_DATE", obj.TRANS_DATE);
@@ -111,7 +111,7 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public DbStatusEntity UpdateStockEntry(StockEntryInsertParam1 obj, StockEntryInsertParam2[] obj2, Int64 userid, Int64 id)
+        public DbStatusEntity UpdateOutwardEntry(OutwardEntryInsertParam1 obj, OutwardEntryInsertParam2[] obj2, Int64 userid, Int64 id)
         {
             DataTable dtsub = new DataTable();
             DbStatusEntity objreturn = new DbStatusEntity();
@@ -125,7 +125,7 @@ namespace Catalog.DAO
                 dtsub.Columns.Add("QTY", typeof(double));
                 dtsub.Columns.Add("REMARKS", typeof(string));
                 dtsub.Columns.Add("GENID", typeof(string));
-                foreach (StockEntryInsertParam2 ob in obj2)
+                foreach (OutwardEntryInsertParam2 ob in obj2)
                 {
                     DataRow dr = dtsub.NewRow();
                     dr["CATALOG_ID"] = ob.ID;
@@ -141,7 +141,7 @@ namespace Catalog.DAO
 
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_UpdateStockEntry", con);
+                    SqlCommand cmd = new SqlCommand("USP_UpdateOutwardEntry", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@TRANS_MAIN_ID", id);
                     cmd.Parameters.AddWithValue("@LED_NAME", obj.LED_NAME);
@@ -174,17 +174,15 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public DbStatusEntity DeleteStockEntry(Int64 id)
+        public DbStatusEntity DeleteOutwardEntry(Int64 id)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-
-
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_DeleteStockEntry", con);
+                    SqlCommand cmd = new SqlCommand("USP_DeleteOutwardEntry", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", id);
 
@@ -209,17 +207,15 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public DbStatusEntity VoidStockEntry(Int64 id)
+        public DbStatusEntity VoidOutwardEntry(Int64 id)
         {
             DbStatusEntity objreturn = new DbStatusEntity();
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-
-
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_VoidStockEntry", con);
+                    SqlCommand cmd = new SqlCommand("USP_VoidOutwardEntry", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", id);
 
@@ -244,17 +240,17 @@ namespace Catalog.DAO
             return objreturn;
         }
 
-        public List<StockEntryEditParam> EditStockEnrty(long id)
+        public List<OutwardEntryEditParam> EditOutwardEnrty(long id)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
             DataSet ds = new DataSet();
-            List<StockEntryEditParam> retlst = new List<StockEntryEditParam>();
+            List<OutwardEntryEditParam> retlst = new List<OutwardEntryEditParam>();
             try
             {
                 using (SqlConnection con = new SqlConnection(CS))
                 {
-                    SqlCommand cmd = new SqlCommand("USP_GetStockEntryDetailsbyID", con);
+                    SqlCommand cmd = new SqlCommand("USP_GetOutwardEntryDetailsbyID", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", id);
                     con.Open();
@@ -265,7 +261,7 @@ namespace Catalog.DAO
                     {
                         for (int i = 0; i <= ds.Tables[1].Rows.Count - 1; i++)
                         {
-                            StockEntryEditParam obj = new StockEntryEditParam();
+                            OutwardEntryEditParam obj = new OutwardEntryEditParam();
                             obj.TRANS_MAIN_ID = ds.Tables[0].Rows[0]["TRANS_MAIN_ID"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[0].Rows[0]["TRANS_MAIN_ID"]);
                             obj.TRANS_DATE = ds.Tables[0].Rows[0]["TRANS_DATE"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[0]["TRANS_DATE"]);
                             obj.TRANS_NO = ds.Tables[0].Rows[0]["TRANS_NO"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[0].Rows[0]["TRANS_NO"]);
@@ -296,7 +292,7 @@ namespace Catalog.DAO
             return retlst;
         }
 
-        public List<Int64> CheckVoidStockEnrty(long id)
+        public List<Int64> CheckVoidOutwardEnrty(long id)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
@@ -307,7 +303,7 @@ namespace Catalog.DAO
                 using (SqlConnection con = new SqlConnection(CS))
                 {
                     Int64 retval = 0;
-                    SqlCommand cmd = new SqlCommand("USP_GetStockEntryVoidDetailsbyID", con);
+                    SqlCommand cmd = new SqlCommand("USP_GetOutwardEntryVoidDetailsbyID", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", id);
                     con.Open();
