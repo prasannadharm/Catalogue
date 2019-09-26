@@ -113,6 +113,7 @@
     <Content Include="css\jquery-ui.min.css" />
     <Content Include="images\static\barcode.png" />
     <Content Include="images\static\delete.png" />
+    <Content Include="images\static\download.png" />
     <Content Include="images\static\edit.png" />
     <Content Include="images\static\favicon.ico" />
     <Content Include="images\static\imageview.png" />

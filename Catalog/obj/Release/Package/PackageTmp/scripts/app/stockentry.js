@@ -140,7 +140,7 @@ $(function () {
                 if (checkid != null && checkid != undefined && checkid > 0) {
                     alert('Cannot Edit Voided/Cancelled entry.');
                     return false;
-                }               
+                }
 
                 var date = new Date();
                 var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -389,9 +389,62 @@ $(function () {
         }
     });
 
-    $("#btnUpdate").click(function () {       
+    $(document).on("click", ".printButton", function () {
+
+        var id = $(this).attr("data-id");
+        console.log(id);
+
+        $('#tablesubprn tbody').remove();
+        $('#tablesubprn').append("<tbody>");
+        $('#tablesubprn').append("</tbody>");
+        $('#lblstkNoPRN').val('');
+        $('#lblstkDatePRN').val('');
+        $('#lblrefnoPRN').val('');
+        $('#lblledNamePRN').val('');
+        $('#lblRemarksPRN').val('');
+
+        $.ajax({
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            url: "Stock.aspx/EditData",
+            data: '{id: ' + id + '}',
+            dataType: "json",
+            success: function (data) {
+                if (data.d.length > 0) {
+                    $("#lblledNamePRN").text(data.d[0].LED_NAME);
+                    $("#lblstkNoPRN").text(data.d[0].TRANS_NO);
+                    $('#lblstkDatePRN').text(data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
+                    $("#lblRemarksPRN").text(data.d[0].REMARKS_MAIN);
+                    $("#lblrefnoPRN").text(data.d[0].REF_NO);
+                }
+
+                $('#tablesubprn tbody').remove();
+                $('#tablesubprn').append("<tbody>");
+                for (var i = 0; i < data.d.length; i++) {
+                    $('#tablesubprn').append(
+                        "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td>" + data.d[i].CODE + "</td><td style='color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='text-align:center;color:red'>" + data.d[i].QTY + "</td><td>" + data.d[i].REMARKS + "</td></tr>");
+                }
+                $('#tablesubprn').append("</tbody>");
+                $('#printdiv').show();
+                var divToPrint = document.getElementById("printdiv");
+                newWin = window.open("");
+                newWin.document.write(printdiv.outerHTML);
+                $('#printdiv').hide();
+                newWin.print();
+                newWin.close();
+                
+            },
+            error: function () {
+                alert("Error while retrieving data of :" + id);
+            }
+        });
+
+       
+    });
+
+    $("#btnUpdate").click(function () {
         var id = $(this).attr("edit-id");
-        
+
         if ($("#ContentPlaceHolder1_LED_NAME").val().trim() == "") {
             alert("Please enter Ledger name.");
             $("#ContentPlaceHolder1_LED_NAME").focus();
@@ -444,7 +497,7 @@ $(function () {
                     type: "Post",
                     contentType: "application/json; charset=utf-8",
                     url: "Stock.aspx/UpdatetData",
-                    data: '{obj1: ' + JSON.stringify(obj1) + ', obj2: ' + JSON.stringify(subItemsList) + ', id: '+ id +'}',
+                    data: '{obj1: ' + JSON.stringify(obj1) + ', obj2: ' + JSON.stringify(subItemsList) + ', id: ' + id + '}',
                     dataType: "json",
                     success: function (data) {
                         for (var i = 0; i < data.d.length; i++) {
@@ -476,7 +529,7 @@ $(function () {
             }
         });
         document.getElementById("loader").style.display = "none";
-              
+
     });
 });
 

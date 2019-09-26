@@ -1,9 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/CatalogAdmin.Master" AutoEventWireup="true" CodeBehind="Stock.aspx.cs" Inherits="Catalog.Pages.Stock" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/CatalogAdmin.Master" AutoEventWireup="true" CodeBehind="Outward.aspx.cs" Inherits="Catalog.Pages.Outward" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <style>
+      <style>
         .filters .dropdown-menu > li > a {
             display: block;
             padding: 2px 15px;
@@ -29,13 +28,13 @@
     <script src="../scripts/popper.min.js"></script>
     <script src="../scripts/bootstrap-datepicker.min.js"></script>
     <script src="../scripts/jquery-ui.min.js"></script>
-    <script src="../scripts/app/stockentry.js"></script>
+    <script src="../scripts/app/outwardentry.js"></script>
     <div id="loader"></div>
     <div class="col-lg-12" id="mainlistingdiv">
         <div class="panel panel-default">
             <div class="row">
                 <div class="col-3">
-                    <h2>Stock Entry</h2>
+                    <h2>Outward Entry</h2>
                 </div>
                 <div class="col-9">
                     <label class="control-label" style="display: inline">Date From </label>
@@ -54,7 +53,7 @@
                 <table id="tablemain" class="table table-striped table-bordered" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>Stock No</th>
+                            <th>Outward No</th>
                             <th>Date</th>
                             <th>Ledger Name</th>
                             <th>Remarks</th>
@@ -79,7 +78,7 @@
         <div class="panel panel-default">
             <div class="row">
                 <div class="col-12" id="subheaderdiv">
-                    <h2 style='color: blue'>Stock Entry -> Add Stock Entry</h2>
+                    <h2 style='color: blue'>Outward Entry -> Add Outward Entry</h2>
                 </div>
             </div>
 
@@ -90,11 +89,11 @@
                     <asp:HiddenField ID="LED_ID" runat="server" />
                 </div>
                 <div class="form-group col-md-6 col-lg-3">
-                    <label>Stock Entry No</label>
+                    <label>Outward Entry No</label>
                     <input type="number" id="TRANS_NO" class="form-control" disabled="disabled" style="text-align: center; background-color: white" />
                 </div>
                 <div class="form-group col-md-6 col-lg-3">
-                    <label>Stock Entry Date</label>
+                    <label>Outward Entry Date</label>
                     <input class="form-control datepicker" id="TRANS_DATE" name="date" placeholder="DD-MM-YYYY" type="text" style="text-align: center;" />
                 </div>
             </div>
@@ -232,7 +231,7 @@
         <div class="panel panel-default">
             <div class="row">
                 <div class="col-12">
-                    <h2 style='color: blue'>Stock Entry Details</h2>
+                    <h2 style='color: blue'>Outward Entry Details</h2>
                 </div>
             </div>
 
@@ -240,7 +239,7 @@
                 <table>
                     <tr>
                         <td>
-                            <label>Stock Entry No</label>
+                            <label>Outward Entry No</label>
                         </td>
                         <td>
                             <label> : </label>
@@ -251,7 +250,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label>Stock Entry Date</label>
+                            <label>Outward Entry Date</label>
                         </td>
                         <td>
                             <label> : </label>

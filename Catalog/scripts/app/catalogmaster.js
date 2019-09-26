@@ -713,6 +713,7 @@ $(function () {
         $('#fileToUpload').val("");
         $("#btnUploadImage").attr("edit-id", id);
         ShowUploadedFiles();
+        $('#divimgpreview').hide();
         $('#fileToUpload').focus();
     });
 
@@ -1043,6 +1044,15 @@ $(function () {
 
     });
 
+    $("#btnCloseImgPreview").click(function () {
+        $('#divimgpreview').hide();
+    });  
+
+    $(document).on("click", ".previewButtonImage", function () {    
+        var phyimage = $(this).attr("data-id");
+        $('#imgpreview').attr("src", "../images/upload/" + phyimage);
+        $('#divimgpreview').show();
+    });
 });
 
 
@@ -1127,10 +1137,13 @@ function ShowUploadedFiles() {
             for (var i = 0; i < data.d.length; i++) {
                 $('#tableupload').append(
                     "<tr><td>" + data.d[i].ORG_FILE_NAME + "</td><td><input type='checkbox'  class='chkkstatus' data-id=" + data.d[i].PHY_FILE_NAME + " " + (data.d[i].IS_THUMBNAIL == true ? "checked='checked'" : "") + "/></td>" +
-                    "<td><span style='float:left; margin-left:10px; width:40px;' ><a class='btn btn-success btn-sm downloadButton' href='CatalogImageUpload.ashx?action=DOWNLOAD&catalogid=" + catalogid + "&phy_file_name=" + data.d[i].PHY_FILE_NAME + "&org_file_name=" + data.d[i].ORG_FILE_NAME + "'>Download</a></span></td>" +
-                    "<td><input type='button' class='btn btn-danger btn-sm deleteButtonImage' data-id='" + data.d[i].PHY_FILE_NAME + "' name='submitButton' id='btnDeleteImage' value='Delete' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+                    "<td style='text-align:center'><img src='../images/static/delete.png' alt='Delete Record' class='deleteButtonImage handcursor' data-id='" + data.d[i].PHY_FILE_NAME + "' name='submitButton' id='btnDeleteImage' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
+                    "<td style='text-align:center'><img src='../images/static/imageview.png' alt='Delete Record' class='previewButtonImage handcursor' data-id='" + data.d[i].PHY_FILE_NAME + "' name='submitButton' id='btnPreviewImage' value='Preview' style='margin-right:5px;margin-left:5px'/> </td>" +
+                    "<td style='text-align:center'><a class='downloadButton' href='CatalogImageUpload.ashx?action=DOWNLOAD&catalogid=" + catalogid + "&phy_file_name=" + data.d[i].PHY_FILE_NAME + "&org_file_name=" + data.d[i].ORG_FILE_NAME + "'><img src='../images/static/download.png' alt='Download Record' class='downloadButton handcursor' id='btnDeleteImage' style='margin-right:5px;margin-left:5px'/> </td></a></tr>");
+
             }
             $('#tableupload').append("</tbody>");
+           
         },
         error: function () {
             alert("Error while Showing update data");

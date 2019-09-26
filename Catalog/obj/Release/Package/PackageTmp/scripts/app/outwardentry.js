@@ -95,10 +95,10 @@ $(function () {
         $('#tablesub').append("<tbody>");
         $('#tablesub').append("</tbody>");
 
-        $("#subheaderdiv").html("<h2 style='color:blue'>Stock Entry -> Add Stock Entry</h2>");
+        $("#subheaderdiv").html("<h2 style='color:blue'>Outward Entry -> Add Outward Entry</h2>");
 
         $.ajax({
-            url: "Stock.aspx/GetLatestTrasnsactionNumber",
+            url: "Outward.aspx/GetLatestTrasnsactionNumber",
             data: '{}',
             dataType: "json",
             type: "POST",
@@ -129,7 +129,7 @@ $(function () {
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
-            url: "Stock.aspx/CheckVoidStockEnrty",
+            url: "Outward.aspx/CheckVoidOutwardEnrty",
             data: '{id: ' + id + '}',
             dataType: "json",
             success: function (data) {
@@ -148,7 +148,7 @@ $(function () {
                 $('#btnUpdate').show();
                 $('#mainlistingdiv').hide();
                 $('#mainldetaildiv').show();
-                $("#subheaderdiv").html("<h2 style='color:blue'>Stock Entry -> Edit Stock Entry</h2>");
+                $("#subheaderdiv").html("<h2 style='color:blue'>Outward Entry -> Edit Outward Entry</h2>");
                 subItemsList = [];
                 rebuildSubTableGrid();
                 $('#tablesub tbody').remove();
@@ -166,7 +166,7 @@ $(function () {
                 $.ajax({
                     type: "Post",
                     contentType: "application/json; charset=utf-8",
-                    url: "Stock.aspx/EditData",
+                    url: "Outward.aspx/EditData",
                     data: '{id: ' + id + '}',
                     dataType: "json",
                     success: function (data) {
@@ -178,7 +178,7 @@ $(function () {
                             $("#REMARKS").val(data.d[0].REMARKS_MAIN);
                             $("#REF_NO").val(data.d[0].REF_NO);
 
-                            $("#subheaderdiv").html("<h2 style='color:blue'>Stock Entry -> Edit Stock Entry No: " + data.d[0].TRANS_NO + "</h2>");
+                            $("#subheaderdiv").html("<h2 style='color:blue'>Outward Entry -> Edit Outward Entry No: " + data.d[0].TRANS_NO + "</h2>");
                         }
                         for (var i = 0; i < data.d.length; i++) {
                             var objdetail = {};
@@ -218,7 +218,7 @@ $(function () {
     $("[id$=LED_NAME]").autocomplete({
         source: function (request, response) {
             $.ajax({
-                url: "Stock.aspx/GetLedgersbyName",
+                url: "Outward.aspx/GetLedgersbyName",
                 data: "{ 'str': '" + request.term + "'}",
                 dataType: "json",
                 type: "POST",
@@ -254,13 +254,13 @@ $(function () {
         }
 
         if ($("#TRANS_NO").val().trim() == "") {
-            alert("Please enter Stock entry No.");
+            alert("Please enter Outward entry No.");
             $("#TRANS_NO").focus();
             return false;
         }
 
         if (isDate($("#TRANS_DATE").val()) == false) {
-            alert('Please enter valid Stock entry date');
+            alert('Please enter valid Outward entry date');
             $("#TRANS_DATE").focus();
             return false;
         }
@@ -269,7 +269,7 @@ $(function () {
         var ledid = '0';
         document.getElementById("loader").style.display = "block";
         $.ajax({
-            url: "Stock.aspx/VerifyLedgerbyName",
+            url: "Outward.aspx/VerifyLedgerbyName",
             data: "{ 'str': '" + $("#ContentPlaceHolder1_LED_NAME").val().trim() + "'}",
             dataType: "json",
             type: "POST",
@@ -298,7 +298,7 @@ $(function () {
                 $.ajax({
                     type: "Post",
                     contentType: "application/json; charset=utf-8",
-                    url: "Stock.aspx/InsertData",
+                    url: "Outward.aspx/InsertData",
                     data: '{obj1: ' + JSON.stringify(obj1) + ', obj2: ' + JSON.stringify(subItemsList) + '}',
                     dataType: "json",
                     success: function (data) {
@@ -339,7 +339,7 @@ $(function () {
             $.ajax({
                 type: "Post",
                 contentType: "application/json; charset=utf-8",
-                url: "Stock.aspx/DeleteData",
+                url: "Outward.aspx/DeleteData",
                 data: '{id: ' + id + '}',
                 dataType: "json",
                 success: function (data) {
@@ -367,7 +367,7 @@ $(function () {
             $.ajax({
                 type: "Post",
                 contentType: "application/json; charset=utf-8",
-                url: "Stock.aspx/VoidData",
+                url: "Outward.aspx/VoidData",
                 data: '{id: ' + id + '}',
                 dataType: "json",
                 success: function (data) {
@@ -406,7 +406,7 @@ $(function () {
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
-            url: "Stock.aspx/EditData",
+            url: "Outward.aspx/EditData",
             data: '{id: ' + id + '}',
             dataType: "json",
             success: function (data) {
@@ -432,14 +432,14 @@ $(function () {
                 $('#printdiv').hide();
                 newWin.print();
                 newWin.close();
-                
+
             },
             error: function () {
                 alert("Error while retrieving data of :" + id);
             }
         });
 
-       
+
     });
 
     $("#btnUpdate").click(function () {
@@ -452,13 +452,13 @@ $(function () {
         }
 
         if ($("#TRANS_NO").val().trim() == "") {
-            alert("Please enter Stock entry No.");
+            alert("Please enter Outward entry No.");
             $("#TRANS_NO").focus();
             return false;
         }
 
         if (isDate($("#TRANS_DATE").val()) == false) {
-            alert('Please enter valid Stock entry date');
+            alert('Please enter valid Outward entry date');
             $("#TRANS_DATE").focus();
             return false;
         }
@@ -467,7 +467,7 @@ $(function () {
         var ledid = '0';
         document.getElementById("loader").style.display = "block";
         $.ajax({
-            url: "Stock.aspx/VerifyLedgerbyName",
+            url: "Outward.aspx/VerifyLedgerbyName",
             data: "{ 'str': '" + $("#ContentPlaceHolder1_LED_NAME").val().trim() + "'}",
             dataType: "json",
             type: "POST",
@@ -496,7 +496,7 @@ $(function () {
                 $.ajax({
                     type: "Post",
                     contentType: "application/json; charset=utf-8",
-                    url: "Stock.aspx/UpdatetData",
+                    url: "Outward.aspx/UpdatetData",
                     data: '{obj1: ' + JSON.stringify(obj1) + ', obj2: ' + JSON.stringify(subItemsList) + ', id: ' + id + '}',
                     dataType: "json",
                     success: function (data) {
@@ -562,7 +562,7 @@ function searchItem() {
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: "Stock.aspx/SearchCatalogbyText",
+        url: "Outward.aspx/SearchCatalogbyText",
         data: '{obj: ' + JSON.stringify(obj) + '}',
         dataType: "json",
         success: function (data) {
@@ -760,14 +760,14 @@ function getMainGridDetails() {
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: "Stock.aspx/GetData",
+        url: "Outward.aspx/GetData",
         data: '{obj: ' + JSON.stringify(obj) + '}',
         dataType: "json",
         success: function (data) {
             $('#griddiv').remove();
             $('#maindiv').append("<div class='table-responsive' id='griddiv'></div>");
             $('#griddiv').append("<table id='tablemain' class='table table-striped table-bordered' style='width: 100%'></table>");
-            $('#tablemain').append("<thead><tr><th>Stock No</th><th>Date</th><th>Ledger Name</th><th>Remarks</th><th>Void</th><th>Created By</th><th>Modified By</th><th></th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
+            $('#tablemain').append("<thead><tr><th>Outward No</th><th>Date</th><th>Ledger Name</th><th>Remarks</th><th>Void</th><th>Created By</th><th>Modified By</th><th></th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
             $('#tablemain tbody').remove();
             $('#tablemain').append("<tbody>");
             for (var i = 0; i < data.d.length; i++) {
