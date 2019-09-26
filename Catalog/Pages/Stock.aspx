@@ -79,7 +79,7 @@
         <div class="panel panel-default">
             <div class="row">
                 <div class="col-12" id="subheaderdiv">
-                    <h2 style='color:blue'>Stock Entry -> Add Stock Entry</h2>
+                    <h2 style='color: blue'>Stock Entry -> Add Stock Entry</h2>
                 </div>
             </div>
 
@@ -112,7 +112,7 @@
 
             <div class="row">
                 <div class="form-group col-12">
-                    <h3 style='color:orange'>Add Jewellery Items</h3>
+                    <h3 style='color: orange'>Add Jewellery Items</h3>
                 </div>
             </div>
 
@@ -213,10 +213,10 @@
 
                 <div class="row" id="divISimgpreview" style="display: none;">
                     <div class="form-group col-12">
-                        <button type="button" id="btnISCloseImgPreview" class="btn btn-danger btn-sm" style="margin-left:15px">Close Preview</button>
+                        <button type="button" id="btnISCloseImgPreview" class="btn btn-danger btn-sm" style="margin-left: 15px">Close Preview</button>
                     </div>
                     <div class="form-group col-12">
-                        <img id="imgISpreviewsub" src="../images/static/preview.png" style="height: 300px; width: 300px;margin-left:15px" />
+                        <img id="imgISpreviewsub" src="../images/static/preview.png" style="height: 300px; width: 300px; margin-left: 15px" />
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -226,4 +226,99 @@
         </div>
     </div>
     <!-- For Modal Popup  -->
+
+    <!-- For Print Popup  -->
+    <div class="col-lg-12" id="printdiv" style="display: none">
+        <div class="panel panel-default">
+            <div class="row">
+                <div class="col-12">
+                    <h2 style='color: blue'>Stock Entry Details</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <table>
+                    <tr>
+                        <td>
+                            <label>Stock Entry No</label>
+                        </td>
+                        <td>
+                            <label> : </label>
+                        </td>
+                        <td>
+                            <label id="lblstkNoPRN"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Stock Entry Date</label>
+                        </td>
+                        <td>
+                            <label> : </label>
+                        </td>
+                        <td>
+                            <label id="lblstkDatePRN"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ref. No.</label>
+                        </td>
+                        <td>
+                            <label> : </label>
+                        </td>
+                        <td>
+                            <label id="lblrefnoPRN"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ledger Name</label>
+                        </td>
+                        <td>
+                            <label> : </label>
+                        </td>
+                        <td>
+                            <label id="lblledNamePRN"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Remarks</label>
+                        </td>
+                        <td>
+                            <label> : </label>
+                        </td>
+                        <td>
+                            <label id="lblRemarksPRN"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-12">
+                    <h3 style='color: brown'>Jewellery Items</h3>
+                </div>
+            </div>
+
+            <div class="table-responsive" id="gridsubdivprn">
+                <table id="tablesubprn" class="table table-striped table-bordered" style="width: 100%" border="1">
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Code</th>
+                            <th>Title</th>
+                            <th>Qty</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- For Print Popup  -->
+
 </asp:Content>

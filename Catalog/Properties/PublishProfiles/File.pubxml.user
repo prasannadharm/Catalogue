@@ -16,13 +16,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/16/2019 20:23:16</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>09/25/2019 07:35:22</publishTime>
+      <publishTime>09/25/2019 21:09:37</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>09/25/2019 07:35:22</publishTime>
+      <publishTime>09/25/2019 21:09:36</publishTime>
     </File>
     <File Include="bin/Catalog.dll">
-      <publishTime>09/25/2019 07:35:06</publishTime>
+      <publishTime>09/25/2019 21:07:16</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>12/07/2015 19:04:38</publishTime>
@@ -328,7 +328,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/16/2019 21:05:00</publishTime>
     </File>
     <File Include="Pages/Stock.aspx">
-      <publishTime>09/25/2019 06:45:13</publishTime>
+      <publishTime>09/25/2019 20:27:27</publishTime>
     </File>
     <File Include="Pages/UserDashboard.aspx">
       <publishTime>04/26/2019 13:00:36</publishTime>
@@ -340,7 +340,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/01/2019 10:40:40</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>09/25/2019 07:35:17</publishTime>
+      <publishTime>09/25/2019 21:09:30</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>04/16/2019 20:23:16</publishTime>
@@ -424,7 +424,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/20/2019 20:26:08</publishTime>
     </File>
     <File Include="scripts/app/stockentry.js">
-      <publishTime>09/25/2019 07:33:19</publishTime>
+      <publishTime>09/25/2019 20:57:39</publishTime>
     </File>
     <File Include="scripts/app/usermaster.js">
       <publishTime>05/03/2019 00:46:53</publishTime>
@@ -466,7 +466,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/14/2019 20:06:56</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/25/2019 07:35:17</publishTime>
+      <publishTime>09/25/2019 21:09:29</publishTime>
     </File>
   </ItemGroup>
 </Project>
