@@ -310,14 +310,23 @@
                                     <tr>
                                         <th>Image File</th>
                                         <th>Thumbnail</th>
-                                        <th></th>
-                                        <th></th>
+                                        <th>Delete</th>
+                                        <th>View</th>
+                                        <th>Download</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+                <div class="row" id="divimgpreview" style="display: none;">
+                    <div class="form-group col-12">
+                        <button type="button" id="btnCloseImgPreview" class="btn btn-danger btn-sm" style="margin-left: 15px">Close Preview</button>
+                    </div>
+                    <div class="form-group col-12">
+                        <img id="imgpreview" src="../images/static/preview.png" style="height: 300px; width: 300px; margin-left: 15px" />
                     </div>
                 </div>
                 <div style="float: left; padding-left: 10px">

@@ -767,12 +767,12 @@ function getMainGridDetails() {
             $('#griddiv').remove();
             $('#maindiv').append("<div class='table-responsive' id='griddiv'></div>");
             $('#griddiv').append("<table id='tablemain' class='table table-striped table-bordered' style='width: 100%'></table>");
-            $('#tablemain').append("<thead><tr><th>Stock No</th><th>Date</th><th>Ledger Name</th><th>Remarks</th><th>Void</th><th>Created By</th><th>Modified By</th><th></th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
+            $('#tablemain').append("<thead><tr><th>No</th><th>Date</th><th>Ledger Name</th><th>Void</th><th>Created By</th><th>Modified By</th><th></th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
             $('#tablemain tbody').remove();
             $('#tablemain').append("<tbody>");
             for (var i = 0; i < data.d.length; i++) {
                 $('#tablemain').append(
-                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td>" + data.d[i].TRANS_DATE + "</td><td style='text-align:center;color:blue'>" + data.d[i].LED_NAME + "</td><td>" + data.d[i].REMARKS + "</td><td>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td><td>" + data.d[i].CREATEDBY + "</td><td>" + data.d[i].MODIFIEDBY +
+                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td>" + data.d[i].TRANS_DATE + "</td><td style='color:blue'>" + data.d[i].LED_NAME + "</td><td style='text-align:center;'>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td><td>" + data.d[i].CREATEDBY + "</td><td>" + data.d[i].MODIFIEDBY +
                     "</td>" + "<td>" + "<img src='../images/static/edit.png' alt='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
                     "<td><img src='../images/static/delete.png' alt='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
                     "<td><img src='../images/static/void.png' alt='Void / Cancel Record' class='voidButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnVoid' value='Void' style='margin-right:5px;margin-left:5px'/> </td>" +

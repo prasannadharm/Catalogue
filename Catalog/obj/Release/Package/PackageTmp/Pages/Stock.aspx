@@ -56,8 +56,7 @@
                         <tr>
                             <th>Stock No</th>
                             <th>Date</th>
-                            <th>Ledger Name</th>
-                            <th>Remarks</th>
+                            <th>Ledger Name</th>                            
                             <th>Void</th>
                             <th>Created By</th>
                             <th>Modified By</th>
