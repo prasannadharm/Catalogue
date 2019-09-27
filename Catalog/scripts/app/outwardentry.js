@@ -76,6 +76,27 @@ $(document).ready(function () {
 })
 
 $(function () {
+    $.ajax({
+        type: "POST",
+        url: "Outward.aspx/GetActiveOutwardTypeList",
+        data: '{}',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: LoadOutwardTypeCombo
+    });
+});
+
+function LoadOutwardTypeCombo(data) {
+    var options = [];
+    for (var i = 0; i < data.d.length; i++) {
+        options.push('<option value="',
+          data.d[i].ID, '">',
+          data.d[i].NAME, '</option>');
+    }
+    $("#OUTWARD_TYPE").html(options.join(''));
+}
+
+$(function () {
     $(document).on("click", ".addNewButton", function () {
         var date = new Date();
         var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -89,6 +110,8 @@ $(function () {
         $("#ContentPlaceHolder1_LED_ID").val('');
         $('#REMARKS').val('');
         $('#REF_NO').val('');
+        $('#OUTWARD_TYPE').val('');
+
         subItemsList = [];
         rebuildSubTableGrid()
         $('#tablesub tbody').remove();
@@ -160,6 +183,7 @@ $(function () {
                 $("#ContentPlaceHolder1_LED_ID").val('');
                 $('#REMARKS').val('');
                 $('#REF_NO').val('');
+                $('#OUTWARD_TYPE').val('');
 
                 //$("#btnUpdate").attr("edit-id", id);
                 //alert(id);  //getting the row id 
@@ -177,7 +201,7 @@ $(function () {
                             $('#TRANS_DATE').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
                             $("#REMARKS").val(data.d[0].REMARKS_MAIN);
                             $("#REF_NO").val(data.d[0].REF_NO);
-
+                            $('#OUTWARD_TYPE').val(data.d[0].OUT_TYPE_ID);
                             $("#subheaderdiv").html("<h2 style='color:blue'>Outward Entry -> Edit Outward Entry No: " + data.d[0].TRANS_NO + "</h2>");
                         }
                         for (var i = 0; i < data.d.length; i++) {
@@ -245,13 +269,7 @@ $(function () {
         minLength: 1
     });
 
-    $("#btnSave").click(function () {
-
-        if ($("#ContentPlaceHolder1_LED_NAME").val().trim() == "") {
-            alert("Please enter Ledger name.");
-            $("#ContentPlaceHolder1_LED_NAME").focus();
-            return false;
-        }
+    $("#btnSave").click(function () {       
 
         if ($("#TRANS_NO").val().trim() == "") {
             alert("Please enter Outward entry No.");
@@ -262,6 +280,18 @@ $(function () {
         if (isDate($("#TRANS_DATE").val()) == false) {
             alert('Please enter valid Outward entry date');
             $("#TRANS_DATE").focus();
+            return false;
+        }
+
+        if ($("#OUTWARD_TYPE").val() == null || $("#OUTWARD_TYPE").val() == undefined || $("#OUTWARD_TYPE").val().trim() == '') {
+            alert("Please Select Outward Type.");
+            $("#OUTWARD_TYPE").focus();
+            return false;
+        }
+
+        if ($("#ContentPlaceHolder1_LED_NAME").val().trim() == "") {
+            alert("Please enter Ledger name.");
+            $("#ContentPlaceHolder1_LED_NAME").focus();
             return false;
         }
 
@@ -294,7 +324,7 @@ $(function () {
                 obj1.TRANS_DATE = $("#TRANS_DATE").val();
                 obj1.REF_NO = $("#REF_NO").val();
                 obj1.REMARKS = $("#REMARKS").val();
-
+                obj1.OUT_TYPE_NAME = $('#OUTWARD_TYPE :selected').text();
                 $.ajax({
                     type: "Post",
                     contentType: "application/json; charset=utf-8",
@@ -402,7 +432,7 @@ $(function () {
         $('#lblrefnoPRN').val('');
         $('#lblledNamePRN').val('');
         $('#lblRemarksPRN').val('');
-
+        $('#lblouttypePRN').val('');
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
@@ -416,6 +446,7 @@ $(function () {
                     $('#lblstkDatePRN').text(data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
                     $("#lblRemarksPRN").text(data.d[0].REMARKS_MAIN);
                     $("#lblrefnoPRN").text(data.d[0].REF_NO);
+                    $('#lblouttypePRN').text(data.d[0].OUT_TYPE_NAME);
                 }
 
                 $('#tablesubprn tbody').remove();
@@ -445,12 +476,6 @@ $(function () {
     $("#btnUpdate").click(function () {
         var id = $(this).attr("edit-id");
 
-        if ($("#ContentPlaceHolder1_LED_NAME").val().trim() == "") {
-            alert("Please enter Ledger name.");
-            $("#ContentPlaceHolder1_LED_NAME").focus();
-            return false;
-        }
-
         if ($("#TRANS_NO").val().trim() == "") {
             alert("Please enter Outward entry No.");
             $("#TRANS_NO").focus();
@@ -460,6 +485,18 @@ $(function () {
         if (isDate($("#TRANS_DATE").val()) == false) {
             alert('Please enter valid Outward entry date');
             $("#TRANS_DATE").focus();
+            return false;
+        }
+
+        if ($("#OUTWARD_TYPE").val() == null || $("#OUTWARD_TYPE").val() == undefined || $("#OUTWARD_TYPE").val().trim() == '') {
+            alert("Please Select Outward Type.");
+            $("#OUTWARD_TYPE").focus();
+            return false;
+        }
+
+        if ($("#ContentPlaceHolder1_LED_NAME").val().trim() == "") {
+            alert("Please enter Ledger name.");
+            $("#ContentPlaceHolder1_LED_NAME").focus();
             return false;
         }
 
@@ -492,6 +529,7 @@ $(function () {
                 obj1.TRANS_DATE = $("#TRANS_DATE").val();
                 obj1.REF_NO = $("#REF_NO").val();
                 obj1.REMARKS = $("#REMARKS").val();
+                obj1.OUT_TYPE_NAME = $('#OUTWARD_TYPE :selected').text();
 
                 $.ajax({
                     type: "Post",
@@ -767,12 +805,13 @@ function getMainGridDetails() {
             $('#griddiv').remove();
             $('#maindiv').append("<div class='table-responsive' id='griddiv'></div>");
             $('#griddiv').append("<table id='tablemain' class='table table-striped table-bordered' style='width: 100%'></table>");
-            $('#tablemain').append("<thead><tr><th>Outward No</th><th>Date</th><th>Ledger Name</th><th>Remarks</th><th>Void</th><th>Created By</th><th>Modified By</th><th></th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
+            $('#tablemain').append("<thead><tr><th>No</th><th>Date</th><th>Ledger Name</th><th>Type</th><th>Void</th><th>Created By</th><th></th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
             $('#tablemain tbody').remove();
             $('#tablemain').append("<tbody>");
             for (var i = 0; i < data.d.length; i++) {
                 $('#tablemain').append(
-                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td>" + data.d[i].TRANS_DATE + "</td><td style='text-align:center;color:blue'>" + data.d[i].LED_NAME + "</td><td>" + data.d[i].REMARKS + "</td><td>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td><td>" + data.d[i].CREATEDBY + "</td><td>" + data.d[i].MODIFIEDBY +
+                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td>" + data.d[i].TRANS_DATE + "</td><td style='center;color:blue'>" + data.d[i].LED_NAME + "</td><td>" +
+                    data.d[i].OUT_TYPE_NAME + "</td><td style='text-align:center;'>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td><td>" + data.d[i].CREATEDBY +
                     "</td>" + "<td>" + "<img src='../images/static/edit.png' alt='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
                     "<td><img src='../images/static/delete.png' alt='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
                     "<td><img src='../images/static/void.png' alt='Void / Cancel Record' class='voidButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnVoid' value='Void' style='margin-right:5px;margin-left:5px'/> </td>" +

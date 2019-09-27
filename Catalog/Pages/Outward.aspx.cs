@@ -190,5 +190,20 @@ namespace Catalog.Pages
             }
             return details.ToArray();
         }
+
+        [WebMethod]
+        public static OutwardTypeMasterEntity[] GetActiveOutwardTypeList() 
+        {
+            var details = new List<OutwardTypeMasterEntity>();
+            try
+            {
+                details = new GenericDAO().GetActiveOutwardTypeList();
+            }
+            catch (Exception ex)
+            {
+                // details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
     }
 }

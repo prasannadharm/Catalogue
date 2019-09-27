@@ -19,7 +19,9 @@ namespace Catalog.Models
         public string CREATEDBY { get; set; }
         public string CREATEDON { get; set; }
         public string MODIFIEDBY { get; set; }
-        public string MODIFIEDON { get; set; }        
+        public string MODIFIEDON { get; set; }
+        public Int64 OUT_TYPE_ID { get; set; }
+        public string OUT_TYPE_NAME { get; set; }
     }
 
     public class OutwardEntrySubEntity
@@ -52,6 +54,7 @@ namespace Catalog.Models
         public string TRANS_DATE { get; set; }
         public string REF_NO { get; set; }
         public string REMARKS { get; set; }
+        public string OUT_TYPE_NAME { get; set; }
     }
 
     public class OutwardEntryInsertParam2
@@ -85,5 +88,7 @@ namespace Catalog.Models
         public Int64 GENID { get; set; }
         public double QTY { get; set; }
         public string REMARKS { get; set; }
+        public Int64 OUT_TYPE_ID { get; set; }
+        public string OUT_TYPE_NAME { get; set; }
     }
 }

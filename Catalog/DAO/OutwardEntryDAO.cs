@@ -38,6 +38,7 @@ namespace Catalog.DAO
                         obj1.VOID_STATUS = ds.Tables[0].Rows[i]["VOID_STATUS"] == DBNull.Value ? false : Convert.ToBoolean(ds.Tables[0].Rows[i]["VOID_STATUS"]);
                         obj1.CREATEDBY = ds.Tables[0].Rows[i]["CREATEDBY"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["CREATEDBY"].ToString();
                         obj1.MODIFIEDBY = ds.Tables[0].Rows[i]["MODIFIEDBY"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["MODIFIEDBY"].ToString();
+                        obj1.OUT_TYPE_NAME = ds.Tables[0].Rows[i]["OUT_TYPE_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["OUT_TYPE_NAME"].ToString();
                         retlst.Add(obj1);
                     }
                 }
@@ -86,7 +87,8 @@ namespace Catalog.DAO
                     cmd.Parameters.AddWithValue("@REF_NO", obj.REF_NO);
                     cmd.Parameters.AddWithValue("@REMARKS", obj.REMARKS);
                     cmd.Parameters.AddWithValue("@USER_ID", userid);
-
+                    cmd.Parameters.AddWithValue("@OUT_TYPE_NAME", obj.OUT_TYPE_NAME);
+                    
                     SqlParameter sqlParam = cmd.Parameters.AddWithValue("@TVP", dtsub);
                     sqlParam.SqlDbType = SqlDbType.Structured;
 
@@ -149,6 +151,7 @@ namespace Catalog.DAO
                     cmd.Parameters.AddWithValue("@REF_NO", obj.REF_NO);
                     cmd.Parameters.AddWithValue("@REMARKS", obj.REMARKS);
                     cmd.Parameters.AddWithValue("@USER_ID", userid);
+                    cmd.Parameters.AddWithValue("@OUT_TYPE_NAME", obj.OUT_TYPE_NAME);
 
                     SqlParameter sqlParam = cmd.Parameters.AddWithValue("@TVP", dtsub);
                     sqlParam.SqlDbType = SqlDbType.Structured;
@@ -269,6 +272,8 @@ namespace Catalog.DAO
                             obj.LED_ID = ds.Tables[0].Rows[0]["LED_ID"] == DBNull.Value ? "0" : Convert.ToString(ds.Tables[0].Rows[0]["LED_ID"]);
                             obj.LED_NAME = ds.Tables[0].Rows[0]["LED_NAME"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[0]["LED_NAME"]);
                             obj.REMARKS_MAIN = ds.Tables[0].Rows[0]["REMARKS_MAIN"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[0]["REMARKS_MAIN"]);
+                            obj.OUT_TYPE_ID = ds.Tables[0].Rows[0]["OUT_TYPE_ID"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[0].Rows[0]["OUT_TYPE_ID"]);
+                            obj.OUT_TYPE_NAME = ds.Tables[0].Rows[0]["OUT_TYPE_NAME"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[0]["OUT_TYPE_NAME"]);
 
                             obj.CATALOG_ID = ds.Tables[1].Rows[i]["CATALOG_ID"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[1].Rows[i]["CATALOG_ID"]);
                             obj.SKU = ds.Tables[1].Rows[i]["SKU"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[1].Rows[i]["SKU"]);

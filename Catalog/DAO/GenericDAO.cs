@@ -483,5 +483,38 @@ namespace Catalog.DAO
             }
             return lstvalues;
         }
+        public List<OutwardTypeMasterEntity> GetActiveOutwardTypeList()
+        {
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlDataAdapter adapter;
+            DataSet ds = new DataSet();
+            List<OutwardTypeMasterEntity> retlst = new List<OutwardTypeMasterEntity>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("USP_GetActiveOutwardTypeList", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        OutwardTypeMasterEntity obj = new OutwardTypeMasterEntity();
+                        obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
+                        obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
+                        obj.RETURNABLE = ds.Tables[0].Rows[i]["RETURNABLE"] != null? Convert.ToBoolean(ds.Tables[0].Rows[i]["RETURNABLE"]) : false;
+                        retlst.Add(obj);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return retlst;
+        }
+        
     }
 }

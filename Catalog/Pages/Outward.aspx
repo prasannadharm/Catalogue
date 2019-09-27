@@ -53,13 +53,12 @@
                 <table id="tablemain" class="table table-striped table-bordered" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>Outward No</th>
+                            <th>No</th>
                             <th>Date</th>
-                            <th>Ledger Name</th>
-                            <th>Remarks</th>
+                            <th>Ledger Name</th>                            
+                            <th>Type</th>
                             <th>Void</th>
-                            <th>Created By</th>
-                            <th>Modified By</th>
+                            <th>Created By</th>                            
                             <th></th>
                             <th></th>
                             <th></th>
@@ -82,12 +81,7 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="form-group col-md-12 col-lg-6">
-                    <label>Ledger Name</label>
-                    <asp:TextBox ID="LED_NAME" class="form-control" runat="server" placeholder="Please enter Ledger name" />
-                    <asp:HiddenField ID="LED_ID" runat="server" />
-                </div>
+            <div class="row">                
                 <div class="form-group col-md-6 col-lg-3">
                     <label>Outward Entry No</label>
                     <input type="number" id="TRANS_NO" class="form-control" disabled="disabled" style="text-align: center; background-color: white" />
@@ -96,17 +90,29 @@
                     <label>Outward Entry Date</label>
                     <input class="form-control datepicker" id="TRANS_DATE" name="date" placeholder="DD-MM-YYYY" type="text" style="text-align: center;" />
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-12 col-lg-9">
-                    <label>Remarks</label>
-                    <input type="text" id="REMARKS" class="form-control" placeholder="Please enter Ledger name" />
-                </div>
                 <div class="form-group col-md-12 col-lg-3">
                     <label>Ref. No.</label>
                     <input type="text" id="REF_NO" class="form-control" placeholder="Please enter Ref. No." />
                 </div>
+                <div class="form-group col-md-12 col-lg-3">
+                    <label>Outward Type</label>
+                    <select id="OUTWARD_TYPE" class="form-control">                        
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12 col-lg-6">
+                    <label>Ledger Name</label>
+                    <asp:TextBox ID="LED_NAME" class="form-control" runat="server" placeholder="Please enter Ledger name" />
+                    <asp:HiddenField ID="LED_ID" runat="server" />
+                </div>
+
+                <div class="form-group col-md-12 col-lg-6">
+                    <label>Remarks</label>
+                    <input type="text" id="REMARKS" class="form-control" placeholder="Please enter Ledger name" />
+                </div>
+                
             </div>
 
             <div class="row">
@@ -279,6 +285,17 @@
                         </td>
                         <td>
                             <label id="lblledNamePRN"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Outward Type</label>
+                        </td>
+                        <td>
+                            <label> : </label>
+                        </td>
+                        <td>
+                            <label id="lblouttypePRN"></label>
                         </td>
                     </tr>
                     <tr>
