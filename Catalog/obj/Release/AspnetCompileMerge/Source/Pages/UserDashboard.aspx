@@ -15,11 +15,11 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Transaction -> Stock Enrty Completed
+                            <td>Transaction -> Stock Enrty &amp; Outward Entry Completed
                             </td>
                         </tr>
                         <tr>
-                            <td>Transactions -> Outward Enrty Completed
+                            <td>Reports -> Stock Entry Register &amp; Outward Enrty Register Completed
                             </td>
                         </tr>
                         <tr>
@@ -49,8 +49,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>All Reports screen are pending
-                            </td>
+                            <td>Inward Entry Register &amp; Stockstatement Pending</td>
                         </tr>
                     </tbody>
                 </table>

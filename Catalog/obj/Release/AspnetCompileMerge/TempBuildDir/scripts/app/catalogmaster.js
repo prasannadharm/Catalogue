@@ -47,7 +47,7 @@ $(function () {
 });
 
 function LoadCombos(data) {   
-   
+    document.getElementById("loader").style.display = "block";
     var optionsJewel = [];
     var optionsDesign = [];
     var optionsCollection = [];
@@ -120,9 +120,9 @@ function LoadCombos(data) {
     $("#cmbKarat").html(optionsKarat.join(''));
     $("#cmbKarat").addClass("selectpicker");
     $("#cmbKarat").addClass("form-control");
-    getDetails();
-    $('.selectpicker').selectpicker('');   
     
+    $('.selectpicker').selectpicker('');
+    getDetails();
 }
 
 function clearfilter() {
@@ -235,6 +235,7 @@ function getDetails() {
 //Combos Loading Code - Start
 
 $(function () {
+    document.getElementById("loader").style.display = "block";
     $.ajax({
         type: "POST",
         url: "CatalogMaster.aspx/GetActiveJewelleryList",
@@ -245,7 +246,7 @@ $(function () {
     });
 });
 
-function LoadJewelleryCombo(data) {
+function LoadJewelleryCombo(data) {    
     var options = [];
     options.push('<option value="',
           '0', '">',
@@ -256,9 +257,11 @@ function LoadJewelleryCombo(data) {
           data.d[i].NAME, '</option>');
     }
     $("#JEWELLERY_NAME1").html(options.join(''));
+    document.getElementById("loader").style.display = "none";
 }
 
 $(function () {
+    document.getElementById("loader").style.display = "block";
     $.ajax({
         type: "POST",
         url: "CatalogMaster.aspx/GetActiveDesignList",
@@ -280,9 +283,11 @@ function LoadDesignCombo(data) {
           data.d[i].NAME, '</option>');
     }
     $("#DESIGN_NAME1").html(options.join(''));
+    document.getElementById("loader").style.display = "none";
 }
 
 $(function () {
+    document.getElementById("loader").style.display = "block";
     $.ajax({
         type: "POST",
         url: "CatalogMaster.aspx/GetActiveCollectionsList",
@@ -304,9 +309,11 @@ function LoadCollectionsCombo(data) {
           data.d[i].NAME, '</option>');
     }
     $("#COLLECTIONS_NAME1").html(options.join(''));
+    document.getElementById("loader").style.display = "none";
 }
 
 $(function () {
+    document.getElementById("loader").style.display = "block";
     $.ajax({
         type: "POST",
         url: "CatalogMaster.aspx/GetActiveMaterialList",
@@ -328,9 +335,11 @@ function LoadMaterialCombo(data) {
           data.d[i].NAME, '</option>');
     }
     $("#MATERIAL_NAME1").html(options.join(''));
+    document.getElementById("loader").style.display = "none";
 }
 
 $(function () {
+    document.getElementById("loader").style.display = "block";
     $.ajax({
         type: "POST",
         url: "CatalogMaster.aspx/GetActiveOccasionList",
@@ -352,9 +361,11 @@ function LoadOccasionCombo(data) {
           data.d[i].NAME, '</option>');
     }
     $("#OCCASION_NAME1").html(options.join(''));
+    document.getElementById("loader").style.display = "none";
 }
 
 $(function () {
+    document.getElementById("loader").style.display = "block";
     $.ajax({
         type: "POST",
         url: "CatalogMaster.aspx/GetActiveGramSlabList",
@@ -376,9 +387,11 @@ function LoadGramSlabCombo(data) {
           data.d[i].NAME, '</option>');
     }
     $("#GRAMSLAB_NAME1").html(options.join(''));
+    document.getElementById("loader").style.display = "none";
 }
 
 $(function () {
+    document.getElementById("loader").style.display = "block";
     $.ajax({
         type: "POST",
         url: "CatalogMaster.aspx/GetActiveKaratList",
@@ -400,6 +413,7 @@ function LoadKaratCombo(data) {
           data.d[i].NAME, '</option>');
     }
     $("#KARAT_NAME1").html(options.join(''));
+    document.getElementById("loader").style.display = "none";
 }
 
 //Combos Loading Code - End
@@ -1054,7 +1068,6 @@ $(function () {
         $('#divimgpreview').show();
     });
 });
-
 
 function CalcAmt() {
     if (Datalodaing != 0)

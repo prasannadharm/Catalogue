@@ -152,7 +152,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="form-group col-6">
-                                <label>Description</label>
+                                <label>Title / Description</label>
                                 <input type="text" name="TITLE" id="TITLE1" class="form-control" placeholder="Please enter Description" />
                             </div>
                             <div class="form-group col-3">
