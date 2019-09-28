@@ -173,6 +173,7 @@
     <Content Include="Pages\MaterialMaster.aspx" />
     <Content Include="Pages\OccasionMaster.aspx" />
     <Content Include="Pages\Outward.aspx" />
+    <Content Include="Pages\OutwardRegister.aspx" />
     <Content Include="Pages\OutwardTypeMaster.aspx" />
     <Content Include="Pages\RolesMaster.aspx" />
     <Content Include="Pages\Search.aspx" />
@@ -202,6 +203,7 @@
     <Content Include="scripts\app\materialmaster.js" />
     <Content Include="scripts\app\occasionmaster.js" />
     <Content Include="scripts\app\outwardentry.js" />
+    <Content Include="scripts\app\outwardregister.js" />
     <Content Include="scripts\app\outwardtypemaster.js" />
     <Content Include="scripts\app\rolesmaster.js" />
     <Content Include="scripts\app\search.js" />
@@ -239,6 +241,7 @@
     <Compile Include="Models\DropdownEntity.cs" />
     <Compile Include="Models\InwardTypeMasterEntity.cs" />
     <Compile Include="Models\OutwardEntryEntity.cs" />
+    <Compile Include="Models\OutwardRegisterParamEntity.cs" />
     <Compile Include="Models\OutwardTypeMasterEntity.cs" />
     <Compile Include="Models\SearchCatalogByTextEntity.cs" />
     <Compile Include="Models\SearchCatalogEntity.cs" />
@@ -445,6 +448,13 @@
     </Compile>
     <Compile Include="Pages\Outward.aspx.designer.cs">
       <DependentUpon>Outward.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OutwardRegister.aspx.cs">
+      <DependentUpon>OutwardRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\OutwardRegister.aspx.designer.cs">
+      <DependentUpon>OutwardRegister.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\OutwardTypeMaster.aspx.cs">
       <DependentUpon>OutwardTypeMaster.aspx</DependentUpon>

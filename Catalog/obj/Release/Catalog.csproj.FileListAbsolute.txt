@@ -63,3 +63,4 @@ F:\GIT-TFS\Source\Repos\Catalogue\Catalog\bin\Microsoft.ApplicationInsights.xml
 F:\GIT-TFS\Source\Repos\Catalogue\Catalog\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 F:\GIT-TFS\Source\Repos\Catalogue\Catalog\obj\Release\Catalog.dll
 F:\GIT-TFS\Source\Repos\Catalogue\Catalog\obj\Release\Catalog.pdb
+F:\GIT-TFS\Source\Repos\Catalogue\Catalog\obj\Release\Catalog.csprojResolveAssemblyReference.cache
