@@ -165,6 +165,7 @@
     <Content Include="Pages\GramSlabMaster.aspx" />
     <Content Include="Pages\home.aspx" />
     <Content Include="Pages\home.html" />
+    <Content Include="Pages\Inward.aspx" />
     <Content Include="Pages\InwardTypeMaster.aspx" />
     <Content Include="Pages\JewelleryMaster.aspx" />
     <Content Include="Pages\KaratMaster.aspx" />
@@ -196,6 +197,7 @@
     <Content Include="scripts\app\forgotpassword.js" />
     <Content Include="scripts\app\gramslabmaster.js" />
     <Content Include="scripts\app\home.js" />
+    <Content Include="scripts\app\inwardentry.js" />
     <Content Include="scripts\app\inwardtypemaster.js" />
     <Content Include="scripts\app\jewellerymaster.js" />
     <Content Include="scripts\app\karatmaster.js" />
@@ -230,6 +232,7 @@
     <Compile Include="DAO\BannerMasterDAO.cs" />
     <Compile Include="DAO\CatalogDetailsDAO.cs" />
     <Compile Include="DAO\HomeDAO.cs" />
+    <Compile Include="DAO\InwardEntryDAO.cs" />
     <Compile Include="DAO\InwardTypeMasterDAO.cs" />
     <Compile Include="DAO\OutwardEntryDAO.cs" />
     <Compile Include="DAO\OutwardTypeMasterDAO.cs" />
@@ -239,6 +242,7 @@
     <Compile Include="Models\CatalogDetailsEntity.cs" />
     <Compile Include="Models\CatalogImageEntity.cs" />
     <Compile Include="Models\DropdownEntity.cs" />
+    <Compile Include="Models\InwardEntryEntity.cs" />
     <Compile Include="Models\InwardTypeMasterEntity.cs" />
     <Compile Include="Models\OutwardEntryEntity.cs" />
     <Compile Include="Models\OutwardRegisterParamEntity.cs" />
@@ -392,6 +396,13 @@
     </Compile>
     <Compile Include="Pages\home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Inward.aspx.cs">
+      <DependentUpon>Inward.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Inward.aspx.designer.cs">
+      <DependentUpon>Inward.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\InwardTypeMaster.aspx.cs">
       <DependentUpon>InwardTypeMaster.aspx</DependentUpon>

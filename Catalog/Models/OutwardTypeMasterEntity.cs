@@ -11,5 +11,5 @@ namespace Catalog.Models
         public string NAME { get; set; }
         public bool RETURNABLE { get; set; }
         public bool ACTIVE_STATUS { get; set; }
-    }
+    }    
 }

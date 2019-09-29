@@ -88,6 +88,9 @@ $(function () {
 
 function LoadOutwardTypeCombo(data) {
     var options = [];
+    options.push('<option value="',
+          "0", '">',
+          '--Select--', '</option>');
     for (var i = 0; i < data.d.length; i++) {
         options.push('<option value="',
           data.d[i].ID, '">',
@@ -110,7 +113,7 @@ $(function () {
         $("#ContentPlaceHolder1_LED_ID").val('');
         $('#REMARKS').val('');
         $('#REF_NO').val('');
-        $('#OUTWARD_TYPE').val('');
+        $('#OUTWARD_TYPE').val(0);
 
         subItemsList = [];
         rebuildSubTableGrid()
@@ -183,7 +186,7 @@ $(function () {
                 $("#ContentPlaceHolder1_LED_ID").val('');
                 $('#REMARKS').val('');
                 $('#REF_NO').val('');
-                $('#OUTWARD_TYPE').val('');
+                $('#OUTWARD_TYPE').val(0);
 
                 //$("#btnUpdate").attr("edit-id", id);
                 //alert(id);  //getting the row id 
@@ -283,7 +286,7 @@ $(function () {
             return false;
         }
 
-        if ($("#OUTWARD_TYPE").val() == null || $("#OUTWARD_TYPE").val() == undefined || $("#OUTWARD_TYPE").val().trim() == '') {
+        if ($("#OUTWARD_TYPE").val() == null || $("#OUTWARD_TYPE").val() == undefined || $("#OUTWARD_TYPE").val() <= 0 || $("#OUTWARD_TYPE").val().trim() == '') {
             alert("Please Select Outward Type.");
             $("#OUTWARD_TYPE").focus();
             return false;
@@ -292,6 +295,13 @@ $(function () {
         if ($("#ContentPlaceHolder1_LED_NAME").val().trim() == "") {
             alert("Please enter Ledger name.");
             $("#ContentPlaceHolder1_LED_NAME").focus();
+            return false;
+        }
+
+        if (subItemsList == null || subItemsList == undefined || subItemsList.length <= 0)
+        {
+            alert("Please add Jewellery Items.");
+            $("#txtSearchItem").focus();
             return false;
         }
 
@@ -488,7 +498,7 @@ $(function () {
             return false;
         }
 
-        if ($("#OUTWARD_TYPE").val() == null || $("#OUTWARD_TYPE").val() == undefined || $("#OUTWARD_TYPE").val().trim() == '') {
+        if ($("#OUTWARD_TYPE").val() == null || $("#OUTWARD_TYPE").val() == undefined || $("#OUTWARD_TYPE").val() <= 0 || $("#OUTWARD_TYPE").val().trim() == '') {
             alert("Please Select Outward Type.");
             $("#OUTWARD_TYPE").focus();
             return false;
@@ -497,6 +507,12 @@ $(function () {
         if ($("#ContentPlaceHolder1_LED_NAME").val().trim() == "") {
             alert("Please enter Ledger name.");
             $("#ContentPlaceHolder1_LED_NAME").focus();
+            return false;
+        }
+
+        if (subItemsList == null || subItemsList == undefined || subItemsList.length <= 0) {
+            alert("Please add Jewellery Items.");
+            $("#txtSearchItem").focus();
             return false;
         }
 

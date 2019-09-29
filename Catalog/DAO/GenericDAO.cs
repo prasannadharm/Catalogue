@@ -515,6 +515,37 @@ namespace Catalog.DAO
             }
             return retlst;
         }
-        
+
+        public List<InwardTypeMasterEntity> GetActiveInwardTypeList()
+        {
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlDataAdapter adapter;
+            DataSet ds = new DataSet();
+            List<InwardTypeMasterEntity> retlst = new List<InwardTypeMasterEntity>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("USP_GetActiveInwardTypeList", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        InwardTypeMasterEntity obj = new InwardTypeMasterEntity();
+                        obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
+                        obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();                        
+                        retlst.Add(obj);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return retlst;
+        }
     }
 }
