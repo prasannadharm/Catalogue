@@ -1,8 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/CatalogAdmin.Master" AutoEventWireup="true" CodeBehind="Inward.aspx.cs" Inherits="Catalog.Pages.Inward" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <style>
+    <style>
         .filters .dropdown-menu > li > a {
             display: block;
             padding: 2px 15px;
@@ -55,10 +56,10 @@
                         <tr>
                             <th>No</th>
                             <th>Date</th>
-                            <th>Ledger Name</th>                            
+                            <th>Ledger Name</th>
                             <th>Type</th>
                             <th>Void</th>
-                            <th>Created By</th>                            
+                            <th>Created By</th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -81,7 +82,7 @@
                 </div>
             </div>
 
-            <div class="row">                
+            <div class="row">
                 <div class="form-group col-md-6 col-lg-3">
                     <label>Inward Entry No</label>
                     <input type="number" id="TRANS_NO" class="form-control" disabled="disabled" style="text-align: center; background-color: white" />
@@ -96,7 +97,7 @@
                 </div>
                 <div class="form-group col-md-12 col-lg-3">
                     <label>Inward Type</label>
-                    <select id="INWARD_TYPE" class="form-control">                        
+                    <select id="INWARD_TYPE" class="form-control">
                     </select>
                 </div>
             </div>
@@ -112,39 +113,15 @@
                     <label>Remarks</label>
                     <input type="text" id="REMARKS" class="form-control" placeholder="Please enter Ledger name" />
                 </div>
-                
-            </div>
 
-            <div class="row">
-                <div class="form-group col-12">
-                    <h3 style='color: orange'>Add Jewellery Items</h3>
+                <div class="form-group col-md-12 col-lg-6">
+                    <h3 style='color: orange; display: inline'>Add Jewellery Items</h3>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="form-group col-md-12 col-lg-3">
-                    <label>Search By</label>
-                    <select name="cmbSeacrhField" id="cmbSeacrhField" class="form-control">
-                        <option value="SKU">SKU</option>
-                        <option value="Code">Code</option>
-                        <option value="Title">Title</option>
-                    </select>
+                <div class="form-group col-md-12 col-lg-6">
+                    <button type="button" id="btnFetch" class="btn btn-primary" style="display: inline">Fetch Pending Outward Entries</button>
                 </div>
-                <div class="form-group col-md-12 col-lg-3">
-                    <label>Condition</label>
-                    <select name="cmbSeacrhCondition" id="cmbSeacrhCondition" class="form-control">
-                        <option value="Equals">Equals</option>
-                        <option value="Contains">Contains</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-9 col-lg-3">
-                    <label>Search Text</label>
-                    <input type="text" id="txtSearchItem" class="form-control" placeholder="Enter search keyword..." />
-                </div>
-                <div class="form-group col-md-3 col-lg-3">
-                    <button type="button" id="btnSearchItem" class="btn btn-primary" style="margin-top: 32px">Search</button>
-                </div>
-            </div>
+            </div>           
 
             <div class="table-responsive" id="gridsubdiv">
                 <table id="tablesub" class="table table-striped table-bordered" style="width: 100%">
@@ -154,6 +131,7 @@
                             <th>Code</th>
                             <th>Title</th>
                             <th>Qty</th>
+                            <th>P Qty</th>
                             <th>Remarks</th>
                             <th>Delete</th>
                             <th>View</th>
@@ -198,13 +176,13 @@
                         <div class="table-responsive" id="griditemsearchdiv">
                             <table id="tableitemsearch" class="table table-striped table-bordered" style="width: 100%">
                                 <thead>
-                                    <tr>
+                                    <tr>                                        
+                                        <th>Outward No</th>
+                                        <th>Outward Date</th>
                                         <th>SKU</th>
                                         <th>Code</th>
                                         <th>Title</th>
-                                        <th>Jewellery</th>
-                                        <th>Collection</th>
-                                        <th>Design</th>
+                                        <th>Pending Qty</th>                                        
                                         <th>Select</th>
                                         <th>View</th>
                                     </tr>
@@ -248,7 +226,7 @@
                             <label>Inward Entry No</label>
                         </td>
                         <td>
-                            <label> : </label>
+                            <label>: </label>
                         </td>
                         <td>
                             <label id="lblstkNoPRN"></label>
@@ -259,7 +237,7 @@
                             <label>Inward Entry Date</label>
                         </td>
                         <td>
-                            <label> : </label>
+                            <label>: </label>
                         </td>
                         <td>
                             <label id="lblstkDatePRN"></label>
@@ -270,7 +248,7 @@
                             <label>Ref. No.</label>
                         </td>
                         <td>
-                            <label> : </label>
+                            <label>: </label>
                         </td>
                         <td>
                             <label id="lblrefnoPRN"></label>
@@ -281,7 +259,7 @@
                             <label>Ledger Name</label>
                         </td>
                         <td>
-                            <label> : </label>
+                            <label>: </label>
                         </td>
                         <td>
                             <label id="lblledNamePRN"></label>
@@ -292,7 +270,7 @@
                             <label>Inward Type</label>
                         </td>
                         <td>
-                            <label> : </label>
+                            <label>: </label>
                         </td>
                         <td>
                             <label id="lblintypePRN"></label>
@@ -303,7 +281,7 @@
                             <label>Remarks</label>
                         </td>
                         <td>
-                            <label> : </label>
+                            <label>: </label>
                         </td>
                         <td>
                             <label id="lblRemarksPRN"></label>
@@ -326,7 +304,8 @@
                             <th>Code</th>
                             <th>Title</th>
                             <th>Qty</th>
-                            <th>Remarks</th>
+                            <th>Out No</th>
+                            <th>Remarks</th>                            
                         </tr>
                     </thead>
                     <tbody>

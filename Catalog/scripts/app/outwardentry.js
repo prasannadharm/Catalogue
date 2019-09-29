@@ -472,7 +472,7 @@ $(function () {
                 newWin.document.write(printdiv.outerHTML);
                 $('#printdiv').hide();
                 newWin.print();
-                newWin.close();
+                //newWin.close();
 
             },
             error: function () {

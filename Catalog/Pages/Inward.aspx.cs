@@ -32,8 +32,7 @@ namespace Catalog.Pages
             }
             return details.ToArray();
         }
-
-
+        
         [WebMethod]
         public static string[] GetLedgersbyName(string str)
         {
@@ -48,8 +47,7 @@ namespace Catalog.Pages
             }
             return ledgers.ToArray();
         }
-
-
+        
         [WebMethod]
         public static string[] GetLatestTrasnsactionNumber()
         {
@@ -64,15 +62,14 @@ namespace Catalog.Pages
             }
             return lstvalues.ToArray();
         }
-
-
+        
         [WebMethod]
-        public static SearchCatalogByTextEntity[] SearchCatalogbyText(SearchCatalogByConditionEntity obj)
+        public static PendingOutwardEntries[] GetPendingOutwardEntries(string str)
         {
-            List<SearchCatalogByTextEntity> details = new List<SearchCatalogByTextEntity>();
+            List<PendingOutwardEntries> details = new List<PendingOutwardEntries>();
             try
             {
-                details = new GenericDAO().SearchCatalogbyText(obj);
+                details = new InwardEntryDAO().GetPendingOutwardEntries(str);
             }
             catch (Exception ex)
             {
@@ -80,8 +77,7 @@ namespace Catalog.Pages
             }
             return details.ToArray();
         }
-
-
+        
         [WebMethod]
         public static string[] VerifyLedgerbyName(string str)
         {

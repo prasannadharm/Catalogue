@@ -60,15 +60,20 @@ namespace Catalog.Models
 
     public class InwardEntryInsertParam2
     {
-        public Int64 ID { get; set; }
+        public Int64 CATALOG_ID { get; set; }
         public string SKU { get; set; }
         public string CODE { get; set; }
-        public string TITLE { get; set; }
+        public string CATALOG_TITLE { get; set; }
         public string PHY_FILE_NAME { get; set; }
         public string ORG_FILE_NAME { get; set; }
         public Int64 GENID { get; set; }
         public double QTY { get; set; }
         public string REMARKS { get; set; }
+        public Int64 OUT_TRANS_MAIN_ID { get; set; }
+        public Int64 OUT_TRANS_NO { get; set; }
+        public string OUT_GENID { get; set; }
+        public double OUT_QTY { get; set; }
+        public double OUT_BAL_QTY { get; set; }
     }
 
     public class InwardEntryEditParam
@@ -91,5 +96,26 @@ namespace Catalog.Models
         public string REMARKS { get; set; }
         public Int64 IN_TYPE_ID { get; set; }
         public string IN_TYPE_NAME { get; set; }
+        public Int64 OUT_TRANS_MAIN_ID { get; set; }
+        public Int64 OUT_TRANS_NO { get; set; }
+        public string OUT_GENID { get; set; }
+        public double OUT_QTY { get; set; }
+        public double OUT_BAL_QTY { get; set; }
+    }
+
+    public class PendingOutwardEntries
+    {
+        public Int64 CATALOG_ID { get; set; }
+        public string SKU { get; set; }
+        public string CODE { get; set; }
+        public string CATALOG_TITLE { get; set; }
+        public Int64 OUT_TRANS_MAIN_ID { get; set; }
+        public Int64 OUT_TRANS_NO { get; set; }
+        public string OUT_GENID { get; set; }
+        public string OUT_TRANS_DATE { get; set;}
+        public double OUT_QTY { get; set; }
+        public double OUT_BAL_QTY { get; set; }
+        public string ORG_FILE_NAME { get; set; }
+        public string PHY_FILE_NAME { get; set; }
     }
 }

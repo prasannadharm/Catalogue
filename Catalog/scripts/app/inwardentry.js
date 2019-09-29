@@ -41,7 +41,7 @@ $(document).ready(function () {
         var key = e.which;
         if (key == 13)  // the enter key code
         {
-            $('#REF_NO').focus();
+            searchpendingItem();
         }
     });
 
@@ -49,20 +49,12 @@ $(document).ready(function () {
         var key = e.which;
         if (key == 13)  // the enter key code
         {
-            $('#txtSearchItem').focus();
+            $('#INWARD_TYPE').focus();
         }
-    });
+    });   
 
-    $('#txtSearchItem').keypress(function (e) {
-        var key = e.which;
-        if (key == 13)  // the enter key code
-        {
-            searchItem();
-        }
-    });
-
-    $("#btnSearchItem").click(function () {
-        searchItem();
+    $("#btnFetch").click(function () {
+        searchpendingItem();
     });
 
     $("#btnCloseImgPreview").click(function () {
@@ -114,6 +106,7 @@ $(function () {
         $('#REMARKS').val('');
         $('#REF_NO').val('');
         $('#INWARD_TYPE').val(0);
+        $("#ContentPlaceHolder1_LED_NAME").prop("disabled", false);
 
         subItemsList = [];
         rebuildSubTableGrid()
@@ -187,6 +180,7 @@ $(function () {
                 $('#REMARKS').val('');
                 $('#REF_NO').val('');
                 $('#INWARD_TYPE').val(0);
+                $("#ContentPlaceHolder1_LED_NAME").prop("disabled", true);
 
                 //$("#btnUpdate").attr("edit-id", id);
                 //alert(id);  //getting the row id 
@@ -209,15 +203,21 @@ $(function () {
                         }
                         for (var i = 0; i < data.d.length; i++) {
                             var objdetail = {};
-                            objdetail.ID = data.d[i].CATALOG_ID;
+                            objdetail.CATALOG_ID = data.d[i].CATALOG_ID;
                             objdetail.SKU = data.d[i].SKU;
                             objdetail.CODE = data.d[i].CODE;
-                            objdetail.TITLE = data.d[i].CATALOG_TITLE;
+                            objdetail.CATALOG_TITLE = data.d[i].CATALOG_TITLE;
                             objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
                             objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
                             objdetail.GENID = data.d[i].GENID;
                             objdetail.QTY = data.d[i].QTY;
                             objdetail.REMARKS = data.d[i].REMARKS;
+                            objdetail.OUT_TRANS_MAIN_ID = data.d[i].OUT_TRANS_MAIN_ID;
+                            objdetail.OUT_TRANS_NO = data.d[i].OUT_TRANS_NO;
+                            objdetail.OUT_GENID = data.d[i].OUT_GENID;
+                            objdetail.OUT_QTY = data.d[i].OUT_QTY;
+                            objdetail.OUT_BAL_QTY = data.d[i].OUT_BAL_QTY;
+                            objdetail.OUT_TRANS_DATE = data.d[i].OUT_TRANS_DATE;
                             subItemsList.push(objdetail);
                         }
                         rebuildSubTableGrid();
@@ -462,7 +462,7 @@ $(function () {
                 $('#tablesubprn').append("<tbody>");
                 for (var i = 0; i < data.d.length; i++) {
                     $('#tablesubprn').append(
-                        "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td>" + data.d[i].CODE + "</td><td style='color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='text-align:center;color:red'>" + data.d[i].QTY + "</td><td>" + data.d[i].REMARKS + "</td></tr>");
+                        "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td>" + data.d[i].CODE + "</td><td style='color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='text-align:center;color:red'>" + data.d[i].QTY + "</td><td style='text-align:center;color:blue'>" + data.d[i].OUT_TRANS_NO + "</td><td>" + data.d[i].REMARKS + "</td></tr>");
                 }
                 $('#tablesubprn').append("</tbody>");
                 $('#printdiv').show();
@@ -471,7 +471,7 @@ $(function () {
                 newWin.document.write(printdiv.outerHTML);
                 $('#printdiv').hide();
                 newWin.print();
-                newWin.close();
+                //newWin.close();
 
             },
             error: function () {
@@ -586,80 +586,67 @@ $(function () {
     });
 });
 
-function searchItem() {
-    if ($.trim($("#cmbSeacrhField").val()) == '') {
-        alert('Please select search field.');
-        $("#cmbSeacrhField").focus();
+function searchpendingItem() {
+    
+    if ($.trim($("#ContentPlaceHolder1_LED_NAME").val()) == '') {
+        alert('Please select Ledger.');
+        $("#ContentPlaceHolder1_LED_NAME").focus();
         return false;
     }
 
-    if ($.trim($("#cmbSeacrhCondition").val()) == '') {
-        alert('Please select search condition.');
-        $("#cmbSeacrhCondition").focus();
-        return false;
-    }
-
-    if ($.trim($("#txtSearchItem").val()) == '') {
-        alert('Please enter search text.');
-        $("#txtSearchItem").focus();
-        return false;
-    }
-
-    document.getElementById("loader").style.display = "block";
-
-    var obj = {};
-    obj.SEARCHBY = $("#cmbSeacrhField").val();
-    obj.CONDITION = $("#cmbSeacrhCondition").val();
-    obj.SEARCHITEM = $.trim($("#txtSearchItem").val());
+    document.getElementById("loader").style.display = "block";   
 
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: "Inward.aspx/SearchCatalogbyText",
-        data: '{obj: ' + JSON.stringify(obj) + '}',
+        url: "Inward.aspx/GetPendingOutwardEntries",
+        data: "{ 'str': '" + $.trim($("#ContentPlaceHolder1_LED_NAME").val()) + "'}",        
         dataType: "json",
         success: function (data) {
             if (data.d.length <= 0) {
                 alert('No records found.');
-                $("#txtSearchItem").focus();
+                $("#ContentPlaceHolder1_LED_NAME").focus();
                 return false;
-            }
-            else if (data.d.length == 1) {
-                var objdetail = {};
-                objdetail.ID = data.d[0].ID;
-                objdetail.SKU = data.d[0].SKU;
-                objdetail.CODE = data.d[0].CODE;
-                objdetail.TITLE = data.d[0].TITLE;
-                objdetail.PHY_FILE_NAME = data.d[0].PHY_FILE_NAME;
-                objdetail.ORG_FILE_NAME = data.d[0].ORG_FILE_NAME;
-                objdetail.GENID = Math.floor((Math.random() * 1000000) + 1);
-                objdetail.QTY = 1;
-                objdetail.REMARKS = '';
-                subItemsList.push(objdetail);
-                rebuildSubTableGrid();
-                $("#txtSearchItem").val('');
-                $("#txtSearchItem").focus();
-                return false;
-            }
+            }            
             else {
                 tempsubItemsList = [];
                 for (var i = 0; i < data.d.length; i++) {
-                    var objdetail = {};
-                    objdetail.ID = data.d[i].ID;
-                    objdetail.SKU = data.d[i].SKU;
-                    objdetail.CODE = data.d[i].CODE;
-                    objdetail.TITLE = data.d[i].TITLE;
-                    objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
-                    objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
-                    objdetail.GENID = Math.floor((Math.random() * 1000000) + 1);
-                    objdetail.QTY = 1;
-                    objdetail.REMARKS = '';
-                    objdetail.JEWELLERY_NAME = data.d[i].JEWELLERY_NAME;
-                    objdetail.COLLECTIONS_NAME = data.d[i].COLLECTIONS_NAME;
-                    objdetail.DESIGN_NAME = data.d[i].DESIGN_NAME;
-                    tempsubItemsList.push(objdetail);
+                    var fnd = 0
+                    for (var j = 0; j < subItemsList.length; j++) {
+                        if (subItemsList[j].OUT_TRANS_MAIN_ID == data.d[i].OUT_TRANS_MAIN_ID && subItemsList[j].OUT_GENID == data.d[i].OUT_GENID)
+                        {
+                            fnd =1
+                            break;
+                        }
+                    }
+                    if (fnd == 0) {
+                        var objdetail = {};
+                        objdetail.CATALOG_ID = data.d[i].CATALOG_ID;
+                        objdetail.SKU = data.d[i].SKU;
+                        objdetail.CODE = data.d[i].CODE;
+                        objdetail.CATALOG_TITLE = data.d[i].CATALOG_TITLE;
+                        objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
+                        objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
+                        objdetail.GENID = Math.floor((Math.random() * 1000000) + 1);
+                        objdetail.QTY = 1;
+                        objdetail.REMARKS = '';
+                        objdetail.OUT_TRANS_MAIN_ID = data.d[i].OUT_TRANS_MAIN_ID;
+                        objdetail.OUT_TRANS_NO = data.d[i].OUT_TRANS_NO;
+                        objdetail.OUT_GENID = data.d[i].OUT_GENID;
+                        objdetail.OUT_QTY = data.d[i].OUT_QTY;
+                        objdetail.OUT_BAL_QTY = data.d[i].OUT_BAL_QTY;
+                        objdetail.OUT_TRANS_DATE = data.d[i].OUT_TRANS_DATE;
+                        tempsubItemsList.push(objdetail);
+                    }
+                }
+                if (tempsubItemsList.length <= 0)
+                {
+                    alert('No more pending records found.');
+                    $("#ContentPlaceHolder1_LED_NAME").focus();
+                    return false;
                 }
                 rebuildItemSearchTableGrid();
+                $("#ContentPlaceHolder1_LED_NAME").prop("disabled", true);
                 return false;
             }
 
@@ -679,34 +666,37 @@ function rebuildItemSearchTableGrid() {
     $('#tableitemsearch').append("<tbody>");
     for (var i = 0; i < tempsubItemsList.length; i++) {
         $('#tableitemsearch').append(
-            "<tr><td style='text-align:center;color:brown'><b>" + tempsubItemsList[i].SKU + "</b></td><td>" + tempsubItemsList[i].CODE + "</td><td style='color:blue'>" + tempsubItemsList[i].TITLE + "</td>" +
-            "<td>" + tempsubItemsList[i].JEWELLERY_NAME + "</td><td>" + tempsubItemsList[i].COLLECTIONS_NAME + "</td><td>" + tempsubItemsList[i].DESIGN_NAME + "</td>" +
-            "<td style='text-align: center'><img src='../images/static/select.png' alt='Select Record' class='selectButtonSubis handcursor' data-id='" + tempsubItemsList[i].ID + '_' + tempsubItemsList[i].GENID + "' id='btnselectSubIS_" + tempsubItemsList[i].GENID + "' value='Select' style='margin-right:5px;margin-left:5px'/> </td>" +
+            "<tr><td style='text-align:center;color:red'><b>" + tempsubItemsList[i].OUT_TRANS_NO + "</b></td><td>" + tempsubItemsList[i].OUT_TRANS_DATE + "</td>" +
+            "<td style='text-align:center;color:brown'><b>" + tempsubItemsList[i].SKU + "</b></td><td>" + tempsubItemsList[i].CODE + "</td><td style='color:blue'>" + tempsubItemsList[i].CATALOG_TITLE + "</td><td style='text-align:center;color:red'><b>" + tempsubItemsList[i].OUT_BAL_QTY + "</b></td>" +
+            "<td style='text-align: center'><img src='../images/static/select.png' alt='Select Record' class='selectButtonSubis handcursor' data-id='" + tempsubItemsList[i].CATALOG_ID + '_' + tempsubItemsList[i].GENID + "' id='btnselectSubIS_" + tempsubItemsList[i].GENID + "' value='Select' style='margin-right:5px;margin-left:5px'/> </td>" +
             "<td style='text-align: center'><img src='../images/static/imageview.png' alt='Preview' class='previewButtonSubIS handcursor' data-id='" + tempsubItemsList[i].PHY_FILE_NAME + "' id='btnPreviewSubis' value='Preview' style='margin-right:5px;margin-left:5px'/> </td></tr>");
     }
     $('#tableitemsearch').append("</tbody>");
 
-    $("div.mhs h4").html("Search results for " + $('#cmbSeacrhField').val() + " : " + $('#txtSearchItem').val());
-    $("#txtSearchItem").val('');
+    $("div.mhs h4").html("Pending Outward Entries : " + $('#ContentPlaceHolder1_LED_NAME').val());
     $('#divISimgpreview').hide();
     $('#PopupModalItemSearch').modal('show');
     $('#PopupModalItemSearch').focus();
 
     $(".selectButtonSubis").click(function () {
-        var id = this.id.split("_");
-        var newsubItemsList = [];
+        var id = this.id.split("_");        
         for (var i = 0; i < tempsubItemsList.length; i++) {
             if (tempsubItemsList[i].GENID == id[1]) {
                 var objdetail = {};
-                objdetail.ID = tempsubItemsList[i].ID;
+                objdetail.CATALOG_ID = tempsubItemsList[i].CATALOG_ID;
                 objdetail.SKU = tempsubItemsList[i].SKU;
                 objdetail.CODE = tempsubItemsList[i].CODE;
-                objdetail.TITLE = tempsubItemsList[i].TITLE;
+                objdetail.CATALOG_TITLE = tempsubItemsList[i].CATALOG_TITLE;
                 objdetail.PHY_FILE_NAME = tempsubItemsList[i].PHY_FILE_NAME;
                 objdetail.ORG_FILE_NAME = tempsubItemsList[i].ORG_FILE_NAME;
                 objdetail.GENID = tempsubItemsList[i].GENID;
-                objdetail.QTY = 1;
+                objdetail.QTY = tempsubItemsList[i].OUT_BAL_QTY;
                 objdetail.REMARKS = '';
+                objdetail.OUT_TRANS_MAIN_ID = tempsubItemsList[i].OUT_TRANS_MAIN_ID;
+                objdetail.OUT_TRANS_NO = tempsubItemsList[i].OUT_TRANS_NO;
+                objdetail.OUT_GENID = tempsubItemsList[i].OUT_GENID;
+                objdetail.OUT_QTY = tempsubItemsList[i].OUT_QTY;
+                objdetail.OUT_BAL_QTY = tempsubItemsList[i].OUT_BAL_QTY;               
                 subItemsList.push(objdetail);
                 break;
             }
@@ -729,10 +719,11 @@ function rebuildSubTableGrid() {
     $('#tablesub').append("<tbody>");
     for (var i = 0; i < subItemsList.length; i++) {
         $('#tablesub').append(
-            "<tr><td style='text-align:center;color:brown'><b>" + subItemsList[i].SKU + "</b></td><td>" + subItemsList[i].CODE + "</td><td style='color:blue'>" + subItemsList[i].TITLE + "</td>" +
+            "<tr><td style='text-align:center;color:brown'><b>" + subItemsList[i].SKU + "</b></td><td>" + subItemsList[i].CODE + "</td><td style='color:blue'>" + subItemsList[i].CATALOG_TITLE + "</td>" +
             "<td><input type='number' id='txtqty_" + subItemsList[i].GENID + "' class='form-control subqty' value=" + subItemsList[i].QTY + " style='width:80px;text-align:center' /></td>" +
+            "<td style='text-align:center;color:red;padding-top: 15px;'><b>" + subItemsList[i].OUT_BAL_QTY + "</b></td>" +
             "<td><input type='text' id='txtsubremarks_" + subItemsList[i].GENID + "' class='form-control subremarks' value='" + subItemsList[i].REMARKS + "' /></td>" +
-            "<td style='text-align: center'><img src='../images/static/delete.png' alt='Delete Record' class='deleteButtonSub handcursor' data-id='" + subItemsList[i].ID + '_' + subItemsList[i].GENID + "' id='btnDeleteSub_" + subItemsList[i].GENID + "' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
+            "<td style='text-align: center'><img src='../images/static/delete.png' alt='Delete Record' class='deleteButtonSub handcursor' data-id='" + subItemsList[i].CATALOG_ID + '_' + subItemsList[i].GENID + "' id='btnDeleteSub_" + subItemsList[i].GENID + "' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
             "<td style='text-align: center'><img src='../images/static/imageview.png' alt='Preview' class='previewButtonSub handcursor' data-id='" + subItemsList[i].PHY_FILE_NAME + "' id='btnPreviewSub' value='Preview' style='margin-right:5px;margin-left:5px'/> </td></tr>");
     }
     $('#tablesub').append("</tbody>");
@@ -741,7 +732,15 @@ function rebuildSubTableGrid() {
         var id = this.id.split("_");
         for (var i = 0; i < subItemsList.length; i++) {
             if (subItemsList[i].GENID == id[1]) {
-                subItemsList[i].QTY = $(this).val();
+                if ($(this).val() <= subItemsList[i].OUT_BAL_QTY) {
+                    subItemsList[i].QTY = $(this).val();
+                }
+                else
+                {
+                    alert('Qty cannot be greater than Pending Qty.');
+                    $(this).val(subItemsList[i].OUT_BAL_QTY);
+                    subItemsList[i].QTY = subItemsList[i].OUT_BAL_QTY;
+                }
                 return false;
             }
         }

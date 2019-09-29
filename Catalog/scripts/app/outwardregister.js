@@ -363,14 +363,15 @@ function generatereport() {
                     shtml = shtml + "<tr><td colspan='3'>";
                     shtml = shtml + "<table class='table table-striped table-bordered' style='width: 100%' border='1'>";
                     shtml = shtml + "<thead>";
-                    shtml = shtml + "<tr><th>SKU</th><th>Code</th><th>Title Desc.</th><th>Qty</th><th>Remarks</th></tr>";
+                    shtml = shtml + "<tr><th>SKU</th><th>Code</th><th>Title Desc.</th><th>Qty</th><th>Pend. Qty</th><th>Remarks</th></tr>";
                     shtml = shtml + "</thead>";
                     shtml = shtml + "<tbody>";
                 }
                 shtml = shtml + "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "<b></td>";
                 shtml = shtml + "<td>" + data.d[i].CODE + "</td>";
                 shtml = shtml + "<td><b>" + data.d[i].CATALOG_TITLE + "</b></td>";
-                shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td>";
+                shtml = shtml + "<td style='text-align:center;color:blue'><b>" + data.d[i].QTY + "</b></td>";
+                shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].BAL_QTY + "</b></td>";
                 shtml = shtml + "<td>" + data.d[i].REMARKS + "</td></tr>";
             }
             shtml = shtml + "</tboby></table></td></tr>"; //For Sub Table

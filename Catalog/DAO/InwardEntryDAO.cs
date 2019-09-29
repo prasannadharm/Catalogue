@@ -65,16 +65,27 @@ namespace Catalog.DAO
                 dtsub.Columns.Add("QTY", typeof(double));
                 dtsub.Columns.Add("REMARKS", typeof(string));
                 dtsub.Columns.Add("GENID", typeof(string));
+                dtsub.Columns.Add("OUT_TRANS_MAIN_ID", typeof(Int64));
+                dtsub.Columns.Add("OUT_TRANS_NO", typeof(Int64));
+                dtsub.Columns.Add("OUT_GENID", typeof(string));
+                dtsub.Columns.Add("OUT_QTY", typeof(double));
+                dtsub.Columns.Add("OUT_BAL_QTY", typeof(double));
+
                 foreach (InwardEntryInsertParam2 ob in obj2)
                 {
                     DataRow dr = dtsub.NewRow();
-                    dr["CATALOG_ID"] = ob.ID;
+                    dr["CATALOG_ID"] = ob.CATALOG_ID;
                     dr["SKU"] = ob.SKU;
                     dr["CODE"] = ob.CODE;
-                    dr["CATALOG_TITLE"] = ob.TITLE;
+                    dr["CATALOG_TITLE"] = ob.CATALOG_TITLE;
                     dr["QTY"] = ob.QTY;
                     dr["REMARKS"] = ob.REMARKS;
                     dr["GENID"] = ob.GENID;
+                    dr["OUT_TRANS_MAIN_ID"] = ob.OUT_TRANS_MAIN_ID;
+                    dr["OUT_TRANS_NO"] = ob.OUT_TRANS_NO;
+                    dr["OUT_GENID"] = ob.OUT_GENID;
+                    dr["OUT_QTY"] = ob.OUT_QTY;
+                    dr["OUT_BAL_QTY"] = ob.OUT_BAL_QTY;
                     dtsub.Rows.Add(dr);
                 }
                 dtsub.AcceptChanges();
@@ -128,16 +139,27 @@ namespace Catalog.DAO
                 dtsub.Columns.Add("QTY", typeof(double));
                 dtsub.Columns.Add("REMARKS", typeof(string));
                 dtsub.Columns.Add("GENID", typeof(string));
+                dtsub.Columns.Add("OUT_TRANS_MAIN_ID", typeof(Int64));
+                dtsub.Columns.Add("OUT_TRANS_NO", typeof(Int64));
+                dtsub.Columns.Add("OUT_GENID", typeof(string));
+                dtsub.Columns.Add("OUT_QTY", typeof(double));
+                dtsub.Columns.Add("OUT_BAL_QTY", typeof(double));
+
                 foreach (InwardEntryInsertParam2 ob in obj2)
                 {
                     DataRow dr = dtsub.NewRow();
-                    dr["CATALOG_ID"] = ob.ID;
+                    dr["CATALOG_ID"] = ob.CATALOG_ID;
                     dr["SKU"] = ob.SKU;
                     dr["CODE"] = ob.CODE;
-                    dr["CATALOG_TITLE"] = ob.TITLE;
+                    dr["CATALOG_TITLE"] = ob.CATALOG_TITLE;
                     dr["QTY"] = ob.QTY;
                     dr["REMARKS"] = ob.REMARKS;
                     dr["GENID"] = ob.GENID;
+                    dr["OUT_TRANS_MAIN_ID"] = ob.OUT_TRANS_MAIN_ID;
+                    dr["OUT_TRANS_NO"] = ob.OUT_TRANS_NO;
+                    dr["OUT_GENID"] = ob.OUT_GENID;
+                    dr["OUT_QTY"] = ob.OUT_QTY;
+                    dr["OUT_BAL_QTY"] = ob.OUT_BAL_QTY;
                     dtsub.Rows.Add(dr);
                 }
                 dtsub.AcceptChanges();
@@ -286,6 +308,11 @@ namespace Catalog.DAO
                             obj.ORG_FILE_NAME = ds.Tables[1].Rows[i]["ORG_FILE_NAME"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[1].Rows[i]["ORG_FILE_NAME"]);
                             obj.PHY_FILE_NAME = ds.Tables[1].Rows[i]["PHY_FILE_NAME"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[1].Rows[i]["PHY_FILE_NAME"]);
 
+                            obj.OUT_TRANS_MAIN_ID = ds.Tables[1].Rows[i]["OUT_TRANS_MAIN_ID"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[1].Rows[i]["OUT_TRANS_MAIN_ID"]);
+                            obj.OUT_TRANS_NO = ds.Tables[1].Rows[i]["OUT_TRANS_NO"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[1].Rows[i]["OUT_TRANS_NO"]);
+                            obj.OUT_QTY = ds.Tables[1].Rows[i]["OUT_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[1].Rows[i]["OUT_QTY"]);
+                            obj.OUT_BAL_QTY = ds.Tables[1].Rows[i]["OUT_BAL_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[1].Rows[i]["OUT_BAL_QTY"]);
+                            obj.OUT_GENID = ds.Tables[1].Rows[i]["OUT_GENID"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[1].Rows[i]["OUT_GENID"]);
                             retlst.Add(obj);
                         }
                     }
@@ -328,6 +355,49 @@ namespace Catalog.DAO
             }
             return retvallst;
         }
-        
+
+        public List<PendingOutwardEntries> GetPendingOutwardEntries(string ledname)
+        {
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlDataAdapter adapter;
+            DataSet ds = new DataSet();
+            List<PendingOutwardEntries> retlst = new List<PendingOutwardEntries>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("USP_GetPendingOutwardEntries", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@LedName", ledname);
+                    con.Open();
+                    adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        PendingOutwardEntries obj = new PendingOutwardEntries();
+                        obj.CATALOG_ID = ds.Tables[0].Rows[i]["CATALOG_ID"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[0].Rows[i]["CATALOG_ID"]);
+                        obj.SKU = ds.Tables[0].Rows[i]["SKU"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[i]["SKU"]);
+                        obj.CODE = ds.Tables[0].Rows[i]["CODE"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[i]["CODE"]);
+                        obj.CATALOG_TITLE = ds.Tables[0].Rows[i]["CATALOG_TITLE"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[i]["CATALOG_TITLE"]);
+                        obj.OUT_TRANS_MAIN_ID = ds.Tables[0].Rows[i]["OUT_TRANS_MAIN_ID"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[0].Rows[i]["OUT_TRANS_MAIN_ID"]);
+                        obj.OUT_TRANS_NO = ds.Tables[0].Rows[i]["OUT_TRANS_NO"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[0].Rows[i]["OUT_TRANS_NO"]);
+                        obj.OUT_GENID = ds.Tables[0].Rows[i]["OUT_GENID"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[i]["OUT_GENID"]);
+                        obj.OUT_QTY = ds.Tables[0].Rows[i]["OUT_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["OUT_QTY"]);
+                        obj.OUT_BAL_QTY = ds.Tables[0].Rows[i]["OUT_BAL_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["OUT_BAL_QTY"]);
+                        obj.ORG_FILE_NAME = ds.Tables[0].Rows[i]["ORG_FILE_NAME"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[i]["ORG_FILE_NAME"]);
+                        obj.PHY_FILE_NAME = ds.Tables[0].Rows[i]["PHY_FILE_NAME"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[i]["PHY_FILE_NAME"]);
+                        obj.OUT_TRANS_DATE = ds.Tables[0].Rows[i]["OUT_TRANS_DATE"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[i]["OUT_TRANS_DATE"]);
+                        retlst.Add(obj);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return retlst;
+        }
+
     }
 }
