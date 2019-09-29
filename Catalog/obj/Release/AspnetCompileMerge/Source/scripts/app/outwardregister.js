@@ -78,7 +78,7 @@
     $("[id$=txt_Ledname]").autocomplete({
         source: function (request, response) {
             $.ajax({
-                url: "StockEntryRegister.aspx/GetLedgersbyName",
+                url: "OutwardRegister.aspx/GetLedgersbyName",
                 data: "{ 'str': '" + request.term + "'}",
                 dataType: "json",
                 type: "POST",
@@ -107,7 +107,7 @@
 
     $.ajax({
         type: "POST",
-        url: "StockEntryRegister.aspx/GetDropdownLisData",
+        url: "OutwardRegister.aspx/GetDropdownLisData",
         data: '{}',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -117,7 +117,29 @@
     $("#btnGenerate").click(function () {
         generatereport();
     });
+
+    $.ajax({
+        type: "POST",
+        url: "OutwardRegister.aspx/GetActiveOutwardTypeList",
+        data: '{}',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: LoadOutwardTypeCombo
+    });
 })
+
+function LoadOutwardTypeCombo(data) {
+    var options = [];
+    options.push('<option value="',
+          "0", '">',
+          "--Nothing Selected--", '</option>');
+    for (var i = 0; i < data.d.length; i++) {
+        options.push('<option value="',
+          data.d[i].ID, '">',
+          data.d[i].NAME, '</option>');
+    }
+    $("#cmb_OutwardType").html(options.join(''));
+}
 
 function generatereport() {
 
@@ -174,7 +196,7 @@ function generatereport() {
     obj.SKU = $("#txt_SKU").val();
     obj.CODE = $("#txt_Code").val();
     obj.DESC = $("#txt_TitleDesc").val();
-
+    obj.OUT_TYPE_ID = $("#cmb_OutwardType").val();
 
     var strjewel = [];
     $('#cmbJewellery > option:selected').each(function () {
@@ -221,7 +243,7 @@ function generatereport() {
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: "StockEntryRegister.aspx/GetStockEntryRegisterData",
+        url: "OutwardRegister.aspx/GetOutwardRegisterData",
         data: '{obj: ' + JSON.stringify(obj) + '}',
         dataType: "json",
         success: function (data) {
@@ -231,9 +253,9 @@ function generatereport() {
             //SKU,Code,Title,QTY,Remarks  
             $('#tableprint thead').remove();
             $('#tableprint tbody').remove();
-            shtml = shtml + "<thead>";            
-            shtml = shtml + "<tr><th>Trans No</th><th>Trans Date</th><th>Ref No</th><th>Ledger</th><th>Remarks</th><th>Void</th><th>Created By</th><th>Modified By</th></tr>";
-            shtml = shtml + "</thead>";            
+            shtml = shtml + "<thead>";
+            shtml = shtml + "<tr><th>Trans No</th><th>Trans Date</th><th>Ref No</th><th>Ledger</th><th>Outward Type</th><th>Remarks</th><th>Void</th><th>Created By</th><th>Modified By</th></tr>";
+            shtml = shtml + "</thead>";
             shtml = shtml + "<tbody>";
             for (var i = 0; i < data.d.length; i++) {
                 if (mainid != data.d[i].TRANS_MAIN_ID) {
@@ -245,16 +267,17 @@ function generatereport() {
                     shtml = shtml + "<td style='text-align:center'>" + data.d[i].TRANS_DATE + "</td>";
                     shtml = shtml + "<td style='text-align:center'>" + data.d[i].REF_NO + "</td>";
                     shtml = shtml + "<td style='color:blue'><b>" + data.d[i].LED_NAME + "</b></td>";
+                    shtml = shtml + "<td style='text-align:center'>" + data.d[i].OUT_TYPE_NAME + "</td>";
                     shtml = shtml + "<td>" + data.d[i].REMARKS_M + "</td>";
                     shtml = shtml + "<td style='text-align:center;'>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td>";
                     shtml = shtml + "<td>" + data.d[i].CREATEDBY + "</td>";
                     shtml = shtml + "<td>" + data.d[i].MODIFIEDBY + "</td></tr>";
-                    shtml = shtml + "<tr><td colspan='3'>";                    
+                    shtml = shtml + "<tr><td colspan='3'>";
                     shtml = shtml + "<table class='table table-striped table-bordered' style='width: 100%' border='1'>";
                     shtml = shtml + "<thead>";
                     shtml = shtml + "<tr><th>SKU</th><th>Code</th><th>Title Desc.</th><th>Qty</th><th>Remarks</th></tr>";
                     shtml = shtml + "</thead>";
-                    shtml = shtml + "<tbody>";                                   
+                    shtml = shtml + "<tbody>";
                 }
                 shtml = shtml + "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "<b></td>";
                 shtml = shtml + "<td>" + data.d[i].CODE + "</td>";
@@ -263,14 +286,14 @@ function generatereport() {
                 shtml = shtml + "<td>" + data.d[i].REMARKS + "</td></tr>";
             }
             shtml = shtml + "</tboby></table></td></tr>"; //For Sub Table
-            shtml = shtml + "</tbody>";            
+            shtml = shtml + "</tbody>";
             $('#tableprint').append(shtml);
             $('#printdiv').show();
             var divToPrint = document.getElementById("printdiv");
             newWin = window.open("");
             newWin.document.write(printdiv.outerHTML);
             $('#printdiv').hide();
-            newWin.print();        
+            newWin.print();
 
 
             document.getElementById("loader").style.display = "none";
@@ -295,6 +318,7 @@ function clearfilter() {
     $("#txt_SKU").val('');
     $("#txt_Code").val('');
     $("#txt_TitleDesc").val('');
+    $("#cmb_OutwardType").val('0');
 
     $("#cmbJewellery").val('default').selectpicker("refresh");
     $("#cmbDesign").val('default').selectpicker("refresh");

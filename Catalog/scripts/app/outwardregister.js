@@ -240,6 +240,94 @@ function generatereport() {
         strkarat.push($(this).val());
     });
     obj.KARATIDS = strkarat.join(',');
+
+    var filtertext = '';
+    filtertext = "Date From : " + $("#dtpFrom").val();
+    filtertext = filtertext +  " To " + $("#dtpTo").val();
+
+    if ($("#txt_From_No").val() > 0 || $("#txt_To_No").val() > 0) {
+        filtertext = filtertext + "; No From :" + $("#txt_From_No").val() + " To " + $("#txt_To_No").val();
+    }
+
+    if ($.trim($("#ContentPlaceHolder1_txt_Ledname").val()) != '') {
+        filtertext = filtertext + "; Ledger :" + $("#ContentPlaceHolder1_txt_Ledname").val();
+    }
+
+    if ($.trim($("#cmb_OutwardType").val()) > 0) {
+        filtertext = filtertext + "; Outward Type :" + $("#cmb_OutwardType option:selected").text();
+    }
+
+    if ($.trim($("#txt_SKU").val()) != '') {
+        filtertext = filtertext + "; SKU :" + $("#txt_SKU").val();
+    }
+
+    if ($.trim($("#txt_Code").val()) != '') {
+        filtertext = filtertext + "; Code : " + $("#txt_Code").val();
+    }
+
+    if ($.trim($("#txt_TitleDesc").val()) != '') {
+        filtertext = filtertext + "; Title Desc. : " + $("#txt_TitleDesc").val();
+    }
+
+    if (strjewel.length > 0) {
+        filtertext = filtertext + "; Jewellery : ";
+        $('#cmbJewellery > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strjdesign.length > 0) {
+        filtertext = filtertext + "; Design : ";
+        $('#cmbDesign > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strcoll.length > 0) {
+        filtertext = filtertext + "; Collection : ";
+        $('#cmbCollection > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strmat.length > 0) {
+        filtertext = filtertext + "; Material : ";
+        $('#cmbMaterial > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strocc.length > 0) {
+        filtertext = filtertext + "; Occasion : ";
+        $('#cmbOccasion > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strocc.length > 0) {
+        filtertext = filtertext + "; Gram Slab : ";
+        $('#CmbGramSlab > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strkarat.length > 0) {
+        filtertext = filtertext + "; Karat : ";
+        $('#cmbKarat > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    $('#lblfilter').text(filtertext);
+
+
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",

@@ -162,6 +162,8 @@ function generatereport() {
         return false;
     }
 
+    $('#lbldatefrom').text($("#dtpFrom").val());
+    $('#lbldateto').text($("#dtpTo").val());
 
     var obj = {};
     obj.FROMDATE = $("#dtpFrom").val();
@@ -227,6 +229,8 @@ function generatereport() {
             var shtml = '';
             //No, Date, Ref NO, Ledger, Remarks, Void, Creadted by Modified
             //SKU,Code,Title,QTY,Remarks  
+            $('#tableprint thead').remove();
+            $('#tableprint tbody').remove();
             shtml = shtml + "<thead>";            
             shtml = shtml + "<tr><th>Trans No</th><th>Trans Date</th><th>Ref No</th><th>Ledger</th><th>Remarks</th><th>Void</th><th>Created By</th><th>Modified By</th></tr>";
             shtml = shtml + "</thead>";            
