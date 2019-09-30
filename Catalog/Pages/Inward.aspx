@@ -297,7 +297,16 @@
             </div>
 
             <div class="table-responsive" id="gridsubdivprn">
-                <table id="tablesubprn" class="table table-striped table-bordered" style="width: 100%" border="1">
+                <style>
+                    table#tableprint {
+                        border-collapse: collapse;
+                    }
+
+                    th#tableprint, td#tableprint {
+                        border: 1px solid black;
+                    }
+                </style>
+                <table id="tablesubprn" class="table table-striped table-bordered" style="width: 100%">
                     <thead>
                         <tr>
                             <th>SKU</th>

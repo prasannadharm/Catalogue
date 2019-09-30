@@ -77,7 +77,7 @@
                             <td style="width: 75%">
                                 <select id="cmb_RepType" class="form-control" style="width: 100%">
                                     <option value="CS">Current Stock Position</option>
-                                    <option value="ST">Stock Statement</option>                                    
+                                    <option value="ST">Stock Statement</option>
                                 </select>
                             </td>
                         </tr>
@@ -383,7 +383,16 @@
             <div style="height: 15px">
             </div>
             <div id="divgridprint">
-                <table id="tableprint" style="width: 100%" border="1">
+                <style>
+                    table#tableprint {
+                        border-collapse: collapse;
+                    }
+
+                    th#tableprint, td#tableprint {
+                        border: 1px solid black;
+                    }
+                </style>
+                <table id="tableprint" style="width: 100%">
                 </table>
             </div>
         </div>
