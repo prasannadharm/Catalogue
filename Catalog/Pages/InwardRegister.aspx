@@ -1,9 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/CatalogAdmin.Master" AutoEventWireup="true" CodeBehind="OutwardRegister.aspx.cs" Inherits="Catalog.Pages.OutwardRegister" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/CatalogAdmin.Master" AutoEventWireup="true" CodeBehind="InwardRegister.aspx.cs" Inherits="Catalog.Pages.InwardRegister" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <style>
+      <style>
         .filters .dropdown-menu > li > a {
             display: block;
             padding: 2px 15px;
@@ -31,13 +30,13 @@
     <script src="../scripts/bootstrap-datepicker.min.js"></script>
     <script src="../scripts/jquery-ui.min.js"></script>
     <script src="../scripts/bootstrap-select.min.js"></script>
-    <script src="../scripts/app/outwardregister.js"></script>
+    <script src="../scripts/app/inwardregister.js"></script>
     <div id="loader"></div>
     <div class="col-lg-12" id="mainlistingdiv">
         <div class="panel panel-default">
             <div class="row">
                 <div class="col-12">
-                    <h2>Outward Register</h2>
+                    <h2>Inward Register</h2>
                 </div>
             </div>
 
@@ -118,10 +117,10 @@
                     <table style="width: 100%">
                         <tr>
                             <td style="width: 25%">
-                                <label class="control-label" style="display: inline">Outward Type</label>
+                                <label class="control-label" style="display: inline">Inward Type</label>
                             </td>
                             <td style="width: 75%">
-                                <select id="cmb_OutwardType" class="form-control" style="width: 100%">
+                                <select id="cmb_InwardType" class="form-control" style="width: 100%">
                                 </select>
                             </td>
                         </tr>
@@ -390,7 +389,7 @@
         <div class="panel panel-default">
             <div class="row">
                 <div class="col-12">
-                    <h2 style='color: blue; display: inline'>Outward Register</h2>
+                    <h2 style='color: blue; display: inline'>Inward Register</h2>
                     <label style="display: inline; margin-left: 50px; margin-right: 5px">From</label>
                     <label id="lbldatefrom" style="display: inline; margin-right: 5px">01-10-2019</label>
                     <label style="display: inline; margin-right: 5px">To</label>
@@ -414,5 +413,4 @@
         </div>
     </div>
     <!-- For Print Popup  -->
-
 </asp:Content>

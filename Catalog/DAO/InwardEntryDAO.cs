@@ -399,5 +399,68 @@ namespace Catalog.DAO
             return retlst;
         }
 
+        public List<InwardRegisterResultEntity> GetInwardRegister(InwardRegisterParamEntity obj)
+        {
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlDataAdapter adapter;
+            DataSet ds = new DataSet();
+            List<InwardRegisterResultEntity> retlst = new List<InwardRegisterResultEntity>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("USP_GetInwardRegister", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@DateFrom", obj.FROMDATE);
+                    cmd.Parameters.AddWithValue("@DateTo", obj.TODATE);
+                    cmd.Parameters.AddWithValue("@FromNo", obj.FROMNO);
+                    cmd.Parameters.AddWithValue("@ToNo", obj.TONO);
+                    cmd.Parameters.AddWithValue("@LedName", obj.LEDNAME);
+                    cmd.Parameters.AddWithValue("@JewelleryIDs", obj.JEWELLERYIDS);
+                    cmd.Parameters.AddWithValue("@DesignIDs", obj.DESIGNIDS);
+                    cmd.Parameters.AddWithValue("@CollectionsIDs", obj.COLLECTIONSIDS);
+                    cmd.Parameters.AddWithValue("@MaterialIDs", obj.MATERIALIDS);
+                    cmd.Parameters.AddWithValue("@OccasionIDs", obj.OCCASIONIDS);
+                    cmd.Parameters.AddWithValue("@GramSlabIDs", obj.GRAMSLABIDS);
+                    cmd.Parameters.AddWithValue("@KaratIDs", obj.KARATIDS);
+                    cmd.Parameters.AddWithValue("@SKU", obj.SKU);
+                    cmd.Parameters.AddWithValue("@CODE", obj.CODE);
+                    cmd.Parameters.AddWithValue("@Desc", obj.DESC);
+                    cmd.Parameters.AddWithValue("@IN_TYPE_ID", obj.IN_TYPE_ID);
+                    con.Open();
+                    adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(ds);
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        InwardRegisterResultEntity obj1 = new InwardRegisterResultEntity();
+                        obj1.TRANS_MAIN_ID = ds.Tables[0].Rows[i]["TRANS_MAIN_ID"] != DBNull.Value ? Convert.ToInt64(ds.Tables[0].Rows[i]["TRANS_MAIN_ID"]) : 0;
+                        obj1.TRANS_NO = ds.Tables[0].Rows[i]["TRANS_NO"] != DBNull.Value ? Convert.ToInt64(ds.Tables[0].Rows[i]["TRANS_NO"]) : 0;
+                        obj1.TRANS_DATE = ds.Tables[0].Rows[i]["TRANS_DATE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["TRANS_DATE"].ToString();
+                        obj1.REF_NO = ds.Tables[0].Rows[i]["REF_NO"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["REF_NO"].ToString();
+                        obj1.LED_NAME = ds.Tables[0].Rows[i]["LED_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["LED_NAME"].ToString();
+                        obj1.REMARKS_M = ds.Tables[0].Rows[i]["REMARKS_M"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["REMARKS_M"].ToString();
+                        obj1.VOID_STATUS = ds.Tables[0].Rows[i]["VOID_STATUS"] == DBNull.Value ? false : Convert.ToBoolean(ds.Tables[0].Rows[i]["VOID_STATUS"]);
+                        obj1.CREATEDBY = ds.Tables[0].Rows[i]["CREATEDBY"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["CREATEDBY"].ToString();
+                        obj1.MODIFIEDBY = ds.Tables[0].Rows[i]["MODIFIEDBY"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["MODIFIEDBY"].ToString();
+                        obj1.IN_TYPE_NAME = ds.Tables[0].Rows[i]["IN_TYPE_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["IN_TYPE_NAME"].ToString();
+
+                        obj1.TRANS_SUB_ID = ds.Tables[0].Rows[i]["TRANS_SUB_ID"] != DBNull.Value ? Convert.ToInt64(ds.Tables[0].Rows[i]["TRANS_SUB_ID"]) : 0;
+                        obj1.SKU = ds.Tables[0].Rows[i]["SKU"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["SKU"].ToString();
+                        obj1.CODE = ds.Tables[0].Rows[i]["CODE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["CODE"].ToString();
+                        obj1.CATALOG_TITLE = ds.Tables[0].Rows[i]["CATALOG_TITLE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["CATALOG_TITLE"].ToString();
+                        obj1.QTY = ds.Tables[0].Rows[i]["QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["QTY"]);
+                        obj1.OUT_TRANS_NO = ds.Tables[0].Rows[i]["OUT_TRANS_NO"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[0].Rows[i]["OUT_TRANS_NO"]);
+                        obj1.REMARKS = ds.Tables[0].Rows[i]["REMARKS"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["REMARKS"].ToString();
+                        retlst.Add(obj1);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return retlst;
+        }
+
     }
 }
