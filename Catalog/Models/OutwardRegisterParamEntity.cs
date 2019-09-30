@@ -23,6 +23,7 @@ namespace Catalog.Models
         public string GRAMSLABIDS { get; set; }
         public string KARATIDS { get; set; }
         public Int64 OUT_TYPE_ID { get; set; }
+        public bool SHOW_PENDING_ONLY { get; set; }
     }
 
     public class OutwardRegisterResultEntity
@@ -37,6 +38,7 @@ namespace Catalog.Models
         public string CREATEDBY { get; set; }
         public string MODIFIEDBY { get; set; }
         public string OUT_TYPE_NAME { get; set; }
+        public bool RETURNABLE { get; set; }
 
         public Int64 TRANS_SUB_ID { get; set; }
         public string SKU { get; set; }

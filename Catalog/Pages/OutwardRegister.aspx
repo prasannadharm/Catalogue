@@ -357,6 +357,31 @@
                 </div>
             </div>
 
+
+            <div style="height: 10px">
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-0  col-md-0 col-lg-3">
+                </div>
+                <div class="col-sm-12  col-md-12 col-lg-6">
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 25%">
+                                
+                            </td>
+                            <td style="width: 75%">
+                                <input type="checkbox" id="chkPending" value="Pending" style="margin-left: 10px; margin-right: 5px; vertical-align: middle;" />
+                                <label>Show Pending Entries Only</label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-sm-0  col-md-0 col-lg-3">
+                </div>
+            </div>
+
             <div style="height: 20px">
             </div>
 

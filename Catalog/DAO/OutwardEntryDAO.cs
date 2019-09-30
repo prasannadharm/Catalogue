@@ -356,6 +356,9 @@ namespace Catalog.DAO
                     cmd.Parameters.AddWithValue("@CODE", obj.CODE);
                     cmd.Parameters.AddWithValue("@Desc", obj.DESC);
                     cmd.Parameters.AddWithValue("@OUT_TYPE_ID", obj.OUT_TYPE_ID);
+                    cmd.Parameters.AddWithValue("@ShowPendingOnly", obj.SHOW_PENDING_ONLY);
+
+
                     con.Open();
                     adapter = new SqlDataAdapter(cmd);
                     adapter.Fill(ds);
@@ -372,6 +375,7 @@ namespace Catalog.DAO
                         obj1.CREATEDBY = ds.Tables[0].Rows[i]["CREATEDBY"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["CREATEDBY"].ToString();
                         obj1.MODIFIEDBY = ds.Tables[0].Rows[i]["MODIFIEDBY"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["MODIFIEDBY"].ToString();
                         obj1.OUT_TYPE_NAME = ds.Tables[0].Rows[i]["OUT_TYPE_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["OUT_TYPE_NAME"].ToString();
+                        obj1.RETURNABLE = ds.Tables[0].Rows[i]["RETURNABLE"] == DBNull.Value ? false : Convert.ToBoolean(ds.Tables[0].Rows[i]["RETURNABLE"]);
 
                         obj1.TRANS_SUB_ID = ds.Tables[0].Rows[i]["TRANS_SUB_ID"] != DBNull.Value ? Convert.ToInt64(ds.Tables[0].Rows[i]["TRANS_SUB_ID"]) : 0;
                         obj1.SKU = ds.Tables[0].Rows[i]["SKU"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["SKU"].ToString();
