@@ -413,5 +413,47 @@ namespace Catalog.DAO
             return objreturn;
         }
 
+        public List<ItemLedgerEntity> GetItemLedgerData(long id)
+        {
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlDataAdapter adapter;
+            DataSet ds = new DataSet();
+            List<ItemLedgerEntity> retlst = new List<ItemLedgerEntity>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("USP_GetItemLedgerReport", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", id);
+                    con.Open();
+                    adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        ItemLedgerEntity obj = new ItemLedgerEntity();
+                        obj.ID = ds.Tables[0].Rows[i]["ID"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[0].Rows[i]["ID"].ToString());
+                        obj.TRANS_ID = ds.Tables[0].Rows[i]["TRANS_ID"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[0].Rows[i]["TRANS_ID"].ToString());
+                        obj.TRANS_NO = ds.Tables[0].Rows[i]["TRANS_NO"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[0].Rows[i]["TRANS_NO"].ToString());
+                        obj.TRANS_DATE = ds.Tables[0].Rows[i]["TRANS_DATE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["TRANS_DATE"].ToString();
+                        obj.TRANS_TYPE = ds.Tables[0].Rows[i]["TRANS_TYPE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["TRANS_TYPE"].ToString();
+                        obj.LED_NAME = ds.Tables[0].Rows[i]["LED_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["LED_NAME"].ToString();
+                        obj.TITLE = ds.Tables[0].Rows[i]["TITLE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["TITLE"].ToString();
+
+                        obj.IN_QTY = ds.Tables[0].Rows[i]["IN_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["IN_QTY"]);
+                        obj.OUT_QTY = ds.Tables[0].Rows[i]["OUT_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["OUT_QTY"]);
+                        obj.BAL_QTY = ds.Tables[0].Rows[i]["BAL_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["BAL_QTY"]);
+                        retlst.Add(obj); 
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return retlst;
+        }
+
     }
 }

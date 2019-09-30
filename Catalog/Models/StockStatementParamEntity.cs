@@ -37,4 +37,18 @@ namespace Catalog.Models
         public double OUT_QTY { get; set; }
         public double CLS_QTY { get; set; }        
     }
+
+    public class ItemLedgerEntity
+    {
+        public Int64 ID { get; set; }
+        public Int64 TRANS_ID { get; set; }
+        public Int64 TRANS_NO { get; set; }
+        public string TRANS_DATE { get; set; }
+        public string LED_NAME { get; set; }
+        public string TRANS_TYPE { get; set; }
+        public string TITLE { get; set; }
+        public double IN_QTY { get; set; }
+        public double OUT_QTY { get; set; }
+        public double BAL_QTY { get; set; }        
+    }
 }

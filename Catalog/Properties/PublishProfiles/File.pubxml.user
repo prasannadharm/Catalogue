@@ -16,13 +16,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/16/2019 20:23:16</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>09/30/2019 10:53:44</publishTime>
+      <publishTime>09/30/2019 19:16:41</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>09/30/2019 10:53:44</publishTime>
+      <publishTime>09/30/2019 19:16:41</publishTime>
     </File>
     <File Include="bin/Catalog.dll">
-      <publishTime>09/30/2019 10:53:21</publishTime>
+      <publishTime>09/30/2019 19:16:23</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>12/07/2015 19:04:38</publishTime>
@@ -253,7 +253,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/15/2019 07:18:20</publishTime>
     </File>
     <File Include="Pages/CatalogAdmin.Master">
-      <publishTime>09/20/2019 21:40:04</publishTime>
+      <publishTime>09/30/2019 18:39:12</publishTime>
     </File>
     <File Include="Pages/CatalogDetails.aspx">
       <publishTime>05/21/2019 20:44:53</publishTime>
@@ -262,7 +262,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/11/2019 20:43:18</publishTime>
     </File>
     <File Include="Pages/CatalogMaster.aspx">
-      <publishTime>09/28/2019 14:12:53</publishTime>
+      <publishTime>09/30/2019 19:02:37</publishTime>
     </File>
     <File Include="Pages/CatalogueMaster.aspx">
       <publishTime>04/29/2019 06:12:03</publishTime>
@@ -304,7 +304,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/30/2019 00:08:56</publishTime>
     </File>
     <File Include="Pages/InwardRegister.aspx">
-      <publishTime>09/30/2019 10:10:08</publishTime>
+      <publishTime>09/30/2019 14:33:20</publishTime>
     </File>
     <File Include="Pages/InwardTypeMaster.aspx">
       <publishTime>09/08/2019 20:48:47</publishTime>
@@ -331,7 +331,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/27/2019 06:12:22</publishTime>
     </File>
     <File Include="Pages/OutwardRegister.aspx">
-      <publishTime>09/30/2019 10:31:34</publishTime>
+      <publishTime>09/30/2019 14:33:20</publishTime>
     </File>
     <File Include="Pages/OutwardTypeMaster.aspx">
       <publishTime>09/08/2019 20:54:33</publishTime>
@@ -346,10 +346,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/27/2019 06:09:33</publishTime>
     </File>
     <File Include="Pages/StockEntryRegister.aspx">
-      <publishTime>09/29/2019 16:24:42</publishTime>
+      <publishTime>09/30/2019 14:33:20</publishTime>
+    </File>
+    <File Include="Pages/StockStatement.aspx">
+      <publishTime>09/30/2019 18:08:45</publishTime>
     </File>
     <File Include="Pages/UserDashboard.aspx">
-      <publishTime>09/30/2019 10:18:12</publishTime>
+      <publishTime>09/30/2019 18:32:46</publishTime>
     </File>
     <File Include="Pages/UserLogin.aspx">
       <publishTime>05/19/2019 20:16:04</publishTime>
@@ -358,7 +361,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/01/2019 10:40:40</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>09/30/2019 10:53:35</publishTime>
+      <publishTime>09/30/2019 19:16:37</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>04/16/2019 20:23:16</publishTime>
@@ -379,7 +382,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/21/2019 20:45:54</publishTime>
     </File>
     <File Include="scripts/app/catalogmaster.js">
-      <publishTime>09/28/2019 14:21:06</publishTime>
+      <publishTime>09/30/2019 19:04:43</publishTime>
     </File>
     <File Include="scripts/app/cataloguemaster.js">
       <publishTime>04/29/2019 06:13:12</publishTime>
@@ -442,7 +445,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/30/2019 00:07:48</publishTime>
     </File>
     <File Include="scripts/app/outwardregister.js">
-      <publishTime>09/30/2019 10:49:55</publishTime>
+      <publishTime>09/30/2019 17:57:07</publishTime>
     </File>
     <File Include="scripts/app/outwardtypemaster.js">
       <publishTime>09/08/2019 21:03:20</publishTime>
@@ -458,6 +461,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="scripts/app/stockentryregister.js">
       <publishTime>09/29/2019 16:56:12</publishTime>
+    </File>
+    <File Include="scripts/app/stockstatement.js">
+      <publishTime>09/30/2019 18:30:57</publishTime>
     </File>
     <File Include="scripts/app/usermaster.js">
       <publishTime>05/03/2019 00:46:53</publishTime>
@@ -499,7 +505,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/14/2019 20:06:56</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/30/2019 10:53:33</publishTime>
+      <publishTime>09/30/2019 19:16:36</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -19,7 +19,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Reports -> All Regsters completed only Stock Statement Pending</td>
+                            <td>Reports -> All Reports completed</td>
                         </tr>
                         <tr>
                             <td>All Master forms completed  (Only barocode prinitng at catalog is pending)
@@ -45,10 +45,7 @@
                         <tr>
                             <td>Only barocode prinitng &amp; Item Tracking at catalog is pending
                             </td>
-                        </tr>
-                        <tr>
-                            <td>Stock Statement Pending</td>
-                        </tr>
+                        </tr>                        
                     </tbody>
                 </table>
             </td>

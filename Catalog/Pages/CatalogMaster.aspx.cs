@@ -151,6 +151,21 @@ namespace Catalog.Pages
             }
             return details.ToArray();
         }
+        
+        [WebMethod]
+        public static ItemLedgerEntity[] GetItemLedgerData(int id)
+        {
+            var details = new List<ItemLedgerEntity>();
+            try
+            {
+                details = new CatalogMasterDAO().GetItemLedgerData(id);
+            }
+            catch (Exception ex)
+            {
+                //details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
 
         [WebMethod]
         public static DbStatusEntity[] UpdateData(CatalogMasterEntity obj, int id) //Update data in database  

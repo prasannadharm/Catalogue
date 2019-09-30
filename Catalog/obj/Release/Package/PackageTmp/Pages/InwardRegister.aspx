@@ -140,7 +140,7 @@
                     <table style="width: 100%">
                         <tr>
                             <td style="width: 25%">
-                                <label class="control-label" style="display: inline">Jelwellery</label>
+                                <label class="control-label" style="display: inline">Jewellery</label>
                             </td>
                             <td style="width: 75%">
                                 <select id="cmbJewellery" multiple data-live-search="true" class="filters" style="width: 100%">

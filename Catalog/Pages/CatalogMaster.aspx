@@ -130,6 +130,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -343,5 +344,31 @@
     </div>
     <!-- For Modal Popup  -->
 
+
+    <!-- For Print Popup  -->
+     <div class="col-lg-12" id="printdiv" style="display: none">
+        <div class="panel panel-default">
+            <div class="row">
+                <div class="col-12">
+                    <h2 style='color: blue; display: inline'>Item Ledger Statement</h2>                    
+                </div>
+            </div>
+            <div style="height: 15px">
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label style="display: inline; margin-right: 5px">Filter : </label>
+                    <label id="lblfilter" style="display: inline; margin-right: 5px; color: brown"></label>
+                </div>
+            </div>
+            <div style="height: 15px">
+            </div>
+            <div id="divgridprint">
+                <table id="tableprint" style="width: 100%" border="1">
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- For Print Popup  -->
 
 </asp:Content>

@@ -4,9 +4,6 @@
     $(".datepicker").datepicker({ dateFormat: 'dd-mm-yy' });
     $('#dtpFrom').datepicker('setDate', today);
     $('#dtpTo').datepicker('setDate', today);
-    $('#txt_From_No').val(0);
-    $('#txt_To_No').val(0);
-    $('#ContentPlaceHolder1_txt_Ledname').focus();
     $('#dtpFrom').keypress(function (e) {
         var key = e.which;
         if (key == 13)  // the enter key code
@@ -19,34 +16,10 @@
         var key = e.which;
         if (key == 13)  // the enter key code
         {
-            $('#txt_From_No').focus();
-        }
-    });
-
-    $('#txt_From_No').keypress(function (e) {
-        var key = e.which;
-        if (key == 13)  // the enter key code
-        {
-            $('#txt_To_No').focus();
-        }
-    });
-
-    $('#txt_To_No').keypress(function (e) {
-        var key = e.which;
-        if (key == 13)  // the enter key code
-        {
-            $('#ContentPlaceHolder1_txt_Ledname').focus();
-        }
-    });
-
-    $('#ContentPlaceHolder1_txt_Ledname').keypress(function (e) {
-        var key = e.which;
-        if (key == 13)  // the enter key code
-        {
             $('#txt_SKU').focus();
         }
-    });
-
+    });   
+    
     $('#txt_SKU').keypress(function (e) {
         var key = e.which;
         if (key == 13)  // the enter key code
@@ -73,41 +46,11 @@
 
     $("#btnClearfilter").click(function () {
         clearfilter();
-    });
-
-    $("[id$=txt_Ledname]").autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                url: "OutwardRegister.aspx/GetLedgersbyName",
-                data: "{ 'str': '" + request.term + "'}",
-                dataType: "json",
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    response($.map(data.d, function (item) {
-                        return {
-                            label: item.split('-')[0],
-                            val: item.split('-')[1]
-                        }
-                    }))
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                }
-            });
-        },
-        select: function (e, i) {
-            // $("[id$=LED_ID]").val(i.item.val);
-        },
-        minLength: 1
-    });
+    });      
 
     $.ajax({
         type: "POST",
-        url: "OutwardRegister.aspx/GetDropdownLisData",
+        url: "StockStatement.aspx/GetDropdownLisData",
         data: '{}',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -118,28 +61,8 @@
         generatereport();
     });
 
-    $.ajax({
-        type: "POST",
-        url: "OutwardRegister.aspx/GetActiveOutwardTypeList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadOutwardTypeCombo
-    });
+    $('#txt_TitleDesc').focus();
 })
-
-function LoadOutwardTypeCombo(data) {
-    var options = [];
-    options.push('<option value="',
-          "0", '">',
-          "--Nothing Selected--", '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#cmb_OutwardType").html(options.join(''));
-}
 
 function generatereport() {
 
@@ -165,44 +88,27 @@ function generatereport() {
         $("#dtpFrom").focus();
         return false;
     }
-
-    if ($("#txt_From_No").val() == null || $("#txt_From_No").val() == undefined) {
-        alert("Please enter From No.");
-        $("#txt_From_No").focus();
-        return false;
-    }
-
-    if ($("#txt_To_No").val() == null || $("#txt_To_No").val() == undefined) {
-        alert("Please enter To No.");
-        $("#txt_To_No").focus();
-        return false;
-    }
-
-    if ($("#txt_From_No").val() > $("#txt_To_No").val()) {
-        alert("Please enter From No. cannot be greaterthan To No.");
-        $("#txt_To_No").focus();
-        return false;
-    }
-
+    
+    
     $('#lbldatefrom').text($("#dtpFrom").val());
     $('#lbldateto').text($("#dtpTo").val());
 
     var obj = {};
     obj.FROMDATE = $("#dtpFrom").val();
     obj.TODATE = $("#dtpTo").val();
-    obj.FROMNO = $("#txt_From_No").val();
-    obj.TONO = $("#txt_To_No").val();
-    obj.LEDNAME = $("#ContentPlaceHolder1_txt_Ledname").val();
     obj.SKU = $("#txt_SKU").val();
     obj.CODE = $("#txt_Code").val();
     obj.DESC = $("#txt_TitleDesc").val();
-    obj.OUT_TYPE_ID = $("#cmb_OutwardType").val();
-    if ($('#chkPending').is(":checked")) {
-        obj.SHOW_PENDING_ONLY = true;
+    
+    obj.REPTYPE = $("#cmb_RepType").val();
+    if ($('#chkInStock').is(":checked")) {
+        obj.SHOW_INSTOCK_ITEMS_ONLY = true;
     }
     else {
-        obj.SHOW_PENDING_ONLY = false;
+        obj.SHOW_INSTOCK_ITEMS_ONLY = false;
     }
+
+
     var strjewel = [];
     $('#cmbJewellery > option:selected').each(function () {
         strjewel.push($(this).val());
@@ -247,21 +153,8 @@ function generatereport() {
     obj.KARATIDS = strkarat.join(',');
 
     var filtertext = '';
-    filtertext = "Date From : " + $("#dtpFrom").val();
-    filtertext = filtertext +  " To " + $("#dtpTo").val();
-
-    if ($("#txt_From_No").val() > 0 || $("#txt_To_No").val() > 0) {
-        filtertext = filtertext + "; No From :" + $("#txt_From_No").val() + " To " + $("#txt_To_No").val();
-    }
-
-    if ($.trim($("#ContentPlaceHolder1_txt_Ledname").val()) != '') {
-        filtertext = filtertext + "; Ledger :" + $("#ContentPlaceHolder1_txt_Ledname").val();
-    }
-
-    if ($.trim($("#cmb_OutwardType").val()) > 0) {
-        filtertext = filtertext + "; Outward Type :" + $("#cmb_OutwardType option:selected").text();
-    }
-
+    filtertext = "Statement Type : " + $("#cmb_RepType option:selected").text();    
+        
     if ($.trim($("#txt_SKU").val()) != '') {
         filtertext = filtertext + "; SKU :" + $("#txt_SKU").val();
     }
@@ -330,9 +223,10 @@ function generatereport() {
         filtertext = filtertext.substring(0, filtertext.length - 1);
     }
 
-    if ($('#chkPending').is(":checked")) {
+    if ($('#chkInStock').is(":checked")) {
         filtertext = filtertext + "; Show Pending Items only.";
     }
+
 
     $('#lblfilter').text(filtertext);
 
@@ -340,7 +234,7 @@ function generatereport() {
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: "OutwardRegister.aspx/GetOutwardRegisterData",
+        url: "StockStatement.aspx/GetStockstatementData",
         data: '{obj: ' + JSON.stringify(obj) + '}',
         dataType: "json",
         success: function (data) {
@@ -351,47 +245,37 @@ function generatereport() {
             $('#tableprint thead').remove();
             $('#tableprint tbody').remove();
             shtml = shtml + "<thead>";
-            shtml = shtml + "<tr><th>Trans No</th><th>Trans Date</th><th>Ref No</th><th>Ledger</th><th>Outward Type</th><th>Remarks</th><th>Void</th><th>Created By</th><th>Modified By</th></tr>";
+            if ($("#cmb_RepType").val() == 'CS') {
+                shtml = shtml + "<tr><th>Sl No</th><th>SKU</th><th>Code</th><th>Title</th><th>Stock Qty</th></tr>";
+            }
+            else
+            {
+                shtml = shtml + "<tr><th>Sl No</th><th>SKU</th><th>Code</th><th>Title</th><th>Current Stock Qty</th><th>Opening Qty</th><th>Stock Entry Qty</th><th>Inward Qty</th><th>Outward Qty</th><th>Closing Qty</th></tr>";
+            }
             shtml = shtml + "</thead>";
             shtml = shtml + "<tbody>";
             for (var i = 0; i < data.d.length; i++) {
-                if (mainid != data.d[i].TRANS_MAIN_ID) {
-                    mainid = data.d[i].TRANS_MAIN_ID;
-                    if (i != 0) {
-                        shtml = shtml + "</tboby></table></td></tr>"; //For Sub Table
-                    }
-                    shtml = shtml + "<tr><td style='text-align:center;color:blue'><b>" + data.d[i].TRANS_NO + "</b></td>";
-                    shtml = shtml + "<td style='text-align:center'>" + data.d[i].TRANS_DATE + "</td>";
-                    shtml = shtml + "<td style='text-align:center'>" + data.d[i].REF_NO + "</td>";
-                    shtml = shtml + "<td style='color:blue'><b>" + data.d[i].LED_NAME + "</b></td>";
-                    shtml = shtml + "<td style='text-align:center'>" + data.d[i].OUT_TYPE_NAME + "</td>";
-                    shtml = shtml + "<td>" + data.d[i].REMARKS_M + "</td>";
-                    shtml = shtml + "<td style='text-align:center;'>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td>";
-                    shtml = shtml + "<td>" + data.d[i].CREATEDBY + "</td>";
-                    shtml = shtml + "<td>" + data.d[i].MODIFIEDBY + "</td></tr>";
-                    shtml = shtml + "<tr><td colspan='3'>";
-                    shtml = shtml + "<table class='table table-striped table-bordered' style='width: 100%' border='1'>";
-                    shtml = shtml + "<thead>";
-                    if (data.d[i].RETURNABLE == true) {
-                        shtml = shtml + "<tr><th>SKU</th><th>Code</th><th>Title Desc.</th><th>Qty</th><th>Pend. Qty</th><th>Remarks</th></tr>";
-                    }
-                    else
-                    {
-                        shtml = shtml + "<tr><th>SKU</th><th>Code</th><th>Title Desc.</th><th>Qty</th><th>Remarks</th></tr>";
-                    }
-                    shtml = shtml + "</thead>";
-                    shtml = shtml + "<tbody>";
+                if ($("#cmb_RepType").val() == 'CS') {
+                    shtml = shtml + "<td style='text-align:center;'>" + data.d[i].ID + "</td>";
+                    shtml = shtml + "<td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "<b></td>";
+                    shtml = shtml + "<td>" + data.d[i].CODE + "</td>";
+                    shtml = shtml + "<td><b>" + data.d[i].CATALOG_TITLE + "</b></td>";
+                    shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].CURR_STK_QTY + "</b></td><tr>";
                 }
-                shtml = shtml + "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "<b></td>";
-                shtml = shtml + "<td>" + data.d[i].CODE + "</td>";
-                shtml = shtml + "<td><b>" + data.d[i].CATALOG_TITLE + "</b></td>";
-                shtml = shtml + "<td style='text-align:center;color:blue'><b>" + data.d[i].QTY + "</b></td>";
-                if (data.d[i].RETURNABLE == true) {
-                    shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].BAL_QTY + "</b></td>";
+                else
+                {
+                    shtml = shtml + "<td style='text-align:center;'>" + data.d[i].ID + "</td>";
+                    shtml = shtml + "<td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "<b></td>";
+                    shtml = shtml + "<td>" + data.d[i].CODE + "</td>";
+                    shtml = shtml + "<td><b>" + data.d[i].CATALOG_TITLE + "</b></td>";
+                    shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].CURR_STK_QTY + "</b></td>";
+                    shtml = shtml + "<td style='text-align:center;color:green'><b>" + data.d[i].OPENING_QTY + "</b></td>";
+                    shtml = shtml + "<td style='text-align:center;color:blue'><b>" + data.d[i].STK_QTY + "</b></td>";
+                    shtml = shtml + "<td style='text-align:center;color:brown'><b>" + data.d[i].IN_QTY + "</b></td>";
+                    shtml = shtml + "<td style='text-align:center;color:black'><b>" + data.d[i].OUT_QTY + "</b></td>";
+                    shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].CLS_QTY + "</b></td><tr>";
                 }
-                shtml = shtml + "<td>" + data.d[i].REMARKS + "</td></tr>";
-            }
-            shtml = shtml + "</tboby></table></td></tr>"; //For Sub Table
+            }            
             shtml = shtml + "</tbody>";
             $('#tableprint').append(shtml);
             $('#printdiv').show();
@@ -418,13 +302,11 @@ function clearfilter() {
     $(".datepicker").datepicker({ dateFormat: 'dd-mm-yy' });
     $('#dtpFrom').datepicker('setDate', today);
     $('#dtpTo').datepicker('setDate', today);
-    $('#txt_From_No').val(0);
-    $('#txt_To_No').val(0);
-    $("#ContentPlaceHolder1_txt_Ledname").val('');
     $("#txt_SKU").val('');
     $("#txt_Code").val('');
     $("#txt_TitleDesc").val('');
-    $("#cmb_OutwardType").val('0');
+    $("#cmb_RepType").val('CS');
+    $("#chkInStock").prop('checked', true);
 
     $("#cmbJewellery").val('default').selectpicker("refresh");
     $("#cmbDesign").val('default').selectpicker("refresh");
@@ -433,10 +315,7 @@ function clearfilter() {
     $("#cmbOccasion").val('default').selectpicker("refresh");
     $("#CmbGramSlab").val('default').selectpicker("refresh");
     $("#cmbKarat").val('default').selectpicker("refresh");
-
-    $("#chkPending").prop('checked', true);
-
-    $('#ContentPlaceHolder1_txt_Ledname').focus();
+    $('#txt_TitleDesc').focus();
 }
 
 function LoadCombos(data) {
