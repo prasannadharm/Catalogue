@@ -256,15 +256,15 @@ function generatereport() {
             shtml = shtml + "<tbody>";
             for (var i = 0; i < data.d.length; i++) {
                 if ($("#cmb_RepType").val() == 'CS') {
-                    shtml = shtml + "<td style='text-align:center;'>" + data.d[i].ID + "</td>";
+                    shtml = shtml + "<tr><td style='text-align:center;'>" + data.d[i].ID + "</td>";
                     shtml = shtml + "<td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "<b></td>";
                     shtml = shtml + "<td>" + data.d[i].CODE + "</td>";
                     shtml = shtml + "<td><b>" + data.d[i].CATALOG_TITLE + "</b></td>";
-                    shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].CURR_STK_QTY + "</b></td><tr>";
+                    shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].CURR_STK_QTY + "</b></td></tr>";
                 }
                 else
                 {
-                    shtml = shtml + "<td style='text-align:center;'>" + data.d[i].ID + "</td>";
+                    shtml = shtml + "<tr><td style='text-align:center;'>" + data.d[i].ID + "</td>";
                     shtml = shtml + "<td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "<b></td>";
                     shtml = shtml + "<td>" + data.d[i].CODE + "</td>";
                     shtml = shtml + "<td><b>" + data.d[i].CATALOG_TITLE + "</b></td>";
@@ -273,7 +273,7 @@ function generatereport() {
                     shtml = shtml + "<td style='text-align:center;color:blue'><b>" + data.d[i].STK_QTY + "</b></td>";
                     shtml = shtml + "<td style='text-align:center;color:brown'><b>" + data.d[i].IN_QTY + "</b></td>";
                     shtml = shtml + "<td style='text-align:center;color:black'><b>" + data.d[i].OUT_QTY + "</b></td>";
-                    shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].CLS_QTY + "</b></td><tr>";
+                    shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].CLS_QTY + "</b></td></tr>";
                 }
             }            
             shtml = shtml + "</tbody>";

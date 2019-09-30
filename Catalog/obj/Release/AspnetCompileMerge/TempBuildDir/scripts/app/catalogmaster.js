@@ -47,7 +47,7 @@ $(function () {
     });
 });
 
-function LoadCombos(data) {   
+function LoadCombos(data) {
     document.getElementById("loader").style.display = "block";
     var optionsJewel = [];
     var optionsDesign = [];
@@ -93,7 +93,7 @@ function LoadCombos(data) {
             data.d[i].NAME, '</option>');
         }
     }
-    
+
     $("#cmbJewellery").html(optionsJewel.join(''));
     $("#cmbJewellery").addClass("selectpicker");
     $("#cmbJewellery").addClass("form-control");
@@ -121,7 +121,7 @@ function LoadCombos(data) {
     $("#cmbKarat").html(optionsKarat.join(''));
     $("#cmbKarat").addClass("selectpicker");
     $("#cmbKarat").addClass("form-control");
-    
+
     $('.selectpicker').selectpicker('');
     getDetails();
 }
@@ -207,16 +207,17 @@ function getDetails() {
             $('#griddiv').remove();
             $('#maindiv').append("<div class='table-responsive' id='griddiv'></div>");
             $('#griddiv').append("<table id='tablemain' class='table table-striped table-bordered' style='width: 100%'></table>");
-            $('#tablemain').append("<thead><tr><th>SKU</th><th>Code</th><th>Description</th><th>Stock</th><th>Jewellery</th><th>Design</th><th>Collection</th><th></th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
+            $('#tablemain').append("<thead><tr><th>SKU</th><th>Code</th><th>Description</th><th>Stock</th><th>Jewellery</th><th>Design</th><th>Collection</th><th></th><th></th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
             $('#tablemain tbody').remove();
             $('#tablemain').append("<tbody>");
             for (var i = 0; i < data.d.length; i++) {
                 $('#tablemain').append(
                     "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td>" + data.d[i].CODE + "</td><td style='color:blue'>" + data.d[i].TITLE + "</td><td style='text-align:center;color:red'><b>" + data.d[i].STK_QTY + "</b></td><td>" + data.d[i].JEWELLERY_NAME + "</td><td>" + data.d[i].DESIGN_NAME +
-                    "</td><td>" + data.d[i].COLLECTIONS_NAME + "</td>" + "<td>" + "<img src='../images/static/edit.png' alt='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
-                    "<td><img src='../images/static/delete.png' alt='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
-                    "<td>" + "<img src='../images/static/upload.png' alt='Upload Image' class='uploadButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnUpload' value='Upload' style='margin-right:5px;margin-left:5px'/>" + "</td>" +
-                    "<td><img src='../images/static/barcode.png' alt='Print Barcode' class='barcodeButton handcursor' data-id='" + data.d[i].ID + "' id='btnBarcode' value='Barcode' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+                    "</td><td>" + data.d[i].COLLECTIONS_NAME + "</td>" + "<td style='text-align:center;'>" + "<img src='../images/static/edit.png' alt='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
+                    "<td style='text-align:center;'><img src='../images/static/delete.png' alt='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
+                    "<td style='text-align:center;'>" + "<img src='../images/static/upload.png' alt='Upload Image' class='uploadButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnUpload' value='Upload' style='margin-right:5px;margin-left:5px'/>" + "</td>" +
+                    "<td style='text-align:center;'>" + "<img src='../images/static/report.png' alt='Item Ledger Report' class='reportButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnReport' value='Report' style='margin-right:5px;margin-left:5px'/>" + "</td>" +
+                    "<td style='text-align:center;'><img src='../images/static/barcode.png' alt='Print Barcode' class='barcodeButton handcursor' data-id='" + data.d[i].ID + "' id='btnBarcode' value='Barcode' style='margin-right:5px;margin-left:5px'/> </td></tr>");
             }
             $('#tablemain').append("</tbody>");
             $('#tablemain').DataTable({
@@ -247,7 +248,7 @@ $(function () {
     });
 });
 
-function LoadJewelleryCombo(data) {    
+function LoadJewelleryCombo(data) {
     var options = [];
     options.push('<option value="',
           '0', '">',
@@ -1038,7 +1039,7 @@ $(function () {
             type: "Post",
             contentType: "application/json; charset=utf-8",
             url: "CatalogMaster.aspx/UpdateCatalogImageStatus",
-            data: "{id: " + catalogid + ", str: '"+ phyimage +"'}",
+            data: "{id: " + catalogid + ", str: '" + phyimage + "'}",
             dataType: "json",
             success: function (data) {
                 for (var i = 0; i < data.d.length; i++) {
@@ -1061,12 +1062,62 @@ $(function () {
 
     $("#btnCloseImgPreview").click(function () {
         $('#divimgpreview').hide();
-    });  
+    });
 
-    $(document).on("click", ".previewButtonImage", function () {    
+    $(document).on("click", ".previewButtonImage", function () {
         var phyimage = $(this).attr("data-id");
         $('#imgpreview').attr("src", "../images/upload/" + phyimage);
         $('#divimgpreview').show();
+    });
+
+    $(document).on("click", ".reportButton", function () {
+        var id = $(this).attr("data-id");
+        console.log(id);
+        //alert(id);      
+
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "CatalogMaster.aspx/GetItemLedgerData",
+            data: '{id: ' + id + '}',
+            dataType: "json",
+            success: function (data) {
+                var shtml = '';
+                $('#tableprint thead').remove();
+                $('#tableprint tbody').remove();
+                shtml = shtml + "<thead>";
+                shtml = shtml + "<tr><th>Sl No</th><th>Trans No</th><th>Trans Date</th><th>Trans Type</th><th>In Qty</th><th>Out Qty</th><th>Bal Qty</th></tr>";
+                shtml = shtml + "</thead>";
+                shtml = shtml + "<tbody>";
+                for (var i = 0; i < data.d.length; i++) {
+                    $('#lblfilter').text("Item Ledger Details : " + data.d[i].TITLE);
+                    shtml = shtml + "<tr><td style='text-align:center;'>" + data.d[i].ID + "</td>";
+                    shtml = shtml + "<td style='text-align:center;'>" + data.d[i].TRANS_NO + "</td>";
+                    shtml = shtml + "<td>" + data.d[i].TRANS_DATE + "</td>";
+                    shtml = shtml + "<td>" + data.d[i].TRANS_TYPE + "</td>";
+                    shtml = shtml + "<td style='text-align:center;color:blue'><b>" + data.d[i].IN_QTY + "</b></td>";
+                    shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].OUT_QTY + "</b></td>";
+                    shtml = shtml + "<td style='text-align:center;color:brown'><b>" + data.d[i].BAL_QTY + "</b></td><tr>";
+
+                }
+                shtml = shtml + "</tbody>";
+                $('#tableprint').append(shtml);
+                $('#printdiv').show();
+                var divToPrint = document.getElementById("printdiv");
+                newWin = window.open("");
+                newWin.document.write(printdiv.outerHTML);
+                $('#printdiv').hide();
+                newWin.print();
+
+
+                document.getElementById("loader").style.display = "none";
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                document.getElementById("loader").style.display = "none";
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
     });
 });
 
@@ -1157,7 +1208,7 @@ function ShowUploadedFiles() {
 
             }
             $('#tableupload').append("</tbody>");
-           
+
         },
         error: function () {
             alert("Error while Showing update data");
