@@ -1,6 +1,7 @@
 ﻿var Datalodaing = 0;
 $(document).ready(function () {
     //getDetails();
+    $("#masterdiv").removeClass("container");
 });
 
 $(function () {

@@ -7,139 +7,138 @@
         .filters .dropdown-menu > li > a {
             display: block;
             padding: 2px 15px;
-            clear: both; 
-            font-weight: 400;          
-            line-height: 1.5; 
+            clear: both;
+            font-weight: 400;
+            line-height: 1.5;
             color: #000000;
             white-space: nowrap;
         }
 
-        .handcursor{
-	        cursor:pointer;
-	        cursor:hand;
+        .handcursor {
+            cursor: pointer;
+            cursor: hand;
         }
     </style>
     <link href="../css/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <link href="../css/ajaxloader.css" rel="stylesheet" />
-    <link href="../css/bootstrap-select.css" rel="stylesheet" />    
+    <link href="../css/bootstrap-select.css" rel="stylesheet" />
     <script src="../scripts/jquery.dataTables.min.js"></script>
-    <script src="../scripts/dataTables.bootstrap4.min.js"></script> 
-     <script src="../scripts/AjaxFileupload.js"></script>
-     <script src="../scripts/popper.min.js"></script>
-    <script src="../scripts/bootstrap-select.min.js"></script>    
-    
+    <script src="../scripts/dataTables.bootstrap4.min.js"></script>
+    <script src="../scripts/AjaxFileupload.js"></script>
+    <script src="../scripts/popper.min.js"></script>
+    <script src="../scripts/bootstrap-select.min.js"></script>
+
     <script src="../scripts/app/catalogmaster.js?v=1"></script>
     <div id="loader"></div>
-    <div class="col-lg-12">
+    <div class="col-lg-12" id="mainlistingdiv">
         <div class="panel panel-default">
             <div class="row">
                 <div class="col-2">
                     <h2>Catalog</h2>
-                    
                 </div>
                 <div class="col-10">
                     <input type="text" name="SEARCH" id="txtSearch" class="form-control" placeholder="Search by Description.." style="width: 35%; display: inline; margin-right: 10px;" />
-                    <select name="cmbRows" id="cmbRows" class="form-control" style="width: 110px;display: inline;margin-right: 10px;">
+                    <select name="cmbRows" id="cmbRows" class="form-control" style="width: 110px; display: inline; margin-right: 10px;">
                         <option value="20">Last 20</option>
                         <option value="50">Last 50</option>
                         <option value="100">Last 100</option>
                         <option value="0">All Items</option>
                     </select>
                     <button type="button" id="btnSearch" class="btn btn-success" style="display: inline; margin-right: 10px; margin-top: -5px">Search</button>
-                    <button type="button" id="btnAdvanced" class="btn btn-primary" style="display: inline; margin-top: -5px;margin-right: 10px" data-toggle="collapse" data-target="#democollapseBtn" aria-expanded="false" aria-controls="democollapseBtn">More Filters</button>
-                    <button type="button" id="btnClearfilter" class="btn btn-danger" style="display: inline; margin-top: -5px;margin-right: 10px">Reset Filters</button>                    
+                    <button type="button" id="btnAdvanced" class="btn btn-primary" style="display: inline; margin-top: -5px; margin-right: 10px" data-toggle="collapse" data-target="#democollapseBtn" aria-expanded="false" aria-controls="democollapseBtn">More Filters</button>
+                    <button type="button" id="btnClearfilter" class="btn btn-danger" style="display: inline; margin-top: -5px; margin-right: 10px">Reset Filters</button>
                     <button type="button" id="btnAddNew" class="btn btn-success addNewButton" style="position: relative; float: right;">Add New</button>
                 </div>
             </div>
 
-            <div class="collapse" id="democollapseBtn" style="margin-top: 10px;margin-bottom: 10px">
-                    <div class="card card-body">
-                        <div class="row">
+            <div class="collapse" id="democollapseBtn" style="margin-top: 10px; margin-bottom: 10px">
+                <div class="card card-body">
+                    <div class="row">
 
-                            <div class="col-6 col-md-4 col-lg-4">
-                                <label>SKU</label>
-                                <input type="text" id="txtSku" class="form-control" placeholder="Search by SKU" />
-                            </div>
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <label>SKU</label>
+                            <input type="text" id="txtSku" class="form-control" placeholder="Search by SKU" />
+                        </div>
 
-                            <div class="col-6 col-md-4 col-lg-4">
-                                <label>Code</label>
-                                <input type="text" id="txtCode" class="form-control" placeholder="Search by Code" />
-                            </div>
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <label>Code</label>
+                            <input type="text" id="txtCode" class="form-control" placeholder="Search by Code" />
+                        </div>
 
-                            <div class="col-6 col-md-4 col-lg-4">
-                                <label>Jewellery</label>
-                                <select id="cmbJewellery" multiple data-live-search="true" class="filters">
-                                </select>
-                            </div>
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <label>Jewellery</label>
+                            <select id="cmbJewellery" multiple data-live-search="true" class="filters">
+                            </select>
+                        </div>
 
-                            <div class="col-6 col-md-4 col-lg-4">
-                                <label>Design</label>
-                                <select id="cmbDesign" multiple data-live-search="true" class="filters">
-                                </select>
-                            </div>
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <label>Design</label>
+                            <select id="cmbDesign" multiple data-live-search="true" class="filters">
+                            </select>
+                        </div>
 
-                            <div class="col-6 col-md-4 col-lg-4">
-                                <label>Collection</label>
-                                <select id="cmbCollection" multiple data-live-search="true" class="filters">
-                                </select>
-                            </div>
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <label>Collection</label>
+                            <select id="cmbCollection" multiple data-live-search="true" class="filters">
+                            </select>
+                        </div>
 
-                            <div class="col-6 col-md-4 col-lg-4">
-                                <label>Material</label>
-                                <select id="cmbMaterial" multiple data-live-search="true" class="filters">
-                                </select>
-                            </div>
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <label>Material</label>
+                            <select id="cmbMaterial" multiple data-live-search="true" class="filters">
+                            </select>
+                        </div>
 
-                            <div class="col-6 col-md-4 col-lg-4">
-                                <label>Occasion</label>
-                                <select id="cmbOccasion" multiple data-live-search="true" class="filters">
-                                </select>
-                            </div>
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <label>Occasion</label>
+                            <select id="cmbOccasion" multiple data-live-search="true" class="filters">
+                            </select>
+                        </div>
 
-                            <div class="col-6 col-md-4 col-lg-4">
-                                <label>Gram Slab</label>
-                                <select id="CmbGramSlab" multiple data-live-search="true" class="filters">
-                                </select>
-                            </div>
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <label>Gram Slab</label>
+                            <select id="CmbGramSlab" multiple data-live-search="true" class="filters">
+                            </select>
+                        </div>
 
-                            <div class="col-6 col-md-4 col-lg-4">
-                                <label>Karat</label>                                
-                                <select id="cmbKarat" multiple data-live-search="true" class="filters">
-                                </select>
-                            </div>                            
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <label>Karat</label>
+                            <select id="cmbKarat" multiple data-live-search="true" class="filters">
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
 
-            <!-- /.panel-heading -->
-            <div class="panel-body" id="maindiv">
-                <div class="table-responsive" id="griddiv">
-                    <table id="tablemain" class="table table-striped table-bordered" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th>SKU</th>
-                                <th>Code</th>
-                                <th>Description</th>
-                                <th>Stock</th>
-                                <th>Jewellery</th>
-                                <th>Design</th>
-                                <th>Collection</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body" id="maindiv">
+            <div class="table-responsive" id="griddiv">
+                <table id="tablemain" class="table table-striped table-bordered" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Code</th>
+                            <th>Description</th>
+                            <th>Stock</th>
+                            <th>Jewellery</th>
+                            <th>Design</th>
+                            <th>Collection</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+
     <!-- For Modal Popup  -->
     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="PopupModal">
         <div class="modal-dialog  modal-lg" role="document">
@@ -330,9 +329,9 @@
                     </div>
                 </div>
                 <div style="float: left; padding-left: 10px">
-                <span style="padding-left: 10px">
-                     <%--Progress bar--%> 
-                    <img id="loading" src="../images/static/loading.gif" style="display: none;"></span>
+                    <span style="padding-left: 10px">
+                        <%--Progress bar--%>
+                        <img id="loading" src="../images/static/loading.gif" style="display: none;"></span>
                 </div>
                 <div class="modal-footer">
                     <asp:FileUpload ID="fileToUpload" runat="server" ClientIDMode="Static" />
