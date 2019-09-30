@@ -181,6 +181,7 @@
     <Content Include="Pages\Search.aspx" />
     <Content Include="Pages\Stock.aspx" />
     <Content Include="Pages\StockEntryRegister.aspx" />
+    <Content Include="Pages\StockStatement.aspx" />
     <Content Include="Pages\UserDashboard.aspx" />
     <Content Include="Pages\UserLogin.aspx" />
     <Content Include="Pages\UserMaster.aspx" />
@@ -213,6 +214,7 @@
     <Content Include="scripts\app\search.js" />
     <Content Include="scripts\app\stockentry.js" />
     <Content Include="scripts\app\stockentryregister.js" />
+    <Content Include="scripts\app\stockstatement.js" />
     <Content Include="scripts\app\usermaster.js" />
     <Content Include="scripts\baguetteBox.min.js" />
     <Content Include="scripts\bootstrap-datepicker.min.js" />
@@ -240,6 +242,7 @@
     <Compile Include="DAO\OutwardTypeMasterDAO.cs" />
     <Compile Include="DAO\SearchItemDAO.cs" />
     <Compile Include="DAO\StockEntryDAO.cs" />
+    <Compile Include="DAO\StockStatementDAO.cs" />
     <Compile Include="Models\BannerImageEntity.cs" />
     <Compile Include="Models\CatalogDetailsEntity.cs" />
     <Compile Include="Models\CatalogImageEntity.cs" />
@@ -256,6 +259,7 @@
     <Compile Include="Models\SearchItemQueryEntity.cs" />
     <Compile Include="Models\StockEntryEntity.cs" />
     <Compile Include="Models\StockEntryRegisterParamEntity.cs" />
+    <Compile Include="Models\StockStatementParamEntity.cs" />
     <Compile Include="Models\TrendingEntity.cs" />
     <Compile Include="Pages\Banner.aspx.cs">
       <DependentUpon>Banner.aspx</DependentUpon>
@@ -511,6 +515,13 @@
     </Compile>
     <Compile Include="Pages\StockEntryRegister.aspx.designer.cs">
       <DependentUpon>StockEntryRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\StockStatement.aspx.cs">
+      <DependentUpon>StockStatement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\StockStatement.aspx.designer.cs">
+      <DependentUpon>StockStatement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\UserDashboard.aspx.cs">
       <DependentUpon>UserDashboard.aspx</DependentUpon>

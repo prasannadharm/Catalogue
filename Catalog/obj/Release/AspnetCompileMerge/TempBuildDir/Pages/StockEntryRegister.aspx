@@ -7,19 +7,19 @@
         .filters .dropdown-menu > li > a {
             display: block;
             padding: 2px 15px;
-            clear: both; 
-            font-weight: 400;          
-            line-height: 1.5; 
+            clear: both;
+            font-weight: 400;
+            line-height: 1.5;
             color: #000000;
             white-space: nowrap;
         }
 
-        .handcursor{
-	        cursor:pointer;
-	        cursor:hand;
+        .handcursor {
+            cursor: pointer;
+            cursor: hand;
         }
     </style>
-    <link href="../css/bootstrap-select.css" rel="stylesheet" />    
+    <link href="../css/bootstrap-select.css" rel="stylesheet" />
     <link href="../css/bootstrap-datepicker3.css" rel="stylesheet" />
     <link href="../css/jquery-ui.min.css" rel="stylesheet" />
     <link href="../css/dataTables.bootstrap4.min.css" rel="stylesheet" />
@@ -30,7 +30,7 @@
     <script src="../scripts/popper.min.js"></script>
     <script src="../scripts/bootstrap-datepicker.min.js"></script>
     <script src="../scripts/jquery-ui.min.js"></script>
-    <script src="../scripts/bootstrap-select.min.js"></script>    
+    <script src="../scripts/bootstrap-select.min.js"></script>
 
     <script src="../scripts/app/stockentryregister.js"></script>
     <div id="loader"></div>
@@ -182,7 +182,7 @@
                 </div>
             </div>
 
-            
+
             <div style="height: 10px">
             </div>
 
@@ -248,7 +248,7 @@
                 </div>
                 <div class="col-sm-0  col-md-0 col-lg-3">
                 </div>
-            </div>            
+            </div>
 
             <div style="height: 10px">
             </div>
@@ -377,17 +377,25 @@
         <div class="panel panel-default">
             <div class="row">
                 <div class="col-12">
-                    <h2 style='color: blue;display:inline'>Stock Entry Register</h2>
-                    <label style="display:inline;margin-left:50px;margin-right:5px">From</label>
-                    <label id="lbldatefrom" style="display:inline;margin-right:5px">01-10-2019</label>
-                    <label style="display:inline;margin-right:5px">To</label>
-                    <label id="lbldateto" style="display:inline;margin-right:5px">30-10-2019</label>
+                    <h2 style='color: blue; display: inline'>Stock Entry Register</h2>
+                    <label style="display: inline; margin-left: 50px; margin-right: 5px">From</label>
+                    <label id="lbldatefrom" style="display: inline; margin-right: 5px">01-10-2019</label>
+                    <label style="display: inline; margin-right: 5px">To</label>
+                    <label id="lbldateto" style="display: inline; margin-right: 5px">30-10-2019</label>
                 </div>
-            </div>            
-            <div style="height: 30px">
+            </div>
+            <div style="height: 15px">
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label style="display: inline; margin-right: 5px">Filter : </label>
+                    <label id="lblfilter" style="display: inline; margin-right: 5px;color:brown"></label>
+                </div>
+            </div>
+            <div style="height: 15px">
             </div>
             <div id="divgridprint">
-                <table id="tableprint" style="width: 100%" border="1">                                    
+                <table id="tableprint" style="width: 100%" border="1">
                 </table>
             </div>
         </div>

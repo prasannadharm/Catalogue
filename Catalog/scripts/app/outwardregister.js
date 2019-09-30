@@ -330,6 +330,10 @@ function generatereport() {
         filtertext = filtertext.substring(0, filtertext.length - 1);
     }
 
+    if ($('#chkPending').is(":checked")) {
+        filtertext = filtertext + "; Show Pending Items only.";
+    }
+
     $('#lblfilter').text(filtertext);
 
 

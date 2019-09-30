@@ -265,6 +265,12 @@ $(function () {
             return false;
         }
 
+        if (subItemsList == null || subItemsList == undefined || subItemsList.length <= 0) {
+            alert("Please add Jewellery Items.");
+            $("#txtSearchItem").focus();
+            return false;
+        }
+
         var ledname = '';
         var ledid = '0';
         document.getElementById("loader").style.display = "block";
@@ -431,7 +437,7 @@ $(function () {
                 newWin.document.write(printdiv.outerHTML);
                 $('#printdiv').hide();
                 newWin.print();
-                newWin.close();
+                //newWin.close();
                 
             },
             error: function () {
@@ -460,6 +466,12 @@ $(function () {
         if (isDate($("#TRANS_DATE").val()) == false) {
             alert('Please enter valid Stock entry date');
             $("#TRANS_DATE").focus();
+            return false;
+        }
+
+        if (subItemsList == null || subItemsList == undefined || subItemsList.length <= 0) {
+            alert("Please add Jewellery Items.");
+            $("#txtSearchItem").focus();
             return false;
         }
 

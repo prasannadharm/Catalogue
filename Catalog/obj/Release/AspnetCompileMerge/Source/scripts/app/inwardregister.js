@@ -78,7 +78,7 @@
     $("[id$=txt_Ledname]").autocomplete({
         source: function (request, response) {
             $.ajax({
-                url: "OutwardRegister.aspx/GetLedgersbyName",
+                url: "InwardRegister.aspx/GetLedgersbyName",
                 data: "{ 'str': '" + request.term + "'}",
                 dataType: "json",
                 type: "POST",
@@ -107,7 +107,7 @@
 
     $.ajax({
         type: "POST",
-        url: "OutwardRegister.aspx/GetDropdownLisData",
+        url: "InwardRegister.aspx/GetDropdownLisData",
         data: '{}',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -120,15 +120,15 @@
 
     $.ajax({
         type: "POST",
-        url: "OutwardRegister.aspx/GetActiveOutwardTypeList",
+        url: "InwardRegister.aspx/GetActiveInwardTypeList",
         data: '{}',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: LoadOutwardTypeCombo
+        success: LoadInwardTypeCombo
     });
 })
 
-function LoadOutwardTypeCombo(data) {
+function LoadInwardTypeCombo(data) {
     var options = [];
     options.push('<option value="',
           "0", '">',
@@ -138,7 +138,7 @@ function LoadOutwardTypeCombo(data) {
           data.d[i].ID, '">',
           data.d[i].NAME, '</option>');
     }
-    $("#cmb_OutwardType").html(options.join(''));
+    $("#cmb_InwardType").html(options.join(''));
 }
 
 function generatereport() {
@@ -196,13 +196,8 @@ function generatereport() {
     obj.SKU = $("#txt_SKU").val();
     obj.CODE = $("#txt_Code").val();
     obj.DESC = $("#txt_TitleDesc").val();
-    obj.OUT_TYPE_ID = $("#cmb_OutwardType").val();
-    if ($('#chkPending').is(":checked")) {
-        obj.SHOW_PENDING_ONLY = true;
-    }
-    else {
-        obj.SHOW_PENDING_ONLY = false;
-    }
+    obj.IN_TYPE_ID = $("#cmb_InwardType").val();
+
     var strjewel = [];
     $('#cmbJewellery > option:selected').each(function () {
         strjewel.push($(this).val());
@@ -248,7 +243,7 @@ function generatereport() {
 
     var filtertext = '';
     filtertext = "Date From : " + $("#dtpFrom").val();
-    filtertext = filtertext +  " To " + $("#dtpTo").val();
+    filtertext = filtertext + " To " + $("#dtpTo").val();
 
     if ($("#txt_From_No").val() > 0 || $("#txt_To_No").val() > 0) {
         filtertext = filtertext + "; No From :" + $("#txt_From_No").val() + " To " + $("#txt_To_No").val();
@@ -258,8 +253,8 @@ function generatereport() {
         filtertext = filtertext + "; Ledger :" + $("#ContentPlaceHolder1_txt_Ledname").val();
     }
 
-    if ($.trim($("#cmb_OutwardType").val()) > 0) {
-        filtertext = filtertext + "; Outward Type :" + $("#cmb_OutwardType option:selected").text();
+    if ($.trim($("#cmb_InwardType").val()) > 0) {
+        filtertext = filtertext + "; Inward Type :" + $("#cmb_InwardType option:selected").text();
     }
 
     if ($.trim($("#txt_SKU").val()) != '') {
@@ -336,7 +331,7 @@ function generatereport() {
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: "OutwardRegister.aspx/GetOutwardRegisterData",
+        url: "InwardRegister.aspx/GetInwardRegisterData",
         data: '{obj: ' + JSON.stringify(obj) + '}',
         dataType: "json",
         success: function (data) {
@@ -347,7 +342,7 @@ function generatereport() {
             $('#tableprint thead').remove();
             $('#tableprint tbody').remove();
             shtml = shtml + "<thead>";
-            shtml = shtml + "<tr><th>Trans No</th><th>Trans Date</th><th>Ref No</th><th>Ledger</th><th>Outward Type</th><th>Remarks</th><th>Void</th><th>Created By</th><th>Modified By</th></tr>";
+            shtml = shtml + "<tr><th>Trans No</th><th>Trans Date</th><th>Ref No</th><th>Ledger</th><th>Inward Type</th><th>Remarks</th><th>Void</th><th>Created By</th><th>Modified By</th></tr>";
             shtml = shtml + "</thead>";
             shtml = shtml + "<tbody>";
             for (var i = 0; i < data.d.length; i++) {
@@ -360,7 +355,7 @@ function generatereport() {
                     shtml = shtml + "<td style='text-align:center'>" + data.d[i].TRANS_DATE + "</td>";
                     shtml = shtml + "<td style='text-align:center'>" + data.d[i].REF_NO + "</td>";
                     shtml = shtml + "<td style='color:blue'><b>" + data.d[i].LED_NAME + "</b></td>";
-                    shtml = shtml + "<td style='text-align:center'>" + data.d[i].OUT_TYPE_NAME + "</td>";
+                    shtml = shtml + "<td style='text-align:center'>" + data.d[i].IN_TYPE_NAME + "</td>";
                     shtml = shtml + "<td>" + data.d[i].REMARKS_M + "</td>";
                     shtml = shtml + "<td style='text-align:center;'>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td>";
                     shtml = shtml + "<td>" + data.d[i].CREATEDBY + "</td>";
@@ -368,13 +363,7 @@ function generatereport() {
                     shtml = shtml + "<tr><td colspan='3'>";
                     shtml = shtml + "<table class='table table-striped table-bordered' style='width: 100%' border='1'>";
                     shtml = shtml + "<thead>";
-                    if (data.d[i].RETURNABLE == true) {
-                        shtml = shtml + "<tr><th>SKU</th><th>Code</th><th>Title Desc.</th><th>Qty</th><th>Pend. Qty</th><th>Remarks</th></tr>";
-                    }
-                    else
-                    {
-                        shtml = shtml + "<tr><th>SKU</th><th>Code</th><th>Title Desc.</th><th>Qty</th><th>Remarks</th></tr>";
-                    }
+                    shtml = shtml + "<tr><th>SKU</th><th>Code</th><th>Title Desc.</th><th>Qty</th><th>Out No</th><th>Remarks</th></tr>";
                     shtml = shtml + "</thead>";
                     shtml = shtml + "<tbody>";
                 }
@@ -382,9 +371,7 @@ function generatereport() {
                 shtml = shtml + "<td>" + data.d[i].CODE + "</td>";
                 shtml = shtml + "<td><b>" + data.d[i].CATALOG_TITLE + "</b></td>";
                 shtml = shtml + "<td style='text-align:center;color:blue'><b>" + data.d[i].QTY + "</b></td>";
-                if (data.d[i].RETURNABLE == true) {
-                    shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].BAL_QTY + "</b></td>";
-                }
+                shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].OUT_TRANS_NO + "</b></td>";
                 shtml = shtml + "<td>" + data.d[i].REMARKS + "</td></tr>";
             }
             shtml = shtml + "</tboby></table></td></tr>"; //For Sub Table
@@ -420,7 +407,7 @@ function clearfilter() {
     $("#txt_SKU").val('');
     $("#txt_Code").val('');
     $("#txt_TitleDesc").val('');
-    $("#cmb_OutwardType").val('0');
+    $("#cmb_InwardType").val('0');
 
     $("#cmbJewellery").val('default').selectpicker("refresh");
     $("#cmbDesign").val('default').selectpicker("refresh");
@@ -429,9 +416,6 @@ function clearfilter() {
     $("#cmbOccasion").val('default').selectpicker("refresh");
     $("#CmbGramSlab").val('default').selectpicker("refresh");
     $("#cmbKarat").val('default').selectpicker("refresh");
-
-    $("#chkPending").prop('checked', true);
-
     $('#ContentPlaceHolder1_txt_Ledname').focus();
 }
 

@@ -124,7 +124,7 @@
                                 <th>Code</th>
                                 <th>Description</th>
                                 <th>Stock</th>
-                                <th>Jelwellery</th>
+                                <th>Jewellery</th>
                                 <th>Design</th>
                                 <th>Collection</th>
                                 <th></th>

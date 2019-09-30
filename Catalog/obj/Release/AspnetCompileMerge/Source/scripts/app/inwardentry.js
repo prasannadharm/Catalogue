@@ -41,7 +41,7 @@ $(document).ready(function () {
         var key = e.which;
         if (key == 13)  // the enter key code
         {
-            $('#REF_NO').focus();
+            searchpendingItem();
         }
     });
 
@@ -49,20 +49,12 @@ $(document).ready(function () {
         var key = e.which;
         if (key == 13)  // the enter key code
         {
-            $('#txtSearchItem').focus();
+            $('#INWARD_TYPE').focus();
         }
-    });
+    });   
 
-    $('#txtSearchItem').keypress(function (e) {
-        var key = e.which;
-        if (key == 13)  // the enter key code
-        {
-            searchItem();
-        }
-    });
-
-    $("#btnSearchItem").click(function () {
-        searchItem();
+    $("#btnFetch").click(function () {
+        searchpendingItem();
     });
 
     $("#btnCloseImgPreview").click(function () {
@@ -78,15 +70,15 @@ $(document).ready(function () {
 $(function () {
     $.ajax({
         type: "POST",
-        url: "Outward.aspx/GetActiveOutwardTypeList",
+        url: "Inward.aspx/GetActiveInwardTypeList",
         data: '{}',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: LoadOutwardTypeCombo
+        success: LoadInwardTypeCombo
     });
 });
 
-function LoadOutwardTypeCombo(data) {
+function LoadInwardTypeCombo(data) {
     var options = [];
     options.push('<option value="',
           "0", '">',
@@ -96,7 +88,7 @@ function LoadOutwardTypeCombo(data) {
           data.d[i].ID, '">',
           data.d[i].NAME, '</option>');
     }
-    $("#OUTWARD_TYPE").html(options.join(''));
+    $("#INWARD_TYPE").html(options.join(''));
 }
 
 $(function () {
@@ -113,7 +105,8 @@ $(function () {
         $("#ContentPlaceHolder1_LED_ID").val('');
         $('#REMARKS').val('');
         $('#REF_NO').val('');
-        $('#OUTWARD_TYPE').val(0);
+        $('#INWARD_TYPE').val(0);
+        $("#ContentPlaceHolder1_LED_NAME").prop("disabled", false);
 
         subItemsList = [];
         rebuildSubTableGrid()
@@ -121,10 +114,10 @@ $(function () {
         $('#tablesub').append("<tbody>");
         $('#tablesub').append("</tbody>");
 
-        $("#subheaderdiv").html("<h2 style='color:blue'>Outward Entry -> Add Outward Entry</h2>");
+        $("#subheaderdiv").html("<h2 style='color:blue'>Inward Entry -> Add Inward Entry</h2>");
 
         $.ajax({
-            url: "Outward.aspx/GetLatestTrasnsactionNumber",
+            url: "Inward.aspx/GetLatestTrasnsactionNumber",
             data: '{}',
             dataType: "json",
             type: "POST",
@@ -155,7 +148,7 @@ $(function () {
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
-            url: "Outward.aspx/CheckVoidOutwardEnrty",
+            url: "Inward.aspx/CheckVoidInwardEnrty",
             data: '{id: ' + id + '}',
             dataType: "json",
             success: function (data) {
@@ -174,7 +167,7 @@ $(function () {
                 $('#btnUpdate').show();
                 $('#mainlistingdiv').hide();
                 $('#mainldetaildiv').show();
-                $("#subheaderdiv").html("<h2 style='color:blue'>Outward Entry -> Edit Outward Entry</h2>");
+                $("#subheaderdiv").html("<h2 style='color:blue'>Inward Entry -> Edit Inward Entry</h2>");
                 subItemsList = [];
                 rebuildSubTableGrid();
                 $('#tablesub tbody').remove();
@@ -186,14 +179,15 @@ $(function () {
                 $("#ContentPlaceHolder1_LED_ID").val('');
                 $('#REMARKS').val('');
                 $('#REF_NO').val('');
-                $('#OUTWARD_TYPE').val(0);
+                $('#INWARD_TYPE').val(0);
+                $("#ContentPlaceHolder1_LED_NAME").prop("disabled", true);
 
                 //$("#btnUpdate").attr("edit-id", id);
                 //alert(id);  //getting the row id 
                 $.ajax({
                     type: "Post",
                     contentType: "application/json; charset=utf-8",
-                    url: "Outward.aspx/EditData",
+                    url: "Inward.aspx/EditData",
                     data: '{id: ' + id + '}',
                     dataType: "json",
                     success: function (data) {
@@ -204,20 +198,26 @@ $(function () {
                             $('#TRANS_DATE').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
                             $("#REMARKS").val(data.d[0].REMARKS_MAIN);
                             $("#REF_NO").val(data.d[0].REF_NO);
-                            $('#OUTWARD_TYPE').val(data.d[0].OUT_TYPE_ID);
-                            $("#subheaderdiv").html("<h2 style='color:blue'>Outward Entry -> Edit Outward Entry No: " + data.d[0].TRANS_NO + "</h2>");
+                            $('#INWARD_TYPE').val(data.d[0].IN_TYPE_ID);
+                            $("#subheaderdiv").html("<h2 style='color:blue'>Inward Entry -> Edit Inward Entry No: " + data.d[0].TRANS_NO + "</h2>");
                         }
                         for (var i = 0; i < data.d.length; i++) {
                             var objdetail = {};
-                            objdetail.ID = data.d[i].CATALOG_ID;
+                            objdetail.CATALOG_ID = data.d[i].CATALOG_ID;
                             objdetail.SKU = data.d[i].SKU;
                             objdetail.CODE = data.d[i].CODE;
-                            objdetail.TITLE = data.d[i].CATALOG_TITLE;
+                            objdetail.CATALOG_TITLE = data.d[i].CATALOG_TITLE;
                             objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
                             objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
                             objdetail.GENID = data.d[i].GENID;
                             objdetail.QTY = data.d[i].QTY;
                             objdetail.REMARKS = data.d[i].REMARKS;
+                            objdetail.OUT_TRANS_MAIN_ID = data.d[i].OUT_TRANS_MAIN_ID;
+                            objdetail.OUT_TRANS_NO = data.d[i].OUT_TRANS_NO;
+                            objdetail.OUT_GENID = data.d[i].OUT_GENID;
+                            objdetail.OUT_QTY = data.d[i].OUT_QTY;
+                            objdetail.OUT_BAL_QTY = data.d[i].OUT_BAL_QTY;
+                            objdetail.OUT_TRANS_DATE = data.d[i].OUT_TRANS_DATE;
                             subItemsList.push(objdetail);
                         }
                         rebuildSubTableGrid();
@@ -245,7 +245,7 @@ $(function () {
     $("[id$=LED_NAME]").autocomplete({
         source: function (request, response) {
             $.ajax({
-                url: "Outward.aspx/GetLedgersbyName",
+                url: "Inward.aspx/GetLedgersbyName",
                 data: "{ 'str': '" + request.term + "'}",
                 dataType: "json",
                 type: "POST",
@@ -272,23 +272,23 @@ $(function () {
         minLength: 1
     });
 
-    $("#btnSave").click(function () {       
+    $("#btnSave").click(function () {
 
         if ($("#TRANS_NO").val().trim() == "") {
-            alert("Please enter Outward entry No.");
+            alert("Please enter Inward entry No.");
             $("#TRANS_NO").focus();
             return false;
         }
 
         if (isDate($("#TRANS_DATE").val()) == false) {
-            alert('Please enter valid Outward entry date');
+            alert('Please enter valid Inward entry date');
             $("#TRANS_DATE").focus();
             return false;
         }
 
-        if ($("#OUTWARD_TYPE").val() == null || $("#OUTWARD_TYPE").val() == undefined || $("#OUTWARD_TYPE").val() <= 0 || $("#OUTWARD_TYPE").val().trim() == '') {
-            alert("Please Select Outward Type.");
-            $("#OUTWARD_TYPE").focus();
+        if ($("#INWARD_TYPE").val() == null || $("#INWARD_TYPE").val() == undefined || $("#INWARD_TYPE").val() <= 0 || $("#INWARD_TYPE").val().trim() == '') {
+            alert("Please Select Inward Type.");
+            $("#INWARD_TYPE").focus();
             return false;
         }
 
@@ -298,8 +298,7 @@ $(function () {
             return false;
         }
 
-        if (subItemsList == null || subItemsList == undefined || subItemsList.length <= 0)
-        {
+        if (subItemsList == null || subItemsList == undefined || subItemsList.length <= 0) {
             alert("Please add Jewellery Items.");
             $("#txtSearchItem").focus();
             return false;
@@ -309,7 +308,7 @@ $(function () {
         var ledid = '0';
         document.getElementById("loader").style.display = "block";
         $.ajax({
-            url: "Outward.aspx/VerifyLedgerbyName",
+            url: "Inward.aspx/VerifyLedgerbyName",
             data: "{ 'str': '" + $("#ContentPlaceHolder1_LED_NAME").val().trim() + "'}",
             dataType: "json",
             type: "POST",
@@ -334,11 +333,11 @@ $(function () {
                 obj1.TRANS_DATE = $("#TRANS_DATE").val();
                 obj1.REF_NO = $("#REF_NO").val();
                 obj1.REMARKS = $("#REMARKS").val();
-                obj1.OUT_TYPE_NAME = $('#OUTWARD_TYPE :selected').text();
+                obj1.IN_TYPE_NAME = $('#INWARD_TYPE :selected').text();
                 $.ajax({
                     type: "Post",
                     contentType: "application/json; charset=utf-8",
-                    url: "Outward.aspx/InsertData",
+                    url: "Inward.aspx/InsertData",
                     data: '{obj1: ' + JSON.stringify(obj1) + ', obj2: ' + JSON.stringify(subItemsList) + '}',
                     dataType: "json",
                     success: function (data) {
@@ -379,7 +378,7 @@ $(function () {
             $.ajax({
                 type: "Post",
                 contentType: "application/json; charset=utf-8",
-                url: "Outward.aspx/DeleteData",
+                url: "Inward.aspx/DeleteData",
                 data: '{id: ' + id + '}',
                 dataType: "json",
                 success: function (data) {
@@ -407,7 +406,7 @@ $(function () {
             $.ajax({
                 type: "Post",
                 contentType: "application/json; charset=utf-8",
-                url: "Outward.aspx/VoidData",
+                url: "Inward.aspx/VoidData",
                 data: '{id: ' + id + '}',
                 dataType: "json",
                 success: function (data) {
@@ -442,11 +441,11 @@ $(function () {
         $('#lblrefnoPRN').val('');
         $('#lblledNamePRN').val('');
         $('#lblRemarksPRN').val('');
-        $('#lblouttypePRN').val('');
+        $('#lblintypePRN').val('');
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
-            url: "Outward.aspx/EditData",
+            url: "Inward.aspx/EditData",
             data: '{id: ' + id + '}',
             dataType: "json",
             success: function (data) {
@@ -456,14 +455,14 @@ $(function () {
                     $('#lblstkDatePRN').text(data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
                     $("#lblRemarksPRN").text(data.d[0].REMARKS_MAIN);
                     $("#lblrefnoPRN").text(data.d[0].REF_NO);
-                    $('#lblouttypePRN').text(data.d[0].OUT_TYPE_NAME);
+                    $('#lblintypePRN').text(data.d[0].IN_TYPE_NAME);
                 }
 
                 $('#tablesubprn tbody').remove();
                 $('#tablesubprn').append("<tbody>");
                 for (var i = 0; i < data.d.length; i++) {
                     $('#tablesubprn').append(
-                        "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td>" + data.d[i].CODE + "</td><td style='color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='text-align:center;color:red'>" + data.d[i].QTY + "</td><td>" + data.d[i].REMARKS + "</td></tr>");
+                        "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td>" + data.d[i].CODE + "</td><td style='color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='text-align:center;color:red'>" + data.d[i].QTY + "</td><td style='text-align:center;color:blue'>" + data.d[i].OUT_TRANS_NO + "</td><td>" + data.d[i].REMARKS + "</td></tr>");
                 }
                 $('#tablesubprn').append("</tbody>");
                 $('#printdiv').show();
@@ -487,20 +486,20 @@ $(function () {
         var id = $(this).attr("edit-id");
 
         if ($("#TRANS_NO").val().trim() == "") {
-            alert("Please enter Outward entry No.");
+            alert("Please enter Inward entry No.");
             $("#TRANS_NO").focus();
             return false;
         }
 
         if (isDate($("#TRANS_DATE").val()) == false) {
-            alert('Please enter valid Outward entry date');
+            alert('Please enter valid Inward entry date');
             $("#TRANS_DATE").focus();
             return false;
         }
 
-        if ($("#OUTWARD_TYPE").val() == null || $("#OUTWARD_TYPE").val() == undefined || $("#OUTWARD_TYPE").val() <= 0 || $("#OUTWARD_TYPE").val().trim() == '') {
-            alert("Please Select Outward Type.");
-            $("#OUTWARD_TYPE").focus();
+        if ($("#INWARD_TYPE").val() == null || $("#INWARD_TYPE").val() == undefined || $("#INWARD_TYPE").val() <= 0 || $("#INWARD_TYPE").val().trim() == '') {
+            alert("Please Select Inward Type.");
+            $("#INWARD_TYPE").focus();
             return false;
         }
 
@@ -520,7 +519,7 @@ $(function () {
         var ledid = '0';
         document.getElementById("loader").style.display = "block";
         $.ajax({
-            url: "Outward.aspx/VerifyLedgerbyName",
+            url: "Inward.aspx/VerifyLedgerbyName",
             data: "{ 'str': '" + $("#ContentPlaceHolder1_LED_NAME").val().trim() + "'}",
             dataType: "json",
             type: "POST",
@@ -545,12 +544,12 @@ $(function () {
                 obj1.TRANS_DATE = $("#TRANS_DATE").val();
                 obj1.REF_NO = $("#REF_NO").val();
                 obj1.REMARKS = $("#REMARKS").val();
-                obj1.OUT_TYPE_NAME = $('#OUTWARD_TYPE :selected').text();
+                obj1.IN_TYPE_NAME = $('#INWARD_TYPE :selected').text();
 
                 $.ajax({
                     type: "Post",
                     contentType: "application/json; charset=utf-8",
-                    url: "Outward.aspx/UpdatetData",
+                    url: "Inward.aspx/UpdatetData",
                     data: '{obj1: ' + JSON.stringify(obj1) + ', obj2: ' + JSON.stringify(subItemsList) + ', id: ' + id + '}',
                     dataType: "json",
                     success: function (data) {
@@ -587,80 +586,67 @@ $(function () {
     });
 });
 
-function searchItem() {
-    if ($.trim($("#cmbSeacrhField").val()) == '') {
-        alert('Please select search field.');
-        $("#cmbSeacrhField").focus();
+function searchpendingItem() {
+    
+    if ($.trim($("#ContentPlaceHolder1_LED_NAME").val()) == '') {
+        alert('Please select Ledger.');
+        $("#ContentPlaceHolder1_LED_NAME").focus();
         return false;
     }
 
-    if ($.trim($("#cmbSeacrhCondition").val()) == '') {
-        alert('Please select search condition.');
-        $("#cmbSeacrhCondition").focus();
-        return false;
-    }
-
-    if ($.trim($("#txtSearchItem").val()) == '') {
-        alert('Please enter search text.');
-        $("#txtSearchItem").focus();
-        return false;
-    }
-
-    document.getElementById("loader").style.display = "block";
-
-    var obj = {};
-    obj.SEARCHBY = $("#cmbSeacrhField").val();
-    obj.CONDITION = $("#cmbSeacrhCondition").val();
-    obj.SEARCHITEM = $.trim($("#txtSearchItem").val());
+    document.getElementById("loader").style.display = "block";   
 
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: "Outward.aspx/SearchCatalogbyText",
-        data: '{obj: ' + JSON.stringify(obj) + '}',
+        url: "Inward.aspx/GetPendingOutwardEntries",
+        data: "{ 'str': '" + $.trim($("#ContentPlaceHolder1_LED_NAME").val()) + "'}",        
         dataType: "json",
         success: function (data) {
             if (data.d.length <= 0) {
                 alert('No records found.');
-                $("#txtSearchItem").focus();
+                $("#ContentPlaceHolder1_LED_NAME").focus();
                 return false;
-            }
-            else if (data.d.length == 1) {
-                var objdetail = {};
-                objdetail.ID = data.d[0].ID;
-                objdetail.SKU = data.d[0].SKU;
-                objdetail.CODE = data.d[0].CODE;
-                objdetail.TITLE = data.d[0].TITLE;
-                objdetail.PHY_FILE_NAME = data.d[0].PHY_FILE_NAME;
-                objdetail.ORG_FILE_NAME = data.d[0].ORG_FILE_NAME;
-                objdetail.GENID = Math.floor((Math.random() * 1000000) + 1);
-                objdetail.QTY = 1;
-                objdetail.REMARKS = '';
-                subItemsList.push(objdetail);
-                rebuildSubTableGrid();
-                $("#txtSearchItem").val('');
-                $("#txtSearchItem").focus();
-                return false;
-            }
+            }            
             else {
                 tempsubItemsList = [];
                 for (var i = 0; i < data.d.length; i++) {
-                    var objdetail = {};
-                    objdetail.ID = data.d[i].ID;
-                    objdetail.SKU = data.d[i].SKU;
-                    objdetail.CODE = data.d[i].CODE;
-                    objdetail.TITLE = data.d[i].TITLE;
-                    objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
-                    objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
-                    objdetail.GENID = Math.floor((Math.random() * 1000000) + 1);
-                    objdetail.QTY = 1;
-                    objdetail.REMARKS = '';
-                    objdetail.JEWELLERY_NAME = data.d[i].JEWELLERY_NAME;
-                    objdetail.COLLECTIONS_NAME = data.d[i].COLLECTIONS_NAME;
-                    objdetail.DESIGN_NAME = data.d[i].DESIGN_NAME;
-                    tempsubItemsList.push(objdetail);
+                    var fnd = 0
+                    for (var j = 0; j < subItemsList.length; j++) {
+                        if (subItemsList[j].OUT_TRANS_MAIN_ID == data.d[i].OUT_TRANS_MAIN_ID && subItemsList[j].OUT_GENID == data.d[i].OUT_GENID)
+                        {
+                            fnd =1
+                            break;
+                        }
+                    }
+                    if (fnd == 0) {
+                        var objdetail = {};
+                        objdetail.CATALOG_ID = data.d[i].CATALOG_ID;
+                        objdetail.SKU = data.d[i].SKU;
+                        objdetail.CODE = data.d[i].CODE;
+                        objdetail.CATALOG_TITLE = data.d[i].CATALOG_TITLE;
+                        objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
+                        objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
+                        objdetail.GENID = Math.floor((Math.random() * 1000000) + 1);
+                        objdetail.QTY = 1;
+                        objdetail.REMARKS = '';
+                        objdetail.OUT_TRANS_MAIN_ID = data.d[i].OUT_TRANS_MAIN_ID;
+                        objdetail.OUT_TRANS_NO = data.d[i].OUT_TRANS_NO;
+                        objdetail.OUT_GENID = data.d[i].OUT_GENID;
+                        objdetail.OUT_QTY = data.d[i].OUT_QTY;
+                        objdetail.OUT_BAL_QTY = data.d[i].OUT_BAL_QTY;
+                        objdetail.OUT_TRANS_DATE = data.d[i].OUT_TRANS_DATE;
+                        tempsubItemsList.push(objdetail);
+                    }
+                }
+                if (tempsubItemsList.length <= 0)
+                {
+                    alert('No more pending records found.');
+                    $("#ContentPlaceHolder1_LED_NAME").focus();
+                    return false;
                 }
                 rebuildItemSearchTableGrid();
+                $("#ContentPlaceHolder1_LED_NAME").prop("disabled", true);
                 return false;
             }
 
@@ -680,34 +666,37 @@ function rebuildItemSearchTableGrid() {
     $('#tableitemsearch').append("<tbody>");
     for (var i = 0; i < tempsubItemsList.length; i++) {
         $('#tableitemsearch').append(
-            "<tr><td style='text-align:center;color:brown'><b>" + tempsubItemsList[i].SKU + "</b></td><td>" + tempsubItemsList[i].CODE + "</td><td style='color:blue'>" + tempsubItemsList[i].TITLE + "</td>" +
-            "<td>" + tempsubItemsList[i].JEWELLERY_NAME + "</td><td>" + tempsubItemsList[i].COLLECTIONS_NAME + "</td><td>" + tempsubItemsList[i].DESIGN_NAME + "</td>" +
-            "<td style='text-align: center'><img src='../images/static/select.png' alt='Select Record' class='selectButtonSubis handcursor' data-id='" + tempsubItemsList[i].ID + '_' + tempsubItemsList[i].GENID + "' id='btnselectSubIS_" + tempsubItemsList[i].GENID + "' value='Select' style='margin-right:5px;margin-left:5px'/> </td>" +
+            "<tr><td style='text-align:center;color:red'><b>" + tempsubItemsList[i].OUT_TRANS_NO + "</b></td><td>" + tempsubItemsList[i].OUT_TRANS_DATE + "</td>" +
+            "<td style='text-align:center;color:brown'><b>" + tempsubItemsList[i].SKU + "</b></td><td>" + tempsubItemsList[i].CODE + "</td><td style='color:blue'>" + tempsubItemsList[i].CATALOG_TITLE + "</td><td style='text-align:center;color:red'><b>" + tempsubItemsList[i].OUT_BAL_QTY + "</b></td>" +
+            "<td style='text-align: center'><img src='../images/static/select.png' alt='Select Record' class='selectButtonSubis handcursor' data-id='" + tempsubItemsList[i].CATALOG_ID + '_' + tempsubItemsList[i].GENID + "' id='btnselectSubIS_" + tempsubItemsList[i].GENID + "' value='Select' style='margin-right:5px;margin-left:5px'/> </td>" +
             "<td style='text-align: center'><img src='../images/static/imageview.png' alt='Preview' class='previewButtonSubIS handcursor' data-id='" + tempsubItemsList[i].PHY_FILE_NAME + "' id='btnPreviewSubis' value='Preview' style='margin-right:5px;margin-left:5px'/> </td></tr>");
     }
     $('#tableitemsearch').append("</tbody>");
 
-    $("div.mhs h4").html("Search results for " + $('#cmbSeacrhField').val() + " : " + $('#txtSearchItem').val());
-    $("#txtSearchItem").val('');
+    $("div.mhs h4").html("Pending Outward Entries : " + $('#ContentPlaceHolder1_LED_NAME').val());
     $('#divISimgpreview').hide();
     $('#PopupModalItemSearch').modal('show');
     $('#PopupModalItemSearch').focus();
 
     $(".selectButtonSubis").click(function () {
-        var id = this.id.split("_");
-        var newsubItemsList = [];
+        var id = this.id.split("_");        
         for (var i = 0; i < tempsubItemsList.length; i++) {
             if (tempsubItemsList[i].GENID == id[1]) {
                 var objdetail = {};
-                objdetail.ID = tempsubItemsList[i].ID;
+                objdetail.CATALOG_ID = tempsubItemsList[i].CATALOG_ID;
                 objdetail.SKU = tempsubItemsList[i].SKU;
                 objdetail.CODE = tempsubItemsList[i].CODE;
-                objdetail.TITLE = tempsubItemsList[i].TITLE;
+                objdetail.CATALOG_TITLE = tempsubItemsList[i].CATALOG_TITLE;
                 objdetail.PHY_FILE_NAME = tempsubItemsList[i].PHY_FILE_NAME;
                 objdetail.ORG_FILE_NAME = tempsubItemsList[i].ORG_FILE_NAME;
                 objdetail.GENID = tempsubItemsList[i].GENID;
-                objdetail.QTY = 1;
+                objdetail.QTY = tempsubItemsList[i].OUT_BAL_QTY;
                 objdetail.REMARKS = '';
+                objdetail.OUT_TRANS_MAIN_ID = tempsubItemsList[i].OUT_TRANS_MAIN_ID;
+                objdetail.OUT_TRANS_NO = tempsubItemsList[i].OUT_TRANS_NO;
+                objdetail.OUT_GENID = tempsubItemsList[i].OUT_GENID;
+                objdetail.OUT_QTY = tempsubItemsList[i].OUT_QTY;
+                objdetail.OUT_BAL_QTY = tempsubItemsList[i].OUT_BAL_QTY;               
                 subItemsList.push(objdetail);
                 break;
             }
@@ -730,10 +719,11 @@ function rebuildSubTableGrid() {
     $('#tablesub').append("<tbody>");
     for (var i = 0; i < subItemsList.length; i++) {
         $('#tablesub').append(
-            "<tr><td style='text-align:center;color:brown'><b>" + subItemsList[i].SKU + "</b></td><td>" + subItemsList[i].CODE + "</td><td style='color:blue'>" + subItemsList[i].TITLE + "</td>" +
+            "<tr><td style='text-align:center;color:brown'><b>" + subItemsList[i].SKU + "</b></td><td>" + subItemsList[i].CODE + "</td><td style='color:blue'>" + subItemsList[i].CATALOG_TITLE + "</td>" +
             "<td><input type='number' id='txtqty_" + subItemsList[i].GENID + "' class='form-control subqty' value=" + subItemsList[i].QTY + " style='width:80px;text-align:center' /></td>" +
+            "<td style='text-align:center;color:red;padding-top: 15px;'><b>" + subItemsList[i].OUT_BAL_QTY + "</b></td>" +
             "<td><input type='text' id='txtsubremarks_" + subItemsList[i].GENID + "' class='form-control subremarks' value='" + subItemsList[i].REMARKS + "' /></td>" +
-            "<td style='text-align: center'><img src='../images/static/delete.png' alt='Delete Record' class='deleteButtonSub handcursor' data-id='" + subItemsList[i].ID + '_' + subItemsList[i].GENID + "' id='btnDeleteSub_" + subItemsList[i].GENID + "' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
+            "<td style='text-align: center'><img src='../images/static/delete.png' alt='Delete Record' class='deleteButtonSub handcursor' data-id='" + subItemsList[i].CATALOG_ID + '_' + subItemsList[i].GENID + "' id='btnDeleteSub_" + subItemsList[i].GENID + "' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
             "<td style='text-align: center'><img src='../images/static/imageview.png' alt='Preview' class='previewButtonSub handcursor' data-id='" + subItemsList[i].PHY_FILE_NAME + "' id='btnPreviewSub' value='Preview' style='margin-right:5px;margin-left:5px'/> </td></tr>");
     }
     $('#tablesub').append("</tbody>");
@@ -742,7 +732,15 @@ function rebuildSubTableGrid() {
         var id = this.id.split("_");
         for (var i = 0; i < subItemsList.length; i++) {
             if (subItemsList[i].GENID == id[1]) {
-                subItemsList[i].QTY = $(this).val();
+                if ($(this).val() <= subItemsList[i].OUT_BAL_QTY) {
+                    subItemsList[i].QTY = $(this).val();
+                }
+                else
+                {
+                    alert('Qty cannot be greater than Pending Qty.');
+                    $(this).val(subItemsList[i].OUT_BAL_QTY);
+                    subItemsList[i].QTY = subItemsList[i].OUT_BAL_QTY;
+                }
                 return false;
             }
         }
@@ -814,7 +812,7 @@ function getMainGridDetails() {
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: "Outward.aspx/GetData",
+        url: "Inward.aspx/GetData",
         data: '{obj: ' + JSON.stringify(obj) + '}',
         dataType: "json",
         success: function (data) {
@@ -827,7 +825,7 @@ function getMainGridDetails() {
             for (var i = 0; i < data.d.length; i++) {
                 $('#tablemain').append(
                     "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td>" + data.d[i].TRANS_DATE + "</td><td style='center;color:blue'>" + data.d[i].LED_NAME + "</td><td>" +
-                    data.d[i].OUT_TYPE_NAME + "</td><td style='text-align:center;'>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td><td>" + data.d[i].CREATEDBY +
+                    data.d[i].IN_TYPE_NAME + "</td><td style='text-align:center;'>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td><td>" + data.d[i].CREATEDBY +
                     "</td>" + "<td>" + "<img src='../images/static/edit.png' alt='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
                     "<td><img src='../images/static/delete.png' alt='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
                     "<td><img src='../images/static/void.png' alt='Void / Cancel Record' class='voidButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnVoid' value='Void' style='margin-right:5px;margin-left:5px'/> </td>" +

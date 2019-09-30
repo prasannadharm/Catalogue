@@ -197,7 +197,12 @@ function generatereport() {
     obj.CODE = $("#txt_Code").val();
     obj.DESC = $("#txt_TitleDesc").val();
     obj.OUT_TYPE_ID = $("#cmb_OutwardType").val();
-
+    if ($('#chkPending').is(":checked")) {
+        obj.SHOW_PENDING_ONLY = true;
+    }
+    else {
+        obj.SHOW_PENDING_ONLY = false;
+    }
     var strjewel = [];
     $('#cmbJewellery > option:selected').each(function () {
         strjewel.push($(this).val());
@@ -240,6 +245,94 @@ function generatereport() {
         strkarat.push($(this).val());
     });
     obj.KARATIDS = strkarat.join(',');
+
+    var filtertext = '';
+    filtertext = "Date From : " + $("#dtpFrom").val();
+    filtertext = filtertext +  " To " + $("#dtpTo").val();
+
+    if ($("#txt_From_No").val() > 0 || $("#txt_To_No").val() > 0) {
+        filtertext = filtertext + "; No From :" + $("#txt_From_No").val() + " To " + $("#txt_To_No").val();
+    }
+
+    if ($.trim($("#ContentPlaceHolder1_txt_Ledname").val()) != '') {
+        filtertext = filtertext + "; Ledger :" + $("#ContentPlaceHolder1_txt_Ledname").val();
+    }
+
+    if ($.trim($("#cmb_OutwardType").val()) > 0) {
+        filtertext = filtertext + "; Outward Type :" + $("#cmb_OutwardType option:selected").text();
+    }
+
+    if ($.trim($("#txt_SKU").val()) != '') {
+        filtertext = filtertext + "; SKU :" + $("#txt_SKU").val();
+    }
+
+    if ($.trim($("#txt_Code").val()) != '') {
+        filtertext = filtertext + "; Code : " + $("#txt_Code").val();
+    }
+
+    if ($.trim($("#txt_TitleDesc").val()) != '') {
+        filtertext = filtertext + "; Title Desc. : " + $("#txt_TitleDesc").val();
+    }
+
+    if (strjewel.length > 0) {
+        filtertext = filtertext + "; Jewellery : ";
+        $('#cmbJewellery > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strjdesign.length > 0) {
+        filtertext = filtertext + "; Design : ";
+        $('#cmbDesign > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strcoll.length > 0) {
+        filtertext = filtertext + "; Collection : ";
+        $('#cmbCollection > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strmat.length > 0) {
+        filtertext = filtertext + "; Material : ";
+        $('#cmbMaterial > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strocc.length > 0) {
+        filtertext = filtertext + "; Occasion : ";
+        $('#cmbOccasion > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strocc.length > 0) {
+        filtertext = filtertext + "; Gram Slab : ";
+        $('#CmbGramSlab > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strkarat.length > 0) {
+        filtertext = filtertext + "; Karat : ";
+        $('#cmbKarat > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    $('#lblfilter').text(filtertext);
+
+
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
@@ -275,14 +368,23 @@ function generatereport() {
                     shtml = shtml + "<tr><td colspan='3'>";
                     shtml = shtml + "<table class='table table-striped table-bordered' style='width: 100%' border='1'>";
                     shtml = shtml + "<thead>";
-                    shtml = shtml + "<tr><th>SKU</th><th>Code</th><th>Title Desc.</th><th>Qty</th><th>Remarks</th></tr>";
+                    if (data.d[i].RETURNABLE == true) {
+                        shtml = shtml + "<tr><th>SKU</th><th>Code</th><th>Title Desc.</th><th>Qty</th><th>Pend. Qty</th><th>Remarks</th></tr>";
+                    }
+                    else
+                    {
+                        shtml = shtml + "<tr><th>SKU</th><th>Code</th><th>Title Desc.</th><th>Qty</th><th>Remarks</th></tr>";
+                    }
                     shtml = shtml + "</thead>";
                     shtml = shtml + "<tbody>";
                 }
                 shtml = shtml + "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "<b></td>";
                 shtml = shtml + "<td>" + data.d[i].CODE + "</td>";
                 shtml = shtml + "<td><b>" + data.d[i].CATALOG_TITLE + "</b></td>";
-                shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td>";
+                shtml = shtml + "<td style='text-align:center;color:blue'><b>" + data.d[i].QTY + "</b></td>";
+                if (data.d[i].RETURNABLE == true) {
+                    shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].BAL_QTY + "</b></td>";
+                }
                 shtml = shtml + "<td>" + data.d[i].REMARKS + "</td></tr>";
             }
             shtml = shtml + "</tboby></table></td></tr>"; //For Sub Table
@@ -327,6 +429,9 @@ function clearfilter() {
     $("#cmbOccasion").val('default').selectpicker("refresh");
     $("#CmbGramSlab").val('default').selectpicker("refresh");
     $("#cmbKarat").val('default').selectpicker("refresh");
+
+    $("#chkPending").prop('checked', true);
+
     $('#ContentPlaceHolder1_txt_Ledname').focus();
 }
 

@@ -15,12 +15,11 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Transaction -> Stock Enrty &amp; Outward Entry Completed
+                            <td>Transaction -> All Screens Completed
                             </td>
                         </tr>
                         <tr>
-                            <td>Reports -> Stock Entry Register &amp; Outward Enrty Register Completed
-                            </td>
+                            <td>Reports -> All Regsters completed only Stock Statement Pending</td>
                         </tr>
                         <tr>
                             <td>All Master forms completed  (Only barocode prinitng at catalog is pending)
@@ -41,15 +40,14 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Transaction -> Inward Enrty Pending
+                            <td>User Dashboard&nbsp; Pending</td>
+                        </tr>
+                        <tr>
+                            <td>Only barocode prinitng &amp; Item Tracking at catalog is pending
                             </td>
                         </tr>
                         <tr>
-                            <td>Only barocode prinitng at catalog is pending
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Inward Entry Register &amp; Stockstatement Pending</td>
+                            <td>Stock Statement Pending</td>
                         </tr>
                     </tbody>
                 </table>

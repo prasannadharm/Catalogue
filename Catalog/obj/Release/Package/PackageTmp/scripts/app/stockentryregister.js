@@ -166,6 +166,7 @@ function generatereport() {
     $('#lbldateto').text($("#dtpTo").val());
 
     var obj = {};
+
     obj.FROMDATE = $("#dtpFrom").val();
     obj.TODATE = $("#dtpTo").val();
     obj.FROMNO = $("#txt_From_No").val();
@@ -175,13 +176,11 @@ function generatereport() {
     obj.CODE = $("#txt_Code").val();
     obj.DESC = $("#txt_TitleDesc").val();
 
-
     var strjewel = [];
     $('#cmbJewellery > option:selected').each(function () {
         strjewel.push($(this).val());
     });
     obj.JEWELLERYIDS = strjewel.join(',');
-
 
     var strjdesign = [];
     $('#cmbDesign > option:selected').each(function () {
@@ -218,6 +217,89 @@ function generatereport() {
         strkarat.push($(this).val());
     });
     obj.KARATIDS = strkarat.join(',');
+
+    var filtertext = '';
+    filtertext = "Date From : " + $("#dtpFrom").val();
+    filtertext = filtertext + " To " + $("#dtpTo").val();
+
+    if ($("#txt_From_No").val() > 0 || $("#txt_To_No").val() > 0) {
+        filtertext = filtertext + "; No From : " + $("#txt_From_No").val() + " To " + $("#txt_To_No").val();
+    }    
+
+    if ($.trim($("#ContentPlaceHolder1_txt_Ledname").val()) != '') {
+        filtertext = filtertext + "; Ledger : " + $("#ContentPlaceHolder1_txt_Ledname").val();
+    }
+
+    if ($.trim($("#txt_SKU").val()) != '') {
+        filtertext = filtertext + "; SKU : " + $("#txt_SKU").val();
+    }
+
+    if ($.trim($("#txt_Code").val()) != '') {
+        filtertext = filtertext + "; Code : " + $("#txt_Code").val();
+    }
+
+    if ($.trim($("#txt_TitleDesc").val()) != '') {
+        filtertext = filtertext + "; Title Desc. : " + $("#txt_TitleDesc").val();
+    }
+
+    if (strjewel.length > 0) {
+        filtertext = filtertext + "; Jewellery : ";
+        $('#cmbJewellery > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strjdesign.length > 0) {
+        filtertext = filtertext + "; Design : ";
+        $('#cmbDesign > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strcoll.length > 0) {
+        filtertext = filtertext + "; Collection : ";
+        $('#cmbCollection > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strmat.length > 0) {
+        filtertext = filtertext + "; Material : ";
+        $('#cmbMaterial > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strocc.length > 0) {
+        filtertext = filtertext + "; Occasion : ";
+        $('#cmbOccasion > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strocc.length > 0) {
+        filtertext = filtertext + "; Gram Slab : ";
+        $('#CmbGramSlab > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    if (strkarat.length > 0) {
+        filtertext = filtertext + "; Karat : ";
+        $('#cmbKarat > option:selected').each(function () {
+            filtertext = filtertext + $(this).text() + ',';
+        });
+        filtertext = filtertext.substring(0, filtertext.length - 1);
+    }
+
+    $('#lblfilter').text(filtertext);
+
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
@@ -231,9 +313,9 @@ function generatereport() {
             //SKU,Code,Title,QTY,Remarks  
             $('#tableprint thead').remove();
             $('#tableprint tbody').remove();
-            shtml = shtml + "<thead>";            
+            shtml = shtml + "<thead>";
             shtml = shtml + "<tr><th>Trans No</th><th>Trans Date</th><th>Ref No</th><th>Ledger</th><th>Remarks</th><th>Void</th><th>Created By</th><th>Modified By</th></tr>";
-            shtml = shtml + "</thead>";            
+            shtml = shtml + "</thead>";
             shtml = shtml + "<tbody>";
             for (var i = 0; i < data.d.length; i++) {
                 if (mainid != data.d[i].TRANS_MAIN_ID) {
@@ -249,12 +331,12 @@ function generatereport() {
                     shtml = shtml + "<td style='text-align:center;'>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td>";
                     shtml = shtml + "<td>" + data.d[i].CREATEDBY + "</td>";
                     shtml = shtml + "<td>" + data.d[i].MODIFIEDBY + "</td></tr>";
-                    shtml = shtml + "<tr><td colspan='3'>";                    
+                    shtml = shtml + "<tr><td colspan='3'>";
                     shtml = shtml + "<table class='table table-striped table-bordered' style='width: 100%' border='1'>";
                     shtml = shtml + "<thead>";
                     shtml = shtml + "<tr><th>SKU</th><th>Code</th><th>Title Desc.</th><th>Qty</th><th>Remarks</th></tr>";
                     shtml = shtml + "</thead>";
-                    shtml = shtml + "<tbody>";                                   
+                    shtml = shtml + "<tbody>";
                 }
                 shtml = shtml + "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "<b></td>";
                 shtml = shtml + "<td>" + data.d[i].CODE + "</td>";
@@ -263,14 +345,14 @@ function generatereport() {
                 shtml = shtml + "<td>" + data.d[i].REMARKS + "</td></tr>";
             }
             shtml = shtml + "</tboby></table></td></tr>"; //For Sub Table
-            shtml = shtml + "</tbody>";            
+            shtml = shtml + "</tbody>";
             $('#tableprint').append(shtml);
             $('#printdiv').show();
             var divToPrint = document.getElementById("printdiv");
             newWin = window.open("");
             newWin.document.write(printdiv.outerHTML);
             $('#printdiv').hide();
-            newWin.print();        
+            newWin.print();
 
 
             document.getElementById("loader").style.display = "none";
