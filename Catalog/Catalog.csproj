@@ -218,6 +218,7 @@
     <Content Include="scripts\app\stockentry.js" />
     <Content Include="scripts\app\stockentryregister.js" />
     <Content Include="scripts\app\stockstatement.js" />
+    <Content Include="scripts\app\userdashboard.js" />
     <Content Include="scripts\app\usermaster.js" />
     <Content Include="scripts\baguetteBox.min.js" />
     <Content Include="scripts\bootstrap-datepicker.min.js" />

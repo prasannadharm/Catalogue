@@ -3,52 +3,135 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <table>
-        <tr>
-            <td>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Updates :
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Transaction -> All Screens Completed
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Reports -> All Reports completed</td>
-                        </tr>
-                        <tr>
-                            <td>All Master forms completed  (Only barocode prinitng at catalog is pending)
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table style="margin-top: 20px">
-                    <thead>
-                        <tr>
-                            <th>Pending :
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>User Dashboard&nbsp; Pending</td>
-                        </tr>
-                        <tr>
-                            <td>Only barocode prinitng</td>
-                        </tr>                        
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-    </table>
-    <img style="align-content: center; height: 400px" />
+    <style>
+        .filters .dropdown-menu > li > a {
+            display: block;
+            padding: 2px 15px;
+            clear: both;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #000000;
+            white-space: nowrap;
+        }
+
+        .handcursor {
+            cursor: pointer;
+            cursor: hand;
+        }
+    </style>
+    <link href="../css/bootstrap-datepicker3.css" rel="stylesheet" />
+    <link href="../css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="../css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../css/ajaxloader.css" rel="stylesheet" />
+    <script src="../scripts/jquery.dataTables.min.js"></script>
+    <script src="../scripts/dataTables.bootstrap4.min.js"></script>
+    <script src="../scripts/AjaxFileupload.js"></script>
+    <script src="../scripts/popper.min.js"></script>
+    <script src="../scripts/bootstrap-datepicker.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/app/userdashboard.js"></script>
+    <div id="loader"></div>
+
+    <div class="col-lg-12" id="mainlistingdiv">
+        <div class="panel panel-default">
+            <div class="row">
+                <div class="col-12">
+                    <h2 style="color: cornflowerblue;display:inline;margin-right:20px;">Dashboard</h2>
+                    <label class="control-label" style="display: inline">Date </label>
+                    <input class="form-control datepicker" id="dtpDate" name="date" placeholder="DD-MM-YYYY" type="text" style="margin-left: 5px; width: 140px; display: inline; text-align: center" />
+                    <button type="button" id="btnRefresh" class="btn btn-success" style="display: inline; margin-left: 10px; margin-top: -5px">Refresh</button>
+                </div>                
+            </div>
+        </div>
+
+        <div style="height:30px">
+        </div>
+        <div class="row">
+            <div class="col-sm-12  col-md-12 col-lg-6">
+                <!-- /.Stock Entry-heading -->
+                <div class="panel-body" id="maindivstockentry">
+                    <h4 style="color: darkcyan">Stock Enrty</h4>
+                    <div class="table-responsive" id="griddivstockentry">
+                        <table id="tablestockentry" class="table table-striped table-bordered" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>StK No</th>
+                                    <th>Ledger</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12  col-md-12 col-lg-6">
+                <!-- /.Inward Entry Entry-heading -->
+                <div class="panel-body" id="maindivinwardentry">
+                    <h4 style="color: blueviolet">Inward Entries</h4>
+                    <div class="table-responsive" id="griddivinwardentry">
+                        <table id="tableinwardentry" class="table table-striped table-bordered" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>In No</th>
+                                    <th>Ledger</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="height:30px">
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12  col-md-12 col-lg-6">
+                <!-- /.Outward Entry-heading -->
+                <div class="panel-body" id="maindivoutwardentry">
+                    <h4 style="color: brown">Outward Entries</h4>
+                    <div class="table-responsive" id="griddivoutwardentry">
+                        <table id="tableoutwardentry" class="table table-striped table-bordered" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>Out No</th>
+                                    <th>Ledger</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12  col-md-12 col-lg-6">
+                <!-- /.Inward Entry Entry-heading -->
+                <div class="panel-body" id="maindivpendingentry"><h4 style="color: red">Pending Outward Entries</h4>
+                    <div class="table-responsive" id="griddivpendingentry">                        
+                        <table id="tablependingentry" class="table table-striped table-bordered" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>Out No</th>
+                                    <th>Ledger</th>
+                                    <th>Jewellery</th>
+                                    <th>Qty</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>

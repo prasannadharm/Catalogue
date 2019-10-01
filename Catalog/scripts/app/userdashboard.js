@@ -1,0 +1,202 @@
+﻿$(document).ready(function () {
+    var date = new Date();
+    var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    subItemsList = [];
+    $(".datepicker").datepicker({ dateFormat: 'dd-mm-yy' });
+    $('#dtpDate').datepicker('setDate', today);   
+
+    $.ajax({
+        url: "UserDashboard.aspx/GetCurrentDate",
+        data: '{}',
+        dataType: "json",
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            for (var i = 0; i < data.d.length; i++) {               
+                $('#dtpDate').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', data.d[i].split('-')[2] + '-' + data.d[i].split('-')[1] + '-' + data.d[i].split('-')[0]);
+            }
+            getDashboardDetails();
+        },
+        error: function (response) {
+            alert(response.responseText);
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        }
+    });
+
+    $("#btnRefresh").click(function () {
+        getDashboardDetails();
+    })
+})
+
+function getDashboardDetails() {
+    document.getElementById("loader").style.display = "block";
+    getStockEntryDetails();    
+}
+
+function getStockEntryDetails()
+{
+    var obj = {};
+    obj.DateFrom = $("#dtpDate").val();
+    obj.DateTo = $("#dtpDate").val();
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: "UserDashboard.aspx/GetSTKData",
+        data: '{obj: ' + JSON.stringify(obj) + '}',
+        dataType: "json",
+        success: function (data) {
+            $('#griddivstockentry').remove();
+            $('#maindivstockentry').append("<div class='table-responsive' id='griddivstockentry'></div>");
+            $('#griddivstockentry').append("<table id='tablestockentry' class='table table-striped table-bordered' style='width: 100%'></table>");
+            $('#tablestockentry').append("<thead><tr><th>StK No</th><th>Ledger</th><th></th></tr></thead><tbody></tbody>");
+            $('#tablestockentry tbody').remove();
+            $('#tablestockentry').append("<tbody>");
+            for (var i = 0; i < data.d.length; i++) {
+                $('#tablestockentry').append(
+                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td style='color:blue'>" + data.d[i].LED_NAME + "</td>" +                    
+                    "<td style='text-align:center'><img src='../images/static/print.png' alt='Print Record' class='printButtonSTK handcursor' data-id='" + data.d[i].ID + "' id='btnPrint' value='Print' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+            }
+            $('#tablestockentry').append("</tbody>");
+            $('#tablestockentry').DataTable({
+                "order": [[0, "desc"]]
+            });
+            getInwardEntryDetails();
+        },
+        error: function (request, status, error) {
+            alert(request.responseText);
+            alert("Error while Showing update data");
+        }
+    });
+}
+
+function getInwardEntryDetails()
+{
+    var obj = {};
+    obj.DateFrom = $("#dtpDate").val();
+    obj.DateTo = $("#dtpDate").val();
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: "UserDashboard.aspx/GetINData",
+        data: '{obj: ' + JSON.stringify(obj) + '}',
+        dataType: "json",
+        success: function (data) {
+            $('#griddivinwardentry').remove();
+            $('#maindivinwardentry').append("<div class='table-responsive' id='griddivinwardentry'></div>");
+            $('#griddivinwardentry').append("<table id='tableinwardentry' class='table table-striped table-bordered' style='width: 100%'></table>");
+            $('#tableinwardentry').append("<thead><tr><th>In No</th><th>Ledger</th><th></th></tr></thead><tbody></tbody>");
+            $('#tableinwardentry tbody').remove();
+            $('#tableinwardentry').append("<tbody>");
+            for (var i = 0; i < data.d.length; i++) {
+                $('#tableinwardentry').append(
+                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td style='color:blue'>" + data.d[i].LED_NAME + "</td>" +
+                    "<td style='text-align:center'><img src='../images/static/print.png' alt='Print Record' class='printButtonIN handcursor' data-id='" + data.d[i].ID + "' id='btnPrint' value='Print' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+            }
+            $('#tableinwardentry').append("</tbody>");
+            $('#tableinwardentry').DataTable({
+                "order": [[0, "desc"]]
+            });
+            getOutwardEntryDetails();
+        },
+        error: function (request, status, error) {
+            alert(request.responseText);
+            alert("Error while Showing update data");
+        }
+    });
+    
+}
+
+function getOutwardEntryDetails() {
+    var obj = {};
+    obj.DateFrom = $("#dtpDate").val();
+    obj.DateTo = $("#dtpDate").val();
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: "UserDashboard.aspx/GetOutData",
+        data: '{obj: ' + JSON.stringify(obj) + '}',
+        dataType: "json",
+        success: function (data) {
+            $('#griddivoutwardentry').remove();
+            $('#maindivoutwardentry').append("<div class='table-responsive' id='griddivoutwardentry'></div>");
+            $('#griddivoutwardentry').append("<table id='tableoutwardentry' class='table table-striped table-bordered' style='width: 100%'></table>");
+            $('#tableoutwardentry').append("<thead><tr><th>Out No</th><th>Ledger</th><th></th></tr></thead><tbody></tbody>");
+            $('#tableoutwardentry tbody').remove();
+            $('#tableoutwardentry').append("<tbody>");
+            for (var i = 0; i < data.d.length; i++) {
+                $('#tableoutwardentry').append(
+                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td style='color:blue'>" + data.d[i].LED_NAME + "</td>" +
+                    "<td style='text-align:center'><img src='../images/static/print.png' alt='Print Record' class='printButtonOT handcursor' data-id='" + data.d[i].ID + "' id='btnPrint' value='Print' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+            }
+            $('#tableoutwardentry').append("</tbody>");
+            $('#tableoutwardentry').DataTable({
+                "order": [[0, "desc"]]
+            });
+            getPendingOutwardEntryDetails();
+        },
+        error: function (request, status, error) {
+            alert(request.responseText);
+            alert("Error while Showing update data");
+        }
+    });
+    
+}
+
+function getPendingOutwardEntryDetails() {
+
+    var obj = {};
+    obj.FROMDATE = '01-01-1900';
+    obj.TODATE = '01-01-3000';
+    obj.FROMNO = 0;
+    obj.TONO = 0;
+    obj.LEDNAME = '';
+    obj.JEWELLERYIDS = '';
+    obj.DESIGNIDS = '';
+    obj.COLLECTIONSIDS = '';
+    obj.MATERIALIDS = '';
+    obj.OCCASIONIDS = '';
+    obj.GRAMSLABIDS = '';
+    obj.KARATIDS = '';
+    obj.OUT_TYPE_ID = 0;
+    obj.SHOW_PENDING_ONLY = true;
+    obj.SKU = '';
+    obj.CODE = '';
+    obj.DESC = '';
+    
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: "UserDashboard.aspx/GetPendingOutwardRegisterData",
+        data: '{obj: ' + JSON.stringify(obj) + '}',
+        dataType: "json",
+        success: function (data) {
+            $('#griddivpendingentry').remove();
+            $('#maindivpendingentry').append("<div class='table-responsive' id='griddivpendingentry'></div>");
+            $('#griddivpendingentry').append("<table id='tablependingentry' class='table table-striped table-bordered' style='width: 100%'></table>");
+            $('#tablependingentry').append("<thead><tr><th>Out No</th><th>Ledger</th><th>Jewellery</th><th>Qty</th><th></th></tr></thead><tbody></tbody>");
+            $('#tablependingentry tbody').remove();
+            $('#tablependingentry').append("<tbody>");
+            for (var i = 0; i < data.d.length; i++) {
+                $('#tablependingentry').append(
+                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td style='color:blue'>" + data.d[i].LED_NAME + "</td>" + "<td style='color:brown'>" + data.d[i].CATALOG_TITLE + "</td>" + "<td style='text-align:center;color:red'><b>" + data.d[i].BAL_QTY + "</b></td>"+
+                    "<td style='text-align:center'><img src='../images/static/print.png' alt='Print Record' class='printButtonPendOT handcursor' data-id='" + data.d[i].TRANS_MAIN_ID + "' id='btnPrint' value='Print' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+            }
+            $('#tablependingentry').append("</tbody>");
+            $('#tablependingentry').DataTable({
+                "order": [[0, "asc"]]
+            });
+            getPendingOutwardEntryDetails();
+        },
+        error: function (request, status, error) {
+            alert(request.responseText);
+            alert("Error while Showing update data");
+        }
+    });
+
+    document.getElementById("loader").style.display = "none";
+}
