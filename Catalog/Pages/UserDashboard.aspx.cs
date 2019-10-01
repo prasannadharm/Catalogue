@@ -91,6 +91,50 @@ namespace Catalog.Pages
             return details.ToArray();
         }
 
+        [WebMethod]
+        public static StockEntryEditParam[] EditDataSTK(Int64 id)
+        {
+            var details = new List<StockEntryEditParam>();
+            try
+            {
+                details = new StockEntryDAO().EditStockEnrty(id);
+            }
+            catch (Exception ex)
+            {
+                //details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
+
+        [WebMethod]
+        public static InwardEntryEditParam[] EditDataIN(Int64 id)
+        {
+            var details = new List<InwardEntryEditParam>();
+            try
+            {
+                details = new InwardEntryDAO().EditInwardEnrty(id);
+            }
+            catch (Exception ex)
+            {
+                //details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
+
+        [WebMethod]
+        public static OutwardEntryEditParam[] EditDataOUT(Int64 id)
+        {
+            var details = new List<OutwardEntryEditParam>();
+            try
+            {
+                details = new OutwardEntryDAO().EditOutwardEnrty(id);
+            }
+            catch (Exception ex)
+            {
+                //details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
 
     }
 }

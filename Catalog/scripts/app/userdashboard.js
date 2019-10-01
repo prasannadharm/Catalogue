@@ -200,3 +200,115 @@ function getPendingOutwardEntryDetails() {
 
     document.getElementById("loader").style.display = "none";
 }
+
+
+$(function () {
+
+    $(document).on("click", ".printButtonSTK", function () {
+
+        var id = $(this).attr("data-id");
+        console.log(id);
+
+        $('#tablesubprnSTK tbody').remove();
+        $('#tablesubprnSTK').append("<tbody>");
+        $('#tablesubprnSTK').append("</tbody>");
+        $('#lblstkNoPRNSTK').val('');
+        $('#lblstkDatePRNSTK').val('');
+        $('#lblrefnoPRNSTK').val('');
+        $('#lblledNamePRNSTK').val('');
+        $('#lblRemarksPRNSTK').val('');
+
+        $.ajax({
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            url: "UserDashboard.aspx/EditDataSTK",
+            data: '{id: ' + id + '}',
+            dataType: "json",
+            success: function (data) {
+                if (data.d.length > 0) {
+                    $("#lblledNamePRNSTK").text(data.d[0].LED_NAME);
+                    $("#lblstkNoPRNSTK").text(data.d[0].TRANS_NO);
+                    $('#lblstkDatePRNSTK').text(data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
+                    $("#lblRemarksPRNSTK").text(data.d[0].REMARKS_MAIN);
+                    $("#lblrefnoPRNSTK").text(data.d[0].REF_NO);
+                }
+
+                $('#tablesubprnSTK tbody').remove();
+                $('#tablesubprnSTK').append("<tbody>");
+                for (var i = 0; i < data.d.length; i++) {
+                    $('#tablesubprnSTK').append(
+                        "<tr><td style='border: 1px solid black;text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td style='border: 1px solid black;'>" + data.d[i].CODE + "</td><td style='border: 1px solid black;color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td><td style='border: 1px solid black;'>" + data.d[i].REMARKS + "</td></tr>");
+                }
+                $('#tablesubprnSTK').append("</tbody>");
+                $('#printdivSTK').show();
+                var divToPrint = document.getElementById("printdivSTK");
+                newWin = window.open("");
+                newWin.document.write(divToPrint.outerHTML);
+                $('#printdivSTK').hide();
+                newWin.print();
+                //newWin.close();
+
+            },
+            error: function () {
+                alert("Error while retrieving data of :" + id);
+            }
+        });
+
+
+    });
+
+    $(document).on("click", ".printButtonIN", function () {
+
+        var id = $(this).attr("data-id");
+        console.log(id);
+
+        $('#tablesubprnIN tbody').remove();
+        $('#tablesubprnIN').append("<tbody>");
+        $('#tablesubprnIN').append("</tbody>");
+        $('#lblstkNoPRNIN').val('');
+        $('#lblstkDatePRNIN').val('');
+        $('#lblrefnoPRNIN').val('');
+        $('#lblledNamePRNIN').val('');
+        $('#lblRemarksPRNIN').val('');
+        $('#lblintypePRNIN').val('');
+        $.ajax({
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            url: "UserDashboard.aspx/EditDataIN",
+            data: '{id: ' + id + '}',
+            dataType: "json",
+            success: function (data) {
+                if (data.d.length > 0) {
+                    $("#lblledNamePRNIN").text(data.d[0].LED_NAME);
+                    $("#lblstkNoPRNIN").text(data.d[0].TRANS_NO);
+                    $('#lblstkDatePRNIN').text(data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
+                    $("#lblRemarksPRNIN").text(data.d[0].REMARKS_MAIN);
+                    $("#lblrefnoPRNIN").text(data.d[0].REF_NO);
+                    $('#lblintypePRNIN').text(data.d[0].IN_TYPE_NAME);
+                }
+
+                $('#tablesubprnIN tbody').remove();
+                $('#tablesubprnIN').append("<tbody>");
+                for (var i = 0; i < data.d.length; i++) {
+                    $('#tablesubprnIN').append(
+                        "<tr><td style='border: 1px solid black;text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td style='border: 1px solid black;'>" + data.d[i].CODE + "</td><td style='border: 1px solid black;color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td><td style='border: 1px solid black;text-align:center;color:blue'>" + data.d[i].OUT_TRANS_NO + "</td><td style='border: 1px solid black;'>" + data.d[i].REMARKS + "</td></tr>");
+                }
+                $('#tablesubprnIN').append("</tbody>");
+                $('#printdivIN').show();
+                var divToPrint = document.getElementById("printdivIN");
+                newWin = window.open("");
+                newWin.document.write(divToPrint.outerHTML);
+                $('#printdivIN').hide();
+                newWin.print();
+                //newWin.close();
+
+            },
+            error: function () {
+                alert("Error while retrieving data of :" + id);
+            }
+        });
+
+
+    });
+
+});
