@@ -311,48 +311,48 @@ $(function () {
 
     });
 
-    $(document).on("click", ".printButton", function () {
+    $(document).on("click", ".printButtonOT", function () {
 
         var id = $(this).attr("data-id");
         console.log(id);
 
-        $('#tablesubprn tbody').remove();
-        $('#tablesubprn').append("<tbody>");
-        $('#tablesubprn').append("</tbody>");
-        $('#lblstkNoPRN').val('');
-        $('#lblstkDatePRN').val('');
-        $('#lblrefnoPRN').val('');
-        $('#lblledNamePRN').val('');
-        $('#lblRemarksPRN').val('');
-        $('#lblouttypePRN').val('');
+        $('#tablesubprnOT tbody').remove();
+        $('#tablesubprnOT').append("<tbody>");
+        $('#tablesubprnOT').append("</tbody>");
+        $('#lblstkNoPRNOT').val('');
+        $('#lblstkDatePRNOT').val('');
+        $('#lblrefnoPRNOT').val('');
+        $('#lblledNamePRNOT').val('');
+        $('#lblRemarksPRNOT').val('');
+        $('#lblouttypePRNOT').val('');
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
-            url: "Outward.aspx/EditData",
+            url: "UserDashboard.aspx/EditDataOUT",
             data: '{id: ' + id + '}',
             dataType: "json",
             success: function (data) {
                 if (data.d.length > 0) {
-                    $("#lblledNamePRN").text(data.d[0].LED_NAME);
-                    $("#lblstkNoPRN").text(data.d[0].TRANS_NO);
-                    $('#lblstkDatePRN').text(data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
-                    $("#lblRemarksPRN").text(data.d[0].REMARKS_MAIN);
-                    $("#lblrefnoPRN").text(data.d[0].REF_NO);
-                    $('#lblouttypePRN').text(data.d[0].OUT_TYPE_NAME);
+                    $("#lblledNamePRNOT").text(data.d[0].LED_NAME);
+                    $("#lblstkNoPRNOT").text(data.d[0].TRANS_NO);
+                    $('#lblstkDatePRNOT').text(data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
+                    $("#lblRemarksPRNOT").text(data.d[0].REMARKS_MAIN);
+                    $("#lblrefnoPRNOT").text(data.d[0].REF_NO);
+                    $('#lblouttypePRNOT').text(data.d[0].OUT_TYPE_NAME);
                 }
 
-                $('#tablesubprn tbody').remove();
-                $('#tablesubprn').append("<tbody>");
+                $('#tablesubprnOT tbody').remove();
+                $('#tablesubprnOT').append("<tbody>");
                 for (var i = 0; i < data.d.length; i++) {
-                    $('#tablesubprn').append(
+                    $('#tablesubprnOT').append(
                         "<tr><td style='border: 1px solid black;text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td style='border: 1px solid black;'>" + data.d[i].CODE + "</td><td style='border: 1px solid black;color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td><td style='border: 1px solid black;'>" + data.d[i].REMARKS + "</td></tr>");
                 }
-                $('#tablesubprn').append("</tbody>");
-                $('#printdiv').show();
-                var divToPrint = document.getElementById("printdiv");
+                $('#tablesubprnOT').append("</tbody>");
+                $('#printdivOT').show();
+                var divToPrint = document.getElementById("printdivOT");
                 newWin = window.open("");
                 newWin.document.write(divToPrint.outerHTML);
-                $('#printdiv').hide();
+                $('#printdivOT').hide();
                 newWin.print();
                 //newWin.close();
 
@@ -361,7 +361,61 @@ $(function () {
                 alert("Error while retrieving data of :" + id);
             }
         });
-
-
     });
+
+
+    $(document).on("click", ".printButtonPendOT", function () {
+
+        var id = $(this).attr("data-id");
+        console.log(id);
+
+        $('#tablesubprnPendOT tbody').remove();
+        $('#tablesubprnPendOT').append("<tbody>");
+        $('#tablesubprnPendOT').append("</tbody>");
+        $('#lblstkNoPRNPendOT').val('');
+        $('#lblstkDatePRNPendOT').val('');
+        $('#lblrefnoPRNPendOT').val('');
+        $('#lblledNamePRNPendOT').val('');
+        $('#lblRemarksPRNPendOT').val('');
+        $('#lblouttypePRNPendOT').val('');
+        $.ajax({
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            url: "UserDashboard.aspx/EditDataOUT",
+            data: '{id: ' + id + '}',
+            dataType: "json",
+            success: function (data) {
+                if (data.d.length > 0) {
+                    $("#lblledNamePRNPendOT").text(data.d[0].LED_NAME);
+                    $("#lblstkNoPRNPendOT").text(data.d[0].TRANS_NO);
+                    $('#lblstkDatePRNPendOT').text(data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
+                    $("#lblRemarksPRNPendOT").text(data.d[0].REMARKS_MAIN);
+                    $("#lblrefnoPRNPendOT").text(data.d[0].REF_NO);
+                    $('#lblouttypePRNPendOT').text(data.d[0].OUT_TYPE_NAME);
+                }
+
+                $('#tablesubprnPendOT tbody').remove();
+                $('#tablesubprnPendOT').append("<tbody>");
+                for (var i = 0; i < data.d.length; i++) {
+                    $('#tablesubprnPendOT').append(
+                        "<tr><td style='border: 1px solid black;text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td style='border: 1px solid black;'>" + data.d[i].CODE + "</td><td style='border: 1px solid black;color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].BAL_QTY + "</b></td><td style='border: 1px solid black;'>" + data.d[i].REMARKS + "</td></tr>");
+                }
+                $('#tablesubprnPendOT').append("</tbody>");
+                $('#printdivPendOT').show();
+                var divToPrint = document.getElementById("printdivPendOT");
+                newWin = window.open("");
+                newWin.document.write(divToPrint.outerHTML);
+                $('#printdivPendOT').hide();
+                newWin.print();
+                //newWin.close();
+
+            },
+            error: function () {
+                alert("Error while retrieving data of :" + id);
+            }
+        });
+    });
+
+
+
 });

@@ -90,5 +90,6 @@ namespace Catalog.Models
         public string REMARKS { get; set; }
         public Int64 OUT_TYPE_ID { get; set; }
         public string OUT_TYPE_NAME { get; set; }
+        public double BAL_QTY { get; set; }
     }
 }
