@@ -311,4 +311,57 @@ $(function () {
 
     });
 
+    $(document).on("click", ".printButton", function () {
+
+        var id = $(this).attr("data-id");
+        console.log(id);
+
+        $('#tablesubprn tbody').remove();
+        $('#tablesubprn').append("<tbody>");
+        $('#tablesubprn').append("</tbody>");
+        $('#lblstkNoPRN').val('');
+        $('#lblstkDatePRN').val('');
+        $('#lblrefnoPRN').val('');
+        $('#lblledNamePRN').val('');
+        $('#lblRemarksPRN').val('');
+        $('#lblouttypePRN').val('');
+        $.ajax({
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            url: "Outward.aspx/EditData",
+            data: '{id: ' + id + '}',
+            dataType: "json",
+            success: function (data) {
+                if (data.d.length > 0) {
+                    $("#lblledNamePRN").text(data.d[0].LED_NAME);
+                    $("#lblstkNoPRN").text(data.d[0].TRANS_NO);
+                    $('#lblstkDatePRN').text(data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
+                    $("#lblRemarksPRN").text(data.d[0].REMARKS_MAIN);
+                    $("#lblrefnoPRN").text(data.d[0].REF_NO);
+                    $('#lblouttypePRN').text(data.d[0].OUT_TYPE_NAME);
+                }
+
+                $('#tablesubprn tbody').remove();
+                $('#tablesubprn').append("<tbody>");
+                for (var i = 0; i < data.d.length; i++) {
+                    $('#tablesubprn').append(
+                        "<tr><td style='border: 1px solid black;text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td style='border: 1px solid black;'>" + data.d[i].CODE + "</td><td style='border: 1px solid black;color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td><td style='border: 1px solid black;'>" + data.d[i].REMARKS + "</td></tr>");
+                }
+                $('#tablesubprn').append("</tbody>");
+                $('#printdiv').show();
+                var divToPrint = document.getElementById("printdiv");
+                newWin = window.open("");
+                newWin.document.write(divToPrint.outerHTML);
+                $('#printdiv').hide();
+                newWin.print();
+                //newWin.close();
+
+            },
+            error: function () {
+                alert("Error while retrieving data of :" + id);
+            }
+        });
+
+
+    });
 });

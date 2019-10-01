@@ -345,5 +345,109 @@
     </div>
     <!-- For Print Popup Inward Entry  -->
 
+     <!-- For Print Popup Outward Entry -->
+    <div class="col-lg-12" id="printdivOT" style="display: none">
+        <div class="panel panel-default">
+            <div class="row">
+                <div class="col-12">
+                    <h2 style='color: blue'>Outward Entry Details</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <table>
+                    <tr>
+                        <td>
+                            <label>Outward Entry No</label>
+                        </td>
+                        <td>
+                            <label> : </label>
+                        </td>
+                        <td>
+                            <label id="lblstkNoPRNOT"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Outward Entry Date</label>
+                        </td>
+                        <td>
+                            <label> : </label>
+                        </td>
+                        <td>
+                            <label id="lblstkDatePRNOT"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ref. No.</label>
+                        </td>
+                        <td>
+                            <label> : </label>
+                        </td>
+                        <td>
+                            <label id="lblrefnoPRNOT"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ledger Name</label>
+                        </td>
+                        <td>
+                            <label> : </label>
+                        </td>
+                        <td>
+                            <label id="lblledNamePRNOT"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Outward Type</label>
+                        </td>
+                        <td>
+                            <label> : </label>
+                        </td>
+                        <td>
+                            <label id="lblouttypePRNOT"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Remarks</label>
+                        </td>
+                        <td>
+                            <label> : </label>
+                        </td>
+                        <td>
+                            <label id="lblRemarksPRNOT"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-12">
+                    <h3 style='color: brown'>Jewellery Items</h3>
+                </div>
+            </div>
+
+            <div class="table-responsive" id="gridsubdivprnOT">
+                <table id="tablesubprnOT" style="width: 100%;border-collapse: collapse">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid black;">SKU</th>
+                            <th style="border: 1px solid black;">Code</th>
+                            <th style="border: 1px solid black;">Title</th>
+                            <th style="border: 1px solid black;">Qty</th>                            
+                            <th style="border: 1px solid black;">Remarks</th>              
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- For Print Popup Outward -->
 
 </asp:Content>

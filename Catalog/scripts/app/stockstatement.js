@@ -303,7 +303,7 @@ function generatereport() {
             $('#printdiv').show();
             var divToPrint = document.getElementById("printdiv");
             newWin = window.open("");
-            newWin.document.write(printdiv.outerHTML);
+            newWin.document.write(divToPrint.outerHTML);
             $('#printdiv').hide();
             newWin.print();
 
