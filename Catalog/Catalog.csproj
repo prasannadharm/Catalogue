@@ -199,6 +199,7 @@
     <Content Include="scripts\app\companymaster.js" />
     <Content Include="scripts\app\designmaster.js" />
     <Content Include="scripts\app\forgotpassword.js" />
+    <Content Include="scripts\app\generalsettings.js" />
     <Content Include="scripts\app\gramslabmaster.js" />
     <Content Include="scripts\app\home.js" />
     <Content Include="scripts\app\inwardentry.js" />
@@ -262,6 +263,7 @@
     <Compile Include="Models\StockEntryEntity.cs" />
     <Compile Include="Models\StockEntryRegisterParamEntity.cs" />
     <Compile Include="Models\StockStatementParamEntity.cs" />
+    <Compile Include="Models\TransSeriesEntity.cs" />
     <Compile Include="Models\TrendingEntity.cs" />
     <Compile Include="Pages\Banner.aspx.cs">
       <DependentUpon>Banner.aspx</DependentUpon>
