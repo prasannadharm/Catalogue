@@ -1073,8 +1073,6 @@ $(function () {
     $(document).on("click", ".reportButton", function () {
         var id = $(this).attr("data-id");
         console.log(id);
-        //alert(id);      
-
 
         $.ajax({
             type: "POST",
@@ -1087,18 +1085,18 @@ $(function () {
                 $('#tableprint thead').remove();
                 $('#tableprint tbody').remove();
                 shtml = shtml + "<thead>";
-                shtml = shtml + "<tr><th>Sl No</th><th>Trans No</th><th>Trans Date</th><th>Trans Type</th><th>In Qty</th><th>Out Qty</th><th>Bal Qty</th></tr>";
+                shtml = shtml + "<tr><th style='border: 1px solid black;'>Sl No</th><th style='border: 1px solid black;'>Trans No</th><th style='border: 1px solid black;'>Trans Date</th><th style='border: 1px solid black;'>Trans Type</th><th style='border: 1px solid black;'>In Qty</th><th style='border: 1px solid black;'>Out Qty</th><th style='border: 1px solid black;'>Bal Qty</th></tr>";
                 shtml = shtml + "</thead>";
                 shtml = shtml + "<tbody>";
                 for (var i = 0; i < data.d.length; i++) {
                     $('#lblfilter').text("Item Ledger Details : " + data.d[i].TITLE);
-                    shtml = shtml + "<tr><td style='text-align:center;'>" + data.d[i].ID + "</td>";
-                    shtml = shtml + "<td style='text-align:center;'>" + data.d[i].TRANS_NO + "</td>";
-                    shtml = shtml + "<td>" + data.d[i].TRANS_DATE + "</td>";
-                    shtml = shtml + "<td>" + data.d[i].TRANS_TYPE + "</td>";
-                    shtml = shtml + "<td style='text-align:center;color:blue'><b>" + data.d[i].IN_QTY + "</b></td>";
-                    shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].OUT_QTY + "</b></td>";
-                    shtml = shtml + "<td style='text-align:center;color:brown'><b>" + data.d[i].BAL_QTY + "</b></td><tr>";
+                    shtml = shtml + "<tr><td style='text-align:center;border: 1px solid black;'>" + data.d[i].ID + "</td>";
+                    shtml = shtml + "<td style='text-align:center;border: 1px solid black;'>" + data.d[i].TRANS_NO + "</td>";
+                    shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].TRANS_DATE + "</td>";
+                    shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].TRANS_TYPE + "</td>";
+                    shtml = shtml + "<td style='text-align:center;color:blue;border: 1px solid black;'><b>" + data.d[i].IN_QTY + "</b></td>";
+                    shtml = shtml + "<td style='text-align:center;color:red;border: 1px solid black;'><b>" + data.d[i].OUT_QTY + "</b></td>";
+                    shtml = shtml + "<td style='text-align:center;color:brown;border: 1px solid black;'><b>" + data.d[i].BAL_QTY + "</b></td><tr>";
 
                 }
                 shtml = shtml + "</tbody>";

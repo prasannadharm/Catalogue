@@ -43,8 +43,7 @@
                             <td>User Dashboard&nbsp; Pending</td>
                         </tr>
                         <tr>
-                            <td>Only barocode prinitng &amp; Item Tracking at catalog is pending
-                            </td>
+                            <td>Only barocode prinitng</td>
                         </tr>                        
                     </tbody>
                 </table>

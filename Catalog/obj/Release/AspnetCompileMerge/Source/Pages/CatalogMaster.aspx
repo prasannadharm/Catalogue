@@ -346,11 +346,11 @@
 
 
     <!-- For Print Popup  -->
-     <div class="col-lg-12" id="printdiv" style="display: none">
+    <div class="col-lg-12" id="printdiv" style="display: none">
         <div class="panel panel-default">
             <div class="row">
                 <div class="col-12">
-                    <h2 style='color: blue; display: inline'>Item Ledger Statement</h2>                    
+                    <h2 style='color: blue; display: inline'>Item Ledger Statement</h2>
                 </div>
             </div>
             <div style="height: 15px">
@@ -363,8 +363,8 @@
             </div>
             <div style="height: 15px">
             </div>
-            <div id="divgridprint">
-                <table id="tableprint" style="width: 100%" border="1">
+            <div id="divgridprint">                
+                <table id="tableprint" style="width: 100%;border-collapse: collapse;">
                 </table>
             </div>
         </div>

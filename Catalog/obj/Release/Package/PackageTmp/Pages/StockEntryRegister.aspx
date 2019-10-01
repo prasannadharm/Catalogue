@@ -389,13 +389,13 @@
             <div class="row">
                 <div class="col-12">
                     <label style="display: inline; margin-right: 5px">Filter : </label>
-                    <label id="lblfilter" style="display: inline; margin-right: 5px;color:brown"></label>
+                    <label id="lblfilter" style="display: inline; margin-right: 5px; color: brown"></label>
                 </div>
             </div>
             <div style="height: 15px">
             </div>
             <div id="divgridprint">
-                <table id="tableprint" style="width: 100%" border="1">
+                <table id="tableprint" style="width: 100%;border-collapse: collapse;">
                 </table>
             </div>
         </div>

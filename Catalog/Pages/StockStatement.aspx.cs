@@ -16,7 +16,21 @@ namespace Catalog.Pages
         {
 
         }
-               
+
+        [WebMethod]
+        public static string[] GetCurrentDate()
+        {
+            List<string> lstvalues = new List<string>();
+            try
+            {
+                lstvalues = new GenericDAO().GetCurrentDate();
+            }
+            catch (Exception ex)
+            {
+                // details.Add(new DbStatusEntity(ex.Message));
+            }
+            return lstvalues.ToArray();
+        }
 
         [WebMethod]
         public static StockStatementResultEntity[] GetStockStatementData(StockStatementParamEntity obj)

@@ -1,8 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/CatalogAdmin.Master" AutoEventWireup="true" CodeBehind="InwardRegister.aspx.cs" Inherits="Catalog.Pages.InwardRegister" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-      <style>
+    <style>
         .filters .dropdown-menu > li > a {
             display: block;
             padding: 2px 15px;
@@ -407,7 +408,7 @@
             <div style="height: 15px">
             </div>
             <div id="divgridprint">
-                <table id="tableprint" style="width: 100%" border="1">
+                <table id="tableprint" style="width: 100%;border-collapse: collapse;">
                 </table>
             </div>
         </div>

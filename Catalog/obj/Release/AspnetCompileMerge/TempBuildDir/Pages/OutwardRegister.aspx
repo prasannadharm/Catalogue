@@ -368,9 +368,7 @@
                 <div class="col-sm-12  col-md-12 col-lg-6">
                     <table style="width: 100%">
                         <tr>
-                            <td style="width: 25%">
-                                
-                            </td>
+                            <td style="width: 25%"></td>
                             <td style="width: 75%">
                                 <input type="checkbox" id="chkPending" value="Pending" style="margin-left: 10px; margin-right: 5px; vertical-align: middle;" />
                                 <label>Show Pending Entries Only</label>
@@ -432,8 +430,8 @@
             </div>
             <div style="height: 15px">
             </div>
-            <div id="divgridprint">
-                <table id="tableprint" style="width: 100%" border="1">
+            <div id="divgridprint">              
+                <table id="tableprint" style="width: 100%;border-collapse: collapse;">
                 </table>
             </div>
         </div>

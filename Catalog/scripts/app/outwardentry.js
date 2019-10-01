@@ -8,6 +8,27 @@ $(document).ready(function () {
     $('#dtpFrom').datepicker('setDate', today);
     $('#dtpTo').datepicker('setDate', today);
 
+    $.ajax({
+        url: "Outward.aspx/GetLatestTrasnsactionNumber",
+        data: '{}',
+        dataType: "json",
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            for (var i = 0; i < data.d.length; i++) {
+                $('#dtpFrom').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', data.d[i].split('-')[3] + '-' + data.d[i].split('-')[2] + '-' + data.d[i].split('-')[1]);
+                $('#dtpTo').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', data.d[i].split('-')[3] + '-' + data.d[i].split('-')[2] + '-' + data.d[i].split('-')[1]);
+            }
+            getMainGridDetails();
+        },
+        error: function (response) {
+            alert(response.responseText);
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        }
+    });
+
     $('#dtpFrom').keypress(function (e) {
         var key = e.which;
         if (key == 13)  // the enter key code
@@ -26,8 +47,7 @@ $(document).ready(function () {
 
     $("#btnSearch").click(function () {
         getMainGridDetails();
-    })
-    getMainGridDetails();
+    })    
 
     $('#ContentPlaceHolder1_LED_NAME').keypress(function (e) {
         var key = e.which;

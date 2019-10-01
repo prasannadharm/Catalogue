@@ -358,7 +358,7 @@ namespace Catalog.DAO
             }
             return retlst;
         }
-        public List<SearchCatalogByTextEntity> SearchCatalogbyText( SearchCatalogByConditionEntity obj)
+        public List<SearchCatalogByTextEntity> SearchCatalogbyText(SearchCatalogByConditionEntity obj)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlDataAdapter adapter;
@@ -381,7 +381,7 @@ namespace Catalog.DAO
                     {
                         SearchCatalogByTextEntity objres = new SearchCatalogByTextEntity();
                         objres.ID = Convert.ToInt64(ds.Tables[0].Rows[i]["ID"].ToString());
-                        objres.SKU = ds.Tables[0].Rows[i]["SKU"] == DBNull.Value? "" : ds.Tables[0].Rows[i]["SKU"].ToString();
+                        objres.SKU = ds.Tables[0].Rows[i]["SKU"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["SKU"].ToString();
                         objres.CODE = ds.Tables[0].Rows[i]["CODE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["CODE"].ToString();
                         objres.TITLE = ds.Tables[0].Rows[i]["TITLE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["TITLE"].ToString();
                         objres.JEWELLERY_NAME = ds.Tables[0].Rows[i]["JEWELLERY_NAME"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["JEWELLERY_NAME"].ToString();
@@ -455,6 +455,34 @@ namespace Catalog.DAO
             }
             return ledgers;
         }
+        
+        public List<string> GetCurrentDate()
+        {
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlDataAdapter adapter;
+            DataSet ds = new DataSet();
+            List<string> lstvalues = new List<string>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("USP_GetCurrentDate", con);
+                    cmd.CommandType = CommandType.StoredProcedure;                    
+                    con.Open();
+                    adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(ds);
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        lstvalues.Add(ds.Tables[0].Rows[i]["DATE"].ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return lstvalues;
+        }
         public List<string> GetLatestTrasnsactionNumber(string str)
         {
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
@@ -504,7 +532,7 @@ namespace Catalog.DAO
                         OutwardTypeMasterEntity obj = new OutwardTypeMasterEntity();
                         obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
                         obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
-                        obj.RETURNABLE = ds.Tables[0].Rows[i]["RETURNABLE"] != null? Convert.ToBoolean(ds.Tables[0].Rows[i]["RETURNABLE"]) : false;
+                        obj.RETURNABLE = ds.Tables[0].Rows[i]["RETURNABLE"] != null ? Convert.ToBoolean(ds.Tables[0].Rows[i]["RETURNABLE"]) : false;
                         retlst.Add(obj);
                     }
                 }
@@ -536,7 +564,7 @@ namespace Catalog.DAO
                     {
                         InwardTypeMasterEntity obj = new InwardTypeMasterEntity();
                         obj.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ID"].ToString());
-                        obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();                        
+                        obj.NAME = ds.Tables[0].Rows[i]["NAME"].ToString();
                         retlst.Add(obj);
                     }
                 }

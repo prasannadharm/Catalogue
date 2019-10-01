@@ -319,14 +319,14 @@
             </div>
 
             <div class="table-responsive" id="gridsubdivprn">
-                <table id="tablesubprn" class="table table-striped table-bordered" style="width: 100%" border="1">
+                <table id="tablesubprn" style="width: 100%;border-collapse: collapse">
                     <thead>
                         <tr>
-                            <th>SKU</th>
-                            <th>Code</th>
-                            <th>Title</th>
-                            <th>Qty</th>
-                            <th>Remarks</th>
+                            <th style="border: 1px solid black;">SKU</th>
+                            <th style="border: 1px solid black;">Code</th>
+                            <th style="border: 1px solid black;">Title</th>
+                            <th style="border: 1px solid black;">Qty</th>                            
+                            <th style="border: 1px solid black;">Remarks</th>              
                         </tr>
                     </thead>
                     <tbody>
