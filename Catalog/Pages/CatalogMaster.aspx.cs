@@ -334,5 +334,23 @@ namespace Catalog.Pages
             }
             return details.ToArray();
         }
+
+
+        [WebMethod]
+        public static DbStatusEntity[] InsertBarcode(Int64 id)
+        {
+            var details = new List<DbStatusEntity>();
+            try
+            {
+                details.Add(new GenericDAO().InsertBarcode(id, HttpContext.Current.Session.SessionID.ToString()));
+            }
+            catch (Exception ex)
+            {
+                details.Clear();
+                details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
+
     }
 }
