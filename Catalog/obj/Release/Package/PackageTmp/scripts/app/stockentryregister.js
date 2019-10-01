@@ -4,6 +4,27 @@
     $(".datepicker").datepicker({ dateFormat: 'dd-mm-yy' });
     $('#dtpFrom').datepicker('setDate', today);
     $('#dtpTo').datepicker('setDate', today);
+
+    $.ajax({
+        url: "StockEntryRegister.aspx/GetCurrentDate",
+        data: '{}',
+        dataType: "json",
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            for (var i = 0; i < data.d.length; i++) {
+                $('#dtpFrom').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', data.d[i].split('-')[2] + '-' + data.d[i].split('-')[1] + '-' + data.d[i].split('-')[0]);
+                $('#dtpTo').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', data.d[i].split('-')[2] + '-' + data.d[i].split('-')[1] + '-' + data.d[i].split('-')[0]);
+            }
+        },
+        error: function (response) {
+            alert(response.responseText);
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        }
+    });
+
     $('#txt_From_No').val(0);
     $('#txt_To_No').val(0);
     $('#ContentPlaceHolder1_txt_Ledname').focus();
@@ -350,7 +371,7 @@ function generatereport() {
             $('#printdiv').show();
             var divToPrint = document.getElementById("printdiv");
             newWin = window.open("");
-            newWin.document.write(printdiv.outerHTML);
+            newWin.document.write(divToPrint.outerHTML);
             $('#printdiv').hide();
             newWin.print();
 

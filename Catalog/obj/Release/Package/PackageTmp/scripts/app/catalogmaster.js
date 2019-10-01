@@ -1094,8 +1094,14 @@ $(function () {
                     shtml = shtml + "<td style='text-align:center;border: 1px solid black;'>" + data.d[i].TRANS_NO + "</td>";
                     shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].TRANS_DATE + "</td>";
                     shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].TRANS_TYPE + "</td>";
-                    shtml = shtml + "<td style='text-align:center;color:blue;border: 1px solid black;'><b>" + data.d[i].IN_QTY + "</b></td>";
-                    shtml = shtml + "<td style='text-align:center;color:red;border: 1px solid black;'><b>" + data.d[i].OUT_QTY + "</b></td>";
+                    if (data.d[i].IN_QTY > 0)
+                        shtml = shtml + "<td style='text-align:center;color:blue;border: 1px solid black;'><b>" + data.d[i].IN_QTY + "</b></td>";
+                    else
+                        shtml = shtml + "<td style='text-align:center;color:blue;border: 1px solid black;'><b></b></td>";
+                    if (data.d[i].OUT_QTY > 0)
+                        shtml = shtml + "<td style='text-align:center;color:red;border: 1px solid black;'><b>" + data.d[i].OUT_QTY + "</b></td>";
+                    else
+                        shtml = shtml + "<td style='text-align:center;color:red;border: 1px solid black;'><b></b></td>";
                     shtml = shtml + "<td style='text-align:center;color:brown;border: 1px solid black;'><b>" + data.d[i].BAL_QTY + "</b></td><tr>";
 
                 }
@@ -1104,7 +1110,7 @@ $(function () {
                 $('#printdiv').show();
                 var divToPrint = document.getElementById("printdiv");
                 newWin = window.open("");
-                newWin.document.write(printdiv.outerHTML);
+                newWin.document.write(divToPrint.outerHTML);
                 $('#printdiv').hide();
                 newWin.print();
 
