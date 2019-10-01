@@ -342,7 +342,7 @@ function generatereport() {
             $('#tableprint thead').remove();
             $('#tableprint tbody').remove();
             shtml = shtml + "<thead>";
-            shtml = shtml + "<tr><th>Trans No</th><th>Trans Date</th><th>Ref No</th><th>Ledger</th><th>Inward Type</th><th>Remarks</th><th>Void</th><th>Created By</th><th>Modified By</th></tr>";
+            shtml = shtml + "<tr><th style='border: 1px solid black;'>Trans No</th><th style='border: 1px solid black;'>Trans Date</th><th style='border: 1px solid black;'>Ref No</th><th style='border: 1px solid black;'>Ledger</th><th style='border: 1px solid black;'>Inward Type</th><th style='border: 1px solid black;'>Remarks</th><th style='border: 1px solid black;'>Void</th><th style='border: 1px solid black;'>Created By</th><th style='border: 1px solid black;'>Modified By</th></tr>";
             shtml = shtml + "</thead>";
             shtml = shtml + "<tbody>";
             for (var i = 0; i < data.d.length; i++) {
@@ -351,28 +351,28 @@ function generatereport() {
                     if (i != 0) {
                         shtml = shtml + "</tboby></table></td></tr>"; //For Sub Table
                     }
-                    shtml = shtml + "<tr><td style='text-align:center;color:blue'><b>" + data.d[i].TRANS_NO + "</b></td>";
-                    shtml = shtml + "<td style='text-align:center'>" + data.d[i].TRANS_DATE + "</td>";
-                    shtml = shtml + "<td style='text-align:center'>" + data.d[i].REF_NO + "</td>";
-                    shtml = shtml + "<td style='color:blue'><b>" + data.d[i].LED_NAME + "</b></td>";
-                    shtml = shtml + "<td style='text-align:center'>" + data.d[i].IN_TYPE_NAME + "</td>";
-                    shtml = shtml + "<td>" + data.d[i].REMARKS_M + "</td>";
-                    shtml = shtml + "<td style='text-align:center;'>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td>";
-                    shtml = shtml + "<td>" + data.d[i].CREATEDBY + "</td>";
-                    shtml = shtml + "<td>" + data.d[i].MODIFIEDBY + "</td></tr>";
+                    shtml = shtml + "<tr><td style='text-align:center;color:blue;border: 1px solid black;'><b>" + data.d[i].TRANS_NO + "</b></td>";
+                    shtml = shtml + "<td style='text-align:center;border: 1px solid black;'>" + data.d[i].TRANS_DATE + "</td>";
+                    shtml = shtml + "<td style='text-align:center;border: 1px solid black;'>" + data.d[i].REF_NO + "</td>";
+                    shtml = shtml + "<td style='color:blue;border: 1px solid black;'><b>" + data.d[i].LED_NAME + "</b></td>";
+                    shtml = shtml + "<td style='text-align:center;border: 1px solid black;'>" + data.d[i].IN_TYPE_NAME + "</td>";
+                    shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].REMARKS_M + "</td>";
+                    shtml = shtml + "<td style='text-align:center;border: 1px solid black;'>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].VOID_STATUS == true ? "checked='checked'" : "") + "/></td>";
+                    shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].CREATEDBY + "</td>";
+                    shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].MODIFIEDBY + "</td></tr>";
                     shtml = shtml + "<tr><td colspan='3'>";
-                    shtml = shtml + "<table class='table table-striped table-bordered' style='width: 100%' border='1'>";
+                    shtml = shtml + "<table class='table table-striped table-bordered' style='width: 100%;border-collapse: collapse;'>";
                     shtml = shtml + "<thead>";
-                    shtml = shtml + "<tr><th>SKU</th><th>Code</th><th>Title Desc.</th><th>Qty</th><th>Out No</th><th>Remarks</th></tr>";
+                    shtml = shtml + "<tr><th style='border: 1px solid black;'>SKU</th><th style='border: 1px solid black;'>Code</th><th style='border: 1px solid black;'>Title Desc.</th><th style='border: 1px solid black;'>Qty</th><th style='border: 1px solid black;'>Out No</th><th style='border: 1px solid black;'>Remarks</th></tr>";
                     shtml = shtml + "</thead>";
                     shtml = shtml + "<tbody>";
                 }
-                shtml = shtml + "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "<b></td>";
-                shtml = shtml + "<td>" + data.d[i].CODE + "</td>";
-                shtml = shtml + "<td><b>" + data.d[i].CATALOG_TITLE + "</b></td>";
-                shtml = shtml + "<td style='text-align:center;color:blue'><b>" + data.d[i].QTY + "</b></td>";
-                shtml = shtml + "<td style='text-align:center;color:red'><b>" + data.d[i].OUT_TRANS_NO + "</b></td>";
-                shtml = shtml + "<td>" + data.d[i].REMARKS + "</td></tr>";
+                shtml = shtml + "<tr><td style='text-align:center;color:brown;border: 1px solid black;'><b>" + data.d[i].SKU + "<b></td>";
+                shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].CODE + "</td>";
+                shtml = shtml + "<td style='border: 1px solid black;'><b>" + data.d[i].CATALOG_TITLE + "</b></td>";
+                shtml = shtml + "<td style='text-align:center;color:blue;border: 1px solid black;'><b>" + data.d[i].QTY + "</b></td>";
+                shtml = shtml + "<td style='text-align:center;color:red;border: 1px solid black;'><b>" + data.d[i].OUT_TRANS_NO + "</b></td>";
+                shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].REMARKS + "</td></tr>";
             }
             shtml = shtml + "</tboby></table></td></tr>"; //For Sub Table
             shtml = shtml + "</tbody>";

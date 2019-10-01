@@ -462,7 +462,7 @@ $(function () {
                 $('#tablesubprn').append("<tbody>");
                 for (var i = 0; i < data.d.length; i++) {
                     $('#tablesubprn').append(
-                        "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td>" + data.d[i].CODE + "</td><td style='color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='text-align:center;color:red'>" + data.d[i].QTY + "</td><td style='text-align:center;color:blue'>" + data.d[i].OUT_TRANS_NO + "</td><td>" + data.d[i].REMARKS + "</td></tr>");
+                        "<tr><td style='border: 1px solid black;text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td style='border: 1px solid black;'>" + data.d[i].CODE + "</td><td style='border: 1px solid black;color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td><td style='border: 1px solid black;text-align:center;color:blue'>" + data.d[i].OUT_TRANS_NO + "</td><td style='border: 1px solid black;'>" + data.d[i].REMARKS + "</td></tr>");
                 }
                 $('#tablesubprn').append("</tbody>");
                 $('#printdiv').show();

@@ -408,16 +408,7 @@
             <div style="height: 15px">
             </div>
             <div id="divgridprint">
-                <style>
-                    table#tableprint {
-                        border-collapse: collapse;
-                    }
-
-                    th#tableprint, td#tableprint {
-                        border: 1px solid black;
-                    }
-                </style>
-                <table id="tableprint" style="width: 100%">
+                <table id="tableprint" style="width: 100%;border-collapse: collapse;">
                 </table>
             </div>
         </div>
