@@ -66,6 +66,7 @@ function getStockEntryDetails()
             getInwardEntryDetails();
         },
         error: function (request, status, error) {
+            getInwardEntryDetails();
             alert(request.responseText);
             alert("Error while Showing update data");
         }
@@ -103,6 +104,7 @@ function getInwardEntryDetails()
             getOutwardEntryDetails();
         },
         error: function (request, status, error) {
+            getOutwardEntryDetails();
             alert(request.responseText);
             alert("Error while Showing update data");
         }
@@ -140,6 +142,7 @@ function getOutwardEntryDetails() {
             getPendingOutwardEntryDetails();
         },
         error: function (request, status, error) {
+            getPendingOutwardEntryDetails();
             alert(request.responseText);
             alert("Error while Showing update data");
         }
@@ -190,15 +193,14 @@ function getPendingOutwardEntryDetails() {
             $('#tablependingentry').DataTable({
                 "order": [[0, "asc"]]
             });
-            getPendingOutwardEntryDetails();
+            document.getElementById("loader").style.display = "none";
         },
         error: function (request, status, error) {
             alert(request.responseText);
             alert("Error while Showing update data");
+            document.getElementById("loader").style.display = "none";
         }
-    });
-
-    document.getElementById("loader").style.display = "none";
+    });    
 }
 
 
