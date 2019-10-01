@@ -132,7 +132,7 @@ function getOutwardEntryDetails() {
             $('#tableoutwardentry').append("<tbody>");
             for (var i = 0; i < data.d.length; i++) {
                 $('#tableoutwardentry').append(
-                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td style='color:blue'>" + data.d[i].LED_NAME + "</td><td>" + data.d[i].IN_TYPE_NAME + "</td>" +
+                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td style='color:blue'>" + data.d[i].LED_NAME + "</td><td>" + data.d[i].OUT_TYPE_NAME + "</td>" +
                     "<td style='text-align:center'><img src='../images/static/print.png' alt='Print Record' class='printButtonOT handcursor' data-id='" + data.d[i].ID + "' id='btnPrint' value='Print' style='margin-right:5px;margin-left:5px'/> </td></tr>");
             }
             $('#tableoutwardentry').append("</tbody>");
