@@ -31,7 +31,9 @@ namespace Catalog.DAO
                         RoleMasterEntity obj = new RoleMasterEntity();
                         obj.ROLE_ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ROLE_ID"].ToString());
                         obj.ROLE_NAME = ds.Tables[0].Rows[i]["ROLE_NAME"].ToString();
-                        obj.ACTIVE_STATUS = Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
+                        obj.ACTIVE_STATUS = ds.Tables[0].Rows[i]["ACTIVE_STATUS"] == DBNull.Value ? true : Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
+                        obj.ALLOW_DELETE = ds.Tables[0].Rows[i]["ALLOW_DELETE"] == DBNull.Value ? false : Convert.ToBoolean(ds.Tables[0].Rows[i]["ALLOW_DELETE"]);
+                        obj.ALLOW_EDIT = ds.Tables[0].Rows[i]["ALLOW_EDIT"] == DBNull.Value ? false : Convert.ToBoolean(ds.Tables[0].Rows[i]["ALLOW_EDIT"]);
                         retlst.Add(obj);
                     }
                 }
@@ -99,7 +101,9 @@ namespace Catalog.DAO
                         RoleMasterEntity obj = new RoleMasterEntity();
                         obj.ROLE_ID = Convert.ToInt32(ds.Tables[0].Rows[i]["ROLE_ID"].ToString());
                         obj.ROLE_NAME = ds.Tables[0].Rows[i]["ROLE_NAME"].ToString();
-                        obj.ACTIVE_STATUS = Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
+                        obj.ACTIVE_STATUS = ds.Tables[0].Rows[i]["ACTIVE_STATUS"] == DBNull.Value ? true : Convert.ToBoolean(ds.Tables[0].Rows[i]["ACTIVE_STATUS"]);
+                        obj.ALLOW_DELETE = ds.Tables[0].Rows[i]["ALLOW_DELETE"] == DBNull.Value ? false : Convert.ToBoolean(ds.Tables[0].Rows[i]["ALLOW_DELETE"]);
+                        obj.ALLOW_EDIT = ds.Tables[0].Rows[i]["ALLOW_EDIT"] == DBNull.Value ? false : Convert.ToBoolean(ds.Tables[0].Rows[i]["ALLOW_EDIT"]);
                         retlst.Add(obj);
                     }
                 }
@@ -160,6 +164,8 @@ namespace Catalog.DAO
                     cmd.Parameters.AddWithValue("@ID", id);
                     cmd.Parameters.AddWithValue("@NAME", obj.ROLE_NAME);
                     cmd.Parameters.AddWithValue("@ACTIVE_STATUS", obj.ACTIVE_STATUS);
+                    cmd.Parameters.AddWithValue("@ALLOW_DELETE", obj.ALLOW_DELETE);
+                    cmd.Parameters.AddWithValue("@ALLOW_EDIT", obj.ALLOW_EDIT);
 
                     cmd.Parameters.Add("@RESULT", SqlDbType.Int);
                     cmd.Parameters["@RESULT"].Direction = ParameterDirection.Output;
@@ -194,6 +200,8 @@ namespace Catalog.DAO
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@NAME", obj.ROLE_NAME);
                     cmd.Parameters.AddWithValue("@ACTIVE_STATUS", obj.ACTIVE_STATUS);
+                    cmd.Parameters.AddWithValue("@ALLOW_DELETE", obj.ALLOW_DELETE);
+                    cmd.Parameters.AddWithValue("@ALLOW_EDIT", obj.ALLOW_EDIT);
 
                     cmd.Parameters.Add("@RESULT", SqlDbType.Int);
                     cmd.Parameters["@RESULT"].Direction = ParameterDirection.Output;

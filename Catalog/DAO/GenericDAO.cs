@@ -682,5 +682,39 @@ namespace Catalog.DAO
             return objreturn;
         }
 
+        public List<UserRightsEntity> GetUserRights(Int64 id)
+        {
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlDataAdapter adapter;
+            DataSet ds = new DataSet();
+            List<UserRightsEntity> retlst = new List<UserRightsEntity>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("USP_GetUserRights", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", id);
+                    con.Open();
+                    adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        UserRightsEntity obj = new UserRightsEntity();
+                        obj.USER_ID = ds.Tables[0].Rows[i]["USER_ID"] == DBNull.Value ? 1 : Convert.ToInt64(ds.Tables[0].Rows[i]["USER_ID"]);
+                        obj.ALLOW_DELETE = ds.Tables[0].Rows[i]["ALLOW_DELETE"] == DBNull.Value ? false : Convert.ToBoolean(ds.Tables[0].Rows[i]["ALLOW_DELETE"]);
+                        obj.ALLOW_EDIT = ds.Tables[0].Rows[i]["ALLOW_EDIT"] == DBNull.Value ? false : Convert.ToBoolean(ds.Tables[0].Rows[i]["ALLOW_EDIT"]);
+                        retlst.Add(obj);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return retlst;
+        }
+
     }
 }

@@ -59,12 +59,14 @@ function getDetails() {
             $('#griddiv').remove();
             $('#maindiv').append("<div class='table-responsive' id='griddiv'></div>");
             $('#griddiv').append("<table id='tablemain' class='table table-striped table-bordered' style='width: 100%'></table>");
-            $('#tablemain').append("<thead><tr><th>Role Name</th><th>Active</th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
+            $('#tablemain').append("<thead><tr><th>Role Name</th><th>Active</th><th>Allow Edit</th><th>Allow Delete</th><th></th><th></th><th></th></tr></thead><tbody></tbody>");
             $('#tablemain tbody').remove();
             $('#tablemain').append("<tbody>");
             for (var i = 0; i < data.d.length; i++) {
                 $('#tablemain').append(
-                    "<tr><td>" + data.d[i].ROLE_NAME + "</td><td>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].ACTIVE_STATUS == true ? "checked='checked'" : "") + "/></td>" +
+                    "<tr><td>" + data.d[i].ROLE_NAME + "</td><td style='text-align:center'>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].ACTIVE_STATUS == true ? "checked='checked'" : "") + "/></td>" +
+                    "</td><td style='text-align:center'>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].ALLOW_EDIT == true ? "checked='checked'" : "") + "/></td>" +
+                    "</td><td style='text-align:center'>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].ALLOW_DELETE == true ? "checked='checked'" : "") + "/></td>" +
                     "<td>" + "<input type='button' class='btn btn-warning btn-sm editButton' data-id='" + data.d[i].ROLE_ID + "' name='submitButton' id='btnEdit' value='Edit' />" + "</td>" +
                     "<td>" + "<input type='button' class='btn btn-secondary btn-sm editAuthorityButton' data-id='" + data.d[i].ROLE_ID + "' name='submitButton' id='btnEditAuthority' value='Edit Authority' />" + "</td>" +
                     "<td><input type='button' class='btn btn-danger btn-sm deleteButton' data-id='" + data.d[i].ROLE_ID + "' name='submitButton' id='btnDelete' value='Delete'/> </td></tr>");
@@ -162,6 +164,20 @@ $(function () {
             obj.ACTIVE_STATUS = false;
         }
 
+        if ($('#ALLOW_EDIT1').is(":checked")) {
+            obj.ALLOW_EDIT = true;
+        }
+        else {
+            obj.ALLOW_EDIT = false;
+        }
+
+        if ($('#ALLOW_DELETE1').is(":checked")) {
+            obj.ALLOW_DELETE = true;
+        }
+        else {
+            obj.ALLOW_DELETE = false;
+        }
+
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
@@ -227,6 +243,8 @@ $(function () {
         $('#PopupModal').focus();
         $("#NAME1").val('');
         $("#ACTIVE_STATUS1").prop('checked', true);
+        $("#ALLOW_DELETE1").prop('checked', true);
+        $("#ALLOW_EDIT1").prop('checked', true);
         $("div.modal-header h2").html("Add Roles Details");
         $('#NAME1').focus();
     });
@@ -255,6 +273,14 @@ $(function () {
                         $("#ACTIVE_STATUS1").prop('checked', true);
                     else
                         $("#ACTIVE_STATUS1").prop('checked', false);
+                    if (data.d[i].ALLOW_EDIT == true)
+                        $("#ALLOW_EDIT1").prop('checked', true);
+                    else
+                        $("#ALLOW_EDIT1").prop('checked', false);
+                    if (data.d[i].ALLOW_DELETE == true)
+                        $("#ALLOW_DELETE1").prop('checked', true);
+                    else
+                        $("#ALLOW_DELETE1").prop('checked', false);
                 }
                 $('#NAME1').focus();
             },
@@ -344,6 +370,20 @@ $(function () {
         }
         else {
             obj.ACTIVE_STATUS = false;
+        }
+
+        if ($('#ALLOW_EDIT1').is(":checked")) {
+            obj.ALLOW_EDIT = true;
+        }
+        else {
+            obj.ALLOW_EDIT = false;
+        }
+
+        if ($('#ALLOW_DELETE1').is(":checked")) {
+            obj.ALLOW_DELETE = true;
+        }
+        else {
+            obj.ALLOW_DELETE = false;
         }
 
         $.ajax({

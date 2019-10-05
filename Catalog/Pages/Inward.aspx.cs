@@ -12,10 +12,8 @@ namespace Catalog.Pages
 {
     public partial class Inward : System.Web.UI.Page
     {
-        static Int64 userid = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
-            userid = Convert.ToInt64(Session["USER_ID"]);
         }
 
         [WebMethod]
@@ -99,7 +97,7 @@ namespace Catalog.Pages
             var details = new List<DbStatusEntity>();
             try
             {
-                details.Add(new InwardEntryDAO().InsertInwardEntry(obj1, obj2, userid));
+                details.Add(new InwardEntryDAO().InsertInwardEntry(obj1, obj2, Convert.ToInt64(HttpContext.Current.Session["USER_ID"])));
             }
             catch (Exception ex)
             {
@@ -177,7 +175,7 @@ namespace Catalog.Pages
             var details = new List<DbStatusEntity>();
             try
             {
-                details.Add(new InwardEntryDAO().UpdateInwardEntry(obj1, obj2, userid, id));
+                details.Add(new InwardEntryDAO().UpdateInwardEntry(obj1, obj2, Convert.ToInt64(HttpContext.Current.Session["USER_ID"]), id));
             }
             catch (Exception ex)
             {
@@ -201,5 +199,21 @@ namespace Catalog.Pages
             }
             return details.ToArray();
         }
+
+        [WebMethod]
+        public static UserRightsEntity[] GetUserRights(Int64 id)
+        {
+            var details = new List<UserRightsEntity>();
+            try
+            {
+                details = new GenericDAO().GetUserRights(id);
+            }
+            catch (Exception ex)
+            {
+                //details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
+
     }
 }

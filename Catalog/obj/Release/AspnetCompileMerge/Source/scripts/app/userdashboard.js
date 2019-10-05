@@ -66,6 +66,7 @@ function getStockEntryDetails()
             getInwardEntryDetails();
         },
         error: function (request, status, error) {
+            getInwardEntryDetails();
             alert(request.responseText);
             alert("Error while Showing update data");
         }
@@ -88,12 +89,12 @@ function getInwardEntryDetails()
             $('#griddivinwardentry').remove();
             $('#maindivinwardentry').append("<div class='table-responsive' id='griddivinwardentry'></div>");
             $('#griddivinwardentry').append("<table id='tableinwardentry' class='table table-striped table-bordered' style='width: 100%'></table>");
-            $('#tableinwardentry').append("<thead><tr><th>In No</th><th>Ledger</th><th></th></tr></thead><tbody></tbody>");
+            $('#tableinwardentry').append("<thead><tr><th>In No</th><th>Ledger</th><th>Type</th><th></th></tr></thead><tbody></tbody>");
             $('#tableinwardentry tbody').remove();
             $('#tableinwardentry').append("<tbody>");
             for (var i = 0; i < data.d.length; i++) {
                 $('#tableinwardentry').append(
-                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td style='color:blue'>" + data.d[i].LED_NAME + "</td>" +
+                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td style='color:blue'>" + data.d[i].LED_NAME + "</td>" + "<td>" + data.d[i].IN_TYPE_NAME + "</td>" +
                     "<td style='text-align:center'><img src='../images/static/print.png' alt='Print Record' class='printButtonIN handcursor' data-id='" + data.d[i].ID + "' id='btnPrint' value='Print' style='margin-right:5px;margin-left:5px'/> </td></tr>");
             }
             $('#tableinwardentry').append("</tbody>");
@@ -103,6 +104,7 @@ function getInwardEntryDetails()
             getOutwardEntryDetails();
         },
         error: function (request, status, error) {
+            getOutwardEntryDetails();
             alert(request.responseText);
             alert("Error while Showing update data");
         }
@@ -125,12 +127,12 @@ function getOutwardEntryDetails() {
             $('#griddivoutwardentry').remove();
             $('#maindivoutwardentry').append("<div class='table-responsive' id='griddivoutwardentry'></div>");
             $('#griddivoutwardentry').append("<table id='tableoutwardentry' class='table table-striped table-bordered' style='width: 100%'></table>");
-            $('#tableoutwardentry').append("<thead><tr><th>Out No</th><th>Ledger</th><th></th></tr></thead><tbody></tbody>");
+            $('#tableoutwardentry').append("<thead><tr><th>Out No</th><th>Ledger</th><th>Type</th><th></th></tr></thead><tbody></tbody>");
             $('#tableoutwardentry tbody').remove();
             $('#tableoutwardentry').append("<tbody>");
             for (var i = 0; i < data.d.length; i++) {
                 $('#tableoutwardentry').append(
-                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td style='color:blue'>" + data.d[i].LED_NAME + "</td>" +
+                    "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].TRANS_NO + "</b></td><td style='color:blue'>" + data.d[i].LED_NAME + "</td><td>" + data.d[i].OUT_TYPE_NAME + "</td>" +
                     "<td style='text-align:center'><img src='../images/static/print.png' alt='Print Record' class='printButtonOT handcursor' data-id='" + data.d[i].ID + "' id='btnPrint' value='Print' style='margin-right:5px;margin-left:5px'/> </td></tr>");
             }
             $('#tableoutwardentry').append("</tbody>");
@@ -140,6 +142,7 @@ function getOutwardEntryDetails() {
             getPendingOutwardEntryDetails();
         },
         error: function (request, status, error) {
+            getPendingOutwardEntryDetails();
             alert(request.responseText);
             alert("Error while Showing update data");
         }
@@ -190,15 +193,14 @@ function getPendingOutwardEntryDetails() {
             $('#tablependingentry').DataTable({
                 "order": [[0, "asc"]]
             });
-            getPendingOutwardEntryDetails();
+            document.getElementById("loader").style.display = "none";
         },
         error: function (request, status, error) {
             alert(request.responseText);
             alert("Error while Showing update data");
+            document.getElementById("loader").style.display = "none";
         }
-    });
-
-    document.getElementById("loader").style.display = "none";
+    });    
 }
 
 

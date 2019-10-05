@@ -77,6 +77,7 @@
                                 <tr>
                                     <th>In No</th>
                                     <th>Ledger</th>
+                                    <th>Type</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -102,6 +103,7 @@
                                 <tr>
                                     <th>Out No</th>
                                     <th>Ledger</th>
+                                    <th>Type</th>
                                     <th></th>
                                 </tr>
                             </thead>

@@ -1123,6 +1123,36 @@ $(function () {
             }
         });
     });
+
+    $(document).on("click", ".barcodeButton", function () {
+        var id = $(this).attr("data-id");
+        console.log(id);
+        $.ajax({
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            url: "CatalogMaster.aspx/InsertBarcode",
+            data: '{id : ' + id + '}',
+            dataType: "json",
+            success: function (data) {
+                for (var i = 0; i < data.d.length; i++) {
+                    if (data.d[i].RESULT === 1) {                        
+                        alert(data.d[i].MSG);                        
+                    }
+                    else {
+                        alert(data.d[i].MSG);                        
+                        return false;
+                    }
+                }
+            },
+            error: function (data) {
+                alert("Error while Updating data of :" + id);                
+                return false;
+            }
+        });
+       
+    });
+
+
 });
 
 function CalcAmt() {

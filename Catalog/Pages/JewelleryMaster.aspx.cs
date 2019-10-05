@@ -103,5 +103,20 @@ namespace Catalog.Pages
             }
             return details.ToArray();
         }
+
+        [WebMethod]
+        public static UserRightsEntity[] GetUserRights(Int64 id)
+        {
+            var details = new List<UserRightsEntity>();
+            try
+            {
+                details = new GenericDAO().GetUserRights(id);
+            }
+            catch (Exception ex)
+            {
+                //details.Add(new DbStatusEntity(ex.Message));
+            }
+            return details.ToArray();
+        }
     }
 }
