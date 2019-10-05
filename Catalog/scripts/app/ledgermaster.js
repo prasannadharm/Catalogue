@@ -100,7 +100,7 @@ function getDetails() {
                 $('#tablemain').append(
                     "<tr><td>" + data.d[i].NAME + "</td><td>" + data.d[i].ALIAS_NAME + "</td><td>" + data.d[i].LEDGER_TYPE + "</td><td>" + data.d[i].MOBILE + "</td><td>" + data.d[i].CITY + "</td><td>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].ACTIVE_STATUS == true ? "checked='checked'" : "") + "/></td>" +
                     "<td>" + "<img src='../images/static/edit.png' alt='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
-                    "<td><img src='../images/static/delete.png' alt='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td></tr>" );
+                    "<td><img src='../images/static/delete.png' alt='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td></tr>");
             }
             $('#tablemain').append("</tbody>");
             $('#tablemain').DataTable();
@@ -154,7 +154,7 @@ $(function () {
         obj.EMAIL = $("#EMAIL1").val();
         obj.WEB = $("#WEB1").val();
         obj.GSTIN = $("#GSTIN1").val();
-        obj.REMARKS = $("#REMARKS1").val();        
+        obj.REMARKS = $("#REMARKS1").val();
         if ($('#ACTIVE_STATUS1').is(":checked")) {
             obj.ACTIVE_STATUS = true;
         }
@@ -192,31 +192,50 @@ $(function () {
     });
 
     $(document).on("click", ".deleteButton", function () {
-        if (confirm("Are you sure you want to delete !") == true) {
-            var id = $(this).attr("data-id");
-            $.ajax({
-                type: "Post",
-                contentType: "application/json; charset=utf-8",
-                url: "LedgerMaster.aspx/DeleteData",
-                data: '{id: ' + id + '}',
-                dataType: "json",
-                success: function (data) {
-                    for (var i = 0; i < data.d.length; i++) {
-                        if (data.d[i].RESULT === 1) {
-                            getDetails();
-                            alert(data.d[i].MSG);
-                        }
-                        else {
-                            alert(data.d[i].MSG);
-                            return false;
-                        }
-                    }
-                },
-                error: function (data) {
-                    alert("Error while Deleting data of :" + id);
+        var id = $(this).attr("data-id");
+        $.ajax({
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            url: "LedgerMaster.aspx/GetUserRights",
+            dataType: "json",
+            success: function (data) {
+                if (data.d.length > 0 && data.d[0].ALLOW_DELETE == false) {
+                    alert('You are not Authorised to perform this Operation.');
+                    return false;
                 }
-            });
-        }
+
+                if (confirm("Are you sure you want to delete !") == true) {
+
+                    $.ajax({
+                        type: "Post",
+                        contentType: "application/json; charset=utf-8",
+                        url: "LedgerMaster.aspx/DeleteData",
+                        data: '{id: ' + id + '}',
+                        dataType: "json",
+                        success: function (data) {
+                            for (var i = 0; i < data.d.length; i++) {
+                                if (data.d[i].RESULT === 1) {
+                                    getDetails();
+                                    alert(data.d[i].MSG);
+                                }
+                                else {
+                                    alert(data.d[i].MSG);
+                                    return false;
+                                }
+                            }
+                        },
+                        error: function (data) {
+                            alert("Error while Deleting data of :" + id);
+                        }
+                    });
+                }
+
+            },
+            error: function (data) {
+                alert("Error while Deleting data of :" + id);
+            }
+        });
+
 
     });
 
@@ -240,67 +259,88 @@ $(function () {
         $("#REMARKS1").val('');
         $("#CITY1").val('');
         $("#STATE1").val('');
-        $("#ACTIVE_STATUS1").prop('checked', true);      
+        $("#ACTIVE_STATUS1").prop('checked', true);
         $("div.modal-header h2").html("Add Ledger Details");
         $('#NAME1').focus();
     });
 
     $(document).on("click", ".editButton", function () {
-        $('#btnSave').hide();
-        $('#btnUpdate').show();
-        $('#PopupModal').modal('show');
-        $('#PopupModal').focus();
-        $("#NAME1").val('');
-        $("#ALIAS_NAME1").val('');
-        $("#ADDRESS1").val('');
-        $("#PIN_NO1").val('');
-        $("#LEDGER_TYPE1").val('');
-        $("#MOBILE1").val('');
-        $("#TELEPHONE1").val('');
-        $("#EMAIL1").val('');
-        $("#WEB1").val('');
-        $("#GSTIN1").val('');
-        $("#REMARKS1").val('');
-        $("#CITY1").val('');
-        $("#STATE1").val('');
-        $("#ACTIVE_STATUS1").prop('checked', true);
-        $("div.modal-header h2").html("Edit Ledger Details");
         var id = $(this).attr("data-id");
         console.log(id);
         $("#btnUpdate").attr("edit-id", id);
-        //alert(id);  //getting the row id 
+
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
-            url: "LedgerMaster.aspx/EditData",
-            data: '{id: ' + id + '}',
+            url: "LedgerMaster.aspx/GetUserRights",
             dataType: "json",
             success: function (data) {
-                for (var i = 0; i < data.d.length; i++) {
-                    $("#NAME1").val(data.d[i].NAME);
-                    $("#ALIAS_NAME1").val(data.d[i].ALIAS_NAME);
-                    $("#ADDRESS1").val(data.d[i].ADDRESS);
-                    $("#PIN_NO1").val(data.d[i].PIN_NO);
-                    $("#LEDGER_TYPE1").val(data.d[i].LEDGER_TYPE_ID);
-                    $("#MOBILE1").val(data.d[i].MOBILE);
-                    $("#TELEPHONE1").val(data.d[i].TELEPHONE);
-                    $("#EMAIL1").val(data.d[i].EMAIL);
-                    $("#WEB1").val(data.d[i].WEB);
-                    $("#GSTIN1").val(data.d[i].GSTIN);
-                    $("#REMARKS1").val(data.d[i].REMARKS);
-                    City = data.d[i].CITY;
-                    $("#STATE1").val(data.d[i].STATE).change();
-                    if (data.d[i].ACTIVE_STATUS == true)
-                        $("#ACTIVE_STATUS1").prop('checked', true);
-                    else
-                        $("#ACTIVE_STATUS1").prop('checked', false);
+                if (data.d.length > 0 && data.d[0].ALLOW_EDIT == false) {
+                    alert('You are not Authorised to perform this Operation.');
+                    return false;
                 }
-                $('#NAME1').focus();
+
+
+                $('#btnSave').hide();
+                $('#btnUpdate').show();
+                $('#PopupModal').modal('show');
+                $('#PopupModal').focus();
+                $("#NAME1").val('');
+                $("#ALIAS_NAME1").val('');
+                $("#ADDRESS1").val('');
+                $("#PIN_NO1").val('');
+                $("#LEDGER_TYPE1").val('');
+                $("#MOBILE1").val('');
+                $("#TELEPHONE1").val('');
+                $("#EMAIL1").val('');
+                $("#WEB1").val('');
+                $("#GSTIN1").val('');
+                $("#REMARKS1").val('');
+                $("#CITY1").val('');
+                $("#STATE1").val('');
+                $("#ACTIVE_STATUS1").prop('checked', true);
+                $("div.modal-header h2").html("Edit Ledger Details");
+
+                //alert(id);  //getting the row id 
+                $.ajax({
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "LedgerMaster.aspx/EditData",
+                    data: '{id: ' + id + '}',
+                    dataType: "json",
+                    success: function (data) {
+                        for (var i = 0; i < data.d.length; i++) {
+                            $("#NAME1").val(data.d[i].NAME);
+                            $("#ALIAS_NAME1").val(data.d[i].ALIAS_NAME);
+                            $("#ADDRESS1").val(data.d[i].ADDRESS);
+                            $("#PIN_NO1").val(data.d[i].PIN_NO);
+                            $("#LEDGER_TYPE1").val(data.d[i].LEDGER_TYPE_ID);
+                            $("#MOBILE1").val(data.d[i].MOBILE);
+                            $("#TELEPHONE1").val(data.d[i].TELEPHONE);
+                            $("#EMAIL1").val(data.d[i].EMAIL);
+                            $("#WEB1").val(data.d[i].WEB);
+                            $("#GSTIN1").val(data.d[i].GSTIN);
+                            $("#REMARKS1").val(data.d[i].REMARKS);
+                            City = data.d[i].CITY;
+                            $("#STATE1").val(data.d[i].STATE).change();
+                            if (data.d[i].ACTIVE_STATUS == true)
+                                $("#ACTIVE_STATUS1").prop('checked', true);
+                            else
+                                $("#ACTIVE_STATUS1").prop('checked', false);
+                        }
+                        $('#NAME1').focus();
+                    },
+                    error: function () {
+                        alert("Error while retrieving data of :" + id);
+                    }
+                });
+
             },
-            error: function () {
-                alert("Error while retrieving data of :" + id);
+            error: function (data) {
+                alert("Error while Deleting data of :" + id);
             }
         });
+
     });
 
     $("#btnUpdate").click(function () {
