@@ -201,12 +201,12 @@ namespace Catalog.Pages
         }
 
         [WebMethod]
-        public static UserRightsEntity[] GetUserRights(Int64 id)
+        public static UserRightsEntity[] GetUserRights()
         {
             var details = new List<UserRightsEntity>();
             try
             {
-                details = new GenericDAO().GetUserRights(id);
+                details = new GenericDAO().GetUserRights(Convert.ToInt64(HttpContext.Current.Session["USER_ID"]));
             }
             catch (Exception ex)
             {
