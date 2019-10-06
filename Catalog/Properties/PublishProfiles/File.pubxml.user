@@ -16,13 +16,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/16/2019 20:23:16</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>10/01/2019 23:05:38</publishTime>
+      <publishTime>10/06/2019 19:26:32</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>10/01/2019 23:05:38</publishTime>
+      <publishTime>10/06/2019 19:26:32</publishTime>
     </File>
     <File Include="bin/Catalog.dll">
-      <publishTime>10/01/2019 23:05:07</publishTime>
+      <publishTime>10/06/2019 19:26:00</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>12/07/2015 19:04:38</publishTime>
@@ -343,7 +343,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/08/2019 20:54:33</publishTime>
     </File>
     <File Include="Pages/RolesMaster.aspx">
-      <publishTime>05/02/2019 23:38:22</publishTime>
+      <publishTime>10/05/2019 20:33:23</publishTime>
     </File>
     <File Include="Pages/Search.aspx">
       <publishTime>09/16/2019 21:05:00</publishTime>
@@ -367,7 +367,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/01/2019 10:40:40</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>10/01/2019 23:05:34</publishTime>
+      <publishTime>10/06/2019 19:26:24</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>04/16/2019 20:23:16</publishTime>
@@ -388,7 +388,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/21/2019 20:45:54</publishTime>
     </File>
     <File Include="scripts/app/catalogmaster.js">
-      <publishTime>10/01/2019 23:03:11</publishTime>
+      <publishTime>10/05/2019 22:12:51</publishTime>
     </File>
     <File Include="scripts/app/cataloguemaster.js">
       <publishTime>04/29/2019 06:13:12</publishTime>
@@ -397,10 +397,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/04/2019 19:30:00</publishTime>
     </File>
     <File Include="scripts/app/citystatemaster.js">
-      <publishTime>05/02/2019 12:45:02</publishTime>
+      <publishTime>10/05/2019 22:41:14</publishTime>
     </File>
     <File Include="scripts/app/collectionsmaster.js">
-      <publishTime>04/29/2019 20:06:52</publishTime>
+      <publishTime>10/05/2019 22:34:24</publishTime>
     </File>
     <File Include="scripts/app/company.js">
       <publishTime>04/21/2019 18:32:25</publishTime>
@@ -409,7 +409,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/30/2019 22:21:20</publishTime>
     </File>
     <File Include="scripts/app/designmaster.js">
-      <publishTime>04/29/2019 20:29:30</publishTime>
+      <publishTime>10/05/2019 22:30:23</publishTime>
     </File>
     <File Include="scripts/app/forgotpassword.js">
       <publishTime>05/04/2019 19:30:11</publishTime>
@@ -418,55 +418,55 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2019 11:04:32</publishTime>
     </File>
     <File Include="scripts/app/gramslabmaster.js">
-      <publishTime>04/29/2019 20:55:41</publishTime>
+      <publishTime>10/05/2019 22:37:06</publishTime>
     </File>
     <File Include="scripts/app/home.js">
       <publishTime>05/25/2019 09:29:01</publishTime>
     </File>
     <File Include="scripts/app/inwardentry.js">
-      <publishTime>10/01/2019 13:13:30</publishTime>
+      <publishTime>10/05/2019 22:44:16</publishTime>
     </File>
     <File Include="scripts/app/inwardregister.js">
       <publishTime>10/01/2019 13:25:26</publishTime>
     </File>
     <File Include="scripts/app/inwardtypemaster.js">
-      <publishTime>09/08/2019 20:48:47</publishTime>
+      <publishTime>10/05/2019 22:46:12</publishTime>
     </File>
     <File Include="scripts/app/jewellerymaster.js">
-      <publishTime>04/28/2019 22:34:44</publishTime>
+      <publishTime>10/05/2019 22:28:46</publishTime>
     </File>
     <File Include="scripts/app/karatmaster.js">
-      <publishTime>04/29/2019 21:04:52</publishTime>
+      <publishTime>10/05/2019 22:42:33</publishTime>
     </File>
     <File Include="scripts/app/ledgermaster.js">
-      <publishTime>09/21/2019 14:52:56</publishTime>
+      <publishTime>10/05/2019 22:24:17</publishTime>
     </File>
     <File Include="scripts/app/ledgertypemaster.js">
-      <publishTime>04/29/2019 19:56:12</publishTime>
+      <publishTime>10/05/2019 22:25:56</publishTime>
     </File>
     <File Include="scripts/app/materialmaster.js">
-      <publishTime>04/29/2019 20:23:40</publishTime>
+      <publishTime>10/05/2019 22:32:35</publishTime>
     </File>
     <File Include="scripts/app/occasionmaster.js">
-      <publishTime>04/29/2019 20:49:40</publishTime>
+      <publishTime>10/05/2019 22:38:57</publishTime>
     </File>
     <File Include="scripts/app/outwardentry.js">
-      <publishTime>10/01/2019 13:23:45</publishTime>
+      <publishTime>10/05/2019 22:18:32</publishTime>
     </File>
     <File Include="scripts/app/outwardregister.js">
       <publishTime>10/01/2019 13:25:06</publishTime>
     </File>
     <File Include="scripts/app/outwardtypemaster.js">
-      <publishTime>09/08/2019 21:03:20</publishTime>
+      <publishTime>10/05/2019 22:47:39</publishTime>
     </File>
     <File Include="scripts/app/rolesmaster.js">
-      <publishTime>05/03/2019 00:17:28</publishTime>
+      <publishTime>10/05/2019 22:55:09</publishTime>
     </File>
     <File Include="scripts/app/search.js">
       <publishTime>09/20/2019 20:26:08</publishTime>
     </File>
     <File Include="scripts/app/stockentry.js">
-      <publishTime>10/01/2019 13:10:40</publishTime>
+      <publishTime>10/05/2019 22:15:06</publishTime>
     </File>
     <File Include="scripts/app/stockentryregister.js">
       <publishTime>10/01/2019 13:24:32</publishTime>
@@ -478,7 +478,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2019 18:59:09</publishTime>
     </File>
     <File Include="scripts/app/usermaster.js">
-      <publishTime>05/03/2019 00:46:53</publishTime>
+      <publishTime>10/05/2019 22:52:00</publishTime>
     </File>
     <File Include="scripts/baguetteBox.min.js">
       <publishTime>04/16/2019 06:03:29</publishTime>
@@ -517,7 +517,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/14/2019 20:06:56</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/01/2019 23:05:33</publishTime>
+      <publishTime>10/06/2019 19:26:22</publishTime>
     </File>
   </ItemGroup>
 </Project>

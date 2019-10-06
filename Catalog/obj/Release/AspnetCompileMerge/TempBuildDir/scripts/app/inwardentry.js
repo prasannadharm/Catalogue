@@ -47,7 +47,7 @@ $(document).ready(function () {
 
     $("#btnSearch").click(function () {
         getMainGridDetails();
-    })    
+    })
 
     $('#ContentPlaceHolder1_LED_NAME').keypress(function (e) {
         var key = e.which;
@@ -71,7 +71,7 @@ $(document).ready(function () {
         {
             $('#INWARD_TYPE').focus();
         }
-    });   
+    });
 
     $("#btnFetch").click(function () {
         searchpendingItem();
@@ -164,94 +164,113 @@ $(function () {
         var id = $(this).attr("data-id");
         console.log(id);
         $("#btnUpdate").attr("edit-id", id);
-        var checkid = 0;
+
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
-            url: "Inward.aspx/CheckVoidInwardEnrty",
-            data: '{id: ' + id + '}',
+            url: "Inward.aspx/GetUserRights",
             dataType: "json",
             success: function (data) {
-                if (data.d.length > 0) {
-                    checkid = data.d[0];
-                }
-
-                if (checkid != null && checkid != undefined && checkid > 0) {
-                    alert('Cannot Edit Voided/Cancelled entry.');
+                if (data.d.length > 0 && data.d[0].ALLOW_EDIT == false) {
+                    alert('You are not Authorised to perform this Operation.');
                     return false;
                 }
 
-                var date = new Date();
-                var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-                $('#btnSave').hide();
-                $('#btnUpdate').show();
-                $('#mainlistingdiv').hide();
-                $('#mainldetaildiv').show();
-                $("#subheaderdiv").html("<h2 style='color:blue'>Inward Entry -> Edit Inward Entry</h2>");
-                subItemsList = [];
-                rebuildSubTableGrid();
-                $('#tablesub tbody').remove();
-                $('#tablesub').append("<tbody>");
-                $('#tablesub').append("</tbody>");
-                $('#TRANS_NO').val('0');
-                $('#TRANS_DATE').datepicker('setDate', today);
-                $("#ContentPlaceHolder1_LED_NAME").val('');
-                $("#ContentPlaceHolder1_LED_ID").val('');
-                $('#REMARKS').val('');
-                $('#REF_NO').val('');
-                $('#INWARD_TYPE').val(0);
-                $("#ContentPlaceHolder1_LED_NAME").prop("disabled", true);
-
-                //$("#btnUpdate").attr("edit-id", id);
-                //alert(id);  //getting the row id 
+                var checkid = 0;
                 $.ajax({
                     type: "Post",
                     contentType: "application/json; charset=utf-8",
-                    url: "Inward.aspx/EditData",
+                    url: "Inward.aspx/CheckVoidInwardEnrty",
                     data: '{id: ' + id + '}',
                     dataType: "json",
                     success: function (data) {
                         if (data.d.length > 0) {
-                            $("#ContentPlaceHolder1_LED_NAME").val(data.d[0].LED_NAME);
-                            $("#ContentPlaceHolder1_LED_ID").val(data.d[0].LED_ID);
-                            $("#TRANS_NO").val(data.d[0].TRANS_NO);
-                            $('#TRANS_DATE').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
-                            $("#REMARKS").val(data.d[0].REMARKS_MAIN);
-                            $("#REF_NO").val(data.d[0].REF_NO);
-                            $('#INWARD_TYPE').val(data.d[0].IN_TYPE_ID);
-                            $("#subheaderdiv").html("<h2 style='color:blue'>Inward Entry -> Edit Inward Entry No: " + data.d[0].TRANS_NO + "</h2>");
+                            checkid = data.d[0];
                         }
-                        for (var i = 0; i < data.d.length; i++) {
-                            var objdetail = {};
-                            objdetail.CATALOG_ID = data.d[i].CATALOG_ID;
-                            objdetail.SKU = data.d[i].SKU;
-                            objdetail.CODE = data.d[i].CODE;
-                            objdetail.CATALOG_TITLE = data.d[i].CATALOG_TITLE;
-                            objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
-                            objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
-                            objdetail.GENID = data.d[i].GENID;
-                            objdetail.QTY = data.d[i].QTY;
-                            objdetail.REMARKS = data.d[i].REMARKS;
-                            objdetail.OUT_TRANS_MAIN_ID = data.d[i].OUT_TRANS_MAIN_ID;
-                            objdetail.OUT_TRANS_NO = data.d[i].OUT_TRANS_NO;
-                            objdetail.OUT_GENID = data.d[i].OUT_GENID;
-                            objdetail.OUT_QTY = data.d[i].OUT_QTY;
-                            objdetail.OUT_BAL_QTY = data.d[i].OUT_BAL_QTY;
-                            objdetail.OUT_TRANS_DATE = data.d[i].OUT_TRANS_DATE;
-                            subItemsList.push(objdetail);
+
+                        if (checkid != null && checkid != undefined && checkid > 0) {
+                            alert('Cannot Edit Voided/Cancelled entry.');
+                            return false;
                         }
+
+                        var date = new Date();
+                        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                        $('#btnSave').hide();
+                        $('#btnUpdate').show();
+                        $('#mainlistingdiv').hide();
+                        $('#mainldetaildiv').show();
+                        $("#subheaderdiv").html("<h2 style='color:blue'>Inward Entry -> Edit Inward Entry</h2>");
+                        subItemsList = [];
                         rebuildSubTableGrid();
-                        $("#txtSearchItem").val('');
-                        $('#ContentPlaceHolder1_LED_NAME').focus();
+                        $('#tablesub tbody').remove();
+                        $('#tablesub').append("<tbody>");
+                        $('#tablesub').append("</tbody>");
+                        $('#TRANS_NO').val('0');
+                        $('#TRANS_DATE').datepicker('setDate', today);
+                        $("#ContentPlaceHolder1_LED_NAME").val('');
+                        $("#ContentPlaceHolder1_LED_ID").val('');
+                        $('#REMARKS').val('');
+                        $('#REF_NO').val('');
+                        $('#INWARD_TYPE').val(0);
+                        $("#ContentPlaceHolder1_LED_NAME").prop("disabled", true);
+
+                        //$("#btnUpdate").attr("edit-id", id);
+                        //alert(id);  //getting the row id 
+                        $.ajax({
+                            type: "Post",
+                            contentType: "application/json; charset=utf-8",
+                            url: "Inward.aspx/EditData",
+                            data: '{id: ' + id + '}',
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.d.length > 0) {
+                                    $("#ContentPlaceHolder1_LED_NAME").val(data.d[0].LED_NAME);
+                                    $("#ContentPlaceHolder1_LED_ID").val(data.d[0].LED_ID);
+                                    $("#TRANS_NO").val(data.d[0].TRANS_NO);
+                                    $('#TRANS_DATE').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
+                                    $("#REMARKS").val(data.d[0].REMARKS_MAIN);
+                                    $("#REF_NO").val(data.d[0].REF_NO);
+                                    $('#INWARD_TYPE').val(data.d[0].IN_TYPE_ID);
+                                    $("#subheaderdiv").html("<h2 style='color:blue'>Inward Entry -> Edit Inward Entry No: " + data.d[0].TRANS_NO + "</h2>");
+                                }
+                                for (var i = 0; i < data.d.length; i++) {
+                                    var objdetail = {};
+                                    objdetail.CATALOG_ID = data.d[i].CATALOG_ID;
+                                    objdetail.SKU = data.d[i].SKU;
+                                    objdetail.CODE = data.d[i].CODE;
+                                    objdetail.CATALOG_TITLE = data.d[i].CATALOG_TITLE;
+                                    objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
+                                    objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
+                                    objdetail.GENID = data.d[i].GENID;
+                                    objdetail.QTY = data.d[i].QTY;
+                                    objdetail.REMARKS = data.d[i].REMARKS;
+                                    objdetail.OUT_TRANS_MAIN_ID = data.d[i].OUT_TRANS_MAIN_ID;
+                                    objdetail.OUT_TRANS_NO = data.d[i].OUT_TRANS_NO;
+                                    objdetail.OUT_GENID = data.d[i].OUT_GENID;
+                                    objdetail.OUT_QTY = data.d[i].OUT_QTY;
+                                    objdetail.OUT_BAL_QTY = data.d[i].OUT_BAL_QTY;
+                                    objdetail.OUT_TRANS_DATE = data.d[i].OUT_TRANS_DATE;
+                                    subItemsList.push(objdetail);
+                                }
+                                rebuildSubTableGrid();
+                                $("#txtSearchItem").val('');
+                                $('#ContentPlaceHolder1_LED_NAME').focus();
+                            },
+                            error: function () {
+                                alert("Error while retrieving data of :" + id);
+                            }
+                        });
+
                     },
                     error: function () {
-                        alert("Error while retrieving data of :" + id);
+                        alert("Error while checking is void data of :" + id);
                     }
                 });
 
+
             },
-            error: function () {
-                alert("Error while checking is void data of :" + id);
+            error: function (data) {
+                alert("Error while Deleting data of :" + id);
             }
         });
 
@@ -393,31 +412,51 @@ $(function () {
     });
 
     $(document).on("click", ".deleteButton", function () {
-        if (confirm("Are you sure you want to delete the entry!") == true) {
-            var id = $(this).attr("data-id");
-            $.ajax({
-                type: "Post",
-                contentType: "application/json; charset=utf-8",
-                url: "Inward.aspx/DeleteData",
-                data: '{id: ' + id + '}',
-                dataType: "json",
-                success: function (data) {
-                    for (var i = 0; i < data.d.length; i++) {
-                        if (data.d[i].RESULT === 1) {
-                            getMainGridDetails();
-                            alert(data.d[i].MSG);
-                        }
-                        else {
-                            alert(data.d[i].MSG);
-                            return false;
-                        }
-                    }
-                },
-                error: function (data) {
-                    alert("Error while Deleting data of :" + id);
+        var id = $(this).attr("data-id");
+        $.ajax({
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            url: "CatalogMaster.aspx/GetUserRights",
+            dataType: "json",
+            success: function (data) {
+                if (data.d.length > 0 && data.d[0].ALLOW_DELETE == false) {
+                    alert('You are not Authorised to perform this Operation.');
+                    return false;
                 }
-            });
-        }
+
+                if (confirm("Are you sure you want to delete the entry!") == true) {
+
+                    $.ajax({
+                        type: "Post",
+                        contentType: "application/json; charset=utf-8",
+                        url: "Inward.aspx/DeleteData",
+                        data: '{id: ' + id + '}',
+                        dataType: "json",
+                        success: function (data) {
+                            for (var i = 0; i < data.d.length; i++) {
+                                if (data.d[i].RESULT === 1) {
+                                    getMainGridDetails();
+                                    alert(data.d[i].MSG);
+                                }
+                                else {
+                                    alert(data.d[i].MSG);
+                                    return false;
+                                }
+                            }
+                        },
+                        error: function (data) {
+                            alert("Error while Deleting data of :" + id);
+                        }
+                    });
+                }
+
+            },
+            error: function (data) {
+                alert("Error while Deleting data of :" + id);
+            }
+        });
+
+
     });
 
     $(document).on("click", ".voidButton", function () {
@@ -607,35 +646,34 @@ $(function () {
 });
 
 function searchpendingItem() {
-    
+
     if ($.trim($("#ContentPlaceHolder1_LED_NAME").val()) == '') {
         alert('Please select Ledger.');
         $("#ContentPlaceHolder1_LED_NAME").focus();
         return false;
     }
 
-    document.getElementById("loader").style.display = "block";   
+    document.getElementById("loader").style.display = "block";
 
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
         url: "Inward.aspx/GetPendingOutwardEntries",
-        data: "{ 'str': '" + $.trim($("#ContentPlaceHolder1_LED_NAME").val()) + "'}",        
+        data: "{ 'str': '" + $.trim($("#ContentPlaceHolder1_LED_NAME").val()) + "'}",
         dataType: "json",
         success: function (data) {
             if (data.d.length <= 0) {
                 alert('No records found.');
                 $("#ContentPlaceHolder1_LED_NAME").focus();
                 return false;
-            }            
+            }
             else {
                 tempsubItemsList = [];
                 for (var i = 0; i < data.d.length; i++) {
                     var fnd = 0
                     for (var j = 0; j < subItemsList.length; j++) {
-                        if (subItemsList[j].OUT_TRANS_MAIN_ID == data.d[i].OUT_TRANS_MAIN_ID && subItemsList[j].OUT_GENID == data.d[i].OUT_GENID)
-                        {
-                            fnd =1
+                        if (subItemsList[j].OUT_TRANS_MAIN_ID == data.d[i].OUT_TRANS_MAIN_ID && subItemsList[j].OUT_GENID == data.d[i].OUT_GENID) {
+                            fnd = 1
                             break;
                         }
                     }
@@ -659,8 +697,7 @@ function searchpendingItem() {
                         tempsubItemsList.push(objdetail);
                     }
                 }
-                if (tempsubItemsList.length <= 0)
-                {
+                if (tempsubItemsList.length <= 0) {
                     alert('No more pending records found.');
                     $("#ContentPlaceHolder1_LED_NAME").focus();
                     return false;
@@ -699,7 +736,7 @@ function rebuildItemSearchTableGrid() {
     $('#PopupModalItemSearch').focus();
 
     $(".selectButtonSubis").click(function () {
-        var id = this.id.split("_");        
+        var id = this.id.split("_");
         for (var i = 0; i < tempsubItemsList.length; i++) {
             if (tempsubItemsList[i].GENID == id[1]) {
                 var objdetail = {};
@@ -716,7 +753,7 @@ function rebuildItemSearchTableGrid() {
                 objdetail.OUT_TRANS_NO = tempsubItemsList[i].OUT_TRANS_NO;
                 objdetail.OUT_GENID = tempsubItemsList[i].OUT_GENID;
                 objdetail.OUT_QTY = tempsubItemsList[i].OUT_QTY;
-                objdetail.OUT_BAL_QTY = tempsubItemsList[i].OUT_BAL_QTY;               
+                objdetail.OUT_BAL_QTY = tempsubItemsList[i].OUT_BAL_QTY;
                 subItemsList.push(objdetail);
                 break;
             }
@@ -755,8 +792,7 @@ function rebuildSubTableGrid() {
                 if ($(this).val() <= subItemsList[i].OUT_BAL_QTY) {
                     subItemsList[i].QTY = $(this).val();
                 }
-                else
-                {
+                else {
                     alert('Qty cannot be greater than Pending Qty.');
                     $(this).val(subItemsList[i].OUT_BAL_QTY);
                     subItemsList[i].QTY = subItemsList[i].OUT_BAL_QTY;

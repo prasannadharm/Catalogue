@@ -26,6 +26,8 @@
                             <tr>
                                 <th>Role Name</th>
                                 <th>Active</th>
+                                <th>Allow Edit</th>
+                                <th>Allow Delete</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -51,12 +53,19 @@
                         <div class="form-group col-lg-12">
                             <label>Role Name</label>
                             <input type="text" name="NAME" id="NAME1" class="form-control" placeholder="Please enter Name" />
+                        </div>                        
+                        <div class="form-group col-lg-12">
+                            <label>Allow Edit</label>
+                            <input type="checkbox" name="ALLOW_EDIT" id="ALLOW_EDIT1" style="margin-left: 10px; vertical-align: middle;" />
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label>Allow Delete</label>
+                            <input type="checkbox" name="ALLOW_DELETE" id="ALLOW_DELETE1" style="margin-left: 10px; vertical-align: middle;" />
                         </div>
                         <div class="form-group col-lg-12">
                             <label>Active Status</label>
                             <input type="checkbox" name="ACTIVE_STATUS" id="ACTIVE_STATUS1" style="margin-left: 10px; vertical-align: middle;" />
                         </div>
-
                     </div>
                 </div>
                 <div class="modal-footer">

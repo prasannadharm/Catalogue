@@ -82,14 +82,14 @@ $(function () {
             return false;
         }
 
-        
+
         var obj = {};
         obj.USER_PASSWORD = $("#USER_PASSWORD1").val();
         obj.NAME = $("#NAME1").val();
         obj.EMAIL = $("#EMAIL1").val();
         obj.MOBILE_NO = $("#MOBILE_NO1").val();
         obj.ROLE_ID = $("#ROLE_NAME1").val();
-        
+
         if ($('#ACTIVE_STATUS1').is(":checked")) {
             obj.ACTIVE_STATUS = true;
         }
@@ -127,32 +127,47 @@ $(function () {
     });
 
     $(document).on("click", ".deleteButton", function () {
-        if (confirm("Are you sure you want to delete !") == true) {
-            var id = $(this).attr("data-id");
-            $.ajax({
-                type: "Post",
-                contentType: "application/json; charset=utf-8",
-                url: "UserMaster.aspx/DeleteData",
-                data: '{id: ' + id + '}',
-                dataType: "json",
-                success: function (data) {
-                    for (var i = 0; i < data.d.length; i++) {
-                        if (data.d[i].RESULT === 1) {
-                            getDetails();
-                            alert(data.d[i].MSG);
-                        }
-                        else {
-                            alert(data.d[i].MSG);
-                            return false;
-                        }
-                    }
-                },
-                error: function (data) {
-                    alert("Error while Deleting data of :" + id);
+        var id = $(this).attr("data-id");
+        $.ajax({
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            url: "UserMaster.aspx/GetUserRights",
+            dataType: "json",
+            success: function (data) {
+                if (data.d.length > 0 && data.d[0].ALLOW_DELETE == false) {
+                    alert('You are not Authorised to perform this Operation.');
+                    return false;
                 }
-            });
-        }
 
+                if (confirm("Are you sure you want to delete !") == true) {
+                    $.ajax({
+                        type: "Post",
+                        contentType: "application/json; charset=utf-8",
+                        url: "UserMaster.aspx/DeleteData",
+                        data: '{id: ' + id + '}',
+                        dataType: "json",
+                        success: function (data) {
+                            for (var i = 0; i < data.d.length; i++) {
+                                if (data.d[i].RESULT === 1) {
+                                    getDetails();
+                                    alert(data.d[i].MSG);
+                                }
+                                else {
+                                    alert(data.d[i].MSG);
+                                    return false;
+                                }
+                            }
+                        },
+                        error: function (data) {
+                            alert("Error while Deleting data of :" + id);
+                        }
+                    });
+                }
+            },
+            error: function (data) {
+                alert("Error while Deleting data of :" + id);
+            }
+        });
     });
 
     $(document).on("click", ".addNewButton", function () {
@@ -172,16 +187,6 @@ $(function () {
     });
 
     $(document).on("click", ".editButton", function () {
-        $('#btnSave').hide();
-        $('#btnUpdate').show();
-        $('#PopupModal').modal('show');
-        $('#PopupModal').focus();
-        $("#USER_PASSWORD1").val('');
-        $("#NAME1").val('');
-        $("#EMAIL1").val('');
-        $("#MOBILE_NO1").val('');
-        $("#ROLE_NAME1").val('');
-        $("div.modal-header h2").html("Edit User Details");
         var id = $(this).attr("data-id");
         console.log(id);
         $("#btnUpdate").attr("edit-id", id);
@@ -189,26 +194,53 @@ $(function () {
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
-            url: "UserMaster.aspx/EditData",
-            data: '{id: ' + id + '}',
+            url: "UserMaster.aspx/GetUserRights",
             dataType: "json",
             success: function (data) {
-                for (var i = 0; i < data.d.length; i++) {
-                    $("#USER_PASSWORD1").val(data.d[i].USER_PASSWORD);
-                    $("#NAME1").val(data.d[i].NAME);
-                    $("#EMAIL1").val(data.d[i].EMAIL);
-                    $("#MOBILE_NO1").val(data.d[i].MOBILE_NO);
-                    $("#ROLE_NAME1").val(data.d[i].ROLE_ID);
-                  
-                    if (data.d[i].ACTIVE_STATUS == true)
-                        $("#ACTIVE_STATUS1").prop('checked', true);
-                    else
-                        $("#ACTIVE_STATUS1").prop('checked', false);
+                if (data.d.length > 0 && data.d[0].ALLOW_EDIT == false) {
+                    alert('You are not Authorised to perform this Operation.');
+                    return false;
                 }
-                $('#NAME1').focus();
+
+                $('#btnSave').hide();
+                $('#btnUpdate').show();
+                $('#PopupModal').modal('show');
+                $('#PopupModal').focus();
+                $("#USER_PASSWORD1").val('');
+                $("#NAME1").val('');
+                $("#EMAIL1").val('');
+                $("#MOBILE_NO1").val('');
+                $("#ROLE_NAME1").val('');
+                $("div.modal-header h2").html("Edit User Details");
+               
+                $.ajax({
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "UserMaster.aspx/EditData",
+                    data: '{id: ' + id + '}',
+                    dataType: "json",
+                    success: function (data) {
+                        for (var i = 0; i < data.d.length; i++) {
+                            $("#USER_PASSWORD1").val(data.d[i].USER_PASSWORD);
+                            $("#NAME1").val(data.d[i].NAME);
+                            $("#EMAIL1").val(data.d[i].EMAIL);
+                            $("#MOBILE_NO1").val(data.d[i].MOBILE_NO);
+                            $("#ROLE_NAME1").val(data.d[i].ROLE_ID);
+
+                            if (data.d[i].ACTIVE_STATUS == true)
+                                $("#ACTIVE_STATUS1").prop('checked', true);
+                            else
+                                $("#ACTIVE_STATUS1").prop('checked', false);
+                        }
+                        $('#NAME1').focus();
+                    },
+                    error: function () {
+                        alert("Error while retrieving data of :" + id);
+                    }
+                });
             },
-            error: function () {
-                alert("Error while retrieving data of :" + id);
+            error: function (data) {
+                alert("Error while Deleting data of :" + id);
             }
         });
     });

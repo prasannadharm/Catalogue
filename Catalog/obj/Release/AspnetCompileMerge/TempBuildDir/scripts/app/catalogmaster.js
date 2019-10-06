@@ -653,31 +653,49 @@ $(function () {
     });
 
     $(document).on("click", ".deleteButton", function () {
-        if (confirm("Are you sure you want to delete !") == true) {
-            var id = $(this).attr("data-id");
-            $.ajax({
-                type: "Post",
-                contentType: "application/json; charset=utf-8",
-                url: "CatalogMaster.aspx/DeleteData",
-                data: '{id: ' + id + '}',
-                dataType: "json",
-                success: function (data) {
-                    for (var i = 0; i < data.d.length; i++) {
-                        if (data.d[i].RESULT === 1) {
-                            getDetails();
-                            alert(data.d[i].MSG);
-                        }
-                        else {
-                            alert(data.d[i].MSG);
-                            return false;
-                        }
-                    }
-                },
-                error: function (data) {
-                    alert("Error while Deleting data of :" + id);
+        var id = $(this).attr("data-id");
+        $.ajax({
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            url: "CatalogMaster.aspx/GetUserRights",
+            dataType: "json",
+            success: function (data) {
+                if (data.d.length > 0 && data.d[0].ALLOW_DELETE == false) {
+                    alert('You are not Authorised to perform this Operation.');
+                    return false;
                 }
-            });
-        }
+
+                if (confirm("Are you sure you want to delete !") == true) {
+                    
+                    $.ajax({
+                        type: "Post",
+                        contentType: "application/json; charset=utf-8",
+                        url: "CatalogMaster.aspx/DeleteData",
+                        dataType: "json",
+                        success: function (data) {
+                            for (var i = 0; i < data.d.length; i++) {
+                                if (data.d[i].RESULT === 1) {
+                                    getDetails();
+                                    alert(data.d[i].MSG);
+                                }
+                                else {
+                                    alert(data.d[i].MSG);
+                                    return false;
+                                }
+                            }
+                        },
+                        error: function (data) {
+                            alert("Error while Deleting data of :" + id);
+                        }
+                    });
+                }
+
+            },
+            error: function (data) {
+                alert("Error while Deleting data of :" + id);
+            }
+        });
+
 
     });
 
@@ -734,104 +752,126 @@ $(function () {
     });
 
     $(document).on("click", ".editButton", function () {
-        $('#btnSave').hide();
-        $('#btnUpdate').show();
-        $('#PopupModal').modal('show');
-        $('#PopupModal').focus();
-        $("#TITLE1").val('');
-        $("#ACTIVE_STATUS1").prop('checked', true);
-        $("#SHOW_CATALOG1").prop('checked', true);
-        $("#SHOW_TRENDING1").prop('checked', true);
-        $("#SKU1").text('-');
-        $("#STK_QTY1").text('0');
-        $("#CODE1").val('');
-        $("#PURITY1").val('');
-        $("#REMARKS1").val('');
-        $("#JEWELLERY_NAME1").val('0');
-        $("#DESIGN_NAME1").val('0');
-        $("#COLLECTIONS_NAME1").val('0');
-        $("#MATERIAL_NAME1").val('0');
-        $("#OCCASION_NAME1").val('0');
-        $("#GRAMSLAB_NAME1").val('0');
-        $("#KARAT_NAME1").val('0');
-        $("#PURITY1").val('0');
-
-        $("#RATE1").val(0);
-        $("#GR_WT1").val(0);
-        $("#ST_WT1").val(0);
-        $("#NET_WT1").val(0);
-        $("#VA_PER1").val(0);
-        $("#VA_AMT1").val(0);
-        $("#ST_AMT1").val(0);
-        $("#TAXABLE_AMT1").val(0);
-        $("#TAX_PER1").val(3);
-        $("#TAX_AMT1").val(0);
-        $("#NET_AMT1").val(0);
-        Datalodaing = 1;
-        $("div.modal-header h2").html("Edit Catalog Details");
         var id = $(this).attr("data-id");
-        console.log(id);
-        $("#btnUpdate").attr("edit-id", id);
-        //alert(id);  //getting the row id 
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
-            url: "CatalogMaster.aspx/EditData",
-            data: '{id: ' + id + '}',
+            url: "CatalogMaster.aspx/GetUserRights",
             dataType: "json",
             success: function (data) {
-                for (var i = 0; i < data.d.length; i++) {
-
-                    $("#SKU1").text(data.d[i].SKU);
-                    $("#STK_QTY1").text(data.d[i].STK_QTY);
-
-                    $("#CODE1").val(data.d[i].CODE);
-                    $("#TITLE1").val(data.d[i].TITLE);
-                    $("#JEWELLERY_NAME1").val(data.d[i].JEWELLERY_ID);
-                    $("#DESIGN_NAME1").val(data.d[i].DESIGN_ID);
-                    $("#COLLECTIONS_NAME1").val(data.d[i].COLLECTIONS_ID);
-                    $("#MATERIAL_NAME1").val(data.d[i].MATERIAL_ID);
-                    $("#OCCASION_NAME1").val(data.d[i].OCCASION_ID);
-                    $("#GRAMSLAB_NAME1").val(data.d[i].GRAMSLAB_ID);
-                    $("#KARAT_NAME1").val(data.d[i].KARAT_ID);
-                    $("#REMARKS1").val(data.d[i].REMARKS);
-                    $("#PURITY1").val(data.d[i].PURITY);
-                    $("#RATE1").val(data.d[i].RATE);
-                    $("#GR_WT1").val(data.d[i].GR_WT);
-                    $("#ST_WT1").val(data.d[i].ST_WT);
-                    $("#NET_WT1").val(data.d[i].NET_WT);
-                    $("#VA_PER1").val(data.d[i].VA_PER);
-                    $("#VA_AMT1").val(data.d[i].VA_AMT);
-                    $("#ST_AMT1").val(data.d[i].ST_AMT);
-                    $("#TAXABLE_AMT1").val(data.d[i].TAXABLE_AMT);
-                    $("#TAX_PER1").val(data.d[i].TAX_PER);
-                    $("#TAX_AMT1").val(data.d[i].TAX_AMT);
-                    $("#NET_AMT1").val(data.d[i].NET_AMT);
-
-                    if (data.d[i].ACTIVE_STATUS == true)
-                        $("#ACTIVE_STATUS1").prop('checked', true);
-                    else
-                        $("#ACTIVE_STATUS1").prop('checked', false);
-
-                    if (data.d[i].SHOW_CATALOG == true)
-                        $("#SHOW_CATALOG1").prop('checked', true);
-                    else
-                        $("#SHOW_CATALOG1").prop('checked', false);
-
-                    if (data.d[i].SHOW_TRENDING == true)
-                        $("#SHOW_TRENDING1").prop('checked', true);
-                    else
-                        $("#SHOW_TRENDING1").prop('checked', false);
+                if (data.d.length > 0 && data.d[0].ALLOW_EDIT == false) {
+                    alert('You are not Authorised to perform this Operation.');
+                    return false;
                 }
-                Datalodaing = 0;
-                CalcAmt();
-                $('#TITLE1').focus();
+
+
+
+
+                $('#btnSave').hide();
+                $('#btnUpdate').show();
+                $('#PopupModal').modal('show');
+                $('#PopupModal').focus();
+                $("#TITLE1").val('');
+                $("#ACTIVE_STATUS1").prop('checked', true);
+                $("#SHOW_CATALOG1").prop('checked', true);
+                $("#SHOW_TRENDING1").prop('checked', true);
+                $("#SKU1").text('-');
+                $("#STK_QTY1").text('0');
+                $("#CODE1").val('');
+                $("#PURITY1").val('');
+                $("#REMARKS1").val('');
+                $("#JEWELLERY_NAME1").val('0');
+                $("#DESIGN_NAME1").val('0');
+                $("#COLLECTIONS_NAME1").val('0');
+                $("#MATERIAL_NAME1").val('0');
+                $("#OCCASION_NAME1").val('0');
+                $("#GRAMSLAB_NAME1").val('0');
+                $("#KARAT_NAME1").val('0');
+                $("#PURITY1").val('0');
+
+                $("#RATE1").val(0);
+                $("#GR_WT1").val(0);
+                $("#ST_WT1").val(0);
+                $("#NET_WT1").val(0);
+                $("#VA_PER1").val(0);
+                $("#VA_AMT1").val(0);
+                $("#ST_AMT1").val(0);
+                $("#TAXABLE_AMT1").val(0);
+                $("#TAX_PER1").val(3);
+                $("#TAX_AMT1").val(0);
+                $("#NET_AMT1").val(0);
+                Datalodaing = 1;
+                $("div.modal-header h2").html("Edit Catalog Details");
+                
+                console.log(id);
+                $("#btnUpdate").attr("edit-id", id);
+                //alert(id);  //getting the row id 
+                $.ajax({
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "CatalogMaster.aspx/EditData",
+                    data: '{id: ' + id + '}',
+                    dataType: "json",
+                    success: function (data) {
+                        for (var i = 0; i < data.d.length; i++) {
+
+                            $("#SKU1").text(data.d[i].SKU);
+                            $("#STK_QTY1").text(data.d[i].STK_QTY);
+
+                            $("#CODE1").val(data.d[i].CODE);
+                            $("#TITLE1").val(data.d[i].TITLE);
+                            $("#JEWELLERY_NAME1").val(data.d[i].JEWELLERY_ID);
+                            $("#DESIGN_NAME1").val(data.d[i].DESIGN_ID);
+                            $("#COLLECTIONS_NAME1").val(data.d[i].COLLECTIONS_ID);
+                            $("#MATERIAL_NAME1").val(data.d[i].MATERIAL_ID);
+                            $("#OCCASION_NAME1").val(data.d[i].OCCASION_ID);
+                            $("#GRAMSLAB_NAME1").val(data.d[i].GRAMSLAB_ID);
+                            $("#KARAT_NAME1").val(data.d[i].KARAT_ID);
+                            $("#REMARKS1").val(data.d[i].REMARKS);
+                            $("#PURITY1").val(data.d[i].PURITY);
+                            $("#RATE1").val(data.d[i].RATE);
+                            $("#GR_WT1").val(data.d[i].GR_WT);
+                            $("#ST_WT1").val(data.d[i].ST_WT);
+                            $("#NET_WT1").val(data.d[i].NET_WT);
+                            $("#VA_PER1").val(data.d[i].VA_PER);
+                            $("#VA_AMT1").val(data.d[i].VA_AMT);
+                            $("#ST_AMT1").val(data.d[i].ST_AMT);
+                            $("#TAXABLE_AMT1").val(data.d[i].TAXABLE_AMT);
+                            $("#TAX_PER1").val(data.d[i].TAX_PER);
+                            $("#TAX_AMT1").val(data.d[i].TAX_AMT);
+                            $("#NET_AMT1").val(data.d[i].NET_AMT);
+
+                            if (data.d[i].ACTIVE_STATUS == true)
+                                $("#ACTIVE_STATUS1").prop('checked', true);
+                            else
+                                $("#ACTIVE_STATUS1").prop('checked', false);
+
+                            if (data.d[i].SHOW_CATALOG == true)
+                                $("#SHOW_CATALOG1").prop('checked', true);
+                            else
+                                $("#SHOW_CATALOG1").prop('checked', false);
+
+                            if (data.d[i].SHOW_TRENDING == true)
+                                $("#SHOW_TRENDING1").prop('checked', true);
+                            else
+                                $("#SHOW_TRENDING1").prop('checked', false);
+                        }
+                        Datalodaing = 0;
+                        CalcAmt();
+                        $('#TITLE1').focus();
+                    },
+                    error: function () {
+                        alert("Error while retrieving data of :" + id);
+                        Datalodaing = 0;
+                    }
+                });
+
             },
-            error: function () {
-                alert("Error while retrieving data of :" + id);
-                Datalodaing = 0;
+            error: function (data) {
+                alert("Error while Deleting data of :" + id);
             }
         });
+
     });
 
     $("#btnUpdate").click(function () {
@@ -1014,21 +1054,37 @@ $(function () {
     });
 
     $(document).on("click", ".deleteButtonImage", function () {
-        if (confirm("Are you sure you want to delete the Image!") == true) {
-            var phyimage = $(this).attr("data-id");
-            var catalogid = $("#btnUploadImage").attr("edit-id");
-            var orgfilename = '';
-            $.ajax({
-                url: 'CatalogImageUpload.ashx?action=DELETE&catalogid=' + catalogid + '&phy_file_name=' + phyimage + '&org_file_name=' + orgfilename,
-                type: "GET",
-                cache: false,
-                async: true,
-                success: function (html) {
-                    ShowUploadedFiles();
-                    alert('File Deleted successfully.')
+        var phyimage = $(this).attr("data-id");
+        var catalogid = $("#btnUploadImage").attr("edit-id");
+        $.ajax({
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            url: "CatalogMaster.aspx/GetUserRights",
+            dataType: "json",
+            success: function (data) {
+                if (data.d.length > 0 && data.d[0].ALLOW_DELETE == false) {
+                    alert('You are not Authorised to perform this Operation.');
+                    return false;
                 }
-            });
-        }
+
+                if (confirm("Are you sure you want to delete the Image!") == true) {                   
+                    var orgfilename = '';
+                    $.ajax({
+                        url: 'CatalogImageUpload.ashx?action=DELETE&catalogid=' + catalogid + '&phy_file_name=' + phyimage + '&org_file_name=' + orgfilename,
+                        type: "GET",
+                        cache: false,
+                        async: true,
+                        success: function (html) {
+                            ShowUploadedFiles();
+                            alert('File Deleted successfully.')
+                        }
+                    });
+                }
+            },
+            error: function (data) {
+                alert("Error while Deleting data of :" + id);
+            }
+        });
 
     });
 
@@ -1135,21 +1191,21 @@ $(function () {
             dataType: "json",
             success: function (data) {
                 for (var i = 0; i < data.d.length; i++) {
-                    if (data.d[i].RESULT === 1) {                        
-                        alert(data.d[i].MSG);                        
+                    if (data.d[i].RESULT === 1) {
+                        alert(data.d[i].MSG);
                     }
                     else {
-                        alert(data.d[i].MSG);                        
+                        alert(data.d[i].MSG);
                         return false;
                     }
                 }
             },
             error: function (data) {
-                alert("Error while Updating data of :" + id);                
+                alert("Error while Updating data of :" + id);
                 return false;
             }
         });
-       
+
     });
 
 

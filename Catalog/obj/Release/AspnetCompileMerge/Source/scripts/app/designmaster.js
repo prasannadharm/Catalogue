@@ -81,31 +81,50 @@ $(function () {
     });
 
     $(document).on("click", ".deleteButton", function () {
-        if (confirm("Are you sure you want to delete !") == true) {
-            var id = $(this).attr("data-id");
-            $.ajax({
-                type: "Post",
-                contentType: "application/json; charset=utf-8",
-                url: "DesignMaster.aspx/DeleteData",
-                data: '{id: ' + id + '}',
-                dataType: "json",
-                success: function (data) {
-                    for (var i = 0; i < data.d.length; i++) {
-                        if (data.d[i].RESULT === 1) {
-                            getDetails();
-                            alert(data.d[i].MSG);
-                        }
-                        else {
-                            alert(data.d[i].MSG);
-                            return false;
-                        }
-                    }
-                },
-                error: function (data) {
-                    alert("Error while Deleting data of :" + id);
+        var id = $(this).attr("data-id");
+        $.ajax({
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            url: "DesignMaster.aspx/GetUserRights",
+            dataType: "json",
+            success: function (data) {
+                if (data.d.length > 0 && data.d[0].ALLOW_DELETE == false) {
+                    alert('You are not Authorised to perform this Operation.');
+                    return false;
                 }
-            });
-        }
+
+                if (confirm("Are you sure you want to delete !") == true) {
+
+                    $.ajax({
+                        type: "Post",
+                        contentType: "application/json; charset=utf-8",
+                        url: "DesignMaster.aspx/DeleteData",
+                        data: '{id: ' + id + '}',
+                        dataType: "json",
+                        success: function (data) {
+                            for (var i = 0; i < data.d.length; i++) {
+                                if (data.d[i].RESULT === 1) {
+                                    getDetails();
+                                    alert(data.d[i].MSG);
+                                }
+                                else {
+                                    alert(data.d[i].MSG);
+                                    return false;
+                                }
+                            }
+                        },
+                        error: function (data) {
+                            alert("Error while Deleting data of :" + id);
+                        }
+                    });
+                }
+
+            },
+            error: function (data) {
+                alert("Error while Deleting data of :" + id);
+            }
+        });
+
 
     });
 
@@ -121,12 +140,6 @@ $(function () {
     });
 
     $(document).on("click", ".editButton", function () {
-        $('#btnSave').hide();
-        $('#btnUpdate').show();
-        $('#PopupModal').modal('show');
-        $('#PopupModal').focus();
-        $("#NAME1").val("");
-        $("div.modal-header h2").html("Edit Design Details");
         var id = $(this).attr("data-id");
         console.log(id);
         $("#btnUpdate").attr("edit-id", id);
@@ -134,21 +147,44 @@ $(function () {
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
-            url: "DesignMaster.aspx/EditData",
-            data: '{id: ' + id + '}',
+            url: "DesignMaster.aspx/GetUserRights",
             dataType: "json",
             success: function (data) {
-                for (var i = 0; i < data.d.length; i++) {
-                    $("#NAME1").val(data.d[i].NAME);
-                    if (data.d[i].ACTIVE_STATUS == true)
-                        $("#ACTIVE_STATUS1").prop('checked', true);
-                    else
-                        $("#ACTIVE_STATUS1").prop('checked', false);
+                if (data.d.length > 0 && data.d[0].ALLOW_EDIT == false) {
+                    alert('You are not Authorised to perform this Operation.');
+                    return false;
                 }
-                $('#NAME1').focus();
+
+                $('#btnSave').hide();
+                $('#btnUpdate').show();
+                $('#PopupModal').modal('show');
+                $('#PopupModal').focus();
+                $("#NAME1").val("");
+                $("div.modal-header h2").html("Edit Design Details");
+
+                $.ajax({
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "DesignMaster.aspx/EditData",
+                    data: '{id: ' + id + '}',
+                    dataType: "json",
+                    success: function (data) {
+                        for (var i = 0; i < data.d.length; i++) {
+                            $("#NAME1").val(data.d[i].NAME);
+                            if (data.d[i].ACTIVE_STATUS == true)
+                                $("#ACTIVE_STATUS1").prop('checked', true);
+                            else
+                                $("#ACTIVE_STATUS1").prop('checked', false);
+                        }
+                        $('#NAME1').focus();
+                    },
+                    error: function () {
+                        alert("Error while retrieving data of :" + id);
+                    }
+                });
             },
-            error: function () {
-                alert("Error while retrieving data of :" + id);
+            error: function (data) {
+                alert("Error while Deleting data of :" + id);
             }
         });
     });
