@@ -37,7 +37,7 @@
         <nav class="navbar navbar-inverse" style="background-color: #232f3e;">
             <a class="navbar-brand mb-0 h1" href="#" style="color: #ffd500;">Jewellery Catalog</a>
             <input type="text" id="txtsearch" placeholder="Search.." class="form-control" style="width: 50%" />
-            <button type="button" id="btnsearch" class="btn btn-success" style="position: relative; float: left;">Search</button>
+            <button type="button" id="btnsearch" class="btn btn-light" style="position: relative; float: left;">Search</button>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
