@@ -218,5 +218,20 @@ namespace Catalog.Pages
             }
             return details.ToArray();
         }
+
+        [WebMethod]
+        public static Int64[] CheckOutwardEntryUsedAtInward(Int64 id)
+        {
+            List<Int64> lstvalues = new List<Int64>();
+            try
+            {
+                lstvalues = new OutwardEntryDAO().CheckOutwardEntryUsedAtInward(id);
+            }
+            catch (Exception ex)
+            {
+                // details.Add(new DbStatusEntity(ex.Message));
+            }
+            return lstvalues.ToArray();
+        }
     }
 }

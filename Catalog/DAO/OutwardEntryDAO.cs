@@ -394,5 +394,36 @@ namespace Catalog.DAO
             }
             return retlst;
         }
+
+        public List<Int64> CheckOutwardEntryUsedAtInward(long id)
+        {
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlDataAdapter adapter;
+            DataSet ds = new DataSet();
+            List<Int64> retvallst = new List<Int64>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    Int64 retval = 0;
+                    SqlCommand cmd = new SqlCommand("USP_GetOutwardEntryUsedAtInwardDetailsbyID", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", id);
+                    con.Open();
+                    adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(ds);
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        retval = ds.Tables[0].Rows[i]["TRANS_NO"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[0].Rows[i]["TRANS_NO"]);
+                    }
+                    retvallst.Add(retval);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return retvallst;
+        }
     }
 }

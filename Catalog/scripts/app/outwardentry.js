@@ -172,7 +172,7 @@ $(function () {
         console.log(id);
         $("#btnUpdate").attr("edit-id", id);
         var checkid = 0;
-
+        var inwardno = 0;
         $.ajax({
             type: "Post",
             contentType: "application/json; charset=utf-8",
@@ -200,64 +200,85 @@ $(function () {
                             return false;
                         }
 
-                        var date = new Date();
-                        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-                        $('#btnSave').hide();
-                        $('#btnUpdate').show();
-                        $('#mainlistingdiv').hide();
-                        $('#mainldetaildiv').show();
-                        $("#subheaderdiv").html("<h2 style='color:blue'>Outward Entry -> Edit Outward Entry</h2>");
-                        subItemsList = [];
-                        rebuildSubTableGrid();
-                        $('#tablesub tbody').remove();
-                        $('#tablesub').append("<tbody>");
-                        $('#tablesub').append("</tbody>");
-                        $('#TRANS_NO').val('0');
-                        $('#TRANS_DATE').datepicker('setDate', today);
-                        $("#ContentPlaceHolder1_LED_NAME").val('');
-                        $("#ContentPlaceHolder1_LED_ID").val('');
-                        $('#REMARKS').val('');
-                        $('#REF_NO').val('');
-                        $('#OUTWARD_TYPE').val(0);
-
-                        //$("#btnUpdate").attr("edit-id", id);
-                        //alert(id);  //getting the row id 
                         $.ajax({
                             type: "Post",
                             contentType: "application/json; charset=utf-8",
-                            url: "Outward.aspx/EditData",
+                            url: "Outward.aspx/CheckOutwardEntryUsedAtInward",
                             data: '{id: ' + id + '}',
                             dataType: "json",
                             success: function (data) {
                                 if (data.d.length > 0) {
-                                    $("#ContentPlaceHolder1_LED_NAME").val(data.d[0].LED_NAME);
-                                    $("#ContentPlaceHolder1_LED_ID").val(data.d[0].LED_ID);
-                                    $("#TRANS_NO").val(data.d[0].TRANS_NO);
-                                    $('#TRANS_DATE').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
-                                    $("#REMARKS").val(data.d[0].REMARKS_MAIN);
-                                    $("#REF_NO").val(data.d[0].REF_NO);
-                                    $('#OUTWARD_TYPE').val(data.d[0].OUT_TYPE_ID);
-                                    $("#subheaderdiv").html("<h2 style='color:blue'>Outward Entry -> Edit Outward Entry No: " + data.d[0].TRANS_NO + "</h2>");
+                                    inwardno = data.d[0];
                                 }
-                                for (var i = 0; i < data.d.length; i++) {
-                                    var objdetail = {};
-                                    objdetail.ID = data.d[i].CATALOG_ID;
-                                    objdetail.SKU = data.d[i].SKU;
-                                    objdetail.CODE = data.d[i].CODE;
-                                    objdetail.TITLE = data.d[i].CATALOG_TITLE;
-                                    objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
-                                    objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
-                                    objdetail.GENID = data.d[i].GENID;
-                                    objdetail.QTY = data.d[i].QTY;
-                                    objdetail.REMARKS = data.d[i].REMARKS;
-                                    subItemsList.push(objdetail);
+
+                                if (inwardno != null && inwardno != undefined && inwardno > 0) {
+                                    alert('Cannot Edit this entry, has it it is been used at Inward entry No.: ' + inwardno);
+                                    return false;
                                 }
+
+                                var date = new Date();
+                                var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                                $('#btnSave').hide();
+                                $('#btnUpdate').show();
+                                $('#mainlistingdiv').hide();
+                                $('#mainldetaildiv').show();
+                                $("#subheaderdiv").html("<h2 style='color:blue'>Outward Entry -> Edit Outward Entry</h2>");
+                                subItemsList = [];
                                 rebuildSubTableGrid();
-                                $("#txtSearchItem").val('');
-                                $('#ContentPlaceHolder1_LED_NAME').focus();
+                                $('#tablesub tbody').remove();
+                                $('#tablesub').append("<tbody>");
+                                $('#tablesub').append("</tbody>");
+                                $('#TRANS_NO').val('0');
+                                $('#TRANS_DATE').datepicker('setDate', today);
+                                $("#ContentPlaceHolder1_LED_NAME").val('');
+                                $("#ContentPlaceHolder1_LED_ID").val('');
+                                $('#REMARKS').val('');
+                                $('#REF_NO').val('');
+                                $('#OUTWARD_TYPE').val(0);
+
+                                //$("#btnUpdate").attr("edit-id", id);
+                                //alert(id);  //getting the row id 
+                                $.ajax({
+                                    type: "Post",
+                                    contentType: "application/json; charset=utf-8",
+                                    url: "Outward.aspx/EditData",
+                                    data: '{id: ' + id + '}',
+                                    dataType: "json",
+                                    success: function (data) {
+                                        if (data.d.length > 0) {
+                                            $("#ContentPlaceHolder1_LED_NAME").val(data.d[0].LED_NAME);
+                                            $("#ContentPlaceHolder1_LED_ID").val(data.d[0].LED_ID);
+                                            $("#TRANS_NO").val(data.d[0].TRANS_NO);
+                                            $('#TRANS_DATE').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', data.d[0].TRANS_DATE.split('-')[2] + '-' + data.d[0].TRANS_DATE.split('-')[1] + '-' + data.d[0].TRANS_DATE.split('-')[0]);
+                                            $("#REMARKS").val(data.d[0].REMARKS_MAIN);
+                                            $("#REF_NO").val(data.d[0].REF_NO);
+                                            $('#OUTWARD_TYPE').val(data.d[0].OUT_TYPE_ID);
+                                            $("#subheaderdiv").html("<h2 style='color:blue'>Outward Entry -> Edit Outward Entry No: " + data.d[0].TRANS_NO + "</h2>");
+                                        }
+                                        for (var i = 0; i < data.d.length; i++) {
+                                            var objdetail = {};
+                                            objdetail.ID = data.d[i].CATALOG_ID;
+                                            objdetail.SKU = data.d[i].SKU;
+                                            objdetail.CODE = data.d[i].CODE;
+                                            objdetail.TITLE = data.d[i].CATALOG_TITLE;
+                                            objdetail.PHY_FILE_NAME = data.d[i].PHY_FILE_NAME;
+                                            objdetail.ORG_FILE_NAME = data.d[i].ORG_FILE_NAME;
+                                            objdetail.GENID = data.d[i].GENID;
+                                            objdetail.QTY = data.d[i].QTY;
+                                            objdetail.REMARKS = data.d[i].REMARKS;
+                                            subItemsList.push(objdetail);
+                                        }
+                                        rebuildSubTableGrid();
+                                        $("#txtSearchItem").val('');
+                                        $('#ContentPlaceHolder1_LED_NAME').focus();
+                                    },
+                                    error: function () {
+                                        alert("Error while retrieving data of :" + id);
+                                    }
+                                });
                             },
                             error: function () {
-                                alert("Error while retrieving data of :" + id);
+                                alert("Error while checking entry at inwrad entry :" + id);
                             }
                         });
 
