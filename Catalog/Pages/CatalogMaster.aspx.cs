@@ -367,5 +367,35 @@ namespace Catalog.Pages
             return details.ToArray();
         }
 
+        [WebMethod]
+        public static string[] GetLatestTrasnsactionNumber()
+        {
+            List<string> lstvalues = new List<string>();
+            try
+            {
+                lstvalues = new GenericDAO().GetLatestTrasnsactionNumber("OUTWARD");
+            }
+            catch (Exception ex)
+            {
+                // details.Add(new DbStatusEntity(ex.Message));
+            }
+            return lstvalues.ToArray();
+        }
+
+        [WebMethod]
+        public static string[] GetLedgersbyName(string str)
+        {
+            List<string> ledgers = new List<string>();
+            try
+            {
+                ledgers = new GenericDAO().GetLedgersListbyName(str);
+            }
+            catch (Exception ex)
+            {
+                // details.Add(new DbStatusEntity(ex.Message));
+            }
+            return ledgers.ToArray();
+        }
+
     }
 }

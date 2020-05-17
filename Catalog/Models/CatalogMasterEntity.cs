@@ -42,5 +42,10 @@ namespace Catalog.Models
         public double TAX_AMT { get; set; }
         public double NET_AMT { get; set; }
         public double STK_QTY { get; set; }
+        public double S_PER { get; set; }
+        public string DATE_YM { get; set; }
+        public int LED_ID { get; set; }
+        public string LED_NAME { get; set;}
+        public double DIA_CARAT { get; set;}
     }
 }

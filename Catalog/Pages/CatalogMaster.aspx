@@ -19,6 +19,8 @@
             cursor: hand;
         }
     </style>
+    <link href="../css/bootstrap-datepicker3.css" rel="stylesheet" />
+    <link href="../css/jquery-ui.min.css" rel="stylesheet" />
     <link href="../css/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <link href="../css/ajaxloader.css" rel="stylesheet" />
     <link href="../css/bootstrap-select.css" rel="stylesheet" />
@@ -27,7 +29,8 @@
     <script src="../scripts/AjaxFileupload.js"></script>
     <script src="../scripts/popper.min.js"></script>
     <script src="../scripts/bootstrap-select.min.js"></script>
-
+    <script src="../scripts/bootstrap-datepicker.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
     <script src="../scripts/app/catalogmaster.js?v=1"></script>
     <div id="loader"></div>
     <div class="col-lg-12" id="mainlistingdiv">
@@ -223,11 +226,7 @@
                             <div class="form-group col-3">
                                 <label>Purity</label>
                                 <input type="text" name="PURITY" id="PURITY1" class="form-control" placeholder="Purity %" style="text-align: right" />
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Rate (Rs)</label>
-                                <input type="number" name="RATE" id="RATE1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
-                            </div>
+                            </div>                            
                             <div class="form-group col-3">
                                 <label>Gross WT (Gm)</label>
                                 <input type="number" name="GR_WT" id="GR_WT1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
@@ -236,44 +235,36 @@
                                 <label>Stone WT (Gm)</label>
                                 <input type="number" name="ST_WT" id="ST_WT1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
                             </div>
-                        </div>
-
-
-                        <div class="row">
                             <div class="form-group col-3">
                                 <label>Net WT (Gm)</label>
                                 <input type="number" name="NET_WT" id="NET_WT1" class="form-control" readonly="true" style="text-align: right" />
                             </div>
-                            <div class="form-group col-3">
-                                <label>VA (%)</label>
-                                <input type="number" name="VA_PER" id="VA_PER1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
-                            </div>
-                            <div class="form-group col-3">
-                                <label>VA Amt (Rs)</label>
-                                <input type="number" name="VA_AMT" id="VA_AMT1" readonly="true" class="form-control" style="text-align: right" />
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Stone Amt (Rs)</label>
-                                <input type="number" name="ST_AMT" id="ST_AMT1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
-                            </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-3">
-                                <label>Taxable Amt (Rs)</label>
-                                <input type="number" name="TAXABLE_AMT" id="TAXABLE_AMT1" readonly="true" class="form-control" style="text-align: right" />
+                                <label>Stone Amt (Rs)</label>
+                                <input type="number" name="ST_AMT" id="ST_AMT1" class="form-control" style="text-align: right" />
                             </div>
                             <div class="form-group col-3">
-                                <label>Tax (%)</label>
-                                <input type="number" name="TAX_PER" id="TAX_PER1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
+                                <label>Diamond Carat</label>
+                                <input type="number" name="DIA_CARAT" id="DIA_CARAT1" class="form-control" style="text-align: right" />
                             </div>
                             <div class="form-group col-3">
-                                <label>Tax Amt (Rs)</label>
-                                <input type="number" name="TAX_AMT" id="TAX_AMT1" readonly="true" class="form-control" style="text-align: right" />
+                                <label>S(%)</label>
+                                <input type="number" name="S_PER" id="S_PER1" class="form-control" style="text-align: right" />
                             </div>
                             <div class="form-group col-3">
-                                <label>Net Amt (Rs)</label>
-                                <input type="number" name="NET_AMT" id="NET_AMT1" readonly="true" class="form-control" style="text-align: right" />
+                                <label>YM</label>
+                                <input class="form-control datepicker" id="DATE_YM1" name="date" placeholder="DD-MM-YYYY" type="text" style="text-align: center" />
+                            </div>                            
+                        </div>
+
+                        <div class="row">
+                           <div class="form-group col-6">
+                                <label>Vendor</label>                                
+                               <asp:TextBox ID="LED_NAME1" class="form-control" runat="server" placeholder="Please enter Vendor name" />
+                               <asp:HiddenField ID="LED_ID" runat="server" />
                             </div>
                         </div>
 
