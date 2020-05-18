@@ -1,7 +1,32 @@
 ﻿var Datalodaing = 0;
+var Currentdate;
 $(document).ready(function () {
+    var date = new Date();
+    var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    $(".datepicker").datepicker({ dateFormat: 'dd-mm-yy' });
+    $('#DATE_YM').datepicker('setDate', today);
     //getDetails();
     $("#masterdiv").removeClass("container");
+
+    $.ajax({
+        url: "CatalogMaster.aspx/GetLatestTrasnsactionNumber",
+        data: '{}',
+        dataType: "json",
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            for (var i = 0; i < data.d.length; i++) {
+                Currentdate = data.d[i].split('-')[3] + '-' + data.d[i].split('-')[2] + '-' + data.d[i].split('-')[1];
+                $('#DATE_YM1').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', Currentdate);
+            }           
+        },
+        error: function (response) {
+            alert(response.responseText);
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        }
+    });
 });
 
 $(function () {
@@ -45,6 +70,36 @@ $(function () {
             getDetails();
         }
     });
+
+    $("[id$=LED_NAME1]").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "CatalogMaster.aspx/GetLedgersbyName",
+                data: "{ 'str': '" + request.term + "'}",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    response($.map(data.d, function (item) {
+                        return {
+                            label: item.split('-')[0],
+                            val: item.split('-')[1]
+                        }
+                    }))
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        },
+        select: function (e, i) {
+            $("[id$=LED_ID]").val(i.item.val);
+        },
+        minLength: 1
+    });
 });
 
 function LoadCombos(data) {
@@ -56,6 +111,12 @@ function LoadCombos(data) {
     var optionsOccasion = [];
     var optionsGramSlab = [];
     var optionsKarat = [];
+    var options = [];
+
+    options.push('<option value="',
+          '0', '">',
+          '--SELECT--', '</option>');
+
     for (var i = 0; i < data.d.length; i++) {
         if (data.d[i].TYPE == 'JEWELLERY') {
             optionsJewel.push('<option value="',
@@ -96,31 +157,45 @@ function LoadCombos(data) {
 
     $("#cmbJewellery").html(optionsJewel.join(''));
     $("#cmbJewellery").addClass("selectpicker");
-    $("#cmbJewellery").addClass("form-control");
+    $("#cmbJewellery").addClass("form-control");   
+    
+    $("#JEWELLERY_NAME1").html($.merge($.merge([], options), optionsJewel).join(''));
 
     $("#cmbDesign").html(optionsDesign.join(''));
     $("#cmbDesign").addClass("selectpicker");
     $("#cmbDesign").addClass("form-control");
 
+    $("#DESIGN_NAME1").html($.merge($.merge([], options), optionsDesign).join(''));
+
     $("#cmbCollection").html(optionsCollection.join(''));
     $("#cmbCollection").addClass("selectpicker");
     $("#cmbCollection").addClass("form-control");
+
+    $("#COLLECTIONS_NAME1").html($.merge($.merge([], options), optionsCollection).join(''));
 
     $("#cmbMaterial").html(optionsMaterial.join(''));
     $("#cmbMaterial").addClass("selectpicker");
     $("#cmbMaterial").addClass("form-control");
 
+    $("#MATERIAL_NAME1").html($.merge($.merge([], options), optionsMaterial).join(''));
+
     $("#cmbOccasion").html(optionsOccasion.join(''));
     $("#cmbOccasion").addClass("selectpicker");
     $("#cmbOccasion").addClass("form-control");
+
+    $("#OCCASION_NAME1").html($.merge($.merge([], options), optionsOccasion).join(''));
 
     $("#CmbGramSlab").html(optionsGramSlab.join(''));
     $("#CmbGramSlab").addClass("selectpicker");
     $("#CmbGramSlab").addClass("form-control");
 
+    $("#GRAMSLAB_NAME1").html($.merge($.merge([], options), optionsGramSlab).join(''));
+
     $("#cmbKarat").html(optionsKarat.join(''));
     $("#cmbKarat").addClass("selectpicker");
     $("#cmbKarat").addClass("form-control");
+
+    $("#KARAT_NAME1").html($.merge($.merge([], options), optionsKarat).join(''));
 
     $('.selectpicker').selectpicker('');
     getDetails();
@@ -224,201 +299,16 @@ function getDetails() {
                 "order": [[0, "desc"]]
             });
             //data-toggle='modal' data-target='#PopupModal'
+            document.getElementById("loader").style.display = "none";
         },
         error: function () {
             alert("Error while Showing update data");
+            document.getElementById("loader").style.display = "none";
         }
-
         //
     });
-    document.getElementById("loader").style.display = "none";
+    
 }
-
-//Combos Loading Code - Start
-
-$(function () {
-    document.getElementById("loader").style.display = "block";
-    $.ajax({
-        type: "POST",
-        url: "CatalogMaster.aspx/GetActiveJewelleryList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadJewelleryCombo
-    });
-});
-
-function LoadJewelleryCombo(data) {
-    var options = [];
-    options.push('<option value="',
-          '0', '">',
-          '--SELECT--', '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#JEWELLERY_NAME1").html(options.join(''));
-    document.getElementById("loader").style.display = "none";
-}
-
-$(function () {
-    document.getElementById("loader").style.display = "block";
-    $.ajax({
-        type: "POST",
-        url: "CatalogMaster.aspx/GetActiveDesignList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadDesignCombo
-    });
-});
-
-function LoadDesignCombo(data) {
-    var options = [];
-    options.push('<option value="',
-         '0', '">',
-         '--SELECT--', '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#DESIGN_NAME1").html(options.join(''));
-    document.getElementById("loader").style.display = "none";
-}
-
-$(function () {
-    document.getElementById("loader").style.display = "block";
-    $.ajax({
-        type: "POST",
-        url: "CatalogMaster.aspx/GetActiveCollectionsList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadCollectionsCombo
-    });
-});
-
-function LoadCollectionsCombo(data) {
-    var options = [];
-    options.push('<option value="',
-        '0', '">',
-        '--SELECT--', '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#COLLECTIONS_NAME1").html(options.join(''));
-    document.getElementById("loader").style.display = "none";
-}
-
-$(function () {
-    document.getElementById("loader").style.display = "block";
-    $.ajax({
-        type: "POST",
-        url: "CatalogMaster.aspx/GetActiveMaterialList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadMaterialCombo
-    });
-});
-
-function LoadMaterialCombo(data) {
-    var options = [];
-    options.push('<option value="',
-         '0', '">',
-         '--SELECT--', '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#MATERIAL_NAME1").html(options.join(''));
-    document.getElementById("loader").style.display = "none";
-}
-
-$(function () {
-    document.getElementById("loader").style.display = "block";
-    $.ajax({
-        type: "POST",
-        url: "CatalogMaster.aspx/GetActiveOccasionList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadOccasionCombo
-    });
-});
-
-function LoadOccasionCombo(data) {
-    var options = [];
-    options.push('<option value="',
-        '0', '">',
-        '--SELECT--', '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#OCCASION_NAME1").html(options.join(''));
-    document.getElementById("loader").style.display = "none";
-}
-
-$(function () {
-    document.getElementById("loader").style.display = "block";
-    $.ajax({
-        type: "POST",
-        url: "CatalogMaster.aspx/GetActiveGramSlabList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadGramSlabCombo
-    });
-});
-
-function LoadGramSlabCombo(data) {
-    var options = [];
-    options.push('<option value="',
-        '0', '">',
-        '--SELECT--', '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#GRAMSLAB_NAME1").html(options.join(''));
-    document.getElementById("loader").style.display = "none";
-}
-
-$(function () {
-    document.getElementById("loader").style.display = "block";
-    $.ajax({
-        type: "POST",
-        url: "CatalogMaster.aspx/GetActiveKaratList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadKaratCombo
-    });
-});
-
-function LoadKaratCombo(data) {
-    var options = [];
-    options.push('<option value="',
-        '0', '">',
-        '--SELECT--', '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#KARAT_NAME1").html(options.join(''));
-    document.getElementById("loader").style.display = "none";
-}
-
-//Combos Loading Code - End
 
 $(function () {
     $("#btnUploadImage").click(function () {
@@ -523,57 +413,39 @@ $(function () {
             return false;
         }
 
-        if ($.isNumeric($("#RATE1").val()) == false) {
-            alert("Please enter valid Rate.");
-            $("#RATE1").focus();
-            return false;
-        }
-
         if ($.isNumeric($("#GR_WT1").val()) == false) {
             alert("Please enter valid Gross Wt.");
-            $("#GR_WT").focus();
+            $("#GR_WT1").focus();
             return false;
         }
 
         if ($.isNumeric($("#ST_WT1").val()) == false) {
             alert("Please enter valid Stone Wt.");
-            $("#ST_WT").focus();
+            $("#ST_WT1").focus();
             return false;
         }
 
-        if ($.isNumeric($("#VA_PER1").val()) == false) {
-            alert("Please enter valid VA Percentage.");
-            $("#VA_PER").focus();
+        if ($.isNumeric($("#S_PER1").val()) == false) {
+            alert("Please enter valid S Percentage.");
+            $("#S_PER1").focus();
             return false;
         }
 
-        if ($.isNumeric($("#VA_AMT1").val()) == false) {
-            alert("Please enter valid VA Amount.");
-            $("#VA_AMT").focus();
+        if ($.isNumeric($("#DIA_CARAT1").val()) == false) {
+            alert("Please enter valid Carat.");
+            $("#DIA_CARAT1").focus();
             return false;
         }
 
         if ($.isNumeric($("#ST_AMT1").val()) == false) {
             alert("Please enter valid Stone Amount.");
-            $("#ST_AMT").focus();
+            $("#ST_AMT1").focus();
             return false;
         }
 
-        if ($.isNumeric($("#TAX_PER1").val()) == false) {
-            alert("Please enter valid Tax %");
-            $("#TAX_PER").focus();
-            return false;
-        }
-
-        if ($.isNumeric($("#TAX_AMT1").val()) == false) {
-            alert("Please enter valid Tax Amount");
-            $("#TAX_AMT").focus();
-            return false;
-        }
-
-        if ($.isNumeric($("#NET_AMT1").val()) == false) {
-            alert("Please enter valid Net Amount");
-            $("#NET_AMT").focus();
+        if (isDate($("#DATE_YM1").val()) == false) {
+            alert('Please enter valid date');
+            $("#DATE_YM1").focus();
             return false;
         }
 
@@ -592,17 +464,22 @@ $(function () {
         obj.REMARKS = $("#REMARKS1").val().trim();
 
         obj.PURITY = $("#PURITY1").val();
-        obj.RATE = $("#RATE1").val();
+        obj.RATE = 0;
         obj.GR_WT = $("#GR_WT1").val();
         obj.ST_WT = $("#ST_WT1").val();
         obj.NET_WT = $("#NET_WT1").val();
-        obj.VA_PER = $("#VA_PER1").val();
-        obj.VA_AMT = $("#VA_AMT1").val();
+        obj.VA_PER = 0;
+        obj.VA_AMT = 0;
         obj.ST_AMT = $("#ST_AMT1").val();
-        obj.TAXABLE_AMT = $("#TAXABLE_AMT1").val();
-        obj.TAX_PER = $("#TAX_PER1").val();
-        obj.TAX_AMT = $("#TAX_AMT1").val();
-        obj.NET_AMT = $("#NET_AMT1").val();
+        obj.TAXABLE_AMT = 0;
+        obj.TAX_PER = 0;
+        obj.TAX_AMT = 0;
+        obj.NET_AMT = 0;
+
+        obj.DATE_YM = $("#DATE_YM1").val();
+        obj.S_PER = $("#S_PER1").val();
+        obj.DIA_CARAT = $("#DIA_CARAT1").val();
+        obj.LED_NAME = $("#ContentPlaceHolder1_LED_NAME1").val().trim();
 
         if ($('#ACTIVE_STATUS1').is(":checked")) {
             obj.ACTIVE_STATUS = true;
@@ -634,7 +511,9 @@ $(function () {
                     if (data.d[i].RESULT === 1) {
                         getDetails();
                         alert(data.d[i].MSG);
-                        $('#PopupModal').modal('hide');
+                        $("#masterdiv").removeClass("container");
+                        $('#mainlistingdiv').show();
+                        $('#mainldetaildiv').hide();
                     }
                     else {
                         alert(data.d[i].MSG);
@@ -702,8 +581,9 @@ $(function () {
     $(document).on("click", ".addNewButton", function () {
         $('#btnSave').show();
         $('#btnUpdate').hide();
-        $('#PopupModal').modal('show');
-        $('#PopupModal').focus();
+        $('#mainlistingdiv').hide();
+        $('#mainldetaildiv').show();
+        $("#masterdiv").addClass("container");
         $("#TITLE1").val('');
         $("#ACTIVE_STATUS1").prop('checked', true);
         $("#SHOW_CATALOG1").prop('checked', true);
@@ -720,21 +600,18 @@ $(function () {
         $("#OCCASION_NAME1").val('0');
         $("#GRAMSLAB_NAME1").val('0');
         $("#KARAT_NAME1").val('0');
-        $("#PURITY1").val('0');
-
-        $("#RATE1").val(0);
+        $("#PURITY1").val('0');        
         $("#GR_WT1").val(0);
         $("#ST_WT1").val(0);
         $("#NET_WT1").val(0);
-        $("#VA_PER1").val(0);
-        $("#VA_AMT1").val(0);
-        $("#ST_AMT1").val(0);
-        $("#TAXABLE_AMT1").val(0);
-        $("#TAX_PER1").val(3);
-        $("#TAX_AMT1").val(0);
-        $("#NET_AMT1").val(0);
-        Datalodaing = 0;
-        $("div.modal-header h2").html("Add Catalog Details");
+        $("#ST_AMT1").val(0);        
+        $('#DATE_YM1').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', Currentdate);
+        $("#S_PER1").val(0);
+        $("#DIA_CARAT1").val(0);
+        $("#ContentPlaceHolder1_LED_NAME1").val('');
+        $("#ContentPlaceHolder1_LED_ID").val(0);
+        Datalodaing = 0;        
+        $("#subheaderdiv").html("<h2 style='color:blue'>Add Catalog Details</h2>");
         $('#TITLE1').focus();
     });
 
@@ -764,13 +641,11 @@ $(function () {
                     return false;
                 }
 
-
-
-
                 $('#btnSave').hide();
                 $('#btnUpdate').show();
-                $('#PopupModal').modal('show');
-                $('#PopupModal').focus();
+                $('#mainlistingdiv').hide();
+                $('#mainldetaildiv').show();
+                $("#masterdiv").addClass("container");
                 $("#TITLE1").val('');
                 $("#ACTIVE_STATUS1").prop('checked', true);
                 $("#SHOW_CATALOG1").prop('checked', true);
@@ -789,20 +664,20 @@ $(function () {
                 $("#KARAT_NAME1").val('0');
                 $("#PURITY1").val('0');
 
-                $("#RATE1").val(0);
                 $("#GR_WT1").val(0);
                 $("#ST_WT1").val(0);
                 $("#NET_WT1").val(0);
-                $("#VA_PER1").val(0);
-                $("#VA_AMT1").val(0);
                 $("#ST_AMT1").val(0);
-                $("#TAXABLE_AMT1").val(0);
-                $("#TAX_PER1").val(3);
-                $("#TAX_AMT1").val(0);
-                $("#NET_AMT1").val(0);
-                Datalodaing = 1;
-                $("div.modal-header h2").html("Edit Catalog Details");
                 
+                $('#DATE_YM1').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', Currentdate);
+                $("#S_PER1").val(0);
+                $("#DIA_CARAT1").val(0);
+                $("#ContentPlaceHolder1_LED_NAME1").val('');
+                $("#ContentPlaceHolder1_LED_ID").val(0);
+
+                Datalodaing = 1;                
+                $("#subheaderdiv").html("<h2 style='color:blue'>Edit Catalog Details</h2>");
+
                 console.log(id);
                 $("#btnUpdate").attr("edit-id", id);
                 //alert(id);  //getting the row id 
@@ -829,7 +704,7 @@ $(function () {
                             $("#KARAT_NAME1").val(data.d[i].KARAT_ID);
                             $("#REMARKS1").val(data.d[i].REMARKS);
                             $("#PURITY1").val(data.d[i].PURITY);
-                            $("#RATE1").val(data.d[i].RATE);
+                            
                             $("#GR_WT1").val(data.d[i].GR_WT);
                             $("#ST_WT1").val(data.d[i].ST_WT);
                             $("#NET_WT1").val(data.d[i].NET_WT);
@@ -840,6 +715,12 @@ $(function () {
                             $("#TAX_PER1").val(data.d[i].TAX_PER);
                             $("#TAX_AMT1").val(data.d[i].TAX_AMT);
                             $("#NET_AMT1").val(data.d[i].NET_AMT);
+
+                            $('#DATE_YM1').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', data.d[i].DATE_YM.split('-')[2] + '-' + data.d[i].DATE_YM.split('-')[1] + '-' + data.d[i].DATE_YM.split('-')[0]);
+                            $("#S_PER1").val(data.d[i].S_PER);
+                            $("#DIA_CARAT1").val(data.d[i].DIA_CARAT);
+                            $("#ContentPlaceHolder1_LED_NAME1").val(data.d[i].LED_NAME);
+
 
                             if (data.d[i].ACTIVE_STATUS == true)
                                 $("#ACTIVE_STATUS1").prop('checked', true);
@@ -923,57 +804,39 @@ $(function () {
             return false;
         }
 
-        if ($.isNumeric($("#RATE1").val()) == false) {
-            alert("Please enter valid Rate.");
-            $("#RATE1").focus();
-            return false;
-        }
-
         if ($.isNumeric($("#GR_WT1").val()) == false) {
             alert("Please enter valid Gross Wt.");
-            $("#GR_WT").focus();
+            $("#GR_WT1").focus();
             return false;
         }
 
         if ($.isNumeric($("#ST_WT1").val()) == false) {
             alert("Please enter valid Stone Wt.");
-            $("#ST_WT").focus();
+            $("#ST_WT1").focus();
             return false;
         }
 
-        if ($.isNumeric($("#VA_PER1").val()) == false) {
-            alert("Please enter valid VA Percentage.");
-            $("#VA_PER").focus();
+        if ($.isNumeric($("#S_PER1").val()) == false) {
+            alert("Please enter valid S Percentage.");
+            $("#S_PER1").focus();
             return false;
         }
 
-        if ($.isNumeric($("#VA_AMT1").val()) == false) {
-            alert("Please enter valid VA Amount.");
-            $("#VA_AMT").focus();
+        if ($.isNumeric($("#DIA_CARAT1").val()) == false) {
+            alert("Please enter valid Carat.");
+            $("#DIA_CARAT1").focus();
             return false;
         }
 
         if ($.isNumeric($("#ST_AMT1").val()) == false) {
             alert("Please enter valid Stone Amount.");
-            $("#ST_AMT").focus();
+            $("#ST_AMT1").focus();
             return false;
-        }
+        }        
 
-        if ($.isNumeric($("#TAX_PER1").val()) == false) {
-            alert("Please enter valid Tax %");
-            $("#TAX_PER").focus();
-            return false;
-        }
-
-        if ($.isNumeric($("#TAX_AMT1").val()) == false) {
-            alert("Please enter valid Tax Amount");
-            $("#TAX_AMT").focus();
-            return false;
-        }
-
-        if ($.isNumeric($("#NET_AMT1").val()) == false) {
-            alert("Please enter valid Net Amount");
-            $("#NET_AMT").focus();
+        if (isDate($("#DATE_YM1").val()) == false) {
+            alert('Please enter valid date');
+            $("#DATE_YM1").focus();
             return false;
         }
 
@@ -994,17 +857,22 @@ $(function () {
         obj.REMARKS = $("#REMARKS1").val().trim();
 
         obj.PURITY = $("#PURITY1").val();
-        obj.RATE = $("#RATE1").val();
+        obj.RATE = 0;
         obj.GR_WT = $("#GR_WT1").val();
         obj.ST_WT = $("#ST_WT1").val();
         obj.NET_WT = $("#NET_WT1").val();
-        obj.VA_PER = $("#VA_PER1").val();
-        obj.VA_AMT = $("#VA_AMT1").val();
+        obj.VA_PER = 0;
+        obj.VA_AMT = 0;
         obj.ST_AMT = $("#ST_AMT1").val();
-        obj.TAXABLE_AMT = $("#TAXABLE_AMT1").val();
-        obj.TAX_PER = $("#TAX_PER1").val();
-        obj.TAX_AMT = $("#TAX_AMT1").val();
-        obj.NET_AMT = $("#NET_AMT1").val();
+        obj.TAXABLE_AMT = 0;
+        obj.TAX_PER = 0;
+        obj.TAX_AMT = 0;
+        obj.NET_AMT = 0;
+
+        obj.DATE_YM = $("#DATE_YM1").val();
+        obj.S_PER = $("#S_PER1").val();
+        obj.DIA_CARAT = $("#DIA_CARAT1").val();
+        obj.LED_NAME = $("#ContentPlaceHolder1_LED_NAME1").val().trim();
 
         if ($('#ACTIVE_STATUS1').is(":checked")) {
             obj.ACTIVE_STATUS = true;
@@ -1036,7 +904,9 @@ $(function () {
                     if (data.d[i].RESULT === 1) {
                         getDetails();
                         alert(data.d[i].MSG);
-                        $('#PopupModal').modal('hide');
+                        $("#masterdiv").removeClass("container");
+                        $('#mainlistingdiv').show();
+                        $('#mainldetaildiv').hide();
                     }
                     else {
                         alert(data.d[i].MSG);
@@ -1208,38 +1078,23 @@ $(function () {
 
     });
 
+    $(document).on("click", ".cancelButton", function () {
+        $('#mainlistingdiv').show();
+        $('#mainldetaildiv').hide();
+        $("#masterdiv").removeClass("container");
+    });
 
 });
 
 function CalcAmt() {
     if (Datalodaing != 0)
         return;
-    else if ($.isNumeric($("#RATE1").val()) == false)
-        return;
     else if ($.isNumeric($("#GR_WT1").val()) == false)
         return;
     else if ($.isNumeric($("#ST_WT1").val()) == false)
         return;
-    else if ($.isNumeric($("#VA_PER1").val()) == false)
-        return;
-    else if ($.isNumeric($("#ST_AMT1").val()) == false)
-        return;
-    else if ($.isNumeric($("#TAX_PER1").val()) == false)
-        return;
     else if (Datalodaing == 0) {
-        $("#NET_WT1").val(parseFloat($("#GR_WT1").val() - $("#ST_WT1").val()).toFixed(3));
-        if ($("#RATE1").val() <= 0) {
-            $("#VA_AMT1").val(0);
-            $("#TAXABLE_AMT1").val(0);
-            $("#TAX_AMT1").val(0);
-            $("#NET_AMT1").val(0);
-        }
-        else {
-            $("#VA_AMT1").val(parseFloat(parseFloat($("#NET_WT1").val() * ($("#VA_PER1").val() / 100.0)) * parseFloat($("#RATE1").val())).toFixed(2));
-            $("#TAXABLE_AMT1").val(parseFloat(parseFloat($("#RATE1").val()) * parseFloat(($("#NET_WT1").val())) + parseFloat($("#VA_AMT1").val()) + parseFloat(($("#ST_AMT1").val()))).toFixed(2));
-            $("#TAX_AMT1").val(parseFloat(parseFloat($("#TAXABLE_AMT1").val()) * parseFloat($("#TAX_PER1").val() / 100.0)).toFixed(2));
-            $("#NET_AMT1").val(parseFloat(parseFloat($("#TAXABLE_AMT1").val()) + parseFloat($("#TAX_AMT1").val())).toFixed(2));
-        }
+        $("#NET_WT1").val(parseFloat($("#GR_WT1").val() - $("#ST_WT1").val()).toFixed(3));        
     }
 }
 
@@ -1320,4 +1175,35 @@ function getFormattedTimeStamp() {
     var s = today.getSeconds();
     var ms = today.getMilliseconds();
     return y + "-" + m + "-" + d + "-" + h + "-" + mi + "-" + s + "-" + ms;
+}
+
+function isDate(txtDate) {
+    var currVal = txtDate;
+    if (currVal == '')
+        return false;
+
+    //Declare Regex 
+    var rxDatePattern = /^(\d{1,2})(\/|-)(\d{1,2})(\/|-)(\d{4})$/;
+    var dtArray = currVal.match(rxDatePattern); // is format OK?
+
+    if (dtArray == null)
+        return false;
+
+    //Checks for mm/dd/yyyy format.
+    dtMonth = dtArray[3];
+    dtDay = dtArray[1];
+    dtYear = dtArray[5];
+
+    if (dtMonth < 1 || dtMonth > 12)
+        return false;
+    else if (dtDay < 1 || dtDay > 31)
+        return false;
+    else if ((dtMonth == 4 || dtMonth == 6 || dtMonth == 9 || dtMonth == 11) && dtDay == 31)
+        return false;
+    else if (dtMonth == 2) {
+        var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+        if (dtDay > 29 || (dtDay == 29 && !isleap))
+            return false;
+    }
+    return true;
 }

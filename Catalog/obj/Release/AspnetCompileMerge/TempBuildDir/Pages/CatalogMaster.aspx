@@ -19,6 +19,8 @@
             cursor: hand;
         }
     </style>
+    <link href="../css/bootstrap-datepicker3.css" rel="stylesheet" />
+    <link href="../css/jquery-ui.min.css" rel="stylesheet" />
     <link href="../css/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <link href="../css/ajaxloader.css" rel="stylesheet" />
     <link href="../css/bootstrap-select.css" rel="stylesheet" />
@@ -27,8 +29,9 @@
     <script src="../scripts/AjaxFileupload.js"></script>
     <script src="../scripts/popper.min.js"></script>
     <script src="../scripts/bootstrap-select.min.js"></script>
-
-    <script src="../scripts/app/catalogmaster.js?v=1"></script>
+    <script src="../scripts/bootstrap-datepicker.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/app/catalogmaster.js?v=2"></script>
     <div id="loader"></div>
     <div class="col-lg-12" id="mainlistingdiv">
         <div class="panel panel-default">
@@ -140,153 +143,139 @@
         </div>
     </div>
 
-    <!-- For Modal Popup  -->
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="PopupModal">
-        <div class="modal-dialog  modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Edit Ledger Details</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <!-- For Detailed View Popup  -->
+    <div class="col-lg-12" id="mainldetaildiv" style="display: none">
+        <div class="panel panel-default">
+            <div class="row">
+                <div class="col-12" id="subheaderdiv">
+                    <h2 style='color: blue'>Edit Ledger Details</h2>
                 </div>
-                <div class="modal-body">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label>Title / Description</label>
-                                <input type="text" name="TITLE" id="TITLE1" class="form-control" placeholder="Please enter Description" />
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Code</label>
-                                <input type="text" name="CODE" id="CODE1" class="form-control" placeholder="Please enter Code" />
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Jewellery</label>
-                                <select name="JEWELLERY_NAME" id="JEWELLERY_NAME1" class="form-control">
-                                    <option></option>
-                                </select>
-                            </div>
-                        </div>
+            </div>
 
-                        <div class="row">
-                            <div class="form-group col-3">
-                                <label>Design</label>
-                                <select name="DESIGN_NAME" id="DESIGN_NAME1" class="form-control">
-                                    <option></option>
-                                </select>
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Collection</label>
-                                <select name="COLLECTIONS_NAME" id="COLLECTIONS_NAME1" class="form-control">
-                                    <option></option>
-                                </select>
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Material</label>
-                                <select name="MATERIAL_NAME" id="MATERIAL_NAME1" class="form-control">
-                                    <option></option>
-                                </select>
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Occasion</label>
-                                <select name="OCCASION_NAME" id="OCCASION_NAME1" class="form-control">
-                                    <option></option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-3">
-                                <label>Gram</label>
-                                <select name="GRAMSLAB_NAME" id="GRAMSLAB_NAME1" class="form-control">
-                                    <option></option>
-                                </select>
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Karat</label>
-                                <select name="KARAT_NAME" id="KARAT_NAME1" class="form-control">
-                                    <option></option>
-                                </select>
-                            </div>
-                            <div class="form-group col-6">
-                                <label>Remarks</label>
-                                <input type="checkbox" name="ACTIVE_STATUS" id="ACTIVE_STATUS1" value="Active Status" style="margin-left: 10px; margin-right: 5px; vertical-align: middle;" />
-                                <label>Active</label>
-                                <input type="checkbox" name="SHOW_CATALOG" id="SHOW_CATALOG1" value="Show in Catalog" style="margin-left: 10px; margin-right: 5px; vertical-align: middle;" />
-                                <label>Catalog</label>
-                                <input type="checkbox" name="SHOW_TRENDING" id="SHOW_TRENDING1" value="Show in Trending" style="margin-left: 10px; margin-right: 5px; vertical-align: middle;" />
-                                <label>Trending</label>
-                                <input type="text" name="REMARKS" id="REMARKS1" class="form-control" placeholder="Please enter Reamrks" />
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-3">
-                                <label>Purity</label>
-                                <input type="text" name="PURITY" id="PURITY1" class="form-control" placeholder="Purity %" style="text-align: right" />
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Rate (Rs)</label>
-                                <input type="number" name="RATE" id="RATE1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Gross WT (Gm)</label>
-                                <input type="number" name="GR_WT" id="GR_WT1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Stone WT (Gm)</label>
-                                <input type="number" name="ST_WT" id="ST_WT1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="form-group col-3">
-                                <label>Net WT (Gm)</label>
-                                <input type="number" name="NET_WT" id="NET_WT1" class="form-control" readonly="true" style="text-align: right" />
-                            </div>
-                            <div class="form-group col-3">
-                                <label>VA (%)</label>
-                                <input type="number" name="VA_PER" id="VA_PER1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
-                            </div>
-                            <div class="form-group col-3">
-                                <label>VA Amt (Rs)</label>
-                                <input type="number" name="VA_AMT" id="VA_AMT1" readonly="true" class="form-control" style="text-align: right" />
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Stone Amt (Rs)</label>
-                                <input type="number" name="ST_AMT" id="ST_AMT1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-3">
-                                <label>Taxable Amt (Rs)</label>
-                                <input type="number" name="TAXABLE_AMT" id="TAXABLE_AMT1" readonly="true" class="form-control" style="text-align: right" />
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Tax (%)</label>
-                                <input type="number" name="TAX_PER" id="TAX_PER1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Tax Amt (Rs)</label>
-                                <input type="number" name="TAX_AMT" id="TAX_AMT1" readonly="true" class="form-control" style="text-align: right" />
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Net Amt (Rs)</label>
-                                <input type="number" name="NET_AMT" id="NET_AMT1" readonly="true" class="form-control" style="text-align: right" />
-                            </div>
-                        </div>
-
-                    </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label>Title / Description</label>
+                    <input type="text" name="TITLE" id="TITLE1" class="form-control" placeholder="Please enter Description" />
                 </div>
-                <div class="modal-footer">
-                    <label style="margin-left: 10px">SKU</label>
+                <div class="form-group col-3">
+                    <label>Code</label>
+                    <input type="text" name="CODE" id="CODE1" class="form-control" placeholder="Please enter Code" />
+                </div>
+                <div class="form-group col-3">
+                    <label>Jewellery</label>
+                    <select name="JEWELLERY_NAME" id="JEWELLERY_NAME1" class="form-control">
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-3">
+                    <label>Design</label>
+                    <select name="DESIGN_NAME" id="DESIGN_NAME1" class="form-control">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="form-group col-3">
+                    <label>Collection</label>
+                    <select name="COLLECTIONS_NAME" id="COLLECTIONS_NAME1" class="form-control">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="form-group col-3">
+                    <label>Material</label>
+                    <select name="MATERIAL_NAME" id="MATERIAL_NAME1" class="form-control">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="form-group col-3">
+                    <label>Occasion</label>
+                    <select name="OCCASION_NAME" id="OCCASION_NAME1" class="form-control">
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-3">
+                    <label>Gram</label>
+                    <select name="GRAMSLAB_NAME" id="GRAMSLAB_NAME1" class="form-control">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="form-group col-3">
+                    <label>Karat</label>
+                    <select name="KARAT_NAME" id="KARAT_NAME1" class="form-control">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="form-group col-6">
+                    <label>Remarks</label>
+                    <input type="checkbox" name="ACTIVE_STATUS" id="ACTIVE_STATUS1" value="Active Status" style="margin-left: 10px; margin-right: 5px; vertical-align: middle;" />
+                    <label>Active</label>
+                    <input type="checkbox" name="SHOW_CATALOG" id="SHOW_CATALOG1" value="Show in Catalog" style="margin-left: 10px; margin-right: 5px; vertical-align: middle;" />
+                    <label>Catalog</label>
+                    <input type="checkbox" name="SHOW_TRENDING" id="SHOW_TRENDING1" value="Show in Trending" style="margin-left: 10px; margin-right: 5px; vertical-align: middle;" />
+                    <label>Trending</label>
+                    <input type="text" name="REMARKS" id="REMARKS1" class="form-control" placeholder="Please enter Reamrks" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-3">
+                    <label>Purity</label>
+                    <input type="text" name="PURITY" id="PURITY1" class="form-control" placeholder="Purity %" style="text-align: right" />
+                </div>
+                <div class="form-group col-3">
+                    <label>Gross WT (Gm)</label>
+                    <input type="number" name="GR_WT" id="GR_WT1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
+                </div>
+                <div class="form-group col-3">
+                    <label>Stone WT (Gm)</label>
+                    <input type="number" name="ST_WT" id="ST_WT1" class="form-control" onchange="CalcAmt()" style="text-align: right" />
+                </div>
+                <div class="form-group col-3">
+                    <label>Net WT (Gm)</label>
+                    <input type="number" name="NET_WT" id="NET_WT1" class="form-control" readonly="true" style="text-align: right" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-3">
+                    <label>Stone Amt (Rs)</label>
+                    <input type="number" name="ST_AMT" id="ST_AMT1" class="form-control" style="text-align: right" />
+                </div>
+                <div class="form-group col-3">
+                    <label>Diamond Carat</label>
+                    <input type="number" name="DIA_CARAT" id="DIA_CARAT1" class="form-control" style="text-align: right" />
+                </div>
+                <div class="form-group col-3">
+                    <label>S(%)</label>
+                    <input type="number" name="S_PER" id="S_PER1" class="form-control" style="text-align: right" />
+                </div>
+                <div class="form-group col-3">
+                    <label>YM</label>
+                    <input class="form-control datepicker" id="DATE_YM1" name="date" placeholder="DD-MM-YYYY" type="text" style="text-align: center" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-6">
+                    <label>Vendor</label>
+                    <asp:TextBox ID="LED_NAME1" class="form-control" runat="server" placeholder="Please enter Vendor name" />
+                    <asp:HiddenField ID="LED_ID" runat="server" />
+                </div>                
+            </div>
+
+            <div class="row">                
+                <div class="col-12" style="text-align: right">
+                     <label style="margin-left: 10px">SKU</label>
                     <label id="SKU1" style="color: brown; margin-left: 5px; margin-right: 20px; font-weight: 500">SKU</label>
                     <label>Stock</label>
                     <label id="STK_QTY1" style="color: red; margin-left: 5px; margin-right: 20px; font-weight: 500">0</label>
-                    <button type="button" id="btnSave" class="btn btn-primary">Save Data</button>
-                    <button type="button" id="btnUpdate" class="btn btn-primary" edit-id="">Update Data</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnSave" class="btn btn-primary" style="margin-right: 15px">Save Data</button>
+                    <button type="button" id="btnUpdate" class="btn btn-primary" edit-id="" style="margin-right: 15px">Update Data</button>
+                    <button type="button" class="btn btn-danger cancelButton">Close</button>
                 </div>
             </div>
         </div>
@@ -363,8 +352,8 @@
             </div>
             <div style="height: 15px">
             </div>
-            <div id="divgridprint">                
-                <table id="tableprint" style="width: 100%;border-collapse: collapse;">
+            <div id="divgridprint">
+                <table id="tableprint" style="width: 100%; border-collapse: collapse;">
                 </table>
             </div>
         </div>
