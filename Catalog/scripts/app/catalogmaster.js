@@ -511,7 +511,9 @@ $(function () {
                     if (data.d[i].RESULT === 1) {
                         getDetails();
                         alert(data.d[i].MSG);
-                        $('#PopupModal').modal('hide');
+                        $("#masterdiv").removeClass("container");
+                        $('#mainlistingdiv').show();
+                        $('#mainldetaildiv').hide();
                     }
                     else {
                         alert(data.d[i].MSG);
@@ -579,8 +581,9 @@ $(function () {
     $(document).on("click", ".addNewButton", function () {
         $('#btnSave').show();
         $('#btnUpdate').hide();
-        $('#PopupModal').modal('show');
-        $('#PopupModal').focus();
+        $('#mainlistingdiv').hide();
+        $('#mainldetaildiv').show();
+        $("#masterdiv").addClass("container");
         $("#TITLE1").val('');
         $("#ACTIVE_STATUS1").prop('checked', true);
         $("#SHOW_CATALOG1").prop('checked', true);
@@ -607,8 +610,8 @@ $(function () {
         $("#DIA_CARAT1").val(0);
         $("#ContentPlaceHolder1_LED_NAME1").val('');
         $("#ContentPlaceHolder1_LED_ID").val(0);
-        Datalodaing = 0;
-        $("div.modal-header h2").html("Add Catalog Details");
+        Datalodaing = 0;        
+        $("#subheaderdiv").html("<h2 style='color:blue'>Add Catalog Details</h2>");
         $('#TITLE1').focus();
     });
 
@@ -640,8 +643,9 @@ $(function () {
 
                 $('#btnSave').hide();
                 $('#btnUpdate').show();
-                $('#PopupModal').modal('show');
-                $('#PopupModal').focus();
+                $('#mainlistingdiv').hide();
+                $('#mainldetaildiv').show();
+                $("#masterdiv").addClass("container");
                 $("#TITLE1").val('');
                 $("#ACTIVE_STATUS1").prop('checked', true);
                 $("#SHOW_CATALOG1").prop('checked', true);
@@ -671,9 +675,9 @@ $(function () {
                 $("#ContentPlaceHolder1_LED_NAME1").val('');
                 $("#ContentPlaceHolder1_LED_ID").val(0);
 
-                Datalodaing = 1;
-                $("div.modal-header h2").html("Edit Catalog Details");
-                
+                Datalodaing = 1;                
+                $("#subheaderdiv").html("<h2 style='color:blue'>Edit Catalog Details</h2>");
+
                 console.log(id);
                 $("#btnUpdate").attr("edit-id", id);
                 //alert(id);  //getting the row id 
@@ -900,7 +904,9 @@ $(function () {
                     if (data.d[i].RESULT === 1) {
                         getDetails();
                         alert(data.d[i].MSG);
-                        $('#PopupModal').modal('hide');
+                        $("#masterdiv").removeClass("container");
+                        $('#mainlistingdiv').show();
+                        $('#mainldetaildiv').hide();
                     }
                     else {
                         alert(data.d[i].MSG);
@@ -1072,6 +1078,11 @@ $(function () {
 
     });
 
+    $(document).on("click", ".cancelButton", function () {
+        $('#mainlistingdiv').show();
+        $('#mainldetaildiv').hide();
+        $("#masterdiv").removeClass("container");
+    });
 
 });
 
