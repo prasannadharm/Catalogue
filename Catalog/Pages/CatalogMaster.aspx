@@ -31,7 +31,7 @@
     <script src="../scripts/bootstrap-select.min.js"></script>
     <script src="../scripts/bootstrap-datepicker.min.js"></script>
     <script src="../scripts/jquery-ui.min.js"></script>
-    <script src="../scripts/app/catalogmaster.js?v=1"></script>
+    <script src="../scripts/app/catalogmaster.js?v=2"></script>
     <div id="loader"></div>
     <div class="col-lg-12" id="mainlistingdiv">
         <div class="panel panel-default">

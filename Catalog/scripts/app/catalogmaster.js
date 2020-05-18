@@ -111,6 +111,12 @@ function LoadCombos(data) {
     var optionsOccasion = [];
     var optionsGramSlab = [];
     var optionsKarat = [];
+    var options = [];
+
+    options.push('<option value="',
+          '0', '">',
+          '--SELECT--', '</option>');
+
     for (var i = 0; i < data.d.length; i++) {
         if (data.d[i].TYPE == 'JEWELLERY') {
             optionsJewel.push('<option value="',
@@ -151,31 +157,45 @@ function LoadCombos(data) {
 
     $("#cmbJewellery").html(optionsJewel.join(''));
     $("#cmbJewellery").addClass("selectpicker");
-    $("#cmbJewellery").addClass("form-control");
+    $("#cmbJewellery").addClass("form-control");   
+    
+    $("#JEWELLERY_NAME1").html($.merge($.merge([], options), optionsJewel).join(''));
 
     $("#cmbDesign").html(optionsDesign.join(''));
     $("#cmbDesign").addClass("selectpicker");
     $("#cmbDesign").addClass("form-control");
 
+    $("#DESIGN_NAME1").html($.merge($.merge([], options), optionsDesign).join(''));
+
     $("#cmbCollection").html(optionsCollection.join(''));
     $("#cmbCollection").addClass("selectpicker");
     $("#cmbCollection").addClass("form-control");
+
+    $("#COLLECTIONS_NAME1").html($.merge($.merge([], options), optionsCollection).join(''));
 
     $("#cmbMaterial").html(optionsMaterial.join(''));
     $("#cmbMaterial").addClass("selectpicker");
     $("#cmbMaterial").addClass("form-control");
 
+    $("#MATERIAL_NAME1").html($.merge($.merge([], options), optionsMaterial).join(''));
+
     $("#cmbOccasion").html(optionsOccasion.join(''));
     $("#cmbOccasion").addClass("selectpicker");
     $("#cmbOccasion").addClass("form-control");
+
+    $("#OCCASION_NAME1").html($.merge($.merge([], options), optionsOccasion).join(''));
 
     $("#CmbGramSlab").html(optionsGramSlab.join(''));
     $("#CmbGramSlab").addClass("selectpicker");
     $("#CmbGramSlab").addClass("form-control");
 
+    $("#GRAMSLAB_NAME1").html($.merge($.merge([], options), optionsGramSlab).join(''));
+
     $("#cmbKarat").html(optionsKarat.join(''));
     $("#cmbKarat").addClass("selectpicker");
     $("#cmbKarat").addClass("form-control");
+
+    $("#KARAT_NAME1").html($.merge($.merge([], options), optionsKarat).join(''));
 
     $('.selectpicker').selectpicker('');
     getDetails();
@@ -279,201 +299,16 @@ function getDetails() {
                 "order": [[0, "desc"]]
             });
             //data-toggle='modal' data-target='#PopupModal'
+            document.getElementById("loader").style.display = "none";
         },
         error: function () {
             alert("Error while Showing update data");
+            document.getElementById("loader").style.display = "none";
         }
-
         //
     });
-    document.getElementById("loader").style.display = "none";
+    
 }
-
-//Combos Loading Code - Start
-
-$(function () {
-    document.getElementById("loader").style.display = "block";
-    $.ajax({
-        type: "POST",
-        url: "CatalogMaster.aspx/GetActiveJewelleryList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadJewelleryCombo
-    });
-});
-
-function LoadJewelleryCombo(data) {
-    var options = [];
-    options.push('<option value="',
-          '0', '">',
-          '--SELECT--', '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#JEWELLERY_NAME1").html(options.join(''));
-    document.getElementById("loader").style.display = "none";
-}
-
-$(function () {
-    document.getElementById("loader").style.display = "block";
-    $.ajax({
-        type: "POST",
-        url: "CatalogMaster.aspx/GetActiveDesignList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadDesignCombo
-    });
-});
-
-function LoadDesignCombo(data) {
-    var options = [];
-    options.push('<option value="',
-         '0', '">',
-         '--SELECT--', '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#DESIGN_NAME1").html(options.join(''));
-    document.getElementById("loader").style.display = "none";
-}
-
-$(function () {
-    document.getElementById("loader").style.display = "block";
-    $.ajax({
-        type: "POST",
-        url: "CatalogMaster.aspx/GetActiveCollectionsList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadCollectionsCombo
-    });
-});
-
-function LoadCollectionsCombo(data) {
-    var options = [];
-    options.push('<option value="',
-        '0', '">',
-        '--SELECT--', '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#COLLECTIONS_NAME1").html(options.join(''));
-    document.getElementById("loader").style.display = "none";
-}
-
-$(function () {
-    document.getElementById("loader").style.display = "block";
-    $.ajax({
-        type: "POST",
-        url: "CatalogMaster.aspx/GetActiveMaterialList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadMaterialCombo
-    });
-});
-
-function LoadMaterialCombo(data) {
-    var options = [];
-    options.push('<option value="',
-         '0', '">',
-         '--SELECT--', '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#MATERIAL_NAME1").html(options.join(''));
-    document.getElementById("loader").style.display = "none";
-}
-
-$(function () {
-    document.getElementById("loader").style.display = "block";
-    $.ajax({
-        type: "POST",
-        url: "CatalogMaster.aspx/GetActiveOccasionList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadOccasionCombo
-    });
-});
-
-function LoadOccasionCombo(data) {
-    var options = [];
-    options.push('<option value="',
-        '0', '">',
-        '--SELECT--', '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#OCCASION_NAME1").html(options.join(''));
-    document.getElementById("loader").style.display = "none";
-}
-
-$(function () {
-    document.getElementById("loader").style.display = "block";
-    $.ajax({
-        type: "POST",
-        url: "CatalogMaster.aspx/GetActiveGramSlabList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadGramSlabCombo
-    });
-});
-
-function LoadGramSlabCombo(data) {
-    var options = [];
-    options.push('<option value="',
-        '0', '">',
-        '--SELECT--', '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#GRAMSLAB_NAME1").html(options.join(''));
-    document.getElementById("loader").style.display = "none";
-}
-
-$(function () {
-    document.getElementById("loader").style.display = "block";
-    $.ajax({
-        type: "POST",
-        url: "CatalogMaster.aspx/GetActiveKaratList",
-        data: '{}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: LoadKaratCombo
-    });
-});
-
-function LoadKaratCombo(data) {
-    var options = [];
-    options.push('<option value="',
-        '0', '">',
-        '--SELECT--', '</option>');
-    for (var i = 0; i < data.d.length; i++) {
-        options.push('<option value="',
-          data.d[i].ID, '">',
-          data.d[i].NAME, '</option>');
-    }
-    $("#KARAT_NAME1").html(options.join(''));
-    document.getElementById("loader").style.display = "none";
-}
-
-//Combos Loading Code - End
 
 $(function () {
     $("#btnUploadImage").click(function () {
