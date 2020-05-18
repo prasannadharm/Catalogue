@@ -1,0 +1,147 @@
+Alter table tbl_MST_ROLE add ALLOW_EDIT bit default(1)
+Alter table tbl_MST_ROLE add ALLOW_DELETE bit default(1)
+
+
+
+/****** Object:  StoredProcedure [dbo].[USP_GetRolesDetailsbyID]    Script Date: 05/10/2019 20:00:49 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_GetRolesDetailsbyID]  
+(
+	@ID as int
+)
+as  
+begin  
+	SELECT ROLE_ID,ROLE_NAME,ACTIVE_STATUS,ALLOW_EDIT,ALLOW_DELETE FROM tbl_MST_ROLE WHERE ROLE_ID=@ID ORDER BY ROLE_NAME
+end
+
+
+
+
+/****** Object:  StoredProcedure [dbo].[USP_GetRolesMasterList]    Script Date: 05/10/2019 20:02:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_GetRolesMasterList]  
+as  
+begin  
+	SELECT ROLE_ID,ROLE_NAME,ACTIVE_STATUS,ALLOW_EDIT,ALLOW_DELETE FROM tbl_MST_ROLE ORDER BY ROLE_NAME
+end
+
+
+/****** Object:  StoredProcedure [dbo].[USP_InsertRolesMaster]    Script Date: 05/10/2019 20:04:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_InsertRolesMaster]  
+(
+	@NAME as nvarchar(100),
+	@ACTIVE_STATUS as bit,	
+	@ALLOW_DELETE as bit,
+	@ALLOW_EDIT as bit,
+	@RESULT int OUT,
+	@CNT int OUT,
+	@MSG NVARCHAR(500) OUT  
+)
+as  
+begin  
+	BEGIN TRY
+		SET @RESULT = 0;
+		SET @CNT =0;
+		IF EXISTS(SELECT 1 FROM tbl_MST_ROLE WHERE UPPER(ROLE_NAME)=UPPER(RTRIM(LTRIM(@NAME))))
+		BEGIN
+			SET @RESULT = 2;
+			SET @MSG = 'Role already exists.';
+		END
+		ELSE
+		BEGIN
+			SET @NAME = LTRIM(RTRIM(@NAME));
+			INSERT INTO tbl_MST_ROLE (ROLE_NAME,ACTIVE_STATUS,ALLOW_DELETE,ALLOW_EDIT) SELECT @NAME, @ACTIVE_STATUS,@ALLOW_DELETE,@ALLOW_EDIT
+			SET @CNT = @@ROWCOUNT;
+			SET @RESULT = 1;
+			SET @MSG = 'Data saved successfully.';
+		END
+	END TRY
+	BEGIN CATCH		
+		SET @MSG = ERROR_MESSAGE();
+		SET @RESULT = 0;
+	END CATCH
+end
+
+
+
+
+
+
+/****** Object:  StoredProcedure [dbo].[USP_UpdateRolesMaster]    Script Date: 05/10/2019 20:05:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_UpdateRolesMaster]  
+(
+	@ID as int,
+	@NAME as nvarchar(100),
+	@ACTIVE_STATUS as bit,
+	@ALLOW_DELETE as bit,
+	@ALLOW_EDIT as bit,
+	@RESULT int OUT,
+	@CNT int OUT,
+	@MSG NVARCHAR(500) OUT   
+)
+as  
+BEGIN  
+	BEGIN TRY
+		SET @RESULT = 0;
+		SET @CNT =0;	
+		IF EXISTS(SELECT 1 FROM tbl_MST_ROLE WHERE UPPER(ROLE_NAME)=UPPER(RTRIM(LTRIM(@NAME))) AND ROLE_ID<>@ID)
+		BEGIN
+			SET @RESULT = 2;
+			SET @MSG = 'Role name already exists.';
+		END
+		ELSE
+		BEGIN
+			SET @NAME = LTRIM(RTRIM(@NAME));
+			UPDATE tbl_MST_ROLE set ROLE_NAME=@NAME, ACTIVE_STATUS=@ACTIVE_STATUS,ALLOW_DELETE=@ALLOW_DELETE,ALLOW_EDIT=@ALLOW_EDIT WHERE ROLE_ID=@ID	
+			SET @CNT = @@ROWCOUNT;
+			SET @RESULT = 1;
+			SET @MSG = 'Data updated successfully.';
+		END
+	END TRY
+	BEGIN CATCH		
+		SET @MSG = ERROR_MESSAGE();
+		SET @RESULT = 0;
+	END CATCH
+END
+
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+Create procedure [dbo].[USP_GetUserRights]  
+(
+	@ID as int
+)
+as  
+begin  	
+	SELECT U.USER_ID,ALLOW_EDIT,ALLOW_DELETE FROM tbl_MST_ROLE R 
+	INNER JOIN tbl_MST_USER U ON R.ROLE_ID=U.ROLE_ID
+	WHERE U.USER_ID=@ID
+end
+
+
+
+
+
+
+
+
+
+
+
