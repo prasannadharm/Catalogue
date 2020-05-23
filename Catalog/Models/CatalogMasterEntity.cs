@@ -47,5 +47,6 @@ namespace Catalog.Models
         public int LED_ID { get; set; }
         public string LED_NAME { get; set;}
         public double DIA_CARAT { get; set;}
+        public int PCS { get; set; }
     }
 }

@@ -449,6 +449,12 @@ $(function () {
             return false;
         }
 
+        if ($.isNumeric($("#PCS1").val()) == false) {
+            alert("Please enter valid Peices data.");
+            $("#PCS1").focus();
+            return false;
+        }
+
         CalcAmt();
 
         var obj = {};
@@ -480,6 +486,7 @@ $(function () {
         obj.S_PER = $("#S_PER1").val();
         obj.DIA_CARAT = $("#DIA_CARAT1").val();
         obj.LED_NAME = $("#ContentPlaceHolder1_LED_NAME1").val().trim();
+        obj.PCS = $("#PCS1").val();
 
         if ($('#ACTIVE_STATUS1').is(":checked")) {
             obj.ACTIVE_STATUS = true;
@@ -608,6 +615,7 @@ $(function () {
         $('#DATE_YM1').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', Currentdate);
         $("#S_PER1").val(0);
         $("#DIA_CARAT1").val(0);
+        $("#PCS1").val(1);
         $("#ContentPlaceHolder1_LED_NAME1").val('');
         $("#ContentPlaceHolder1_LED_ID").val(0);
         Datalodaing = 0;        
@@ -672,6 +680,7 @@ $(function () {
                 $('#DATE_YM1').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', Currentdate);
                 $("#S_PER1").val(0);
                 $("#DIA_CARAT1").val(0);
+                $("#PCS1").val(1);
                 $("#ContentPlaceHolder1_LED_NAME1").val('');
                 $("#ContentPlaceHolder1_LED_ID").val(0);
 
@@ -719,6 +728,7 @@ $(function () {
                             $('#DATE_YM1').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker('setDate', data.d[i].DATE_YM.split('-')[2] + '-' + data.d[i].DATE_YM.split('-')[1] + '-' + data.d[i].DATE_YM.split('-')[0]);
                             $("#S_PER1").val(data.d[i].S_PER);
                             $("#DIA_CARAT1").val(data.d[i].DIA_CARAT);
+                            $("#PCS1").val(data.d[i].PCS);
                             $("#ContentPlaceHolder1_LED_NAME1").val(data.d[i].LED_NAME);
 
 
@@ -840,6 +850,12 @@ $(function () {
             return false;
         }
 
+        if ($.isNumeric($("#PCS1").val()) == false) {
+            alert("Please enter valid Peices data.");
+            $("#PCS1").focus();
+            return false;
+        }
+
         CalcAmt();
 
         var id = $(this).attr("edit-id");
@@ -873,6 +889,7 @@ $(function () {
         obj.S_PER = $("#S_PER1").val();
         obj.DIA_CARAT = $("#DIA_CARAT1").val();
         obj.LED_NAME = $("#ContentPlaceHolder1_LED_NAME1").val().trim();
+        obj.PCS = $("#PCS1").val();
 
         if ($('#ACTIVE_STATUS1').is(":checked")) {
             obj.ACTIVE_STATUS = true;

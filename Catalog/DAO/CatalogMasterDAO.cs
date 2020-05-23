@@ -113,14 +113,13 @@ namespace Catalog.DAO
                         obj.TAX_PER = ds.Tables[0].Rows[i]["TAX_PER"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["TAX_PER"]);
                         obj.TAX_AMT = ds.Tables[0].Rows[i]["TAX_AMT"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["TAX_AMT"]);
                         obj.NET_AMT = ds.Tables[0].Rows[i]["NET_AMT"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["NET_AMT"]);
-
                         obj.S_PER = ds.Tables[0].Rows[i]["S_PER"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["S_PER"]);
                         if (ds.Tables[0].Rows[i]["DATE_YM"] != DBNull.Value)
                         obj.DATE_YM = Convert.ToString(ds.Tables[0].Rows[i]["DATE_YM"]);
                         obj.LED_ID = ds.Tables[0].Rows[i]["LED_ID"] == DBNull.Value ? 0 : Convert.ToInt32(ds.Tables[0].Rows[i]["LED_ID"]);
                         obj.LED_NAME = ds.Tables[0].Rows[i]["LED_NAME"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[i]["LED_NAME"]);
                         obj.DIA_CARAT = ds.Tables[0].Rows[i]["DIA_CARAT"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["DIA_CARAT"]);
-
+                        obj.PCS = ds.Tables[0].Rows[i]["PCS"] == DBNull.Value ? 1 : Convert.ToInt32(ds.Tables[0].Rows[i]["PCS"]);
                         retlst.Add(obj);
                     }
                 }
@@ -172,6 +171,7 @@ namespace Catalog.DAO
                     cmd.Parameters.AddWithValue("@DATE_YM", obj.DATE_YM);
                     cmd.Parameters.AddWithValue("@LED_NAME", obj.LED_NAME);
                     cmd.Parameters.AddWithValue("@DIA_CARAT", obj.DIA_CARAT);
+                    cmd.Parameters.AddWithValue("@PCS", obj.PCS);
                     cmd.Parameters.Add("@RESULT", SqlDbType.Int);
                     cmd.Parameters["@RESULT"].Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("@CNT", SqlDbType.Int);
@@ -232,7 +232,7 @@ namespace Catalog.DAO
                     cmd.Parameters.AddWithValue("@DATE_YM", obj.DATE_YM);
                     cmd.Parameters.AddWithValue("@LED_NAME", obj.LED_NAME);
                     cmd.Parameters.AddWithValue("@DIA_CARAT", obj.DIA_CARAT);
-
+                    cmd.Parameters.AddWithValue("@PCS", obj.PCS);
                     cmd.Parameters.Add("@RESULT", SqlDbType.Int);
                     cmd.Parameters["@RESULT"].Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("@CNT", SqlDbType.Int);

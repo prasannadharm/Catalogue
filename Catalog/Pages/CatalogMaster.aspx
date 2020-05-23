@@ -264,7 +264,11 @@
                     <label>Vendor</label>
                     <asp:TextBox ID="LED_NAME1" class="form-control" runat="server" placeholder="Please enter Vendor name" />
                     <asp:HiddenField ID="LED_ID" runat="server" />
-                </div>                
+                </div>  
+                <div class="form-group col-3">
+                    <label>No of Pieces</label>
+                    <input type="text" name="PCS" id="PCS1" class="form-control" style="text-align: right" step="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                </div>              
             </div>
 
             <div class="row">                
