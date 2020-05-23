@@ -283,7 +283,8 @@ namespace Catalog.DAO
                             obj.GENID = ds.Tables[1].Rows[i]["GENID"] == DBNull.Value ? 0 : Convert.ToInt64(ds.Tables[1].Rows[i]["GENID"]);
                             obj.ORG_FILE_NAME = ds.Tables[1].Rows[i]["ORG_FILE_NAME"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[1].Rows[i]["ORG_FILE_NAME"]);
                             obj.PHY_FILE_NAME = ds.Tables[1].Rows[i]["PHY_FILE_NAME"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[1].Rows[i]["PHY_FILE_NAME"]);
-
+                            obj.PCS = ds.Tables[1].Rows[i]["PCS"] == DBNull.Value ? 1 : Convert.ToInt32(ds.Tables[1].Rows[i]["PCS"]);
+                            obj.WT = ds.Tables[1].Rows[i]["WT"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[1].Rows[i]["WT"]);
                             retlst.Add(obj);
                         }
                     }

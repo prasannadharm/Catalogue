@@ -313,6 +313,8 @@ namespace Catalog.DAO
                             obj.OUT_QTY = ds.Tables[1].Rows[i]["OUT_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[1].Rows[i]["OUT_QTY"]);
                             obj.OUT_BAL_QTY = ds.Tables[1].Rows[i]["OUT_BAL_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[1].Rows[i]["OUT_BAL_QTY"]);
                             obj.OUT_GENID = ds.Tables[1].Rows[i]["OUT_GENID"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[1].Rows[i]["OUT_GENID"]);
+                            obj.PCS = ds.Tables[1].Rows[i]["PCS"] == DBNull.Value ? 1 : Convert.ToInt32(ds.Tables[1].Rows[i]["PCS"]);
+                            obj.WT = ds.Tables[1].Rows[i]["WT"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[1].Rows[i]["WT"]);
                             retlst.Add(obj);
                         }
                     }

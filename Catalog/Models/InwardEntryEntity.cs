@@ -101,6 +101,8 @@ namespace Catalog.Models
         public string OUT_GENID { get; set; }
         public double OUT_QTY { get; set; }
         public double OUT_BAL_QTY { get; set; }
+        public Int32 PCS { get; set; }
+        public string WT { get; set; }
     }
 
     public class PendingOutwardEntries

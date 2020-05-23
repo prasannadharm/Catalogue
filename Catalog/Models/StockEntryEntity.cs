@@ -85,5 +85,7 @@ namespace Catalog.Models
         public Int64 GENID { get; set; }
         public double QTY { get; set; }
         public string REMARKS { get; set; }
+        public int PCS { get; set; }
+        public string WT { get; set; }
     }
 }

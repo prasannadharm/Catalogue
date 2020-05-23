@@ -29,7 +29,7 @@
     <script src="../scripts/popper.min.js"></script>
     <script src="../scripts/bootstrap-datepicker.min.js"></script>
     <script src="../scripts/jquery-ui.min.js"></script>
-    <script src="../scripts/app/inwardentry.js"></script>
+    <script src="../scripts/app/inwardentry.js?v=1"></script>
     <div id="loader"></div>
     <div class="col-lg-12" id="mainlistingdiv">
         <div class="panel panel-default">
@@ -314,7 +314,8 @@
                             <th style="border: 1px solid black;">Title</th>
                             <th style="border: 1px solid black;">Qty</th>
                             <th style="border: 1px solid black;">Out No</th>
-                            <th style="border: 1px solid black;">Remarks</th>                            
+                            <th style="border: 1px solid black;">Pcs</th>
+                            <th style="border: 1px solid black;">Weight</th>                            
                         </tr>
                     </thead>
                     <tbody>

@@ -326,7 +326,8 @@
                             <th style="border: 1px solid black;">Code</th>
                             <th style="border: 1px solid black;">Title</th>
                             <th style="border: 1px solid black;">Qty</th>                            
-                            <th style="border: 1px solid black;">Remarks</th>              
+                            <th style="border: 1px solid black;">Pcs</th>              
+                            <th style="border: 1px solid black;">Weight</th>              
                         </tr>
                     </thead>
                     <tbody>

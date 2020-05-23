@@ -29,7 +29,7 @@
     <script src="../scripts/popper.min.js"></script>
     <script src="../scripts/bootstrap-datepicker.min.js"></script>
     <script src="../scripts/jquery-ui.min.js"></script>
-    <script src="../scripts/app/stockentry.js"></script>
+    <script src="../scripts/app/stockentry.js?v=1"></script>
     <div id="loader"></div>
     <div class="col-lg-12" id="mainlistingdiv">
         <div class="panel panel-default">
@@ -144,9 +144,10 @@
                 <table id="tablesub" class="table table-striped table-bordered" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>SKU</th>
-                            <th>Code</th>
+                            <th>SKU</th>                            
                             <th>Title</th>
+                            <th>Pcs</th>
+                            <th>Gr Wt</th>
                             <th>Qty</th>
                             <th>Remarks</th>
                             <th>Delete</th>
@@ -193,12 +194,12 @@
                             <table id="tableitemsearch" class="table table-striped table-bordered" style="width: 100%">
                                 <thead>
                                     <tr>
-                                        <th>SKU</th>
-                                        <th>Code</th>
+                                        <th>SKU</th>                                        
                                         <th>Title</th>
                                         <th>Jewellery</th>
-                                        <th>Collection</th>
-                                        <th>Design</th>
+                                        <th>Collection</th>                                        
+                                        <th>Pcs</th>
+                                        <th>Weight</th>
                                         <th>Select</th>
                                         <th>View</th>
                                     </tr>
@@ -309,7 +310,8 @@
                             <th style="border: 1px solid black;">Code</th>
                             <th style="border: 1px solid black;">Title</th>
                             <th style="border: 1px solid black;">Qty</th>
-                            <th style="border: 1px solid black;">Remarks</th>
+                            <th style="border: 1px solid black;">Pcs</th>
+                            <th style="border: 1px solid black;">Weight</th>
                         </tr>
                     </thead>
                     <tbody>
