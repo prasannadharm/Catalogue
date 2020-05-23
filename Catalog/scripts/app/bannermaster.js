@@ -19,9 +19,9 @@ function getDetails() {
             for (var i = 0; i < data.d.length; i++) {
                 $('#tablemain').append(
                     "<tr><td>" + data.d[i].HEADING + "</td>" +
-                    "<td><span style='float:left; margin-left:10px; width:40px;' ><a class='btn btn-success btn-sm downloadButton' href='BannerImageUpload.ashx?action=DOWNLOAD&id=" + data.d[i].ID + "'>Download</a></span></td>"  +
-                    "<td>" + "<input type='button' class='btn btn-warning btn-sm editButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' />" + "</td>" +
-                    "<td><input type='button' class='btn btn-danger btn-sm deleteButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete'/> </td></tr>");
+                    "<td><span style='float:left; margin-left:10px; width:40px;' ><a class='btn btn-success btn-sm downloadButton' href='BannerImageUpload.ashx?action=DOWNLOAD&id=" + data.d[i].ID + "' title='Download Image'>Download</a></span></td>" +
+                    "<td>" + "<input type='button' class='btn btn-warning btn-sm editButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' title='Edit'/>" + "</td>" +
+                    "<td><input type='button' class='btn btn-danger btn-sm deleteButton' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' title='Delete'/> </td></tr>");
             }
             $('#tablemain').append("</tbody>");
             $('#tablemain').DataTable();

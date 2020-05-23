@@ -99,8 +99,8 @@ function getDetails() {
             for (var i = 0; i < data.d.length; i++) {
                 $('#tablemain').append(
                     "<tr><td>" + data.d[i].NAME + "</td><td>" + data.d[i].ALIAS_NAME + "</td><td>" + data.d[i].LEDGER_TYPE + "</td><td>" + data.d[i].MOBILE + "</td><td>" + data.d[i].CITY + "</td><td>" + "<input type='checkbox' onclick='return false;' " + (data.d[i].ACTIVE_STATUS == true ? "checked='checked'" : "") + "/></td>" +
-                    "<td>" + "<img src='../images/static/edit.png' alt='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
-                    "<td><img src='../images/static/delete.png' alt='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+                    "<td>" + "<img src='../images/static/edit.png' title='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
+                    "<td><img src='../images/static/delete.png' title='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td></tr>");
             }
             $('#tablemain').append("</tbody>");
             $('#tablemain').DataTable();

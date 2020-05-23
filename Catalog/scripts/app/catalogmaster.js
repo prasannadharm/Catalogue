@@ -288,11 +288,11 @@ function getDetails() {
             for (var i = 0; i < data.d.length; i++) {
                 $('#tablemain').append(
                     "<tr><td style='text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td>" + data.d[i].CODE + "</td><td style='color:blue'>" + data.d[i].TITLE + "</td><td style='text-align:center;color:red'><b>" + data.d[i].STK_QTY + "</b></td><td>" + data.d[i].JEWELLERY_NAME + "</td><td>" + data.d[i].DESIGN_NAME +
-                    "</td><td>" + data.d[i].COLLECTIONS_NAME + "</td>" + "<td style='text-align:center;'>" + "<img src='../images/static/edit.png' alt='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
-                    "<td style='text-align:center;'><img src='../images/static/delete.png' alt='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
-                    "<td style='text-align:center;'>" + "<img src='../images/static/upload.png' alt='Upload Image' class='uploadButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnUpload' value='Upload' style='margin-right:5px;margin-left:5px'/>" + "</td>" +
-                    "<td style='text-align:center;'>" + "<img src='../images/static/report.png' alt='Item Ledger Report' class='reportButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnReport' value='Report' style='margin-right:5px;margin-left:5px'/>" + "</td>" +
-                    "<td style='text-align:center;'><img src='../images/static/barcode.png' alt='Print Barcode' class='barcodeButton handcursor' data-id='" + data.d[i].ID + "' id='btnBarcode' value='Barcode' style='margin-right:5px;margin-left:5px'/> </td></tr>");
+                    "</td><td>" + data.d[i].COLLECTIONS_NAME + "</td>" + "<td style='text-align:center;'>" + "<img src='../images/static/edit.png' title='Edit Record' class='editButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnEdit' value='Edit' style='margin-right:5px'/>" + "</td>" +
+                    "<td style='text-align:center;'><img src='../images/static/delete.png' title='Delete Record' class='deleteButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnDelete' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
+                    "<td style='text-align:center;'>" + "<img src='../images/static/upload.png' title='Upload Image' class='uploadButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnUpload' value='Upload' style='margin-right:5px;margin-left:5px'/>" + "</td>" +
+                    "<td style='text-align:center;'>" + "<img src='../images/static/report.png' title='Item Ledger Report' class='reportButton handcursor' data-id='" + data.d[i].ID + "' name='submitButton' id='btnReport' value='Report' style='margin-right:5px;margin-left:5px'/>" + "</td>" +
+                    "<td style='text-align:center;'><img src='../images/static/barcode.png' title='Print Barcode' class='barcodeButton handcursor' data-id='" + data.d[i].ID + "' id='btnBarcode' value='Barcode' style='margin-right:5px;margin-left:5px'/> </td></tr>");
             }
             $('#tablemain').append("</tbody>");
             $('#tablemain').DataTable({
@@ -1147,9 +1147,9 @@ function ShowUploadedFiles() {
             for (var i = 0; i < data.d.length; i++) {
                 $('#tableupload').append(
                     "<tr><td>" + data.d[i].ORG_FILE_NAME + "</td><td><input type='checkbox'  class='chkkstatus' data-id=" + data.d[i].PHY_FILE_NAME + " " + (data.d[i].IS_THUMBNAIL == true ? "checked='checked'" : "") + "/></td>" +
-                    "<td style='text-align:center'><img src='../images/static/delete.png' alt='Delete Record' class='deleteButtonImage handcursor' data-id='" + data.d[i].PHY_FILE_NAME + "' name='submitButton' id='btnDeleteImage' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
-                    "<td style='text-align:center'><img src='../images/static/imageview.png' alt='Delete Record' class='previewButtonImage handcursor' data-id='" + data.d[i].PHY_FILE_NAME + "' name='submitButton' id='btnPreviewImage' value='Preview' style='margin-right:5px;margin-left:5px'/> </td>" +
-                    "<td style='text-align:center'><a class='downloadButton' href='CatalogImageUpload.ashx?action=DOWNLOAD&catalogid=" + catalogid + "&phy_file_name=" + data.d[i].PHY_FILE_NAME + "&org_file_name=" + data.d[i].ORG_FILE_NAME + "'><img src='../images/static/download.png' alt='Download Record' class='downloadButton handcursor' id='btnDeleteImage' style='margin-right:5px;margin-left:5px'/> </td></a></tr>");
+                    "<td style='text-align:center'><img src='../images/static/delete.png' title='Delete Record' class='deleteButtonImage handcursor' data-id='" + data.d[i].PHY_FILE_NAME + "' name='submitButton' id='btnDeleteImage' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
+                    "<td style='text-align:center'><img src='../images/static/imageview.png' title='Show Preview' class='previewButtonImage handcursor' data-id='" + data.d[i].PHY_FILE_NAME + "' name='submitButton' id='btnPreviewImage' value='Preview' style='margin-right:5px;margin-left:5px'/> </td>" +
+                    "<td style='text-align:center'><a class='downloadButton' href='CatalogImageUpload.ashx?action=DOWNLOAD&catalogid=" + catalogid + "&phy_file_name=" + data.d[i].PHY_FILE_NAME + "&org_file_name=" + data.d[i].ORG_FILE_NAME + "'><img src='../images/static/download.png' title='Download Image' class='downloadButton handcursor' id='btnDeleteImage' style='margin-right:5px;margin-left:5px'/> </td></a></tr>");
 
             }
             $('#tableupload').append("</tbody>");
