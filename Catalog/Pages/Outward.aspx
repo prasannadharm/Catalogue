@@ -151,8 +151,9 @@
                     <thead>
                         <tr>
                             <th>SKU</th>
-                            <th>Code</th>
                             <th>Title</th>
+                            <th>Pcs</th>
+                            <th>Gr Wt</th>
                             <th>Qty</th>
                             <th>Remarks</th>
                             <th>Delete</th>
@@ -200,11 +201,11 @@
                                 <thead>
                                     <tr>
                                         <th>SKU</th>
-                                        <th>Code</th>
                                         <th>Title</th>
                                         <th>Jewellery</th>
                                         <th>Collection</th>
-                                        <th>Design</th>
+                                        <th>Pcs</th>
+                                        <th>Weight</th>
                                         <th>Select</th>
                                         <th>View</th>
                                     </tr>

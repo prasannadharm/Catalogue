@@ -266,6 +266,8 @@ $(function () {
                                             objdetail.GENID = data.d[i].GENID;
                                             objdetail.QTY = data.d[i].QTY;
                                             objdetail.REMARKS = data.d[i].REMARKS;
+                                            objdetail.PCS = data.d[i].PCS;
+                                            objdetail.WT = data.d[i].WT;
                                             subItemsList.push(objdetail);
                                         }
                                         rebuildSubTableGrid();
@@ -715,6 +717,8 @@ function searchItem() {
                 objdetail.GENID = Math.floor((Math.random() * 1000000) + 1);
                 objdetail.QTY = 1;
                 objdetail.REMARKS = '';
+                objdetail.PCS = data.d[0].PCS;
+                objdetail.WT = data.d[0].WT;
                 subItemsList.push(objdetail);
                 rebuildSubTableGrid();
                 $("#txtSearchItem").val('');
@@ -737,6 +741,8 @@ function searchItem() {
                     objdetail.JEWELLERY_NAME = data.d[i].JEWELLERY_NAME;
                     objdetail.COLLECTIONS_NAME = data.d[i].COLLECTIONS_NAME;
                     objdetail.DESIGN_NAME = data.d[i].DESIGN_NAME;
+                    objdetail.PCS = data.d[i].PCS;
+                    objdetail.WT = data.d[i].WT;
                     tempsubItemsList.push(objdetail);
                 }
                 rebuildItemSearchTableGrid();
@@ -759,8 +765,8 @@ function rebuildItemSearchTableGrid() {
     $('#tableitemsearch').append("<tbody>");
     for (var i = 0; i < tempsubItemsList.length; i++) {
         $('#tableitemsearch').append(
-            "<tr><td style='text-align:center;color:brown'><b>" + tempsubItemsList[i].SKU + "</b></td><td>" + tempsubItemsList[i].CODE + "</td><td style='color:blue'>" + tempsubItemsList[i].TITLE + "</td>" +
-            "<td>" + tempsubItemsList[i].JEWELLERY_NAME + "</td><td>" + tempsubItemsList[i].COLLECTIONS_NAME + "</td><td>" + tempsubItemsList[i].DESIGN_NAME + "</td>" +
+            "<tr><td style='text-align:center;color:brown'><b>" + tempsubItemsList[i].SKU + "</b></td><td style='color:blue'>" + tempsubItemsList[i].TITLE + "</td>" +
+            "<td>" + tempsubItemsList[i].JEWELLERY_NAME + "</td><td>" + tempsubItemsList[i].COLLECTIONS_NAME + "</td><td>" + tempsubItemsList[i].PCS + "</td><td>" + tempsubItemsList[i].WT + "</td>" +
             "<td style='text-align: center'><img src='../images/static/select.png' title='Select Record' class='selectButtonSubis handcursor' data-id='" + tempsubItemsList[i].ID + '_' + tempsubItemsList[i].GENID + "' id='btnselectSubIS_" + tempsubItemsList[i].GENID + "' value='Select' style='margin-right:5px;margin-left:5px'/> </td>" +
             "<td style='text-align: center'><img src='../images/static/imageview.png' title='Preview' class='previewButtonSubIS handcursor' data-id='" + tempsubItemsList[i].PHY_FILE_NAME + "' id='btnPreviewSubis' value='Preview' style='margin-right:5px;margin-left:5px'/> </td></tr>");
     }
@@ -787,6 +793,8 @@ function rebuildItemSearchTableGrid() {
                 objdetail.GENID = tempsubItemsList[i].GENID;
                 objdetail.QTY = 1;
                 objdetail.REMARKS = '';
+                objdetail.PCS = tempsubItemsList[i].PCS;
+                objdetail.WT = tempsubItemsList[i].WT;
                 subItemsList.push(objdetail);
                 break;
             }
@@ -809,7 +817,7 @@ function rebuildSubTableGrid() {
     $('#tablesub').append("<tbody>");
     for (var i = 0; i < subItemsList.length; i++) {
         $('#tablesub').append(
-            "<tr><td style='text-align:center;color:brown'><b>" + subItemsList[i].SKU + "</b></td><td>" + subItemsList[i].CODE + "</td><td style='color:blue'>" + subItemsList[i].TITLE + "</td>" +
+            "<tr><td style='text-align:center;color:brown'><b>" + subItemsList[i].SKU + "</b></td><td style='color:blue'>" + subItemsList[i].TITLE + "</td><td>" + subItemsList[i].PCS + "</td><td>" + subItemsList[i].WT.replace("Gr wt : ", "") + "</td>" +
             "<td><input type='number' id='txtqty_" + subItemsList[i].GENID + "' class='form-control subqty' value=" + subItemsList[i].QTY + " style='width:80px;text-align:center' /></td>" +
             "<td><input type='text' id='txtsubremarks_" + subItemsList[i].GENID + "' class='form-control subremarks' value='" + subItemsList[i].REMARKS + "' /></td>" +
             "<td style='text-align: center'><img src='../images/static/delete.png' title='Delete Record' class='deleteButtonSub handcursor' data-id='" + subItemsList[i].ID + '_' + subItemsList[i].GENID + "' id='btnDeleteSub_" + subItemsList[i].GENID + "' value='Delete' style='margin-right:5px;margin-left:5px'/> </td>" +
