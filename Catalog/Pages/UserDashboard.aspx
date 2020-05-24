@@ -29,7 +29,7 @@
     <script src="../scripts/popper.min.js"></script>
     <script src="../scripts/bootstrap-datepicker.min.js"></script>
     <script src="../scripts/jquery-ui.min.js"></script>
-    <script src="../scripts/app/userdashboard.js"></script>
+    <script src="../scripts/app/userdashboard.js?v=1"></script>
     <div id="loader"></div>
 
     <div class="col-lg-12" id="mainlistingdiv">
@@ -221,7 +221,8 @@
                             <th style="border: 1px solid black;">Code</th>
                             <th style="border: 1px solid black;">Title</th>
                             <th style="border: 1px solid black;">Qty</th>
-                            <th style="border: 1px solid black;">Remarks</th>
+                            <th style="border: 1px solid black;">Pcs</th>
+                            <th style="border: 1px solid black;">Weight</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -336,7 +337,8 @@
                             <th style="border: 1px solid black;">Title</th>
                             <th style="border: 1px solid black;">Qty</th>
                             <th style="border: 1px solid black;">Out No</th>
-                            <th style="border: 1px solid black;">Remarks</th>
+                            <th style="border: 1px solid black;">Pcs</th>
+                            <th style="border: 1px solid black;">Weight</th>  
                         </tr>
                     </thead>
                     <tbody>
@@ -441,7 +443,8 @@
                             <th style="border: 1px solid black;">Code</th>
                             <th style="border: 1px solid black;">Title</th>
                             <th style="border: 1px solid black;">Qty</th>                            
-                            <th style="border: 1px solid black;">Remarks</th>              
+                            <th style="border: 1px solid black;">Pcs</th>              
+                            <th style="border: 1px solid black;">Weight</th>              
                         </tr>
                     </thead>
                     <tbody>
@@ -548,7 +551,8 @@
                             <th style="border: 1px solid black;">Title</th>
                             <th style="border: 1px solid black;">Qty</th>                            
                             <th style="border: 1px solid black;">Bal Qty</th>                            
-                            <th style="border: 1px solid black;">Remarks</th>              
+                            <th style="border: 1px solid black;">Pcs</th>              
+                            <th style="border: 1px solid black;">Weight</th>
                         </tr>
                     </thead>
                     <tbody>

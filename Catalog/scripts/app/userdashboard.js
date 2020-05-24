@@ -239,7 +239,7 @@ $(function () {
                 $('#tablesubprnSTK').append("<tbody>");
                 for (var i = 0; i < data.d.length; i++) {
                     $('#tablesubprnSTK').append(
-                        "<tr><td style='border: 1px solid black;text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td style='border: 1px solid black;'>" + data.d[i].CODE + "</td><td style='border: 1px solid black;color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td><td style='border: 1px solid black;'>" + data.d[i].REMARKS + "</td></tr>");
+                        "<tr><td style='border: 1px solid black;text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td style='border: 1px solid black;'>" + data.d[i].CODE + "</td><td style='border: 1px solid black;color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td><td style='border: 1px solid black;text-align:center;color:blue'><b>" + data.d[i].PCS + "</b></td><td style='border: 1px solid black;text-align:center'>" + data.d[i].WT + "</td><</tr>");
                 }
                 $('#tablesubprnSTK').append("</tbody>");
                 $('#printdivSTK').show();
@@ -293,7 +293,7 @@ $(function () {
                 $('#tablesubprnIN').append("<tbody>");
                 for (var i = 0; i < data.d.length; i++) {
                     $('#tablesubprnIN').append(
-                        "<tr><td style='border: 1px solid black;text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td style='border: 1px solid black;'>" + data.d[i].CODE + "</td><td style='border: 1px solid black;color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td><td style='border: 1px solid black;text-align:center;color:blue'>" + data.d[i].OUT_TRANS_NO + "</td><td style='border: 1px solid black;'>" + data.d[i].REMARKS + "</td></tr>");
+                        "<tr><td style='border: 1px solid black;text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td style='border: 1px solid black;'>" + data.d[i].CODE + "</td><td style='border: 1px solid black;color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td><td style='border: 1px solid black;text-align:center;color:blue'>" + data.d[i].OUT_TRANS_NO + "</td><td style='border: 1px solid black;text-align:center;color:blue'><b>" + data.d[i].PCS + "</b></td><td style='border: 1px solid black;text-align:center'>" + data.d[i].WT + "</td></tr>");
                 }
                 $('#tablesubprnIN').append("</tbody>");
                 $('#printdivIN').show();
@@ -347,7 +347,7 @@ $(function () {
                 $('#tablesubprnOT').append("<tbody>");
                 for (var i = 0; i < data.d.length; i++) {
                     $('#tablesubprnOT').append(
-                        "<tr><td style='border: 1px solid black;text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td style='border: 1px solid black;'>" + data.d[i].CODE + "</td><td style='border: 1px solid black;color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td><td style='border: 1px solid black;'>" + data.d[i].REMARKS + "</td></tr>");
+                        "<tr><td style='border: 1px solid black;text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td style='border: 1px solid black;'>" + data.d[i].CODE + "</td><td style='border: 1px solid black;color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td><td style='border: 1px solid black;text-align:center;color:blue'><b>" + data.d[i].PCS + "</b></td><td style='border: 1px solid black;text-align:center'>" + data.d[i].WT + "</td></tr>");
                 }
                 $('#tablesubprnOT').append("</tbody>");
                 $('#printdivOT').show();
@@ -364,7 +364,6 @@ $(function () {
             }
         });
     });
-
 
     $(document).on("click", ".printButtonPendOT", function () {
 
@@ -400,7 +399,7 @@ $(function () {
                 $('#tablesubprnPendOT').append("<tbody>");
                 for (var i = 0; i < data.d.length; i++) {
                     $('#tablesubprnPendOT').append(
-                        "<tr><td style='border: 1px solid black;text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td style='border: 1px solid black;'>" + data.d[i].CODE + "</td><td style='border: 1px solid black;color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].BAL_QTY + "</b></td><td style='border: 1px solid black;'>" + data.d[i].REMARKS + "</td></tr>");
+                        "<tr><td style='border: 1px solid black;text-align:center;color:brown'><b>" + data.d[i].SKU + "</b></td><td style='border: 1px solid black;'>" + data.d[i].CODE + "</td><td style='border: 1px solid black;color:blue'>" + data.d[i].CATALOG_TITLE + "</td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].QTY + "</b></td><td style='border: 1px solid black;text-align:center;color:red'><b>" + data.d[i].BAL_QTY + "</b></td><td style='border: 1px solid black;text-align:center;color:blue'><b>" + data.d[i].PCS + "</b></td><td style='border: 1px solid black;text-align:center'>" + data.d[i].WT + "</td></tr>");
                 }
                 $('#tablesubprnPendOT').append("</tbody>");
                 $('#printdivPendOT').show();
@@ -417,7 +416,5 @@ $(function () {
             }
         });
     });
-
-
-
+    
 });

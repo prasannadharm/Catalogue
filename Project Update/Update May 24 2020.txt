@@ -1,0 +1,1605 @@
+Changes:
+a. Added PCS in Catalog.
+b. Added Pcs & Gr Wt Across application.
+c. Bug fixes.
+-----------
+
+Alter table tbl_MST_CATALOG add PCS INT NULL 
+
+update tbl_MST_CATALOG SET PCS=1
+
+--------------------------------------------------------------------
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_GetTrendingList]  
+as  
+begin  
+	SELECT CT.ID, TITLE as HEADING, 'Gr wt : ' + Cast(Cast(Round(GR_WT,3) as NUMERIC(18,3)) as nvarchar(100)) + ' gm, St wt : ' + Cast(Cast(Round(St_WT,3) as Numeric(18,3)) as nvarchar(100)) + ' gm, Nt wt : ' +  Cast(Cast(Round(NET_WT,3) as Numeric(18,3)) as nvarchar(100)) + ' gm.' as DESCRIPTION, CI.PHY_FILE_NAME
+	FROM tbl_MST_CATALOG CT 
+	INNER JOIN tbl_MST_CATALOG_IMAGES CI on CT.ID=CI.CATALOG_ID
+	WHERE CT.ACTIVE_STATUS=1 AND CT.SHOW_TRENDING=1 AND CI.IS_THUMBNAIL=1 
+	ORDER BY TITLE, SORT_ORDER
+end
+
+----------------------------------------------------
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_GetSearchList]  
+(
+	@SearchText nvarchar(200) null,
+	@SKU nvarchar(100) null,
+	@CODE nvarchar(100) null,
+	@JewelleryIDs nvarchar(max) null,
+	@DesignIDs nvarchar(max) null,
+	@CollectionsIDs nvarchar(max) null,
+	@MaterialIDs nvarchar(max) null,
+	@OccasionIDs nvarchar(max) null,
+	@GramSlabIDs nvarchar(max) null,
+	@KaratIDs nvarchar(max) null,
+	@ShowInStock bit
+)
+as  
+begin  
+	DECLARE @QUERY NVARCHAR(max),@QUERYFILTER NVARCHAR(max);
+
+	CREATE TABLE #tmpCatalog(IDD BIGINT IDENTITY(1,1), ID BIGINT NULL, HEADING NVARCHAR(max) NULL, DESCRIPTION NVARCHAR(max) NULL, PHY_FILE_NAME NVARCHAR(200))
+	CREATE TABLE #tmpJewellery (ID BIGINT NULL);
+	CREATE TABLE #tmpDesign (ID BIGINT NULL);
+	CREATE TABLE #tmpCollection (ID BIGINT NULL);
+	CREATE TABLE #tmpMaterial (ID BIGINT NULL);
+	CREATE TABLE #tmpOccasion (ID BIGINT NULL);
+	CREATE TABLE #tmpGramSlab (ID BIGINT NULL);
+	CREATE TABLE #tmpKarat (ID BIGINT NULL);
+	
+	IF (Ltrim(Rtrim(@JewelleryIDs)) != '')
+	BEGIN
+	INSERT INTO #tmpJewellery
+		Select Item FROM dbo.SplitString(@JewelleryIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@DesignIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpDesign
+		Select Item FROM dbo.SplitString(@DesignIDs, ',');
+	END 
+
+	IF (Ltrim(Rtrim(@CollectionsIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpCollection
+		Select Item FROM dbo.SplitString(@CollectionsIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@MaterialIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpMaterial
+		Select Item FROM dbo.SplitString(@MaterialIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@OccasionIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpOccasion
+		Select Item FROM dbo.SplitString(@OccasionIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@GramSlabIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpGramSlab
+		Select Item FROM dbo.SplitString(@GramSlabIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@KaratIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpKarat
+		Select Item FROM dbo.SplitString(@KaratIDs, ',');
+	END
+		
+	
+	SET @QUERY = 'SELECT CT.ID, TITLE as HEADING, CT.REMARKS as DESCRIPTION,' + 
+	'(Select CI.PHY_FILE_NAME FROM tbl_MST_CATALOG_IMAGES CI WHERE CT.ID=CI.CATALOG_ID AND CI.IS_THUMBNAIL=1) as PHY_FILE_NAME
+	FROM tbl_MST_CATALOG CT WHERE CT.ACTIVE_STATUS=1 AND SHOW_CATALOG=1 '
+	
+	IF (@ShowInStock = 1)
+	BEGIN
+		SET @QUERY = @QUERY + 'AND STK_QTY > 0 ' 
+	END
+
+	SET @QUERYFILTER = '';
+	
+	IF Exists(SELECT 1 FROM #tmpJewellery)
+	BEGIN
+		SET @QUERYFILTER = 'JEWELLERY_ID IN (SELECT ID FROM #tmpJewellery) ';
+	END
+
+	IF Exists(SELECT 1 FROM #tmpDesign)
+	BEGIN
+		IF (@QUERYFILTER = '')
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'DESIGN_ID IN (SELECT ID FROM #tmpDesign) ';
+		END
+		ELSE
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'AND DESIGN_ID IN (SELECT ID FROM #tmpDesign) ';
+		END
+	END
+
+	IF Exists(SELECT 1 FROM #tmpCollection)
+	BEGIN
+		IF (@QUERYFILTER = '')
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'COLLECTIONS_ID IN (SELECT ID FROM #tmpCollection) ';
+		END
+		ELSE
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'AND COLLECTIONS_ID IN (SELECT ID FROM #tmpCollection) ';
+		END
+	END
+
+	IF Exists(SELECT 1 FROM #tmpMaterial)
+	BEGIN
+		IF (@QUERYFILTER = '')
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'MATERIAL_ID IN (SELECT ID FROM #tmpMaterial) ';
+		END
+		ELSE
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'AND MATERIAL_ID IN (SELECT ID FROM #tmpMaterial) ';
+		END
+	END
+
+	IF Exists(SELECT 1 FROM #tmpOccasion)
+	BEGIN
+		IF (@QUERYFILTER = '')
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'OCCASION_ID IN (SELECT ID FROM #tmpOccasion) ';
+		END
+		ELSE
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'AND OCCASION_ID IN (SELECT ID FROM #tmpOccasion) ';
+		END
+	END
+
+	IF Exists(SELECT 1 FROM #tmpGramSlab)
+	BEGIN
+		IF (@QUERYFILTER = '')
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'GRAMSLAB_ID IN (SELECT ID FROM #tmpGramSlab) ';
+		END
+		ELSE
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'AND GRAMSLAB_ID IN (SELECT ID FROM #tmpGramSlab) ';
+		END
+	END
+
+	IF Exists(SELECT 1 FROM #tmpKarat)
+	BEGIN
+		IF (@QUERYFILTER = '')
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'KARAT_ID IN (SELECT ID FROM #tmpKarat) ';
+		END
+		ELSE
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'AND KARAT_ID IN (SELECT ID FROM #tmpKarat) ';
+		END
+	END
+
+	IF (Ltrim(Rtrim(@SearchText)) != '')
+	BEGIN
+		IF (@QUERYFILTER = '')
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + '(TITLE LIKE ''%'+ Ltrim(Rtrim(@SearchText)) +'%'' OR SKU LIKE ''%'+ Ltrim(Rtrim(@SearchText)) +'%'' OR CODE LIKE ''%'+ Ltrim(Rtrim(@SearchText)) +'%'') ';
+		END
+		ELSE
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'AND (TITLE LIKE ''%'+ Ltrim(Rtrim(@SearchText)) +'%'' OR SKU LIKE ''%'+ Ltrim(Rtrim(@SearchText)) +'%'' OR CODE LIKE ''%'+ Ltrim(Rtrim(@SearchText)) +'%'' )';
+		END
+	END
+
+	IF (Ltrim(Rtrim(@SKU)) != '')
+	BEGIN
+		IF (@QUERYFILTER = '')
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'SKU = '''+ Ltrim(Rtrim(@SKU)) +''' ';
+		END
+		ELSE
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'AND SKU = '''+ Ltrim(Rtrim(@SKU)) +''' ';
+		END
+	END
+
+	IF (Ltrim(Rtrim(@CODE)) != '')
+	BEGIN
+		IF (@QUERYFILTER = '')
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'CODE LIKE ''%'+ Ltrim(Rtrim(@CODE)) +'%'' ';
+		END
+		ELSE
+		BEGIN
+			SET @QUERYFILTER = @QUERYFILTER + 'AND CODE LIKE ''%'+ Ltrim(Rtrim(@CODE)) +'%'' ';
+		END
+	END
+
+	IF (@QUERYFILTER <> '')
+	BEGIN
+		SET @QUERY=@QUERY + 'AND ('  + @QUERYFILTER + ')';
+	END
+
+	PRINT @QUERY;
+
+	INSERT INTO #tmpCatalog(ID,HEADING,DESCRIPTION,PHY_FILE_NAME)
+	EXEC (@QUERY);
+
+	UPDATE T SET T.DESCRIPTION='Gr wt : ' + Cast(Cast(Round(GR_WT,3) as NUMERIC(18,3)) as nvarchar(100)) + ' gm, St wt : ' + Cast(Cast(Round(St_WT,3) as Numeric(18,3)) as nvarchar(100)) + ' gm, Nt wt : ' + Cast(Cast(Round(NET_WT,3) as Numeric(18,3)) as nvarchar(100)) + ' gm.'  from #tmpCatalog T INNER JOIN tbl_MST_CATALOG CT on CT.ID=T.ID
+
+
+	SELECT ID, HEADING, DESCRIPTION, PHY_FILE_NAME FROM #tmpCatalog ORDER BY HEADING
+	
+
+	DROP TABLE #tmpCatalog;
+	DROP TABLE #tmpJewellery;
+	DROP TABLE #tmpDesign;
+	DROP TABLE #tmpCollection;
+	DROP TABLE #tmpMaterial;
+	DROP TABLE #tmpOccasion;
+	DROP TABLE #tmpGramSlab;
+	DROP TABLE #tmpKarat;
+end
+
+--------------------------------------
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_GetCatalogDetailsbyID]  
+(
+	@ID as bigint
+)
+as  
+begin  
+	Create table #tmpdetails(
+	ID int identity(1,1),
+	NAME nvarchar(200),
+	VALUE nvarchar(MAX)
+	)
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Title', TITLE FROM tbl_MST_CATALOG WHERE ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'SKU', SKU FROM tbl_MST_CATALOG WHERE ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Code', CODE FROM tbl_MST_CATALOG WHERE ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Jewellery', ISNULL(NAME,'') FROM tbl_MST_CATALOG C 
+	INNER JOIN tbl_MST_JEWELLERY J ON  C.JEWELLERY_ID=J.ID WHERE C.ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Design', ISNULL(NAME,'') FROM tbl_MST_CATALOG C 
+	INNER JOIN tbl_MST_DESIGN D ON  C.DESIGN_ID=D.ID WHERE C.ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Collection', ISNULL(NAME,'') FROM tbl_MST_CATALOG C 
+	INNER JOIN tbl_MST_COLLECTIONS CC ON  C.COLLECTIONS_ID=CC.ID WHERE C.ID=@ID
+	
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Occasion', ISNULL(NAME,'') FROM tbl_MST_CATALOG C 
+	INNER JOIN tbl_MST_OCCASION O ON  C.OCCASION_ID=O.ID WHERE C.ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Gram Slab', ISNULL(NAME,'') FROM tbl_MST_CATALOG C 
+	INNER JOIN tbl_MST_GRAMSLAB G ON  C.GRAMSLAB_ID=G.ID WHERE C.ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Karat', ISNULL(NAME,'') FROM tbl_MST_CATALOG C 
+	INNER JOIN tbl_MST_KARAT K ON  C.KARAT_ID=K.ID WHERE C.ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Purity', ISNULL(PURITY,'') FROM tbl_MST_CATALOG C WHERE C.ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Gross WT', ISNULL(GR_WT,0) FROM tbl_MST_CATALOG C WHERE C.ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Stone WT', ISNULL(ST_WT,0) FROM tbl_MST_CATALOG C WHERE C.ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Diamond Carat', ISNULL(DIA_CARAT,0) FROM tbl_MST_CATALOG C WHERE C.ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Net WT', ISNULL(NET_WT,0) FROM tbl_MST_CATALOG C WHERE C.ID=@ID	
+	
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Stone Amt', ISNULL(ST_AMT, 0) FROM tbl_MST_CATALOG C WHERE C.ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'S(%)', ISNULL(S_PER,0) FROM tbl_MST_CATALOG C WHERE C.ID=@ID	
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'No of Pieces', ISNULL(PCS,1) FROM tbl_MST_CATALOG C WHERE C.ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'YM', ISNULL(convert(varchar, DATE_YM, 103),'') FROM tbl_MST_CATALOG C WHERE C.ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Vendor', ISNULL(LED_NAME, '') FROM tbl_MST_CATALOG C WHERE C.ID=@ID
+
+	INSERT INTO #tmpdetails (NAME,VALUE) SELECT 'Stock', ISNULL(STK_QTY,0) FROM tbl_MST_CATALOG C WHERE C.ID=@ID
+
+	SELECT NAME, VALUE FROM #tmpdetails ORDER BY ID
+
+	DROP TABLE #tmpdetails;
+
+end
+
+
+
+----------------------------------------------
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_GetCatalogMasterDetailsbyID]  
+(
+	@ID as bigint
+)
+as  
+begin  
+	SELECT C.ID, C.SKU, C.CODE, C.TITLE, C.STK_QTY, C.REMARKS, C.ACTIVE_STATUS, C.SHOW_CATALOG, C.SHOW_TRENDING,
+	C.JEWELLERY_ID, J.NAME as JEWELLERY_NAME, C.DESIGN_ID, D.NAME AS DESIGN_NAME, C.COLLECTIONS_ID, CL.NAME as COLLECTIONS_NAME, 
+	C.MATERIAL_ID, M.NAME as MATERIAL_NAME, C.OCCASION_ID, O.NAME as OCCASION_NAME, C.GRAMSLAB_ID, G.NAME as GRAMSLAB_NAME, C.KARAT_ID, K.NAME as KARAT_NAME, 
+	C.PURITY, C.RATE, C.GR_WT, C.ST_WT, C.NET_WT, C.VA_PER, C.VA_AMT, C.ST_AMT, C.TAXABLE_AMT, C.TAX_PER, C.TAX_AMT, C.NET_AMT,  
+	cast(Cast(Isnull(C.DATE_YM, GETDATE())as date) as nvarchar) AS DATE_YM, C.S_PER, C.LED_ID, C.LED_NAME, C.DIA_CARAT, C.PCS
+	FROM tbl_MST_CATALOG C
+	LEFT JOIN tbl_MST_JEWELLERY J on C.JEWELLERY_ID=J.ID
+	LEFT JOIN tbl_MST_DESIGN D on C.DESIGN_ID=D.ID
+	LEFT JOIN tbl_MST_COLLECTIONS CL on C.COLLECTIONS_ID=CL.ID
+	LEFT JOIN tbl_MST_MATERIAL M on C.MATERIAL_ID=M.ID
+	LEFT JOIN tbl_MST_OCCASION O on C.OCCASION_ID=O.ID
+	LEFT JOIN tbl_MST_GRAMSLAB G on C.GRAMSLAB_ID=G.ID
+	LEFT JOIN tbl_MST_KARAT K on C.KARAT_ID=K.ID
+	WHERE C.ID=@ID
+	ORDER BY C.SKU 
+end
+
+
+-----------------------------
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_InsertCatalogMaster]  
+( 	
+	@CODE as nvarchar(100), 
+	@TITLE as nvarchar(100), 
+	@REMARKS as nvarchar(100), 
+	@ACTIVE_STATUS as bit,
+	@SHOW_CATALOG as bit, 
+	@SHOW_TRENDING as bit, 
+	@JEWELLERY_ID as int, 
+	@DESIGN_ID as int, 
+	@COLLECTIONS_ID as int, 
+	@MATERIAL_ID as int, 
+	@OCCASION_ID as int, 
+	@GRAMSLAB_ID as int, 
+	@KARAT_ID as int, 
+	@PURITY as nvarchar(100), 
+	@RATE as money, 
+	@GR_WT as money, 
+	@ST_WT as money, 
+	@NET_WT as money, 
+	@VA_PER as money, 
+	@VA_AMT as money, 
+	@ST_AMT as money, 
+	@TAXABLE_AMT as money, 
+	@TAX_PER as money, 
+	@TAX_AMT as money, 
+	@NET_AMT as money, 	
+	@S_PER as money,
+	@DATE_YM as nvarchar(30),
+	@LED_NAME as nvarchar(100),
+	@DIA_CARAT as money,
+	@PCS as int,
+	@RESULT int OUT,
+	@CNT int OUT,
+	@MSG NVARCHAR(500) OUT  
+)
+as  
+begin  
+	BEGIN TRY
+		DECLARE  @SKU as BIGINT;
+		DECLARE @LED_ID as BIGINT;
+		SET @RESULT = 0;
+		SET @CNT =0;	
+		
+		SET @CODE = LTRIM(RTRIM(@CODE));
+		SET @TITLE = LTRIM(RTRIM(@TITLE));
+		SET @REMARKS = LTRIM(RTRIM(@REMARKS));
+		SET @LED_NAME=LTRIM(RTRIM(@LED_NAME));
+
+		IF (Len(@DATE_YM) = 10)
+		BEGIN
+			SET @DATE_YM = SUBSTRING(@DATE_YM, 7, 4) + '-' + SUBSTRING(@DATE_YM, 4, 2) + '-' + SUBSTRING(@DATE_YM, 1, 2);
+		END
+		
+		SELECT @LED_ID=ID FROM tbl_MST_LEDGER WHERE NAME=@LED_NAME;
+		IF (@LED_ID <=0)
+		BEGIN
+			SET @LED_ID = NULL;
+		END
+
+		IF (@JEWELLERY_ID <=0)
+		BEGIN
+			SET @JEWELLERY_ID = NULL;
+		END
+
+		IF (@DESIGN_ID <=0)
+		BEGIN
+			SET @DESIGN_ID = NULL;
+		END
+
+		IF (@COLLECTIONS_ID <=0)
+		BEGIN
+			SET @COLLECTIONS_ID = NULL;
+		END
+
+		IF (@MATERIAL_ID <=0)
+		BEGIN
+			SET @MATERIAL_ID = NULL;
+		END
+
+		IF (@OCCASION_ID <=0)
+		BEGIN
+			SET @OCCASION_ID = NULL;
+		END
+
+		IF (@GRAMSLAB_ID <=0)
+		BEGIN
+			SET @GRAMSLAB_ID = NULL;
+		END
+
+		IF (@KARAT_ID <=0)
+		BEGIN
+			SET @KARAT_ID = NULL;
+		END
+
+		SET @SKU = (SELECT ISNULL(SKU,1) FROM tbl_MST_SERIES);
+	
+		INSERT INTO tbl_MST_CATALOG (SKU, CODE, TITLE, REMARKS, ACTIVE_STATUS, SHOW_CATALOG, SHOW_TRENDING, JEWELLERY_ID, DESIGN_ID, COLLECTIONS_ID, MATERIAL_ID, OCCASION_ID, GRAMSLAB_ID, KARAT_ID, PURITY, RATE, GR_WT, ST_WT, NET_WT, VA_PER, VA_AMT, ST_AMT, TAXABLE_AMT, TAX_PER, TAX_AMT, NET_AMT, S_PER, DATE_YM, LED_ID, LED_NAME, DIA_CARAT, CREATED_ON, PCS) 
+		SELECT @SKU, @CODE, @TITLE, @REMARKS, @ACTIVE_STATUS, @SHOW_CATALOG, @SHOW_TRENDING, @JEWELLERY_ID, @DESIGN_ID, @COLLECTIONS_ID, @MATERIAL_ID, @OCCASION_ID, @GRAMSLAB_ID, @KARAT_ID, @PURITY, @RATE, @GR_WT, @ST_WT, @NET_WT, @VA_PER, @VA_AMT, @ST_AMT, @TAXABLE_AMT, @TAX_PER, @TAX_AMT, @NET_AMT, @S_PER, cast(@DATE_YM as date), @LED_ID, @LED_NAME, @DIA_CARAT, GETDATE(), @PCS
+		SET @CNT = @@ROWCOUNT;
+
+		Update tbl_MST_SERIES SET SKU=SKU+1;
+
+		SET @RESULT = 1;
+		SET @MSG = 'Data saved successfully with SKU=' + Cast(@SKU as nvarchar(100)) ;
+		
+	END TRY
+	BEGIN CATCH		
+		SET @MSG = ERROR_MESSAGE();
+		SET @RESULT = 0;
+	END CATCH
+end
+
+------------------------------
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_UpdateCatalogMaster]  
+( 	
+	@ID as BIGINT,
+	@CODE as nvarchar(100), 
+	@TITLE as nvarchar(100), 
+	@REMARKS as nvarchar(100), 
+	@ACTIVE_STATUS as bit, 
+	@SHOW_CATALOG as bit, 
+	@SHOW_TRENDING as bit, 
+	@JEWELLERY_ID as int, 
+	@DESIGN_ID as int, 
+	@COLLECTIONS_ID as int, 
+	@MATERIAL_ID as int, 
+	@OCCASION_ID as int, 
+	@GRAMSLAB_ID as int, 
+	@KARAT_ID as int, 
+	@PURITY as nvarchar(100), 
+	@RATE as money, 
+	@GR_WT as money, 
+	@ST_WT as money, 
+	@NET_WT as money, 
+	@VA_PER as money, 
+	@VA_AMT as money, 
+	@ST_AMT as money, 
+	@TAXABLE_AMT as money, 
+	@TAX_PER as money, 
+	@TAX_AMT as money, 
+	@NET_AMT as money, 
+	@S_PER as money,
+	@DATE_YM as nvarchar(30),
+	@LED_NAME as nvarchar(100),
+	@DIA_CARAT as money,
+	@PCS as int,
+	@RESULT int OUT,
+	@CNT int OUT,
+	@MSG NVARCHAR(500) OUT  
+)
+as  
+begin  
+	BEGIN TRY
+		DECLARE @LED_ID as BIGINT;
+		SET @RESULT = 0;
+		SET @CNT =0;		
+		
+		SET @CODE = LTRIM(RTRIM(@CODE));
+		SET @TITLE = LTRIM(RTRIM(@TITLE));
+		SET @REMARKS = LTRIM(RTRIM(@REMARKS));
+		SET @LED_NAME=LTRIM(RTRIM(@LED_NAME));
+
+		IF (Len(@DATE_YM) = 10)
+		BEGIN
+			SET @DATE_YM = SUBSTRING(@DATE_YM, 7, 4) + '-' + SUBSTRING(@DATE_YM, 4, 2) + '-' + SUBSTRING(@DATE_YM, 1, 2);
+		END
+		
+		SELECT @LED_ID=ID FROM tbl_MST_LEDGER WHERE NAME=@LED_NAME;
+		IF (@LED_ID <=0)
+		BEGIN
+			SET @LED_ID = NULL;
+		END
+
+		IF (@JEWELLERY_ID <=0)
+		BEGIN
+			SET @JEWELLERY_ID = NULL;
+		END
+
+		IF (@DESIGN_ID <=0)
+		BEGIN
+			SET @DESIGN_ID = NULL;
+		END
+
+		IF (@COLLECTIONS_ID <=0)
+		BEGIN
+			SET @COLLECTIONS_ID = NULL;
+		END
+
+		IF (@MATERIAL_ID <=0)
+		BEGIN
+			SET @MATERIAL_ID = NULL;
+		END
+
+		IF (@OCCASION_ID <=0)
+		BEGIN
+			SET @OCCASION_ID = NULL;
+		END
+
+		IF (@GRAMSLAB_ID <=0)
+		BEGIN
+			SET @GRAMSLAB_ID = NULL;
+		END
+
+		IF (@KARAT_ID <=0)
+		BEGIN
+			SET @KARAT_ID = NULL;
+		END		
+	
+		Update tbl_MST_CATALOG SET CODE=@CODE, TITLE=@TITLE, REMARKS=@REMARKS, ACTIVE_STATUS=@ACTIVE_STATUS, SHOW_CATALOG=@SHOW_CATALOG, 
+		SHOW_TRENDING=@SHOW_TRENDING, JEWELLERY_ID=@JEWELLERY_ID, DESIGN_ID=@DESIGN_ID, COLLECTIONS_ID=@COLLECTIONS_ID, MATERIAL_ID=@MATERIAL_ID, 
+		OCCASION_ID=@OCCASION_ID, GRAMSLAB_ID=@GRAMSLAB_ID, KARAT_ID=@KARAT_ID, PURITY=@PURITY, RATE=@RATE, GR_WT=@GR_WT, ST_WT=@ST_WT, NET_WT=@NET_WT, 
+		VA_PER=@VA_PER, VA_AMT=@VA_AMT, ST_AMT=@ST_AMT, TAXABLE_AMT=@TAXABLE_AMT, TAX_PER=@TAX_PER, TAX_AMT=@TAX_AMT, NET_AMT=@NET_AMT, PCS=@PCS,
+		S_PER=@S_PER, DATE_YM=cast(@DATE_YM as date), LED_ID=@LED_ID, LED_NAME=@LED_NAME, DIA_CARAT=@DIA_CARAT, MODIFIED_ON=GETDATE()  WHERE ID=@ID 
+		
+		SET @CNT = @@ROWCOUNT;		
+		
+		--Normalise Stock Entry
+		UPDATE STK SET STK.SKU=CT.SKU, STK.CODE=CT.CODE, STK.CATALOG_TITLE=CT.TITLE FROM tbl_MST_CATALOG CT 
+		INNER JOIN tbl_TRN_STOCK_SUB STK ON STK.CATALOG_ID=CT.ID WHERE CT.ID=@ID
+
+		--Normalise Outward Entry
+		UPDATE OTS SET OTS.SKU=CT.SKU, OTS.CODE=CT.CODE, OTS.CATALOG_TITLE=CT.TITLE FROM tbl_MST_CATALOG CT 
+		INNER JOIN tbl_TRN_OUTWARD_SUB OTS ON OTS.CATALOG_ID=CT.ID WHERE CT.ID=@ID
+
+		--Normalise Inward Entry
+		UPDATE ITS SET ITS.SKU=CT.SKU, ITS.CODE=CT.CODE, ITS.CATALOG_TITLE=CT.TITLE FROM tbl_MST_CATALOG CT 
+		INNER JOIN tbl_TRN_INWARD_SUB ITS ON ITS.CATALOG_ID=CT.ID WHERE CT.ID=@ID
+
+		SET @RESULT = 1;
+		SET @MSG = 'Data updated successfully.';
+		
+	END TRY
+	BEGIN CATCH		
+		SET @MSG = ERROR_MESSAGE();
+		SET @RESULT = 0;
+	END CATCH
+end
+
+------------------------------
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_GetOutwardEntryDetailsbyID]  
+(
+	@ID as bigint
+)
+as  
+begin  
+	SELECT TOM.ID as TRANS_MAIN_ID, cast(Cast(TOM.TRANS_DATE as date) as nvarchar) AS TRANS_DATE, TOM.TRANS_NO, TOM.REF_NO, 
+	TOM.LED_ID, TOM.LED_NAME, TOM.REMARKS as REMARKS_MAIN, MOT.ID as OUT_TYPE_ID, MOT.NAME as OUT_TYPE_NAME FROM 
+	tbl_TRN_OUTWARD_MAIN TOM LEFT OUTER JOIN tbl_MST_OUTWARD_TYPE MOT ON TOM.OUT_TYPE_ID=MOT.ID WHERE TOM.ID=@ID
+
+	SELECT TS.CATALOG_ID, TS.SKU, TS.CODE, TS.CATALOG_TITLE, TS.QTY, TS.REMARKS, TS.GENID, CI.ORG_FILE_NAME, CI.PHY_FILE_NAME, 
+	TS.BAL_QTY, ISNULL(CT.PCS, 1) as PCS, 'Gr wt : ' + Cast(Cast(Round(CT.GR_WT,3) as NUMERIC(18,3)) as nvarchar(100)) + ' gm.' as WT
+	FROM tbl_TRN_OUTWARD_SUB TS INNER JOIN tbl_MST_CATALOG CT on TS.CATALOG_ID=CT.ID
+	LEFT OUTER JOIN tbl_MST_CATALOG_IMAGES CI on CT.ID=CI.CATALOG_ID
+	WHERE CI.IS_THUMBNAIL=1 AND TS.TRANS_MAIN_ID=@ID
+end
+
+-------------------------------------------
+
+ALTER procedure [dbo].[USP_GetInwardEntryDetailsbyID]  
+(
+	@ID as bigint
+)
+as  
+begin  
+	SELECT TIM.ID as TRANS_MAIN_ID, cast(Cast(TIM.TRANS_DATE as date) as nvarchar) AS TRANS_DATE, TIM.TRANS_NO, TIM.REF_NO, 
+	TIM.LED_ID, TIM.LED_NAME, TIM.REMARKS as REMARKS_MAIN, MIT.ID as IN_TYPE_ID, MIT.NAME as IN_TYPE_NAME FROM 
+	tbl_TRN_INWARD_MAIN TIM LEFT OUTER JOIN tbl_MST_INWARD_TYPE MIT ON TIM.IN_TYPE_ID=MIT.ID WHERE TIM.ID=@ID
+
+	SELECT TS.CATALOG_ID, TS.SKU, TS.CODE, TS.CATALOG_TITLE, TS.QTY, TS.REMARKS, TS.GENID, CI.ORG_FILE_NAME, CI.PHY_FILE_NAME, 
+	TS.OUT_QTY, TS.OUT_BAL_QTY, TS.OUT_TRANS_MAIN_ID, TS.OUT_TRANS_NO, TS.OUT_GENID,
+	ISNULL(CT.PCS, 1) as PCS, 'Gr wt : ' + Cast(Cast(Round(CT.GR_WT,3) as NUMERIC(18,3)) as nvarchar(100)) + ' gm.' as WT
+	FROM tbl_TRN_INWARD_SUB TS INNER JOIN tbl_MST_CATALOG CT on TS.CATALOG_ID=CT.ID
+	LEFT OUTER JOIN tbl_MST_CATALOG_IMAGES CI on CT.ID=CI.CATALOG_ID
+	WHERE CI.IS_THUMBNAIL=1 AND TS.TRANS_MAIN_ID=@ID
+end
+
+------------------------------------------------------
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_GetStockEntryDetailsbyID]  
+(
+	@ID as bigint
+)
+as  
+begin  
+	SELECT ID as TRANS_MAIN_ID, cast(Cast(TRANS_DATE as date) as nvarchar) AS TRANS_DATE, TRANS_NO, REF_NO, 
+	LED_ID, LED_NAME, REMARKS as REMARKS_MAIN FROM tbl_TRN_STOCK_MAIN WHERE ID=@ID
+
+	SELECT TS.CATALOG_ID, TS.SKU, TS.CODE, TS.CATALOG_TITLE, TS.QTY, TS.REMARKS, TS.GENID, CI.ORG_FILE_NAME, CI.PHY_FILE_NAME,
+	ISNULL(CT.PCS, 1) as PCS, 'Gr wt : ' + Cast(Cast(Round(CT.GR_WT,3) as NUMERIC(18,3)) as nvarchar(100)) + ' gm.' as WT
+	FROM tbl_TRN_STOCK_SUB TS INNER JOIN tbl_MST_CATALOG CT on TS.CATALOG_ID=CT.ID
+	LEFT OUTER JOIN tbl_MST_CATALOG_IMAGES CI on CT.ID=CI.CATALOG_ID
+	WHERE CI.IS_THUMBNAIL=1 AND TS.TRANS_MAIN_ID=@ID
+end
+
+
+
+-------------------------------------
+
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_GetCatalogForSearchDetails]  
+(
+	@SearchBy nvarchar(100),
+	@Condition nvarchar(100),
+	@SearchItem nvarchar(100)
+)
+as  
+begin  
+	Declare	@Query nvarchar(max);
+	Set @SearchBy = Upper(Ltrim(Rtrim(@SearchBy)));
+	Set @Condition = Upper(Ltrim(Rtrim(@Condition)));
+	Set @SearchItem = Ltrim(Rtrim(@SearchItem));
+
+	SET @Query = 'SELECT C.ID, C.SKU, C.CODE, C.TITLE, J.NAME as JEWELLERY_NAME, D.NAME AS DESIGN_NAME, CL.NAME as COLLECTIONS_NAME, 				
+				CI.PHY_FILE_NAME, CI.ORG_FILE_NAME,
+				ISNULL(C.PCS, 1) as PCS, ''Gr wt : '' + Cast(Cast(Round(C.GR_WT,3) as NUMERIC(18,3)) as nvarchar(100)) + '' gm.'' as WT
+				FROM tbl_MST_CATALOG C
+				LEFT JOIN tbl_MST_JEWELLERY J on C.JEWELLERY_ID=J.ID 
+				LEFT JOIN tbl_MST_DESIGN D on C.DESIGN_ID=D.ID 
+				LEFT JOIN tbl_MST_COLLECTIONS CL on C.COLLECTIONS_ID=CL.ID	
+				LEFT JOIN tbl_MST_CATALOG_IMAGES CI ON C.ID=CI.CATALOG_ID
+				WHERE C.ACTIVE_STATUS=1 AND IS_THUMBNAIL=1 '				
+
+	IF (@SearchBy = 'SKU')
+	BEGIN
+		SET @Query = @Query + 'AND C.SKU ';
+	END
+	ELSE IF (@SearchBy = 'CODE')
+	BEGIN
+		SET @Query = @Query + 'AND C.CODE ';
+	END
+	ELSE IF (@SearchBy = 'TITLE')
+	BEGIN
+		SET @Query = @Query + 'AND C.TITLE ';
+	END
+
+	IF (@Condition = 'EQUALS')
+	BEGIN
+		SET @Query = @Query + '= ''' + @SearchItem + char(39);
+	END
+	ELSE IF (@Condition = 'CONTAINS')
+	BEGIN
+		SET @Query = @Query + 'LIKE ''%' + @SearchItem + '%' + char(39);
+	END
+
+	PRINT @Query;
+
+	EXEC (@Query);
+
+end
+
+
+------------------------------------
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_GetPendingOutwardEntries]  
+(
+	@LedName nvarchar(100)
+)
+as  
+begin  	
+	SELECT C.ID as CATALOG_ID, C.SKU, C.CODE, C.TITLE as CATALOG_TITLE, TM.ID as OUT_TRANS_MAIN_ID, TM.TRANS_NO as OUT_TRANS_NO, 
+	CONVERT(varchar, TM.TRANS_DATE, 103) as OUT_TRANS_DATE, TS.GENID AS OUT_GENID,
+	TS.QTY as OUT_QTY, TS.BAL_QTY as OUT_BAL_QTY, CI.PHY_FILE_NAME, CI.ORG_FILE_NAME,
+	ISNULL(C.PCS, 1) as PCS, 'Gr wt : ' + Cast(Cast(Round(C.GR_WT,3) as NUMERIC(18,3)) as nvarchar(100)) + ' gm.' as WT
+	FROM tbl_TRN_OUTWARD_MAIN TM 
+	INNER JOIN tbl_TRN_OUTWARD_SUB TS on TM.ID=TS.TRANS_MAIN_ID
+	INNER JOIN tbl_MST_CATALOG C ON C.ID= TS.CATALOG_ID
+	INNER JOIN tbl_MST_OUTWARD_TYPE OT ON TM.OUT_TYPE_ID=OT.ID
+	LEFT JOIN tbl_MST_CATALOG_IMAGES CI ON C.ID=CI.CATALOG_ID
+	WHERE TM.LED_NAME=@LedName AND C.ACTIVE_STATUS=1 AND IS_THUMBNAIL=1 AND OT.RETURNABLE=1 AND TS.BAl_QTY > 0  AND TM.VOID_STATUS=0
+	ORDER BY TM.TRANS_DATE, TM.TRANS_NO, TS.ID	
+end
+
+
+-----------------------------------
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_GetStockStatement]  
+(
+	@DateFrom nvarchar(30)='',
+	@DateTo nvarchar(30)='',
+	@JewelleryIDs nvarchar(max)='',
+	@DesignIDs nvarchar(max)='',
+	@CollectionsIDs nvarchar(max)='',
+	@MaterialIDs nvarchar(max)='',
+	@OccasionIDs nvarchar(max)='',
+	@GramSlabIDs nvarchar(max)='',
+	@KaratIDs nvarchar(max)='',
+	@SKU nvarchar(100)='',
+	@CODE nvarchar(100)='',
+	@Desc nvarchar(200)='',
+	@Type nvarchar(100)='CS',
+	@ShowInStockOnly bit=0
+)
+as  
+begin 
+	DECLARE @QUERY NVARCHAR(max),@QUERYFILTER NVARCHAR(max); 
+	CREATE TABLE #tmpJewellery (ID BIGINT NULL);
+	CREATE TABLE #tmpDesign (ID BIGINT NULL);
+	CREATE TABLE #tmpCollection (ID BIGINT NULL);
+	CREATE TABLE #tmpMaterial (ID BIGINT NULL);
+	CREATE TABLE #tmpOccasion (ID BIGINT NULL);
+	CREATE TABLE #tmpGramSlab (ID BIGINT NULL);
+	CREATE TABLE #tmpKarat (ID BIGINT NULL);
+	CREATE TABLE #tmpCatalog (ID bigint identity(1,1), CATALOG_ID bigint, SKU nvarchar(50), CODE nvarchar(50), CATALOG_TITLE nvarchar(100), 
+	CURR_STK_QTY money, OPENING_QTY money, STK_QTY money, IN_QTY money, OUT_QTY money, CLS_QTY money, PCS int, WT nvarchar(200));
+	
+
+	SET @DateFrom = Ltrim(Rtrim(@DateFrom));
+	SET @DateTo = Ltrim(Rtrim(@DateTo));
+	
+	IF (Len(@DateFrom) = 10)
+	BEGIN
+		SET @DateFrom = SUBSTRING(@DateFrom, 7, 4) + '-' + SUBSTRING(@DateFrom, 4, 2) + '-' + SUBSTRING(@DateFrom, 1, 2);
+	END
+	
+	IF (Len(@DateTo) = 10)
+	BEGIN
+		SET @DateTo = SUBSTRING(@DateTo, 7, 4) + '-' + SUBSTRING(@DateTo, 4, 2) + '-' + SUBSTRING(@DateTo, 1, 2);
+	END
+	
+	PRINT '@DateFrom'
+	PRINT @DateFrom
+	PRINT '@DateTo'
+	PRINT @DateTo
+
+	IF (Ltrim(Rtrim(@JewelleryIDs)) != '')
+	BEGIN
+	INSERT INTO #tmpJewellery
+		Select Item FROM dbo.SplitString(@JewelleryIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@DesignIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpDesign
+		Select Item FROM dbo.SplitString(@DesignIDs, ',');
+	END 
+
+	IF (Ltrim(Rtrim(@CollectionsIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpCollection
+		Select Item FROM dbo.SplitString(@CollectionsIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@MaterialIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpMaterial
+		Select Item FROM dbo.SplitString(@MaterialIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@OccasionIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpOccasion
+		Select Item FROM dbo.SplitString(@OccasionIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@GramSlabIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpGramSlab
+		Select Item FROM dbo.SplitString(@GramSlabIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@KaratIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpKarat
+		Select Item FROM dbo.SplitString(@KaratIDs, ',');
+	END
+		
+	SET @QUERY = 'SELECT C.ID as CATALOG_ID, C.SKU, C.CODE, C.TITLE, C.STK_QTY AS CURR_STK_QTY,
+		ISNULL(C.PCS, 1) as PCS, ''Gr wt : '' + Cast(Cast(Round(C.GR_WT,3) as NUMERIC(18,3)) as nvarchar(100)) + '' gm.'' as WT
+		FROM tbl_MST_CATALOG C WHERE ACTIVE_STATUS=1 '		
+
+	SET @QUERYFILTER = '';
+
+	
+	IF (Ltrim(Rtrim(@SKU)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.SKU LIKE ''%'+ Ltrim(Rtrim(@SKU)) +'%'' ';		
+	END
+
+	IF (Ltrim(Rtrim(@CODE)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.CODE LIKE ''%'+ Ltrim(Rtrim(@CODE)) +'%'' ';		
+	END	
+
+	IF (Ltrim(Rtrim(@Desc)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.TITLE LIKE ''%'+ Ltrim(Rtrim(@Desc)) +'%'' ';		
+	END	
+	
+	IF Exists(SELECT 1 FROM #tmpJewellery)
+	BEGIN
+		SET @QUERYFILTER = 'AND C.JEWELLERY_ID IN (SELECT ID FROM #tmpJewellery) ';
+	END
+
+	IF Exists(SELECT 1 FROM #tmpDesign)
+	BEGIN		
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.DESIGN_ID IN (SELECT ID FROM #tmpDesign) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpCollection)
+	BEGIN	
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.COLLECTIONS_ID IN (SELECT ID FROM #tmpCollection) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpMaterial)
+	BEGIN		
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.MATERIAL_ID IN (SELECT ID FROM #tmpMaterial) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpOccasion)
+	BEGIN		
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.OCCASION_ID IN (SELECT ID FROM #tmpOccasion) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpGramSlab)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.GRAMSLAB_ID IN (SELECT ID FROM #tmpGramSlab) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpKarat)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.KARAT_ID IN (SELECT ID FROM #tmpKarat) ';		
+	END
+	
+	IF (@QUERYFILTER <> '')
+	BEGIN
+		SET @QUERY=@QUERY + @QUERYFILTER;
+	END
+
+	SET @QUERY=@QUERY + ' ORDER BY C.SKU ';
+
+	PRINT @QUERY;
+	
+	INSERT INTO #tmpCatalog (CATALOG_ID,SKU,CODE,CATALOG_TITLE,CURR_STK_QTY,PCS,WT)	
+	EXEC (@QUERY);
+
+	UPDATE #tmpCatalog SET OPENING_QTY=0, STK_QTY=0, IN_QTY=0, OUT_QTY=0, CLS_QTY=0;
+
+	if (@Type='CS') 
+	BEGIN
+		IF (@ShowInStockOnly = 0)
+		BEGIN
+			SELECT * FROM #tmpCatalog ORDER BY ID
+		END
+		ELSE
+		BEGIN
+			SELECT * FROM #tmpCatalog WHERE CURR_STK_QTY>0 ORDER BY ID 
+		END
+	END
+	ELSE
+	BEGIN
+		--Updating Opening Qty From Stock Enrty
+		UPDATE T SET T.OPENING_QTY = (SELECT ISNULL(SUM(TTS.QTY),0) FROM tbl_TRN_STOCK_SUB TTS INNER JOIN tbl_TRN_STOCK_MAIN TTM on TTS.TRANS_MAIN_ID=TTM.ID 
+		WHERE TTS.CATALOG_ID=T.CATALOG_ID AND TTM.VOID_STATUS=0 AND CAST(TTM.TRANS_DATE as DATE) < CAST(@DateFrom as DATE)) 
+		FROM tbl_TRN_STOCK_SUB TS INNER JOIN #tmpCatalog T ON TS.CATALOG_ID=T.CATALOG_ID
+		INNER JOIN tbl_TRN_STOCK_MAIN TM on TS.TRANS_MAIN_ID=TM.ID WHERE TM.VOID_STATUS=0 AND CAST(TM.TRANS_DATE as DATE) < CAST(@DateFrom as DATE)
+
+		--Updating Opening Qty by Subtracting Outward Enrty
+		UPDATE T SET T.OPENING_QTY = Isnull(T.OPENING_QTY,0) - (SELECT ISNULL(SUM(TTS.QTY),0) FROM tbl_TRN_OUTWARD_SUB TTS INNER JOIN tbl_TRN_OUTWARD_MAIN TTM on TTS.TRANS_MAIN_ID=TTM.ID 
+		WHERE TTS.CATALOG_ID=T.CATALOG_ID AND TTM.VOID_STATUS=0 AND CAST(TTM.TRANS_DATE as DATE) < CAST(@DateFrom as DATE)) 
+		FROM tbl_TRN_OUTWARD_SUB TS INNER JOIN #tmpCatalog T ON TS.CATALOG_ID=T.CATALOG_ID
+		INNER JOIN tbl_TRN_OUTWARD_MAIN TM on TS.TRANS_MAIN_ID=TM.ID WHERE TM.VOID_STATUS=0 AND CAST(TM.TRANS_DATE as DATE) < CAST(@DateFrom as DATE)
+		
+		--Updating Opening Qty by Adding Inward Enrty
+		UPDATE T SET T.OPENING_QTY = Isnull(T.OPENING_QTY,0) + (SELECT ISNULL(SUM(TTS.QTY),0) FROM tbl_TRN_INWARD_SUB TTS INNER JOIN tbl_TRN_INWARD_MAIN TTM on TTS.TRANS_MAIN_ID=TTM.ID 
+		WHERE TTS.CATALOG_ID=T.CATALOG_ID AND TTM.VOID_STATUS=0 AND CAST(TTM.TRANS_DATE as DATE) < CAST(@DateFrom as DATE)) 
+		FROM tbl_TRN_INWARD_SUB TS INNER JOIN #tmpCatalog T ON TS.CATALOG_ID=T.CATALOG_ID
+		INNER JOIN tbl_TRN_INWARD_MAIN TM on TS.TRANS_MAIN_ID=TM.ID WHERE TM.VOID_STATUS=0 AND CAST(TM.TRANS_DATE as DATE) < CAST(@DateFrom as DATE)
+
+		--Updating Stock Entry Qty 
+		UPDATE T SET T.STK_QTY = (SELECT ISNULL(SUM(TTS.QTY),0) FROM tbl_TRN_STOCK_SUB TTS INNER JOIN tbl_TRN_STOCK_MAIN TTM on TTS.TRANS_MAIN_ID=TTM.ID 
+		WHERE TTS.CATALOG_ID=T.CATALOG_ID AND TTM.VOID_STATUS=0 AND CAST(TM.TRANS_DATE as DATE) >= CAST(@DateFrom as DATE) AND CAST(TM.TRANS_DATE as DATE) <= CAST(@DateTo as DATE)) 
+		FROM tbl_TRN_STOCK_SUB TS INNER JOIN #tmpCatalog T ON TS.CATALOG_ID=T.CATALOG_ID INNER JOIN tbl_TRN_STOCK_MAIN TM on TS.TRANS_MAIN_ID=TM.ID 
+		WHERE TM.VOID_STATUS=0 AND CAST(TM.TRANS_DATE as DATE) >= CAST(@DateFrom as DATE) AND CAST(TM.TRANS_DATE as DATE) <= CAST(@DateTo as DATE)
+		
+		--Updating Outward Entry Qty 
+		UPDATE T SET T.OUT_QTY = (SELECT ISNULL(SUM(TTS.QTY),0) FROM tbl_TRN_OUTWARD_SUB TTS INNER JOIN tbl_TRN_OUTWARD_MAIN TTM on TTS.TRANS_MAIN_ID=TTM.ID 
+		WHERE TTS.CATALOG_ID=T.CATALOG_ID AND TTM.VOID_STATUS=0 AND CAST(TM.TRANS_DATE as DATE) >= CAST(@DateFrom as DATE) AND CAST(TM.TRANS_DATE as DATE) <= CAST(@DateTo as DATE)) 
+		FROM tbl_TRN_OUTWARD_SUB TS INNER JOIN #tmpCatalog T ON TS.CATALOG_ID=T.CATALOG_ID INNER JOIN tbl_TRN_OUTWARD_MAIN TM on TS.TRANS_MAIN_ID=TM.ID
+		WHERE TM.VOID_STATUS=0 AND CAST(TM.TRANS_DATE as DATE) >= CAST(@DateFrom as DATE) AND CAST(TM.TRANS_DATE as DATE) <= CAST(@DateTo as DATE)
+		
+		--Updating Inward Entry Qty 
+		UPDATE T SET T.IN_QTY = (SELECT ISNULL(SUM(TTS.QTY),0) FROM tbl_TRN_INWARD_SUB TTS INNER JOIN tbl_TRN_INWARD_MAIN TTM on TTS.TRANS_MAIN_ID=TTM.ID 
+		WHERE TTS.CATALOG_ID=T.CATALOG_ID AND TTM.VOID_STATUS=0 AND CAST(TM.TRANS_DATE as DATE) >= CAST(@DateFrom as DATE) AND CAST(TM.TRANS_DATE as DATE) <= CAST(@DateTo as DATE)) 
+		FROM tbl_TRN_INWARD_SUB TS INNER JOIN #tmpCatalog T ON TS.CATALOG_ID=T.CATALOG_ID INNER JOIN tbl_TRN_INWARD_MAIN TM on TS.TRANS_MAIN_ID=TM.ID 
+		WHERE TM.VOID_STATUS=0 AND CAST(TM.TRANS_DATE as DATE) >= CAST(@DateFrom as DATE) AND CAST(TM.TRANS_DATE as DATE) <= CAST(@DateTo as DATE)
+		
+		UPDATE #tmpCatalog SET CLS_QTY = Isnull(OPENING_QTY,0)+Isnull(STK_QTY,0)+Isnull(IN_QTY,0)-Isnull(OUT_QTY,0);
+
+		IF (@ShowInStockOnly = 0)
+		BEGIN
+			SELECT * FROM #tmpCatalog ORDER BY ID
+		END
+		ELSE
+		BEGIN
+			SELECT * FROM #tmpCatalog WHERE CURR_STK_QTY>0 ORDER BY ID
+		END
+	END
+
+	DROP TABLE #tmpJewellery;
+	DROP TABLE #tmpDesign;
+	DROP TABLE #tmpCollection;
+	DROP TABLE #tmpMaterial;
+	DROP TABLE #tmpOccasion;
+	DROP TABLE #tmpGramSlab;
+	DROP TABLE #tmpKarat;
+	DROP TABLE #tmpCatalog
+end
+
+
+--------------------------------------
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_GetStockEntryRegister]  
+(
+	@DateFrom nvarchar(30),
+	@DateTo nvarchar(30),
+	@FromNo bigint,
+	@ToNo bigint,
+	@LedName nvarchar(200)='',
+	@JewelleryIDs nvarchar(max)='',
+	@DesignIDs nvarchar(max)='',
+	@CollectionsIDs nvarchar(max)='',
+	@MaterialIDs nvarchar(max)='',
+	@OccasionIDs nvarchar(max)='',
+	@GramSlabIDs nvarchar(max)='',
+	@KaratIDs nvarchar(max)='',
+	@SKU nvarchar(100)='',
+	@CODE nvarchar(100)='',
+	@Desc nvarchar(200)=''	
+)
+as  
+begin 
+	DECLARE @QUERY NVARCHAR(max),@QUERYFILTER NVARCHAR(max); 
+	CREATE TABLE #tmpJewellery (ID BIGINT NULL);
+	CREATE TABLE #tmpDesign (ID BIGINT NULL);
+	CREATE TABLE #tmpCollection (ID BIGINT NULL);
+	CREATE TABLE #tmpMaterial (ID BIGINT NULL);
+	CREATE TABLE #tmpOccasion (ID BIGINT NULL);
+	CREATE TABLE #tmpGramSlab (ID BIGINT NULL);
+	CREATE TABLE #tmpKarat (ID BIGINT NULL);
+
+	SET @DateFrom = Ltrim(Rtrim(@DateFrom));
+	SET @DateTo = Ltrim(Rtrim(@DateTo));
+	
+	IF (Len(@DateFrom) = 10)
+	BEGIN
+		SET @DateFrom = SUBSTRING(@DateFrom, 7, 4) + '-' + SUBSTRING(@DateFrom, 4, 2) + '-' + SUBSTRING(@DateFrom, 1, 2);
+	END
+	
+	IF (Len(@DateTo) = 10)
+	BEGIN
+		SET @DateTo = SUBSTRING(@DateTo, 7, 4) + '-' + SUBSTRING(@DateTo, 4, 2) + '-' + SUBSTRING(@DateTo, 1, 2);
+	END
+	
+	PRINT '@DateFrom'
+	PRINT @DateFrom
+	PRINT '@DateTo'
+	PRINT @DateTo
+
+	IF (Ltrim(Rtrim(@JewelleryIDs)) != '')
+	BEGIN
+	INSERT INTO #tmpJewellery
+		Select Item FROM dbo.SplitString(@JewelleryIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@DesignIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpDesign
+		Select Item FROM dbo.SplitString(@DesignIDs, ',');
+	END 
+
+	IF (Ltrim(Rtrim(@CollectionsIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpCollection
+		Select Item FROM dbo.SplitString(@CollectionsIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@MaterialIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpMaterial
+		Select Item FROM dbo.SplitString(@MaterialIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@OccasionIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpOccasion
+		Select Item FROM dbo.SplitString(@OccasionIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@GramSlabIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpGramSlab
+		Select Item FROM dbo.SplitString(@GramSlabIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@KaratIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpKarat
+		Select Item FROM dbo.SplitString(@KaratIDs, ',');
+	END
+
+	
+	SET @QUERY = 'SELECT TM.ID as TRANS_MAIN_ID, TM.TRANS_NO, convert(varchar, TM.TRANS_DATE, 5) TRANS_DATE,
+		TM.REF_NO,TM.LED_NAME,TM.REMARKS as REMARKS_M,TM.VOID_STATUS,TM.CREATEDBY,TM.MODIFIEDBY, 
+		TS.ID as TRANS_SUB_ID, TS.SKU, TS.CODE, TS.CATALOG_TITLE,TS.QTY,TS.REMARKS,
+		ISNULL(C.PCS, 1) as PCS, ''Gr wt : '' + Cast(Cast(Round(C.GR_WT,3) as NUMERIC(18,3)) as nvarchar(100)) + '' gm.'' as WT
+		FROM tbl_TRN_STOCK_MAIN TM 
+		INNER JOIN tbl_TRN_STOCK_SUB TS ON TM.ID=TS.TRANS_MAIN_ID
+		INNER JOIN tbl_MST_CATALOG C ON TS.CATALOG_ID=C.ID 
+		WHERE cast(TM.TRANS_DATE as  date) >= Cast(' + char(39) + @DateFrom + char(39) + 'as date) and cast(TM.TRANS_DATE as  date) <= Cast('+ char(39) + @DateTo + char(39) +' as date) '		
+
+	SET @QUERYFILTER = '';
+
+	IF (@FromNo is not null AND @FromNo > 0)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TM.TRANS_NO >= '+ cast(@FromNo as nvarchar) + ' ';
+	END
+
+	IF (@ToNo is not null AND @ToNo > 0)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TM.TRANS_NO <= '+ cast(@ToNo as nvarchar) + ' ';
+	END
+
+	IF (Ltrim(Rtrim(@LedName)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TM.LED_NAME LIKE ''%'+ Ltrim(Rtrim(@LedName)) +'%'' ';		
+	END
+
+	IF (Ltrim(Rtrim(@SKU)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TS.SKU LIKE ''%'+ Ltrim(Rtrim(@SKU)) +'%'' ';		
+	END
+
+	IF (Ltrim(Rtrim(@CODE)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TS.CODE LIKE ''%'+ Ltrim(Rtrim(@CODE)) +'%'' ';		
+	END	
+
+	IF (Ltrim(Rtrim(@Desc)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TS.CATALOG_TITLE LIKE ''%'+ Ltrim(Rtrim(@Desc)) +'%'' ';		
+	END
+	
+	IF Exists(SELECT 1 FROM #tmpJewellery)
+	BEGIN
+		SET @QUERYFILTER = 'AND C.JEWELLERY_ID IN (SELECT ID FROM #tmpJewellery) ';
+	END
+
+	IF Exists(SELECT 1 FROM #tmpDesign)
+	BEGIN		
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.DESIGN_ID IN (SELECT ID FROM #tmpDesign) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpCollection)
+	BEGIN	
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.COLLECTIONS_ID IN (SELECT ID FROM #tmpCollection) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpMaterial)
+	BEGIN		
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.MATERIAL_ID IN (SELECT ID FROM #tmpMaterial) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpOccasion)
+	BEGIN		
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.OCCASION_ID IN (SELECT ID FROM #tmpOccasion) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpGramSlab)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.GRAMSLAB_ID IN (SELECT ID FROM #tmpGramSlab) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpKarat)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.KARAT_ID IN (SELECT ID FROM #tmpKarat) ';		
+	END
+	
+	IF (@QUERYFILTER <> '')
+	BEGIN
+		SET @QUERY=@QUERY + @QUERYFILTER;
+	END
+
+	SET @QUERY=@QUERY + ' ORDER BY TM.TRANS_DATE, TM.TRANS_NO, TS.ID';
+
+	EXEC (@QUERY);
+
+	PRINT @QUERY;
+
+	DROP TABLE #tmpJewellery;
+	DROP TABLE #tmpDesign;
+	DROP TABLE #tmpCollection;
+	DROP TABLE #tmpMaterial;
+	DROP TABLE #tmpOccasion;
+	DROP TABLE #tmpGramSlab;
+	DROP TABLE #tmpKarat;
+end
+
+
+----------------------------------------
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_GetInwardRegister]  
+(
+	@DateFrom nvarchar(30),
+	@DateTo nvarchar(30),
+	@FromNo bigint,
+	@ToNo bigint,
+	@LedName nvarchar(200)='',
+	@JewelleryIDs nvarchar(max)='',
+	@DesignIDs nvarchar(max)='',
+	@CollectionsIDs nvarchar(max)='',
+	@MaterialIDs nvarchar(max)='',
+	@OccasionIDs nvarchar(max)='',
+	@GramSlabIDs nvarchar(max)='',
+	@KaratIDs nvarchar(max)='',
+	@SKU nvarchar(100)='',
+	@CODE nvarchar(100)='',
+	@Desc nvarchar(200)='',
+	@IN_TYPE_ID bigint	
+)
+as  
+begin 
+	DECLARE @QUERY NVARCHAR(max),@QUERYFILTER NVARCHAR(max); 
+	CREATE TABLE #tmpJewellery (ID BIGINT NULL);
+	CREATE TABLE #tmpDesign (ID BIGINT NULL);
+	CREATE TABLE #tmpCollection (ID BIGINT NULL);
+	CREATE TABLE #tmpMaterial (ID BIGINT NULL);
+	CREATE TABLE #tmpOccasion (ID BIGINT NULL);
+	CREATE TABLE #tmpGramSlab (ID BIGINT NULL);
+	CREATE TABLE #tmpKarat (ID BIGINT NULL);
+
+	SET @DateFrom = Ltrim(Rtrim(@DateFrom));
+	SET @DateTo = Ltrim(Rtrim(@DateTo));
+	
+	IF (Len(@DateFrom) = 10)
+	BEGIN
+		SET @DateFrom = SUBSTRING(@DateFrom, 7, 4) + '-' + SUBSTRING(@DateFrom, 4, 2) + '-' + SUBSTRING(@DateFrom, 1, 2);
+	END
+	
+	IF (Len(@DateTo) = 10)
+	BEGIN
+		SET @DateTo = SUBSTRING(@DateTo, 7, 4) + '-' + SUBSTRING(@DateTo, 4, 2) + '-' + SUBSTRING(@DateTo, 1, 2);
+	END
+	
+	PRINT '@DateFrom'
+	PRINT @DateFrom
+	PRINT '@DateTo'
+	PRINT @DateTo
+
+	IF (Ltrim(Rtrim(@JewelleryIDs)) != '')
+	BEGIN
+	INSERT INTO #tmpJewellery
+		Select Item FROM dbo.SplitString(@JewelleryIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@DesignIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpDesign
+		Select Item FROM dbo.SplitString(@DesignIDs, ',');
+	END 
+
+	IF (Ltrim(Rtrim(@CollectionsIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpCollection
+		Select Item FROM dbo.SplitString(@CollectionsIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@MaterialIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpMaterial
+		Select Item FROM dbo.SplitString(@MaterialIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@OccasionIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpOccasion
+		Select Item FROM dbo.SplitString(@OccasionIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@GramSlabIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpGramSlab
+		Select Item FROM dbo.SplitString(@GramSlabIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@KaratIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpKarat
+		Select Item FROM dbo.SplitString(@KaratIDs, ',');
+	END
+
+	
+	SET @QUERY = 'SELECT TM.ID as TRANS_MAIN_ID, TM.TRANS_NO, convert(varchar, TM.TRANS_DATE, 5) TRANS_DATE,
+		TM.REF_NO,TM.LED_NAME,TM.REMARKS as REMARKS_M,TM.VOID_STATUS,TM.CREATEDBY,TM.MODIFIEDBY,TM.IN_TYPE_NAME, 
+		TS.ID as TRANS_SUB_ID, TS.SKU, TS.CODE, TS.CATALOG_TITLE,TS.QTY,TS.REMARKS, TS.OUT_TRANS_NO, 
+		ISNULL(C.PCS, 1) as PCS, ''Gr wt : '' + Cast(Cast(Round(C.GR_WT,3) as NUMERIC(18,3)) as nvarchar(100)) + '' gm.'' as WT
+		FROM tbl_TRN_INWARD_MAIN TM 
+		INNER JOIN tbl_TRN_INWARD_SUB TS ON TM.ID=TS.TRANS_MAIN_ID
+		INNER JOIN tbl_MST_CATALOG C ON TS.CATALOG_ID=C.ID 
+		WHERE cast(TM.TRANS_DATE as  date) >= Cast(' + char(39) + @DateFrom + char(39) + 'as date) and cast(TM.TRANS_DATE as  date) <= Cast('+ char(39) + @DateTo + char(39) +' as date) '		
+
+	SET @QUERYFILTER = '';
+
+	IF (@FromNo is not null AND @FromNo > 0)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TM.TRANS_NO >= '+ cast(@FromNo as nvarchar) + ' ';
+	END
+
+	IF (@ToNo is not null AND @ToNo > 0)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TM.TRANS_NO <= '+ cast(@ToNo as nvarchar) + ' ';
+	END
+
+	IF (Ltrim(Rtrim(@LedName)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TM.LED_NAME LIKE ''%'+ Ltrim(Rtrim(@LedName)) +'%'' ';		
+	END
+
+	IF(@IN_TYPE_ID is not null and @IN_TYPE_ID >0)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TM.IN_TYPE_ID='+ cast(@IN_TYPE_ID as varchar) +' ';		
+	END
+
+	IF (Ltrim(Rtrim(@SKU)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TS.SKU LIKE ''%'+ Ltrim(Rtrim(@SKU)) +'%'' ';		
+	END
+
+	IF (Ltrim(Rtrim(@CODE)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TS.CODE LIKE ''%'+ Ltrim(Rtrim(@CODE)) +'%'' ';		
+	END	
+
+	IF (Ltrim(Rtrim(@Desc)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TS.CATALOG_TITLE LIKE ''%'+ Ltrim(Rtrim(@Desc)) +'%'' ';		
+	END	
+	
+	IF Exists(SELECT 1 FROM #tmpJewellery)
+	BEGIN
+		SET @QUERYFILTER = 'AND C.JEWELLERY_ID IN (SELECT ID FROM #tmpJewellery) ';
+	END
+
+	IF Exists(SELECT 1 FROM #tmpDesign)
+	BEGIN		
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.DESIGN_ID IN (SELECT ID FROM #tmpDesign) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpCollection)
+	BEGIN	
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.COLLECTIONS_ID IN (SELECT ID FROM #tmpCollection) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpMaterial)
+	BEGIN		
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.MATERIAL_ID IN (SELECT ID FROM #tmpMaterial) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpOccasion)
+	BEGIN		
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.OCCASION_ID IN (SELECT ID FROM #tmpOccasion) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpGramSlab)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.GRAMSLAB_ID IN (SELECT ID FROM #tmpGramSlab) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpKarat)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.KARAT_ID IN (SELECT ID FROM #tmpKarat) ';		
+	END
+	
+	IF (@QUERYFILTER <> '')
+	BEGIN
+		SET @QUERY=@QUERY + @QUERYFILTER;
+	END
+
+	SET @QUERY=@QUERY + ' ORDER BY TM.TRANS_DATE, TM.TRANS_NO, TS.ID';
+
+	EXEC (@QUERY);
+
+	PRINT @QUERY;
+
+	DROP TABLE #tmpJewellery;
+	DROP TABLE #tmpDesign;
+	DROP TABLE #tmpCollection;
+	DROP TABLE #tmpMaterial;
+	DROP TABLE #tmpOccasion;
+	DROP TABLE #tmpGramSlab;
+	DROP TABLE #tmpKarat;
+end
+
+
+----------------------------------
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[USP_GetOutwardRegister]  
+(
+	@DateFrom nvarchar(30),
+	@DateTo nvarchar(30),
+	@FromNo bigint,
+	@ToNo bigint,
+	@LedName nvarchar(200)='',
+	@JewelleryIDs nvarchar(max)='',
+	@DesignIDs nvarchar(max)='',
+	@CollectionsIDs nvarchar(max)='',
+	@MaterialIDs nvarchar(max)='',
+	@OccasionIDs nvarchar(max)='',
+	@GramSlabIDs nvarchar(max)='',
+	@KaratIDs nvarchar(max)='',
+	@SKU nvarchar(100)='',
+	@CODE nvarchar(100)='',
+	@Desc nvarchar(200)='',
+	@OUT_TYPE_ID bigint,
+	@ShowPendingOnly bit=0
+)
+as  
+begin 
+	DECLARE @QUERY NVARCHAR(max),@QUERYFILTER NVARCHAR(max); 
+	CREATE TABLE #tmpJewellery (ID BIGINT NULL);
+	CREATE TABLE #tmpDesign (ID BIGINT NULL);
+	CREATE TABLE #tmpCollection (ID BIGINT NULL);
+	CREATE TABLE #tmpMaterial (ID BIGINT NULL);
+	CREATE TABLE #tmpOccasion (ID BIGINT NULL);
+	CREATE TABLE #tmpGramSlab (ID BIGINT NULL);
+	CREATE TABLE #tmpKarat (ID BIGINT NULL);
+
+	SET @DateFrom = Ltrim(Rtrim(@DateFrom));
+	SET @DateTo = Ltrim(Rtrim(@DateTo));
+	
+	IF (Len(@DateFrom) = 10)
+	BEGIN
+		SET @DateFrom = SUBSTRING(@DateFrom, 7, 4) + '-' + SUBSTRING(@DateFrom, 4, 2) + '-' + SUBSTRING(@DateFrom, 1, 2);
+	END
+	
+	IF (Len(@DateTo) = 10)
+	BEGIN
+		SET @DateTo = SUBSTRING(@DateTo, 7, 4) + '-' + SUBSTRING(@DateTo, 4, 2) + '-' + SUBSTRING(@DateTo, 1, 2);
+	END
+	
+	PRINT '@DateFrom'
+	PRINT @DateFrom
+	PRINT '@DateTo'
+	PRINT @DateTo
+
+	IF (Ltrim(Rtrim(@JewelleryIDs)) != '')
+	BEGIN
+	INSERT INTO #tmpJewellery
+		Select Item FROM dbo.SplitString(@JewelleryIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@DesignIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpDesign
+		Select Item FROM dbo.SplitString(@DesignIDs, ',');
+	END 
+
+	IF (Ltrim(Rtrim(@CollectionsIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpCollection
+		Select Item FROM dbo.SplitString(@CollectionsIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@MaterialIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpMaterial
+		Select Item FROM dbo.SplitString(@MaterialIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@OccasionIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpOccasion
+		Select Item FROM dbo.SplitString(@OccasionIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@GramSlabIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpGramSlab
+		Select Item FROM dbo.SplitString(@GramSlabIDs, ',');
+	END
+
+	IF (Ltrim(Rtrim(@KaratIDs)) != '')
+	BEGIN
+		INSERT INTO #tmpKarat
+		Select Item FROM dbo.SplitString(@KaratIDs, ',');
+	END
+
+	
+	SET @QUERY = 'SELECT TM.ID as TRANS_MAIN_ID, TM.TRANS_NO, convert(varchar, TM.TRANS_DATE, 5) TRANS_DATE,
+		TM.REF_NO,TM.LED_NAME,TM.REMARKS as REMARKS_M,TM.VOID_STATUS,TM.CREATEDBY,TM.MODIFIEDBY,TM.OUT_TYPE_NAME, 
+		TS.ID as TRANS_SUB_ID, TS.SKU, TS.CODE, TS.CATALOG_TITLE,TS.QTY,TS.REMARKS,TS.BAL_QTY, OT.RETURNABLE,
+		ISNULL(C.PCS, 1) as PCS, ''Gr wt : '' + Cast(Cast(Round(C.GR_WT,3) as NUMERIC(18,3)) as nvarchar(100)) + '' gm.'' as WT
+		FROM tbl_TRN_OUTWARD_MAIN TM 
+		INNER JOIN tbl_TRN_OUTWARD_SUB TS ON TM.ID=TS.TRANS_MAIN_ID
+		INNER JOIN tbl_MST_CATALOG C ON TS.CATALOG_ID=C.ID 
+		INNER JOIN tbl_MST_OUTWARD_TYPE OT ON TM.OUT_TYPE_ID=OT.ID
+		WHERE cast(TM.TRANS_DATE as  date) >= Cast(' + char(39) + @DateFrom + char(39) + 'as date) and cast(TM.TRANS_DATE as  date) <= Cast('+ char(39) + @DateTo + char(39) +' as date) '		
+
+	SET @QUERYFILTER = '';
+
+	IF (@ShowPendingOnly = 1)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND OT.RETURNABLE=1 AND TS.BAL_QTY > 0 ';
+	END
+
+	IF (@FromNo is not null AND @FromNo > 0)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TM.TRANS_NO >= '+ cast(@FromNo as nvarchar) + ' ';
+	END
+
+	IF (@ToNo is not null AND @ToNo > 0)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TM.TRANS_NO <= '+ cast(@ToNo as nvarchar) + ' ';
+	END
+
+	IF (Ltrim(Rtrim(@LedName)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TM.LED_NAME LIKE ''%'+ Ltrim(Rtrim(@LedName)) +'%'' ';		
+	END
+
+	IF(@OUT_TYPE_ID is not null and @OUT_TYPE_ID >0)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TM.OUT_TYPE_ID='+ cast(@OUT_TYPE_ID as varchar) +' ';		
+	END
+
+	IF (Ltrim(Rtrim(@SKU)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TS.SKU LIKE ''%'+ Ltrim(Rtrim(@SKU)) +'%'' ';		
+	END
+
+	IF (Ltrim(Rtrim(@CODE)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TS.CODE LIKE ''%'+ Ltrim(Rtrim(@CODE)) +'%'' ';		
+	END	
+
+	IF (Ltrim(Rtrim(@Desc)) != '')
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND TS.CATALOG_TITLE LIKE ''%'+ Ltrim(Rtrim(@Desc)) +'%'' ';		
+	END	
+	
+	IF Exists(SELECT 1 FROM #tmpJewellery)
+	BEGIN
+		SET @QUERYFILTER = 'AND C.JEWELLERY_ID IN (SELECT ID FROM #tmpJewellery) ';
+	END
+
+	IF Exists(SELECT 1 FROM #tmpDesign)
+	BEGIN		
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.DESIGN_ID IN (SELECT ID FROM #tmpDesign) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpCollection)
+	BEGIN	
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.COLLECTIONS_ID IN (SELECT ID FROM #tmpCollection) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpMaterial)
+	BEGIN		
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.MATERIAL_ID IN (SELECT ID FROM #tmpMaterial) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpOccasion)
+	BEGIN		
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.OCCASION_ID IN (SELECT ID FROM #tmpOccasion) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpGramSlab)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.GRAMSLAB_ID IN (SELECT ID FROM #tmpGramSlab) ';		
+	END
+
+	IF Exists(SELECT 1 FROM #tmpKarat)
+	BEGIN
+		SET @QUERYFILTER = @QUERYFILTER + 'AND C.KARAT_ID IN (SELECT ID FROM #tmpKarat) ';		
+	END
+	
+	IF (@QUERYFILTER <> '')
+	BEGIN
+		SET @QUERY=@QUERY + @QUERYFILTER;
+	END
+
+	SET @QUERY=@QUERY + ' ORDER BY TM.TRANS_DATE, TM.TRANS_NO, TS.ID';
+
+	EXEC (@QUERY);
+
+	PRINT @QUERY;
+
+	DROP TABLE #tmpJewellery;
+	DROP TABLE #tmpDesign;
+	DROP TABLE #tmpCollection;
+	DROP TABLE #tmpMaterial;
+	DROP TABLE #tmpOccasion;
+	DROP TABLE #tmpGramSlab;
+	DROP TABLE #tmpKarat;
+end
+
+
+---------------------------------
+
+
+
