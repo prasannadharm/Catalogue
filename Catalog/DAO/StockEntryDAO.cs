@@ -377,6 +377,8 @@ namespace Catalog.DAO
                         obj1.CATALOG_TITLE = ds.Tables[0].Rows[i]["CATALOG_TITLE"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["CATALOG_TITLE"].ToString();
                         obj1.QTY = ds.Tables[0].Rows[i]["QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["QTY"]);
                         obj1.REMARKS = ds.Tables[0].Rows[i]["REMARKS"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["REMARKS"].ToString();
+                        obj1.PCS = ds.Tables[0].Rows[i]["PCS"] == DBNull.Value ? 0 : Convert.ToInt32(ds.Tables[0].Rows[i]["PCS"]);
+                        obj1.WT = ds.Tables[0].Rows[i]["WT"] == DBNull.Value ? "" : ds.Tables[0].Rows[i]["WT"].ToString();
                         retlst.Add(obj1);
                     }
                 }
