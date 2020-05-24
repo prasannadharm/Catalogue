@@ -394,11 +394,11 @@ function generatereport() {
                     shtml = shtml + "<table class='table table-striped table-bordered' style='width: 100%;border-collapse: collapse;'>";
                     shtml = shtml + "<thead>";
                     if (data.d[i].RETURNABLE == true) {
-                        shtml = shtml + "<tr><th style='border: 1px solid black;'>SKU</th><th style='border: 1px solid black;'>Code</th><th style='border: 1px solid black;'>Title Desc.</th><th style='border: 1px solid black;'>Qty</th><th style='border: 1px solid black;'>Pend. Qty</th><th style='border: 1px solid black;'>Remarks</th></tr>";
+                        shtml = shtml + "<tr><th style='border: 1px solid black;'>SKU</th><th style='border: 1px solid black;'>Code</th><th style='border: 1px solid black;'>Title Desc.</th><th style='border: 1px solid black;'>Qty</th><th style='border: 1px solid black;'>Pend. Qty</th><th style='border: 1px solid black;'>Pcs</th><th style='border: 1px solid black;'>Gr Wt.</th><th style='border: 1px solid black;'>Remarks</th></tr>";
                     }
                     else
                     {
-                        shtml = shtml + "<tr><th style='border: 1px solid black;'>SKU</th><th style='border: 1px solid black;'>Code</th><th style='border: 1px solid black;'>Title Desc.</th><th style='border: 1px solid black;'>Qty</th><th style='border: 1px solid black;'>Remarks</th></tr>";
+                        shtml = shtml + "<tr><th style='border: 1px solid black;'>SKU</th><th style='border: 1px solid black;'>Code</th><th style='border: 1px solid black;'>Title Desc.</th><th style='border: 1px solid black;'>Qty</th><th style='border: 1px solid black;'>Pcs</th><th style='border: 1px solid black;'>Gr Wt.</th><th style='border: 1px solid black;'>Remarks</th></tr>";
                     }
                     shtml = shtml + "</thead>";
                     shtml = shtml + "<tbody>";
@@ -410,6 +410,8 @@ function generatereport() {
                 if (data.d[i].RETURNABLE == true) {
                     shtml = shtml + "<td style='text-align:center;color:red;border: 1px solid black;'><b>" + data.d[i].BAL_QTY + "</b></td>";
                 }
+                shtml = shtml + "<td style='text-align:center;border: 1px solid black;'>" + data.d[i].PCS + "</td>";
+                shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].WT.replace("Gr wt : ", "") + "</td>";
                 shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].REMARKS + "</td></tr>";
             }
             shtml = shtml + "</tboby></table></td></tr>"; //For Sub Table

@@ -45,5 +45,7 @@ namespace Catalog.Models
         public double QTY { get; set; }
         public Int64 OUT_TRANS_NO { get; set; }
         public string REMARKS { get; set; }
+        public int PCS { get; set; }
+        public string WT { get; set; }
     }
 }

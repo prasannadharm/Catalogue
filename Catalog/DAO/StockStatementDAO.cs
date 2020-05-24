@@ -54,7 +54,7 @@ namespace Catalog.DAO
                         obj1.IN_QTY = ds.Tables[0].Rows[i]["IN_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["IN_QTY"]);
                         obj1.OUT_QTY = ds.Tables[0].Rows[i]["OUT_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["OUT_QTY"]);
                         obj1.CLS_QTY = ds.Tables[0].Rows[i]["CLS_QTY"] == DBNull.Value ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["CLS_QTY"]);
-                        obj1.PCS = ds.Tables[0].Rows[i]["PCS"] == DBNull.Value ? 0 : Convert.ToInt32(ds.Tables[0].Rows[i]["PCS"]);
+                        obj1.PCS = ds.Tables[0].Rows[i]["PCS"] == DBNull.Value ? 1 : Convert.ToInt32(ds.Tables[0].Rows[i]["PCS"]);
                         obj1.WT = ds.Tables[0].Rows[i]["WT"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[i]["WT"]);
                         retlst.Add(obj1);
                     }

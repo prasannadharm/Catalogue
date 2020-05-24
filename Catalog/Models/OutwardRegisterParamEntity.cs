@@ -47,5 +47,7 @@ namespace Catalog.Models
         public double QTY { get; set; }
         public double BAL_QTY { get; set; }
         public string REMARKS { get; set; }
+        public int PCS { get; set; }
+        public string WT { get; set; }
     }
 }

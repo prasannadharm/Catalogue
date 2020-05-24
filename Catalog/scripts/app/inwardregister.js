@@ -384,7 +384,7 @@ function generatereport() {
                     shtml = shtml + "<tr><td colspan='3'>";
                     shtml = shtml + "<table class='table table-striped table-bordered' style='width: 100%;border-collapse: collapse;'>";
                     shtml = shtml + "<thead>";
-                    shtml = shtml + "<tr><th style='border: 1px solid black;'>SKU</th><th style='border: 1px solid black;'>Code</th><th style='border: 1px solid black;'>Title Desc.</th><th style='border: 1px solid black;'>Qty</th><th style='border: 1px solid black;'>Out No</th><th style='border: 1px solid black;'>Remarks</th></tr>";
+                    shtml = shtml + "<tr><th style='border: 1px solid black;'>SKU</th><th style='border: 1px solid black;'>Code</th><th style='border: 1px solid black;'>Title Desc.</th><th style='border: 1px solid black;'>Qty</th><th style='border: 1px solid black;'>Pcs</th><th style='border: 1px solid black;'>Gr Wt.</th><th style='border: 1px solid black;'>Out No</th><th style='border: 1px solid black;'>Remarks</th></tr>";
                     shtml = shtml + "</thead>";
                     shtml = shtml + "<tbody>";
                 }
@@ -392,6 +392,8 @@ function generatereport() {
                 shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].CODE + "</td>";
                 shtml = shtml + "<td style='border: 1px solid black;'><b>" + data.d[i].CATALOG_TITLE + "</b></td>";
                 shtml = shtml + "<td style='text-align:center;color:blue;border: 1px solid black;'><b>" + data.d[i].QTY + "</b></td>";
+                shtml = shtml + "<td style='text-align:center;border: 1px solid black;'>" + data.d[i].PCS + "</td>";
+                shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].WT.replace("Gr wt : ", "") + "</td>";
                 shtml = shtml + "<td style='text-align:center;color:red;border: 1px solid black;'><b>" + data.d[i].OUT_TRANS_NO + "</b></td>";
                 shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].REMARKS + "</td></tr>";
             }
