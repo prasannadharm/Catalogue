@@ -268,11 +268,11 @@ function generatereport() {
             $('#tableprint tbody').remove();
             shtml = shtml + "<thead>";
             if ($("#cmb_RepType").val() == 'CS') {
-                shtml = shtml + "<tr><th style='border: 1px solid black;'>Sl No</th><th style='border: 1px solid black;'>SKU</th><th style='border: 1px solid black;'>Code</th><th style='border: 1px solid black;'>Title</th><th style='border: 1px solid black;'>Stock Qty</th></tr>";
+                shtml = shtml + "<tr><th style='border: 1px solid black;'>Sl No</th><th style='border: 1px solid black;'>SKU</th><th style='border: 1px solid black;'>Code</th><th style='border: 1px solid black;'>Title</th><th style='border: 1px solid black;'>Pcs</th><th style='border: 1px solid black;'>Gr Wt</th><th style='border: 1px solid black;'>Stock Qty</th></tr>";
             }
             else
             {
-                shtml = shtml + "<tr><th style='border: 1px solid black;'>Sl No</th><th style='border: 1px solid black;'>SKU</th><th style='border: 1px solid black;'>Code</th><th style='border: 1px solid black;'>Title</th><th style='border: 1px solid black;'>Current Stock Qty</th><th style='border: 1px solid black;'>Opening Qty</th><th style='border: 1px solid black;'>Stock Entry Qty</th><th style='border: 1px solid black;'>Inward Qty</th><th style='border: 1px solid black;'>Outward Qty</th><th style='border: 1px solid black;'>Closing Qty</th></tr>";
+                shtml = shtml + "<tr><th style='border: 1px solid black;'>Sl No</th><th style='border: 1px solid black;'>SKU</th><th style='border: 1px solid black;'>Code</th><th style='border: 1px solid black;'>Title</th><th style='border: 1px solid black;'>Pcs</th><th style='border: 1px solid black;'>Gr Wt</th><th style='border: 1px solid black;'>Current Stock Qty</th><th style='border: 1px solid black;'>Opening Qty</th><th style='border: 1px solid black;'>Stock Entry Qty</th><th style='border: 1px solid black;'>Inward Qty</th><th style='border: 1px solid black;'>Outward Qty</th><th style='border: 1px solid black;'>Closing Qty</th></tr>";
             }
             shtml = shtml + "</thead>";
             shtml = shtml + "<tbody>";
@@ -282,6 +282,8 @@ function generatereport() {
                     shtml = shtml + "<td style='text-align:center;color:brown;border: 1px solid black;'><b>" + data.d[i].SKU + "<b></td>";
                     shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].CODE + "</td>";
                     shtml = shtml + "<td style='border: 1px solid black;'><b>" + data.d[i].CATALOG_TITLE + "</b></td>";
+                    shtml = shtml + "<td style='border: 1px solid black;text-align:center;'>" + data.d[i].PCS + "</td>";
+                    shtml = shtml + "<td style='border: 1px solid black;text-align:center;'>" + data.d[i].WT.replace("Gr wt : ", "") + "</td>";
                     shtml = shtml + "<td style='text-align:center;color:red;border: 1px solid black;'><b>" + data.d[i].CURR_STK_QTY + "</b></td></tr>";
                 }
                 else
@@ -290,6 +292,8 @@ function generatereport() {
                     shtml = shtml + "<td style='text-align:center;color:brown;border: 1px solid black;'><b>" + data.d[i].SKU + "<b></td>";
                     shtml = shtml + "<td style='border: 1px solid black;'>" + data.d[i].CODE + "</td>";
                     shtml = shtml + "<td style='border: 1px solid black;'><b>" + data.d[i].CATALOG_TITLE + "</b></td>";
+                    shtml = shtml + "<td style='border: 1px solid black;text-align:center;'>" + data.d[i].PCS + "</td>";
+                    shtml = shtml + "<td style='border: 1px solid black;text-align:center;'>" + data.d[i].WT.replace("Gr wt : ", "") + "</td>";
                     shtml = shtml + "<td style='text-align:center;color:red;border: 1px solid black;'><b>" + data.d[i].CURR_STK_QTY + "</b></td>";
                     shtml = shtml + "<td style='text-align:center;color:green;border: 1px solid black;'><b>" + data.d[i].OPENING_QTY + "</b></td>";
                     shtml = shtml + "<td style='text-align:center;color:blue;border: 1px solid black;'><b>" + data.d[i].STK_QTY + "</b></td>";

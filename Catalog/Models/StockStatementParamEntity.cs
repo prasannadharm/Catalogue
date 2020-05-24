@@ -35,7 +35,9 @@ namespace Catalog.Models
         public double STK_QTY { get; set; }
         public double IN_QTY { get; set; }
         public double OUT_QTY { get; set; }
-        public double CLS_QTY { get; set; }        
+        public double CLS_QTY { get; set; }
+        public int PCS { get; set; }
+        public string WT { get; set; }
     }
 
     public class ItemLedgerEntity
