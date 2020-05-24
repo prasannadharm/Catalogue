@@ -127,9 +127,10 @@
                 <table id="tablesub" class="table table-striped table-bordered" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>SKU</th>
-                            <th>Code</th>
+                            <th>SKU</th>                            
                             <th>Title</th>
+                            <th>Pcs</th>
+                            <th>Gr Wt</th>
                             <th>Qty</th>
                             <th>P Qty</th>
                             <th>Remarks</th>
@@ -177,12 +178,13 @@
                             <table id="tableitemsearch" class="table table-striped table-bordered" style="width: 100%">
                                 <thead>
                                     <tr>                                        
-                                        <th>Outward No</th>
-                                        <th>Outward Date</th>
-                                        <th>SKU</th>
-                                        <th>Code</th>
+                                        <th>Out. No</th>
+                                        <th>Out. Dt</th>
+                                        <th>SKU</th>                                        
                                         <th>Title</th>
-                                        <th>Pending Qty</th>                                        
+                                        <th>Pcs</th>
+                                        <th>Gr Wt</th>
+                                        <th>P Qty</th>                                        
                                         <th>Select</th>
                                         <th>View</th>
                                     </tr>

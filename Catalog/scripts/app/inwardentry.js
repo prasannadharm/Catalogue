@@ -250,6 +250,8 @@ $(function () {
                                     objdetail.OUT_QTY = data.d[i].OUT_QTY;
                                     objdetail.OUT_BAL_QTY = data.d[i].OUT_BAL_QTY;
                                     objdetail.OUT_TRANS_DATE = data.d[i].OUT_TRANS_DATE;
+                                    objdetail.PCS = data.d[i].PCS;
+                                    objdetail.WT = data.d[i].WT;
                                     subItemsList.push(objdetail);
                                 }
                                 rebuildSubTableGrid();
@@ -694,6 +696,8 @@ function searchpendingItem() {
                         objdetail.OUT_QTY = data.d[i].OUT_QTY;
                         objdetail.OUT_BAL_QTY = data.d[i].OUT_BAL_QTY;
                         objdetail.OUT_TRANS_DATE = data.d[i].OUT_TRANS_DATE;
+                        objdetail.PCS = data.d[i].PCS;
+                        objdetail.WT = data.d[i].WT;
                         tempsubItemsList.push(objdetail);
                     }
                 }
@@ -724,7 +728,7 @@ function rebuildItemSearchTableGrid() {
     for (var i = 0; i < tempsubItemsList.length; i++) {
         $('#tableitemsearch').append(
             "<tr><td style='text-align:center;color:red'><b>" + tempsubItemsList[i].OUT_TRANS_NO + "</b></td><td>" + tempsubItemsList[i].OUT_TRANS_DATE + "</td>" +
-            "<td style='text-align:center;color:brown'><b>" + tempsubItemsList[i].SKU + "</b></td><td>" + tempsubItemsList[i].CODE + "</td><td style='color:blue'>" + tempsubItemsList[i].CATALOG_TITLE + "</td><td style='text-align:center;color:red'><b>" + tempsubItemsList[i].OUT_BAL_QTY + "</b></td>" +            
+            "<td style='text-align:center;color:brown'><b>" + tempsubItemsList[i].SKU + "</b></td><td style='color:blue'>" + tempsubItemsList[i].CATALOG_TITLE + "</td><td>" + tempsubItemsList[i].PCS + "</td><td>" + tempsubItemsList[i].WT.replace("Gr wt : ", "") + "</td>" + "</td><td style='text-align:center;color:red'><b>" + tempsubItemsList[i].OUT_BAL_QTY + "</b></td>" +
             "<td style='text-align: center'><img src='../images/static/select.png' title='Select Record' class='selectButtonSubis handcursor' data-id='" + tempsubItemsList[i].CATALOG_ID + '_' + tempsubItemsList[i].GENID + "' id='btnselectSubIS_" + tempsubItemsList[i].GENID + "' value='Select' style='margin-right:5px;margin-left:5px'/> </td>" +
             "<td style='text-align: center'><img src='../images/static/imageview.png' title='Show Preview' class='previewButtonSubIS handcursor' data-id='" + tempsubItemsList[i].PHY_FILE_NAME + "' id='btnPreviewSubis' value='Preview' style='margin-right:5px;margin-left:5px'/> </td></tr>");
     }
@@ -754,6 +758,8 @@ function rebuildItemSearchTableGrid() {
                 objdetail.OUT_GENID = tempsubItemsList[i].OUT_GENID;
                 objdetail.OUT_QTY = tempsubItemsList[i].OUT_QTY;
                 objdetail.OUT_BAL_QTY = tempsubItemsList[i].OUT_BAL_QTY;
+                objdetail.PCS = tempsubItemsList[i].PCS;
+                objdetail.WT = tempsubItemsList[i].WT;
                 subItemsList.push(objdetail);
                 break;
             }
@@ -776,7 +782,7 @@ function rebuildSubTableGrid() {
     $('#tablesub').append("<tbody>");
     for (var i = 0; i < subItemsList.length; i++) {
         $('#tablesub').append(
-            "<tr><td style='text-align:center;color:brown'><b>" + subItemsList[i].SKU + "</b></td><td>" + subItemsList[i].CODE + "</td><td style='color:blue'>" + subItemsList[i].CATALOG_TITLE + "</td>" +
+            "<tr><td style='text-align:center;color:brown'><b>" + subItemsList[i].SKU + "</b></td><td style='color:blue'>" + subItemsList[i].CATALOG_TITLE + "</td>" + "<td>" + subItemsList[i].PCS + "</td><td>" + subItemsList[i].WT.replace("Gr wt : ", "") + "</td>" +
             "<td><input type='number' id='txtqty_" + subItemsList[i].GENID + "' class='form-control subqty' value=" + subItemsList[i].QTY + " style='width:80px;text-align:center' /></td>" +
             "<td style='text-align:center;color:red;padding-top: 15px;'><b>" + subItemsList[i].OUT_BAL_QTY + "</b></td>" +
             "<td><input type='text' id='txtsubremarks_" + subItemsList[i].GENID + "' class='form-control subremarks' value='" + subItemsList[i].REMARKS + "' /></td>" +

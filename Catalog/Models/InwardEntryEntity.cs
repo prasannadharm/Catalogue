@@ -119,5 +119,7 @@ namespace Catalog.Models
         public double OUT_BAL_QTY { get; set; }
         public string ORG_FILE_NAME { get; set; }
         public string PHY_FILE_NAME { get; set; }
+        public int PCS { get; set; }
+        public string WT { get; set; }
     }
 }

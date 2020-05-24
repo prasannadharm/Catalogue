@@ -390,6 +390,8 @@ namespace Catalog.DAO
                         obj.ORG_FILE_NAME = ds.Tables[0].Rows[i]["ORG_FILE_NAME"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[i]["ORG_FILE_NAME"]);
                         obj.PHY_FILE_NAME = ds.Tables[0].Rows[i]["PHY_FILE_NAME"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[i]["PHY_FILE_NAME"]);
                         obj.OUT_TRANS_DATE = ds.Tables[0].Rows[i]["OUT_TRANS_DATE"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[i]["OUT_TRANS_DATE"]);
+                        obj.PCS = ds.Tables[0].Rows[i]["PCS"] == DBNull.Value ? 1 : Convert.ToInt32(ds.Tables[0].Rows[i]["PCS"]);
+                        obj.WT = ds.Tables[0].Rows[i]["WT"] == DBNull.Value ? "" : Convert.ToString(ds.Tables[0].Rows[i]["WT"]);
                         retlst.Add(obj);
                     }
                 }
